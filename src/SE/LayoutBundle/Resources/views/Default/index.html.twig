@@ -1,0 +1,68 @@
+{% extends "SELayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+
+{% block se_layout_body %}
+
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <div class="alert alert-danger" role="alert">
+            {% for user in app.user %}
+                {{ user.username }}
+            {% endfor %}
+            Bonjour {{ app.user.username }}, Votre profile n'est pas complet, merci de le compléter
+            <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >ICI</a>
+        </div>
+    {% endif %}
+<div class="panel-body">
+    <div class="slogan"><p>Trouvez le bon service au bon prix !</p></div>
+
+        <div class="col-md-6">
+            <h3>Vous cherchez une aide?</h3>
+            <p><span class="badge">1</span> <a class="slogan-link" href="{{ path('se_portal_advert_add') }}">Postez votre demande</a></p>
+            <p><span class="badge">2</span> Recevez des enchères</p>
+            <p><span class="badge">3</span> Choisissez le meilleur enchérisseur</p>
+        </div>
+        <div class="col-md-6">
+            <h3>Vous proposez vos services?</h3>
+            <p><span class="badge">1</span> <a class="slogan-link" href="{{ path('fos_user_registration_register') }}">Inscrivez vous</a></p>
+            <p><span class="badge">2</span> Recevez des demandes</p>
+            <p><span class="badge">3</span> Enchérissez et gagnez</p>
+        </div>
+</div>
+
+<!-- CATGEORY - CARTE DE FRANCE -->
+    <div class="index-container" >
+        <div class="row">
+            <div class="col-md-4">
+                <h4 class="cat-title">Par Catégories</h4>
+                <ul class="ul-cat">
+                    {% for category in listCategory %}
+                        <li>
+                            <a class="cat-link" href="{{ path('se_portal_advert_list_by_category', { 'category': category.slug }) }}">
+                                {{ category.labelNormal }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h4 class="cat-title">Par Régions</h4>
+                <ul class="ul-cat">
+                    {% for region in listRegion %}
+                        <li>
+                            <a class="cat-link" href="{{ path('se_portal_advert_list_by_region', { 'region': region.slug }) }}">
+                                {{ region.labelNormal }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h4 class="cat-title">Par Carte</h4>
+                <div id="cmap"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

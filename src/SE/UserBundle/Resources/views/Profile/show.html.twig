@@ -1,0 +1,19 @@
+{% extends "SEPortalBundle::layout.html.twig" %}
+
+{% block title %}
+    Mon profile - {{ parent() }}
+{% endblock %}
+
+{% block se_dashboard %}
+
+    <h4 class="cat-title">Mon profile</h4>
+    <div class="col-md-8">
+        {% block fos_user_content %}
+            {% include "@FOSUser/Profile/show_content.html.twig" %}
+        {% endblock fos_user_content %}
+    </div>
+    <div class="col-md-4">
+
+    </div>
+
+{% endblock %}

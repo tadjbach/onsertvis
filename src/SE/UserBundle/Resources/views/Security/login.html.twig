@@ -1,0 +1,33 @@
+{% extends 'SEUserBundle::layout.html.twig' %}
+
+{% block title %}
+    Se connecter - {{ parent() }}
+{% endblock %}
+
+{% block se_user %}
+
+    <div class="col-md-6">
+        <h4 class="cat-title">Connexion</h4>
+        {# On définit ce block, dans lequel vont venir s'insérer les autres vues du bundle #}
+            {% block fos_user_content %}
+                {{ include('@FOSUser/Security/login_content.html.twig') }}
+            {% endblock fos_user_content %}
+    </div>
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-5">
+        <h4 class="cat-title">Vous n'avez pas de compte ?</h4>
+        <div class="form-group">
+            <a href="{{ path('fos_user_registration_register') }}" class="form-control btn btn-primary">
+                Créer un compte
+            </a>
+        </div>
+        <h4 class="cat-title">Mot de passe oublié ?</h4>
+        <div class="form-group">
+            <a href="{{ path('fos_user_resetting_request') }}" class="form-control btn btn-primary">
+                Réinitialiser le mot de passe
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

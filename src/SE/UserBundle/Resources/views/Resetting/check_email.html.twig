@@ -1,0 +1,22 @@
+{% extends 'SEUserBundle::layout.html.twig' %}
+
+{% block title %}
+    Mot de passe oublié ? - {{ parent() }}
+{% endblock %}
+
+{% block se_user %}
+
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        {% block fos_user_content %}
+        <p>
+            {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+        </p>
+        {% endblock fos_user_content %}
+    </div>
+    <div class="col-md-4">
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,38 @@
+<nav class="navbar navbar-default se-header">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logo" href="{{ path('se_layout_homepage') }}">Service Enchère</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+
+                <li><a href="{{ path('se_portal_advert_list')  }}">Voir les demandes</a></li>
+                <li><a href="{{ path('se_portal_advert_add') }}">Déposer une demande</a></li>
+
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                Tableau de bord<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('fos_user_profile_show') }}" >Mon profile</a></li>
+                                <li><a href="{{ path('se_layout_homepage') }}">Mes Annonces</a></li>
+                                <li><a href="{{ path('se_layout_homepage') }}">Mon Enchères</a></li>
+                                <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+                            </ul>
+                        </li>
+                {% else %}
+                    <li><a href="{{ path('fos_user_security_login') }}">Se connecter</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

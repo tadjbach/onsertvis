@@ -1,0 +1,82 @@
+#Portal - Advert
+se_portal_advert_list:
+    path:     /annonce/liste/{page}
+    defaults:
+        _controller: SEPortalBundle:Advert:list
+        page:        1
+    requirements:
+        page: \d*
+
+se_portal_advert_list_by_region:
+    path:     /annonce/region/{region}/{page}
+    defaults:
+        _controller: SEPortalBundle:Advert:listByRegion
+        page:        1
+    requirements:
+        page: \d*
+
+se_portal_advert_list_by_category:
+    path:     /annonce/category/{category}/{page}
+    defaults:
+        _controller: SEPortalBundle:Advert:listByCategory
+        page:        1
+    requirements:
+        page: \d*
+
+se_portal_advert_view:
+    path:     /annonce/{id}
+    defaults:
+        _controller: SEPortalBundle:Advert:view
+    requirements:
+        id: \d+
+
+se_portal_advert_add:
+    path:     /annonce/deposer
+    defaults:
+        _controller: SEPortalBundle:Advert:add
+
+se_portal_advert_edit:
+    path:     /annonce/modifier/{id}
+    defaults:
+        _controller: SEPortalBundle:Advert:edit
+    requirements:
+        id: \d+
+
+se_portal_advert_delete:
+    path:     /annonce/supprimer/{id}
+    defaults:
+        _controller: SEPortalBundle:Advert:delete
+    requirements:
+        id: \d+
+
+#Portal - Account
+se_portal_account_dashboard:
+    path:     /tableau-de-bord
+    defaults:
+        _controller: SEPortalBundle:Account:dashboard
+
+se_portal_account_profile:
+    path:     /mon-profile
+    defaults:
+        _controller: FOSUserBundle:Profile:show
+
+se_portal_account_profile_edit:
+    path:     /modifier-mon-profile
+    defaults:
+        _controller: FOSUserBundle:Profile:edit
+
+se_portal_advert_list_by_user:
+    path:     /tableau-de-bord/mes-annonces/{page}
+    defaults:
+        _controller: SEPortalBundle:Account:advertList
+        page:        1
+    requirements:
+        page: \d*
+
+se_portal_auction_list_by_user:
+    path:     /tableau-de-bord/mes-encheres/{page}
+    defaults:
+        _controller: SEPortalBundle:Account:auctionList
+        page:        1
+    requirements:
+        page: \d*
