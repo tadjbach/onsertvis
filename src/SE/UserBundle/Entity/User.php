@@ -97,13 +97,6 @@ class User extends BaseUser
     /**
      * @var bool
      *
-     * @ORM\Column(name="isEmailConfirm", type="boolean")
-     */
-    private $isEmailConfirm=false;
-
-    /**
-     * @var bool
-     *
      * @ORM\Column(name="isAcountComplete", type="boolean")
      */
     private $isAcountComplete=false;
@@ -283,30 +276,6 @@ class User extends BaseUser
     public function getDetail()
     {
         return $this->detail;
-    }
-
-    /**
-     * Set isEmailConfirm
-     *
-     * @param boolean $isEmailConfirm
-     *
-     * @return User
-     */
-    public function setIsEmailConfirm($isEmailConfirm)
-    {
-        $this->isEmailConfirm = $isEmailConfirm;
-
-        return $this;
-    }
-
-    /**
-     * Get isEmailConfirm
-     *
-     * @return boolean
-     */
-    public function getIsEmailConfirm()
-    {
-        return $this->isEmailConfirm;
     }
 
     /**
