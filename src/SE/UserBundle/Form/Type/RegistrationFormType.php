@@ -40,8 +40,7 @@ class RegistrationFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->buildUserForm1($builder, $options);
-       // $this->buildUserForm2($builder, $options);
+        $this->buildUserForm($builder, $options);
     }
 
     /**
@@ -80,7 +79,7 @@ class RegistrationFormType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    protected function buildUserForm1(FormBuilderInterface $builder, array $options)
+    protected function buildUserForm(FormBuilderInterface $builder, array $options)
     {
         $builder
 
@@ -93,31 +92,5 @@ class RegistrationFormType extends AbstractType
                 'second_options' => array('label' => 'form.password_confirmation'),
                 'invalid_message' => 'fos_user.password.mismatch',
             ));
-    }
-
-    protected function buildUserForm2(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('accountType', ChoiceType::class, array(
-                'choices'    => array(
-                    'Particulier' => 'Particulier',
-                    'Société' => 'Société',
-                    'Autre'=>'Autre'
-                )
-            ))
-            ->add('civility', ChoiceType::class, array(
-                'choices'    => array(
-                    'M' => 'm',
-                    'Mme' => 'mme',
-                    'Mlle' => 'mlle',
-                )
-            ))
-
-            ->add('name', TextType::class)
-            ->add('firstName', TextType::class)
-            ->add('address', TextType::class)
-            ->add('phone1', TextType::class)
-            ->add('phone2', TextType::class)
-            ->add('detail', TextareaType::class);
     }
 }

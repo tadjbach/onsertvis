@@ -104,16 +104,9 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="phone_1", type="string", length=50, nullable=true)
+     * @ORM\Column(name="phone_number", type="string", length=50, nullable=true)
      */
-    private $phone1;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="phone_2", type="string", length=50, nullable=true)
-     */
-    private $phone2;
+    private $phoneNumber;
 
     /**
      * @var bool
@@ -276,54 +269,6 @@ class User extends BaseUser
     public function getDetail()
     {
         return $this->detail;
-    }
-
-    /**
-     * Set phone1
-     *
-     * @param string $phone1
-     *
-     * @return User
-     */
-    public function setPhone1($phone1)
-    {
-        $this->phone1 = $phone1;
-
-        return $this;
-    }
-
-    /**
-     * Get phone1
-     *
-     * @return string
-     */
-    public function getPhone1()
-    {
-        return $this->phone1;
-    }
-
-    /**
-     * Set phone2
-     *
-     * @param string $phone2
-     *
-     * @return User
-     */
-    public function setPhone2($phone2)
-    {
-        $this->phone2 = $phone2;
-
-        return $this;
-    }
-
-    /**
-     * Get phone2
-     *
-     * @return string
-     */
-    public function getPhone2()
-    {
-        return $this->phone2;
     }
 
     /**
@@ -492,5 +437,29 @@ class User extends BaseUser
     public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * Set phoneNumber
+     *
+     * @param string $phoneNumber
+     *
+     * @return User
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber
+     *
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
     }
 }

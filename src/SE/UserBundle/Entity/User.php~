@@ -104,16 +104,9 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="phone_1", type="string", length=50, nullable=true)
+     * @ORM\Column(name="phone_number", type="string", length=50, nullable=true)
      */
-    private $phone1;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="phone_2", type="string", length=50, nullable=true)
-     */
-    private $phone2;
+    private $phoneNumber;
 
     /**
      * @var bool

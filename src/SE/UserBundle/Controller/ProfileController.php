@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Controller managing the user profile.
@@ -61,6 +62,8 @@ class ProfileController extends Controller
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
+        $oldMail = $user->getEmail();
+
         /** @var $dispatcher EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
 
@@ -87,6 +90,7 @@ class ProfileController extends Controller
             $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
             $user->setDateModification(new \DateTime());
             $user->setIsAcountComplete(true);
+
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
@@ -96,11 +100,42 @@ class ProfileController extends Controller
 
             $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
 
+            if ($user->getEmail() !== $oldMail)
+            {
+                $user->setEnabled(false);
+
+                $email = $user->getEmail();
+
+                if (empty($email)) {
+                    return new RedirectResponse($this->get('router')->generate('fos_user_registration_register'));
+                }
+
+
+                // $user = $this->get('fos_user.user_manager')->findUserByEmail($email);
+
+                if (null === $user) {
+                    throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
+                }
+
+                $userManager->updateUser($user);
+
+                $this->get('session')->remove($user->getEmail());
+
+              /*  $this->container->get('security.token_storage')->setToken(null);
+                $request->getSession()->invalidate();*/
+
+                return $this->render('@FOSUser/Registration/check_email.html.twig', array(
+                    'user' => $user,
+                ));
+            }
+
             return $response;
         }
+
 
         return $this->render('@FOSUser/Profile/edit.html.twig', array(
             'form' => $form->createView(),
         ));
     }
+
 }

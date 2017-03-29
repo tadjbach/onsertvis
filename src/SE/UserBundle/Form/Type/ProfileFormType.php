@@ -97,28 +97,27 @@ class ProfileFormType extends AbstractType
     protected function buildUserForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('accountType', ChoiceType::class, array(
+            ->add('accountType', ChoiceType::class, array('label'=> 'Vous êtes',
                 'choices'    => array(
-                    'Particulier' => 'Part',
-                    'Société' => 'Soc',
-                    'Autre'=>'Other'
-                )
+                    'Particulier' => 'Particulier',
+                    'Société' => 'Société',
+                    'Autre'=>'Autre'
+                ),
             ))
             ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
 
-            ->add('civility', ChoiceType::class, array(
+            ->add('civility', ChoiceType::class, array('label'=> 'Civilité',
                 'choices'    => array(
                     'M' => 'm',
                     'Mme' => 'mme',
                     'Mlle' => 'mlle',
                 )
             ))
-            ->add('name', TextType::class)
-            ->add('firstName', TextType::class)
-            ->add('address', TextType::class)
-            ->add('phone1', TextType::class)
-            ->add('phone2', TextType::class)
-            ->add('detail', TextareaType::class)
+            ->add('name', TextType::class, array('label'=> 'Nom'))
+            ->add('firstName', TextType::class, array('label'=> 'Prénom'))
+            ->add('address', TextType::class, array('label'=> 'Adresse'))
+            ->add('phoneNumber', TextType::class, array('label'=> 'N° téléphone'))
+            ->add('detail', TextareaType::class, array('label'=> 'À propos de moi'))
 
             ->add('email', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\EmailType'), array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
 
