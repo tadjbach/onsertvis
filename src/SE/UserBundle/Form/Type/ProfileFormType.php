@@ -99,9 +99,9 @@ class ProfileFormType extends AbstractType
         $builder
             ->add('accountType', ChoiceType::class, array(
                 'choices'    => array(
-                    'Particulier' => 'Particulier',
-                    'Société' => 'Société',
-                    'Autre'=>'Autre'
+                    'Particulier' => 'Part',
+                    'Société' => 'Soc',
+                    'Autre'=>'Other'
                 )
             ))
             ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))

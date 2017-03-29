@@ -65,10 +65,11 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
+    transport: smtp
+    host:      smtp.sendgrid.net
+    port:      587
+    username:  apikey
+    password:  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
     spool:     { type: memory }
 
 assetic:
@@ -82,3 +83,15 @@ fos_user:
     from_email:
             address: noreplay@servicdenchere.fr
             sender_name: service enchère
+    registration:
+        confirmation:
+            enabled: true
+            from_email:
+                address: noreplay@servicdenchere.fr
+                sender_name: service enchère
+    resetting:
+        email:
+            from_email:
+                address:        noreplay@servicdenchere.fr
+                sender_name:    service enchère
+            
