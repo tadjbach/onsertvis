@@ -2,21 +2,17 @@
 {% extends 'SEUserBundle::layout.html.twig' %}
 
 {% block title %}
-    Mot de passe oublié ? - {{ parent() }}
+    Vérification d'adresse mail - {{ parent() }}
 {% endblock %}
 
 {% block se_user %}
 
-    <div class="col-md-4">
-    </div>
-    <div class="col-md-4">
-        <div class="alert alert-success" role="alert">
+    <div class="col-md-12 text-center">
+        <div class="alert alert-danger" role="alert">
        {% block fos_user_content %}
            <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
        {% endblock fos_user_content %}
          </div>
-    </div>
-    <div class="col-md-4">
     </div>
 
 

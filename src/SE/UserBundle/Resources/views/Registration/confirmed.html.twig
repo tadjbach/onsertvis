@@ -12,10 +12,12 @@
     </div>
     <div class="col-md-4">
         {% block fos_user_content %}
+        <div class="alert alert-danger" role="alert">
             <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
             {% if targetUrl %}
                 <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
             {% endif %}
+        </div>
         {% endblock fos_user_content %}
     </div>
     <div class="col-md-4">
