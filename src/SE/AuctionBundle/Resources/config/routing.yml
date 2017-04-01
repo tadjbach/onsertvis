@@ -1,0 +1,66 @@
+#Auction - Advert
+se_auction_advert_list:
+    path:     /annonce/liste/{page}
+    defaults:
+        _controller: SEAuctionBundle:Advert:list
+        page:        1
+    requirements:
+        page: \d*
+
+se_auction_advert_list_by_region:
+    path:     /annonce/region/{region}/{page}
+    defaults:
+        _controller: SEAuctionBundle:Advert:listByRegion
+        page:        1
+    requirements:
+        page: \d*
+
+se_auction_advert_list_by_category:
+    path:     /annonce/category/{category}/{page}
+    defaults:
+        _controller: SEAuctionBundle:Advert:listByCategory
+        page:        1
+    requirements:
+        page: \d*
+
+se_auction_advert_view:
+    path:     /annonce/{id}
+    defaults:
+        _controller: SEAuctionBundle:Advert:view
+    requirements:
+        id: \d+
+
+se_auction_advert_add:
+    path:     /annonce/deposer
+    defaults:
+        _controller: SEAuctionBundle:Advert:add
+
+se_auction_advert_edit:
+    path:     /annonce/modifier/{id}
+    defaults:
+        _controller: SEAuctionBundle:Advert:edit
+    requirements:
+        id: \d+
+
+se_auction_advert_delete:
+    path:     /annonce/supprimer/{id}
+    defaults:
+        _controller: SEAuctionBundle:Advert:delete
+    requirements:
+        id: \d+
+        
+se_auction_advert_list_by_user:
+    path:     /tableau-de-bord/mes-annonces/{page}
+    defaults:
+        _controller: SEPortalBundle:Account:advertList
+        page:        1
+    requirements:
+        page: \d*
+
+se_auction_auction_list_by_user:
+    path:     /tableau-de-bord/mes-encheres/{page}
+    defaults:
+        _controller: SEPortalBundle:Account:auctionList
+        page:        1
+    requirements:
+        page: \d*

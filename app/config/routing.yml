@@ -1,3 +1,7 @@
+se_auction:
+    resource: "@SEAuctionBundle/Resources/config/routing.yml"
+    prefix:   /
+
 se_layout:
     resource: "@SELayoutBundle/Resources/config/routing.yml"
     prefix:   /

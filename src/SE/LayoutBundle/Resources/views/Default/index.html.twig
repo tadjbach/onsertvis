@@ -12,7 +12,7 @@
 
         <div class="col-md-6">
             <h3>Vous cherchez une aide?</h3>
-            <p><span class="badge">1</span> <a class="slogan-link" href="{{ path('se_portal_advert_add') }}">Postez votre demande</a></p>
+            <p><span class="badge">1</span> <a class="slogan-link" href="{{ path('se_auction_advert_add') }}">Postez votre demande</a></p>
             <p><span class="badge">2</span> Recevez des enchères</p>
             <p><span class="badge">3</span> Choisissez le meilleur enchérisseur</p>
         </div>
@@ -32,7 +32,7 @@
                 <ul class="ul-cat">
                     {% for category in listCategory %}
                         <li>
-                            <a class="cat-link" href="{{ path('se_portal_advert_list_by_category', { 'category': category.slug }) }}">
+                            <a class="cat-link" href="{{ path('se_auction_advert_list_by_category', { 'category': category.slug }) }}">
                                 {{ category.labelNormal }}
                             </a>
                         </li>
@@ -44,7 +44,7 @@
                 <ul class="ul-cat">
                     {% for region in listRegion %}
                         <li>
-                            <a class="cat-link" href="{{ path('se_portal_advert_list_by_region', { 'region': region.slug }) }}">
+                            <a class="cat-link" href="{{ path('se_auction_advert_list_by_region', { 'region': region.slug }) }}">
                                 {{ region.labelNormal }}
                             </a>
                         </li>

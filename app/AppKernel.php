@@ -25,7 +25,10 @@ class AppKernel extends Kernel
             new SE\PortalBundle\SEPortalBundle(),
             new \Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new SE\UserBundle\SEUserBundle(),
-            new FOS\UserBundle\FOSUserBundle()
+            new FOS\UserBundle\FOSUserBundle(),
+            new SE\AuctionBundle\SEAuctionBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

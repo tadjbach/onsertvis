@@ -1,0 +1,43 @@
+{% extends "SELayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Liste des demandes en cours - {{ parent() }}
+{% endblock %}
+
+{% block se_layout_body %}
+
+    <div class="panel-body">
+        <h4 class="cat-title">Demandes en cours</h4>
+    </div>
+
+    <div class="index-container" >
+        <div class="row">
+            <div class="col-md-12">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+            {% for p in range(1, nbPages) %}
+                <li{% if p == page %} class="active"{% endif %}>
+                    <a href="{{ path('se_auction_advert_list', {'page': p}) }}">{{ p }}</a>
+                </li>
+            {% endfor %}
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    </div>
+    <hr>
+{% endblock %}

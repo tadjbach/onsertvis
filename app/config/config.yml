@@ -94,3 +94,7 @@ fos_user:
                 address:        noreplay@serviceenchere.fr
                 sender_name:    Service Enchère - Rénisialisation de mot de passe
             
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true

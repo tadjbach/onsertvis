@@ -1,0 +1,24 @@
+{% extends "SELayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Déposer une annonce - {{ parent() }}
+{% endblock %}
+
+{% block se_layout_body %}
+
+    <div class="panel-body">
+        <h4 class="cat-title">Déposer une annonce</h4>
+         <div class="col-sm-6 col-md-4">
+                {{ include('SEAuctionBundle:Advert:form.html.twig') }}
+            </div>
+    </div>
+
+    <div class="index-container" >
+        <div class="row">
+            <div class="col-md-12">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

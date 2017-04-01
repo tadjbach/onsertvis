@@ -26,44 +26,4 @@ class AccountController extends Controller
     public function profileAction(){
         return $this->render('SEPortalBundle:Account:profile.html.twig');
     }
-
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
-    public function advertListAction($page){
-        $nbPerPage = 9;
-
-        $listAdverts = array();
-
-        $nbPages = ceil(count($listAdverts)/$nbPerPage);
-
-        if ($page<1){
-            throw new NotFoundHttpException('page"'.$page.'" inexistante');
-        }
-
-        return $this->render('SEPortalBundle:Account:advertList.html.twig', array(
-            'nbPages'     => $nbPages,
-            'page'        => $page
-        ));
-    }
-
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
-    public function auctionListAction($page){
-        $nbPerPage = 9;
-
-        $listAdverts = array();
-
-        $nbPages = ceil(count($listAdverts)/$nbPerPage);
-
-        if ($page<1){
-            throw new NotFoundHttpException('page"'.$page.'" inexistante');
-        }
-
-        return $this->render('SEPortalBundle:Account:auctionList.html.twig', array(
-            'nbPages'     => $nbPages,
-            'page'        => $page
-        ));
-    }
 }

@@ -14,8 +14,8 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
 
-                <li><a href="{{ path('se_portal_advert_list')  }}">Voir les demandes</a></li>
-                <li><a href="{{ path('se_portal_advert_add') }}">Déposer une demande</a></li>
+                <li><a href="{{ path('se_auction_advert_list')  }}">Voir les demandes</a></li>
+                <li><a href="{{ path('se_auction_advert_add') }}">Déposer une demande</a></li>
 
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li role="presentation" class="dropdown">

@@ -85,7 +85,7 @@ class ProfileController extends Controller
 
             $event = new FormEvent($form, $request);
             $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
-            $user->setDateModification(new \DateTime());
+            $user->setDateUpdate(new \DateTime());
             $user->setIsAcountComplete(true);
             $userManager->updateUser($user);
 

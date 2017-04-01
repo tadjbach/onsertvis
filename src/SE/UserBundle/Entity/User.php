@@ -20,7 +20,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="accountType", type="string", length=10, nullable=true)
+     * @ORM\Column(name="accountType", type="string", length=15, nullable=true)
      */
     private $accountType;
 
@@ -83,9 +83,9 @@ class User extends BaseUser
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateModification", type="datetime", nullable=true)
+     * @ORM\Column(name="dateUpdate", type="datetime", nullable=true)
      */
-    private $dateModification;
+    private $dateUpdate;
 
     /**
      * @var string
@@ -230,27 +230,27 @@ class User extends BaseUser
     }
 
     /**
-     * Set dateModification
+     * Set dateUpdate
      *
-     * @param \DateTime $dateModification
+     * @param \DateTime $dateUpdate
      *
      * @return User
      */
-    public function setDateModification($dateModification)
+    public function setDateUpdate($dateUpdate)
     {
-        $this->dateModification = $dateModification;
+        $this->dateUpdate = $dateUpdate;
 
         return $this;
     }
 
     /**
-     * Get dateModification
+     * Get dateUpdate
      *
      * @return \DateTime
      */
-    public function getDateModification()
+    public function getDateUpdate()
     {
-        return $this->dateModification;
+        return $this->dateUpdate;
     }
 
     /**
