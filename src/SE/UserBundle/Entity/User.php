@@ -114,6 +114,12 @@ class User extends BaseUser
      * @ORM\Column(name="isNewsLetter", type="boolean")
      */
     private $isNewsLetter=false;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="SE\PortalBundle\Entity\Category")
+     */
+    private $categories;
+    
 
     public function __construct()
     {
@@ -461,5 +467,39 @@ class User extends BaseUser
     public function getPhoneNumber()
     {
         return $this->phoneNumber;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \SE\PortalBundle\Entity\Category $category
+     *
+     * @return User
+     */
+    public function addCategory(\SE\PortalBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \SE\PortalBundle\Entity\Category $category
+     */
+    public function removeCategory(\SE\PortalBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }
