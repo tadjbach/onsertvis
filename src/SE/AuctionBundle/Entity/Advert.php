@@ -16,6 +16,28 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Advert
 {
+  
+ 
+    /**
+     * @ORM\ManyToOne(targetEntity="SE\UserBundle\Entity\User")
+     * @Assert\Valid()
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\Category")
+     * @Assert\Valid()
+     */
+     
+    private $category;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="SE\AuctionBundle\Entity\Image", cascade={"persist", "remove"})
+     * @Assert\Valid()
+     */
+    private $image;
+    
+    
     /**
      * @var int
      *
@@ -285,5 +307,77 @@ class Advert
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \SE\AuctionBundle\Entity\Image $image
+     *
+     * @return Advert
+     */
+    public function setImage(\SE\AuctionBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \SE\AuctionBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \SE\UserBundle\Entity\User $user
+     *
+     * @return Advert
+     */
+    public function setUser(\SE\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \SE\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \SE\PortalBundle\Entity\Category $category
+     *
+     * @return Advert
+     */
+    public function setCategory(\SE\PortalBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \SE\PortalBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

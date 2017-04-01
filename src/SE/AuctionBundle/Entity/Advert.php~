@@ -16,6 +16,28 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Advert
 {
+  
+ 
+    /**
+     * @ORM\ManyToOne(targetEntity="SE\UserBundle\Entity\User")
+     * @Assert\Valid()
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\Category")
+     * @Assert\Valid()
+     */
+     
+    private $category;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="SE\AuctionBundle\Entity\Image", cascade={"persist", "remove"})
+     * @Assert\Valid()
+     */
+    private $image;
+    
+    
     /**
      * @var int
      *
@@ -285,5 +307,29 @@ class Advert
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \SE\AuctionBundle\Entity\Image $image
+     *
+     * @return Advert
+     */
+    public function setImage(\SE\AuctionBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \SE\AuctionBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

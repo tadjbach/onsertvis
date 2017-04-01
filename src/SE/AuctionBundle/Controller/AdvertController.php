@@ -31,16 +31,14 @@ class AdvertController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()){
+                
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($advert);
+                $em->flush();
 
-            $em = $this->getDoctrine()->getManager();
-            
+                $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
 
-            $em->persist($advert);
-            $em->flush();
-
-            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-
-            return $this->redirectToRoute('se_auction_advert_view', array('id'=>$advert->getId()));
+                return $this->redirectToRoute('se_auction_advert_view', array('id'=>$advert->getId()));
             }
         }
 
@@ -70,23 +68,88 @@ class AdvertController extends Controller
 
     public function viewAction($id)
     {
-        return $this->render('SEAuctionBundle:Advert:view.html.twig');
+         $em=$this->getDoctrine()
+            ->getManager();
+
+        $advert=$em->find('SEAuctionBundle:Advert', $id);
+
+        if (null===$advert){
+            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+        }
+
+        return $this->render('SEAuctionBundle:Advert:view.html.twig', array(
+            'advert'=>$advert
+        ));
     }
 
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function editAction($id)
+    public function editAction($id, Request $request)
     {
-        return $this->render('SEAuctionBundle:Advert:edit.html.twig');
+         $advert=$this->getDoctrine()
+            ->getManager()
+            ->find('SEAuctionBundle:Advert', $id);
+
+        if (null === $advert) {
+            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+        }
+
+        $form = $this->createForm(AdvertEditType::class, $advert);
+
+        if ($request->isMethod('POST')){
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()){
+                $em = $this->getDoctrine()->getManager();
+
+                $em->flush();
+
+                $request->getSession()->getFlashBag()->add('info', 'Annonce bien modifiée');
+
+                return $this->redirectToRoute('se_auction_advert_view', array('id'=>$advert->getId()));
+            }
+        }
+
+        return $this->render('SEAuctionBundle:Advert:edit.html.twig', array(
+            'form' => $form->createView(),
+            'advert'=>$advert
+        ));
     }
 
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function deleteAction($id)
+    public function deleteAction($id, Request $request)
     {
-        return $this->render('SEAuctionBundle:Advert:delete.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        // On récupère l'annonce $id
+        $advert = $em->getRepository('SEAuctionBundle:Advert')->find($id);
+
+        if (null === $advert) {
+            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+        }
+
+        // On crée un formulaire vide, qui ne contiendra que le champ CSRF
+        // Cela permet de protéger la suppression d'annonce contre cette faille
+        $form = $this->createFormBuilder()->getForm();
+
+        if ($form->handleRequest($request)->isValid()) {
+            $em->remove($advert);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('info', "L'annonce a bien été supprimée.");
+
+            return $this->redirect($this->generateUrl('se_layout_homepage'));
+        }
+
+        // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
+        return $this->render('SEAuctionBundle:Advert:delete.html.twig', array(
+            'advert' => $advert,
+            'form'   => $form->createView()
+        ));
     }
 
     public function listByRegionAction($region, $page)

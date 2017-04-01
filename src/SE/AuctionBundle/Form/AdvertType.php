@@ -22,13 +22,18 @@ class AdvertType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
-            ->add('detail', TextareaType::class)
-           /*->add('image', ImageType::class)
+            ->add('title', TextType::class, array('label'=> 'Titre'))
+            ->add('detail', TextareaType::class, array('label'=> 'Détail'))
+            ->add('image', ImageType::class, 
+                                array('label'=> ' ',
+                                    'attr'   =>  array(
+                                                'class'   => 'fileUpload btn btn-primary'),
+                                      'required'  => false))
             ->add('category', EntityType::class, array(
-               'class'=>'FM\PlatformBundle\Entity\Category',
+                'label'=>'Catégorie',
+               'class'=>'SE\PortalBundle\Entity\Category',
                 'choice_label'=>'labelNormal'
-            ))*/
+            ))
             ->add('save', SubmitType::class);
     }
     
