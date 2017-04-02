@@ -22,32 +22,46 @@ class Country
      */
     private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="slug", type="string", length=255)
-     */
-    private $slug;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="labelNormal", type="string", length=255)
-     */
-    private $labelNormal;
-
-    /**
+        /**
      * @var int
      *
-     * @ORM\Column(name="position", type="integer")
+     * @ORM\Column(name="code", type="integer")
      */
-    private $position;
+    private $code;
+    
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="alpha_2", type="string", length=2)
+     */
+    private $alpha2;
+    
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="alpha_3", type="string", length=3)
+     */
+    private $alpha3;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="label_FR", type="string", length=50)
+     */
+    private $labelFR;
 
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="label_GB", type="string", length=50)
+     */
+    private $labelGB;
+    
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -55,74 +69,122 @@ class Country
     }
 
     /**
-     * Set slug
+     * Set code
      *
-     * @param string $slug
+     * @param integer $code
      *
      * @return Country
      */
-    public function setSlug($slug)
+    public function setCode($code)
     {
-        $this->slug = $slug;
+        $this->code = $code;
 
         return $this;
     }
 
     /**
-     * Get slug
+     * Get code
+     *
+     * @return integer
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set alpha2
+     *
+     * @param string $alpha2
+     *
+     * @return Country
+     */
+    public function setAlpha2($alpha2)
+    {
+        $this->alpha2 = $alpha2;
+
+        return $this;
+    }
+
+    /**
+     * Get alpha2
      *
      * @return string
      */
-    public function getSlug()
+    public function getAlpha2()
     {
-        return $this->slug;
+        return $this->alpha2;
     }
 
     /**
-     * Set labelNormal
+     * Set alpha3
      *
-     * @param string $labelNormal
+     * @param string $alpha3
      *
      * @return Country
      */
-    public function setLabelNormal($labelNormal)
+    public function setAlpha3($alpha3)
     {
-        $this->labelNormal = $labelNormal;
+        $this->alpha3 = $alpha3;
 
         return $this;
     }
 
     /**
-     * Get labelNormal
+     * Get alpha3
      *
      * @return string
      */
-    public function getLabelNormal()
+    public function getAlpha3()
     {
-        return $this->labelNormal;
+        return $this->alpha3;
     }
 
     /**
-     * Set position
+     * Set labelFR
      *
-     * @param integer $position
+     * @param string $labelFR
      *
      * @return Country
      */
-    public function setPosition($position)
+    public function setLabelFR($labelFR)
     {
-        $this->position = $position;
+        $this->labelFR = $labelFR;
 
         return $this;
     }
 
     /**
-     * Get position
+     * Get labelFR
      *
-     * @return int
+     * @return string
      */
-    public function getPosition()
+    public function getLabelFR()
     {
-        return $this->position;
+        return $this->labelFR;
+    }
+
+    /**
+     * Set labelGB
+     *
+     * @param string $labelGB
+     *
+     * @return Country
+     */
+    public function setLabelGB($labelGB)
+    {
+        $this->labelGB = $labelGB;
+
+        return $this;
+    }
+
+    /**
+     * Get labelGB
+     *
+     * @return string
+     */
+    public function getLabelGB()
+    {
+        return $this->labelGB;
     }
 }
