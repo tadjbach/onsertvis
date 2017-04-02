@@ -16,14 +16,16 @@ use SE\AuctionBundle\Event\AuctionEvents;
 
 class AdvertController extends Controller
 {
-        /**
+    /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
     public function addAction(Request $request){
 
         // On crée un objet Advert
         $advert = new Advert();
-
+        
+        $advert->setUser($this->getUser());
+        
         // On crée le FormBuilder grâce au service form factory
         $form = $this->createForm(AdvertType::class, $advert);
 

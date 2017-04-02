@@ -3,14 +3,15 @@
 namespace SE\PortalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Category
+ * Country
  *
- * @ORM\Table(name="category")
- * @ORM\Entity(repositoryClass="SE\PortalBundle\Repository\CategoryRepository")
+ * @ORM\Table(name="country")
+ * @ORM\Entity(repositoryClass="SE\PortalBundle\Repository\CountryRepository")
  */
-class Category
+class Country
 {
     /**
      * @var int
@@ -31,7 +32,7 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="label_normal", type="string", length=255)
+     * @ORM\Column(name="labelNormal", type="string", length=255)
      */
     private $labelNormal;
 
@@ -42,10 +43,11 @@ class Category
      */
     private $position;
 
+
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -57,7 +59,7 @@ class Category
      *
      * @param string $slug
      *
-     * @return Category
+     * @return Country
      */
     public function setSlug($slug)
     {
@@ -81,7 +83,7 @@ class Category
      *
      * @param string $labelNormal
      *
-     * @return Category
+     * @return Country
      */
     public function setLabelNormal($labelNormal)
     {
@@ -105,7 +107,7 @@ class Category
      *
      * @param integer $position
      *
-     * @return Category
+     * @return Country
      */
     public function setPosition($position)
     {
@@ -117,7 +119,7 @@ class Category
     /**
      * Get position
      *
-     * @return integer
+     * @return int
      */
     public function getPosition()
     {

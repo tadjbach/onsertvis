@@ -1,0 +1,68 @@
+<?php
+
+namespace SE\PortalBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Departement
+ *
+ * @ORM\Table(name="departement")
+ * @ORM\Entity(repositoryClass="SE\PortalBundle\Repository\DepartementRepository")
+ */
+class Departement
+{
+     /**
+     * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\Region")
+     * @Assert\Valid()
+     */
+     
+    private $region;
+    
+     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    private $slug;
+
+   /**
+     * @var string
+     *
+     * @ORM\Column(name="label_normal", type="string", length=255)
+     */
+    private $labelNormal;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="labelUppercase", type="string", length=255)
+     */
+    private $labelUppercase;
+    
+         /**
+     * @var string
+     *
+     * @ORM\Column(name="labelSoundex", type="string", length=255)
+     */
+    private $labelSoundex;
+
+   /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=5)
+     */
+    private $code;
+
+
+}

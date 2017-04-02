@@ -16,8 +16,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Advert
 {
-  
- 
     /**
      * @ORM\ManyToOne(targetEntity="SE\UserBundle\Entity\User")
      * @Assert\Valid()
@@ -74,7 +72,35 @@ class Advert
      * @ORM\Column(name="detail", type="text")
      */
     private $detail;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255)
+     */
+    private $address;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postalCode", type="string", length=5)
+     */
+    private $postalCode;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255)
+     */
+    private $city;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=200, nullable=true)
+     */
+    private $country;
+    
     /**
      * @var bool
      *
@@ -105,6 +131,7 @@ class Advert
     public function __construct()
     {
         $this->dateCreation=new \DateTime();
+        $this->country='France';
     }
     
     /**
@@ -379,5 +406,101 @@ class Advert
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     *
+     * @return Advert
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set postalCode
+     *
+     * @param string $postalCode
+     *
+     * @return Advert
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get postalCode
+     *
+     * @return string
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     *
+     * @return Advert
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     *
+     * @return Advert
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 }

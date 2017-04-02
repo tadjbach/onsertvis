@@ -8,7 +8,7 @@
 
     <h4 class="cat-title">{{ advert.title }}</h4>
     <div class="col-md-12">
-        <i>Par user, le {{ advert.dateCreation|date('d/m/Y') }}</i>
+        <i>Par {{ advert.user }}, le {{ advert.dateCreation|date('d/m/Y') }}</i>
         <div class="row">
             <div class="col-xs-6 col-md-6">
                 <div class="thumbnail">

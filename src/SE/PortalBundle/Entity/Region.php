@@ -3,6 +3,7 @@
 namespace SE\PortalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Region
@@ -12,6 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Region
 {
+     /**
+     * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\Country")
+     * @Assert\Valid()
+     */
+     
+    private $country;
+    
     /**
      * @var int
      *

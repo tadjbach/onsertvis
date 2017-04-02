@@ -22,19 +22,27 @@ class AdvertType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, array('label'=> 'Titre'))
-            ->add('detail', TextareaType::class, array('label'=> 'Détail'))
-            ->add('image', ImageType::class, 
+                ->add('category', EntityType::class, array(
+                    'label'=>'Catégorie',
+                   'class'=>'SE\PortalBundle\Entity\Category',
+                    'choice_label'=>'labelNormal'
+                ))
+                ->add('title', TextType::class, array('label'=> 'Titre'))
+                ->add('detail', TextareaType::class, array('label'=> 'Détail'))
+                ->add('address', TextType::class, array('label'=> 'Adresse'))
+                ->add('postalCode', TextType::class, array('label'=> 'Code postal'))
+                ->add('city', TextType::class, array('label'=> 'Ville'))
+                
+                ->add('image', ImageType::class, 
                                 array('label'=> ' ',
                                     'attr'   =>  array(
                                                 'class'   => 'fileUpload btn btn-primary'),
                                       'required'  => false))
-            ->add('category', EntityType::class, array(
-                'label'=>'Catégorie',
-               'class'=>'SE\PortalBundle\Entity\Category',
-                'choice_label'=>'labelNormal'
-            ))
-            ->add('save', SubmitType::class);
+           
+                ->add('save', SubmitType::class, 
+                                array('label'=> 'Enregistrer',
+                                    'attr'   =>  array(
+                                                'class'   => 'btn btn-primary')));
     }
     
     /**
