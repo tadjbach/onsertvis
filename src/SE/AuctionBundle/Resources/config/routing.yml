@@ -16,7 +16,7 @@ se_auction_advert_list_by_region:
         page: \d*
 
 se_auction_advert_list_by_category:
-    path:     /annonce/category/{category}/{page}
+    path:     /annonce/category/{catgeory}/{page}
     defaults:
         _controller: SEAuctionBundle:Advert:listByCategory
         page:        1

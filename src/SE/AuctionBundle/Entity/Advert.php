@@ -30,7 +30,6 @@ class Advert
     
     /**
      * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\City")
-     * @Assert\Valid()
      */
     private $city;
     
@@ -114,6 +113,8 @@ class Advert
     public function __construct()
     {
         $this->dateCreation=new \DateTime();
+        
+        $this->city = null;
     }
     
     /**

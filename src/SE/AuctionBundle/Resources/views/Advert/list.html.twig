@@ -6,17 +6,47 @@
 
 {% block se_layout_body %}
 
-    <div class="panel-body">
         <h4 class="cat-title">Demandes en cours</h4>
-    </div>
-
-    <div class="index-container" >
         <div class="row">
             <div class="col-md-12">
-            </div>
+                <div class="row">
+        <div id="menu" class="col-md-12">
+            filter
         </div>
     </div>
+    <div class="row">
+        <div id="content" class="col-md-12">
+            {% for advert in listAdverts %}
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}">
+                            {% if advert.image is not null %}
+                                <img style="width: 300px; height: 200px;" src="{{ asset(advert.image.webPath) }}" alt="{{ advert.image.alt }}">
+                             {% else %}
+                                <img style="width: 300px; height: 200px;" src="../../uploads/img/no_image.png"
+                                     alt="no-image">
+                                 {% endif %}
+                        </a>
+                        <div class="caption">
+                            <h3>{{ advert.title }}</h3>
+                            <p>Catégorie : {{ advert.category.labelNormal }}</p>
+                            <p>Date : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
+                            <p>Enchère :  </p>
+                            <p>
 
+                                <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}"
+                                  class="btn btn-primary" role="button">Enchérir</a>
+                                <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}"
+                                  class="btn btn-default" role="button">Voir</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                    <div>Pas (encore !) d'annonces</div>
+                {% endfor %}
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12 text-center">
         <ul class="pagination">
@@ -39,5 +69,12 @@
         </ul>
     </div>
     </div>
-    <hr>
+
+            
+            
+            
+            
+            
+    </div>
+</div>
 {% endblock %}

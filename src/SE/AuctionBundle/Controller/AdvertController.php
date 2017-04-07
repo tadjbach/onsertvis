@@ -53,7 +53,11 @@ class AdvertController extends Controller
     {
         $nbPerPage = 9;
 
-        $listAdverts = array();
+         $listAdverts = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('SEAuctionBundle:Advert')
+            ->getAdverts($page, $nbPerPage)
+        ;
 
         $nbPages = ceil(count($listAdverts)/$nbPerPage);
 
@@ -64,7 +68,8 @@ class AdvertController extends Controller
 
         return $this->render('SEAuctionBundle:Advert:list.html.twig', array(
             'nbPages'     => $nbPages,
-            'page'        => $page
+            'page'        => $page,
+            'listAdverts'=> $listAdverts
         ));
     }
 
@@ -172,22 +177,28 @@ class AdvertController extends Controller
         ));
     }
 
-    public function listByCategoryAction($category, $page)
+     public function listByCategoryAction($catgeory)
     {
-        $nbPerPage = 9;
 
-        $listAdverts = array();
+          $catgeoryLabelNormal=$this->getDoctrine()
+            ->getManager()->getRepository('SEPortalBundle:Category')
+            ->findBy(
+                array('slug'=>$catgeory)
+            );
 
-        $nbPages = ceil(count($listAdverts)/$nbPerPage);
+        $listAdverts=$this->getDoctrine()
+            ->getManager()->getRepository('SEAuctionBundle:Advert')
+            ->getAdvertWithCategory($catgeory, 10);
 
-        if ($page<1){
-            throw new NotFoundHttpException('page"'.$page.'" inexistante');
-        }
 
-        return $this->render('SEAuctionBundle:Advert:list.html.twig', array(
-            'nbPages'     => $nbPages,
-            'page'        => $page
+
+        return $this->render('SEAuctionBundle:Advert:listByCategory.html.twig', array(
+            'listAdverts'=>$listAdverts,
+            'catgeoryLabelNormal'=>$catgeoryLabelNormal
+
         ));
+
     }
+
 }
 
