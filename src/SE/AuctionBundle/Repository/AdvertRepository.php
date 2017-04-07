@@ -50,6 +50,45 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+    
+    public function getAdvertByRegion($region, $limit){
+        $qb=$this->createQueryBuilder('a');
+
+        $qb
+            ->innerJoin('a.city', 'c')
+            ->addSelect('c')
+            ->leftJoin('c.departement', 'd')
+            ->addSelect('d')
+            ->leftJoin('d.region', 'r')
+            ->addSelect('r')
+                
+            ->orderBy('a.dateCreation', 'DESC');
+
+        $qb->where($qb->expr()->eq('r.slug', "'".$region."'"));
+
+        $qb->setMaxResults($limit);
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
+        public function getAdvertByUser($userId, $limit){
+        
+     $qb=$this->createQueryBuilder('a');
+
+        $qb
+            ->innerJoin('a.user', 'u')
+            ->addSelect('u');
+
+        $qb->where($qb->expr()->eq('u.id', $userId));
+
+        $qb->setMaxResults($limit);
+
+        return $qb
+            ->getQuery()
+            ->getResult();   
+    }
 
     public function getCountAdvertByCategory($catgeoryId)
     {

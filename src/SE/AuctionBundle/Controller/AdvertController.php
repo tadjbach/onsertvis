@@ -159,25 +159,7 @@ class AdvertController extends Controller
         ));
     }
 
-    public function listByRegionAction($region, $page)
-    {
-        $nbPerPage = 9;
-
-        $listAdverts = array();
-
-        $nbPages = ceil(count($listAdverts)/$nbPerPage);
-
-        if ($page<1){
-            throw new NotFoundHttpException('page"'.$page.'" inexistante');
-        }
-
-        return $this->render('SEAuctionBundle:Advert:list.html.twig', array(
-            'nbPages'     => $nbPages,
-            'page'        => $page
-        ));
-    }
-
-     public function listByCategoryAction($catgeory)
+   public function listByCategoryAction($catgeory)
     {
 
           $catgeoryLabelNormal=$this->getDoctrine()
@@ -197,7 +179,46 @@ class AdvertController extends Controller
             'catgeoryLabelNormal'=>$catgeoryLabelNormal
 
         ));
+    }
+    
+    public function listByRegionAction($region)
+    {
 
+          $regionLabelNormal=$this->getDoctrine()
+            ->getManager()->getRepository('SEPortalBundle:Region')
+            ->findBy(
+                array('slug'=>$region)
+            );
+
+        $listAdverts=$this->getDoctrine()
+            ->getManager()->getRepository('SEAuctionBundle:Advert')
+            ->getAdvertByRegion($region, 10);
+
+
+
+        return $this->render('SEAuctionBundle:Advert:listByRegion.html.twig', array(
+            'listAdverts'=>$listAdverts,
+            'regionLabelNormal'=>$regionLabelNormal
+
+        ));
+    }
+    
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function listByUserAction()
+    {
+        $user = $this->getUser();
+        $listAdverts=$this->getDoctrine()
+            ->getManager()->getRepository('SEAuctionBundle:Advert')
+            ->getAdvertByUser($user->getId(), 10);
+
+
+
+        return $this->render('SEAuctionBundle:Advert:listByUser.html.twig', array(
+            'listAdverts'=>$listAdverts
+
+        ));
     }
 
 }

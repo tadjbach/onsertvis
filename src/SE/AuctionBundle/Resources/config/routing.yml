@@ -52,7 +52,7 @@ se_auction_advert_delete:
 se_auction_advert_list_by_user:
     path:     /tableau-de-bord/mes-annonces/{page}
     defaults:
-        _controller: SEPortalBundle:Account:advertList
+        _controller: SEAuctionBundle:Advert:listByUser
         page:        1
     requirements:
         page: \d*

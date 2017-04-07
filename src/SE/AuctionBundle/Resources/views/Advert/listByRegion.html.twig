@@ -1,0 +1,50 @@
+{% extends "SELayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Annonces par régions - {{ parent() }}
+{% endblock %}
+
+{% block se_layout_body %}
+    <div class="row">
+        <div id="content" class="col-md-12">
+            <h4>
+                {% for reg in regionLabelNormal %}
+                    <a href="{{ path('se_auction_advert_list') }}">Toutes les Demandes</a>
+             > {{ reg.labelNormal }}
+                {% endfor %}
+            </h4>
+            {% for advert in listAdverts %}
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}">
+                            {% if advert.image is not null %}
+                                <img style="width: 300px; height: 200px;" src="{{ asset(advert.image.webPath) }}" alt="{{ advert.image.alt }}">
+                              {% else %}
+                                <img style="width: 300px; height: 200px;" src="../../uploads/img/no_image.png"
+                                     alt="no-image">
+                                 {% endif %}
+                        </a>
+                        <div class="caption">
+                            <h3>{{ advert.title }}</h3>
+                            <p>Dans : {{ advert.category.labelNormal }}</p>
+                            <p>Postée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
+                            <p>à : {{ advert.city.labelNormal }}</p>
+                            <p>Enchère : </p>
+                            <p>
+                                <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}"
+                                   class="btn btn-primary" role="button">Proposez un prix</a>
+                                <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}"
+                                   class="btn btn-default" role="button">Voir</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div>Pas (encore !) d'annonces dans cette catégorie</div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <hr>
+{% endblock %}
