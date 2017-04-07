@@ -30,7 +30,6 @@ class AdvertType extends AbstractType
                 ->add('title', TextType::class, array('label'=> 'Titre'))
                 ->add('detail', TextareaType::class, array('label'=> 'Détail'))
                 ->add('address', TextType::class, array('label'=> 'Adresse'))
-                ->add('postalCode', TextType::class, array('label'=> 'Code postal'))
                 ->add('city', TextType::class, array('label'=> 'Ville'))
                 
                 ->add('image', ImageType::class, 

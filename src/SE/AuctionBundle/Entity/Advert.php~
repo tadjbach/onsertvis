@@ -26,15 +26,19 @@ class Advert
      * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\Category")
      * @Assert\Valid()
      */
-     
     private $category;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\City")
+     * @Assert\Valid()
+     */
+    private $city;
     
     /**
      * @ORM\ManyToOne(targetEntity="SE\AuctionBundle\Entity\Image", cascade={"persist", "remove"})
      * @Assert\Valid()
      */
     private $image;
-    
     
     /**
      * @var int
@@ -66,14 +70,7 @@ class Advert
      */
     private $dateUpdate;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="detail", type="text")
-     */
-    private $detail;
-    
-    /**
+     /**
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255)
@@ -83,23 +80,9 @@ class Advert
     /**
      * @var string
      *
-     * @ORM\Column(name="postalCode", type="string", length=5)
+     * @ORM\Column(name="detail", type="text")
      */
-    private $postalCode;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=255)
-     */
-    private $city;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=200, nullable=true)
-     */
-    private $country;
+    private $detail;
     
     /**
      * @var bool
@@ -131,7 +114,6 @@ class Advert
     public function __construct()
     {
         $this->dateCreation=new \DateTime();
-        $this->country='France';
     }
     
     /**
@@ -409,54 +391,6 @@ class Advert
     }
 
     /**
-     * Set address
-     *
-     * @param string $address
-     *
-     * @return Advert
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * Set postalCode
-     *
-     * @param string $postalCode
-     *
-     * @return Advert
-     */
-    public function setPostalCode($postalCode)
-    {
-        $this->postalCode = $postalCode;
-
-        return $this;
-    }
-
-    /**
-     * Get postalCode
-     *
-     * @return string
-     */
-    public function getPostalCode()
-    {
-        return $this->postalCode;
-    }
-
-    /**
      * Set city
      *
      * @param string $city
@@ -481,26 +415,26 @@ class Advert
     }
 
     /**
-     * Set country
+     * Set address
      *
-     * @param string $country
+     * @param string $address
      *
      * @return Advert
      */
-    public function setCountry($country)
+    public function setAddress($address)
     {
-        $this->country = $country;
+        $this->address = $address;
 
         return $this;
     }
 
     /**
-     * Get country
+     * Get address
      *
      * @return string
      */
-    public function getCountry()
+    public function getAddress()
     {
-        return $this->country;
+        return $this->address;
     }
 }

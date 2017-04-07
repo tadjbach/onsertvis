@@ -60,7 +60,7 @@
             </trans-unit>
             <trans-unit id="15">
                 <source>Account is disabled.</source>
-                <target>Merci de valider votre adresse mail</target>
+                <target>Le compte est désactivé.</target>
             </trans-unit>
             <trans-unit id="16">
                 <source>Account is locked.</source>

@@ -4,6 +4,7 @@ namespace SE\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -53,25 +54,10 @@ class User extends BaseUser
     private $address;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="postalCode", type="integer", length=5, nullable=true)
-     */
-    private $postalCode;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=200, nullable=true)
+     * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\City")
+     * @Assert\Valid()
      */
     private $city;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=200, nullable=true)
-     */
-    private $country;
 
     /**
      * @var \DateTime
@@ -127,8 +113,6 @@ class User extends BaseUser
         $this->isAcountComplete=false;
 
         $this->setRoles(array('ROLE_AUTEUR'));
-
-        $this->country='France';
     }
     
     /**
@@ -374,78 +358,6 @@ class User extends BaseUser
     }
 
     /**
-     * Set postalCode
-     *
-     * @param integer $postalCode
-     *
-     * @return User
-     */
-    public function setPostalCode($postalCode)
-    {
-        $this->postalCode = $postalCode;
-
-        return $this;
-    }
-
-    /**
-     * Get postalCode
-     *
-     * @return integer
-     */
-    public function getPostalCode()
-    {
-        return $this->postalCode;
-    }
-
-    /**
-     * Set city
-     *
-     * @param string $city
-     *
-     * @return User
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return string
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * Set country
-     *
-     * @param string $country
-     *
-     * @return User
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    /**
-     * Get country
-     *
-     * @return string
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
      * Set phoneNumber
      *
      * @param string $phoneNumber
@@ -501,5 +413,29 @@ class User extends BaseUser
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \SE\PortalBundle\Entity\City $city
+     *
+     * @return User
+     */
+    public function setCity(\SE\PortalBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \SE\PortalBundle\Entity\City
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }

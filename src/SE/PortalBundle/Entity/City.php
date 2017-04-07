@@ -62,6 +62,13 @@ class City
      * @ORM\Column(name="postalCode", type="string", length=10)
      */
     private $postalCode;
+    
+       /**
+     * @var string
+     *
+     * @ORM\Column(name="postalCodes", type="string", length=255)
+     */
+    private $postalCodes;
 
 
     /**
@@ -216,5 +223,53 @@ class City
     public function getPostalCode()
     {
         return $this->postalCode;
+    }
+
+    /**
+     * Set postalCodes
+     *
+     * @param string $postalCodes
+     *
+     * @return City
+     */
+    public function setPostalCodes($postalCodes)
+    {
+        $this->postalCodes = $postalCodes;
+
+        return $this;
+    }
+
+    /**
+     * Get postalCodes
+     *
+     * @return string
+     */
+    public function getPostalCodes()
+    {
+        return $this->postalCodes;
+    }
+
+    /**
+     * Set departement
+     *
+     * @param \SE\PortalBundle\Entity\Departement $departement
+     *
+     * @return City
+     */
+    public function setDepartement(\SE\PortalBundle\Entity\Departement $departement = null)
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    /**
+     * Get departement
+     *
+     * @return \SE\PortalBundle\Entity\Departement
+     */
+    public function getDepartement()
+    {
+        return $this->departement;
     }
 }
