@@ -29,12 +29,12 @@
                             <p>Dans : {{ advert.category.labelNormal }}</p>
                             <p>Postée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
                             <p>à : {{ advert.city.labelNormal }}</p>
-                            <p>Enchère : </p>
+                            <p>Prix proposé : </p>
                             <p>
                                 <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}"
-                                   class="btn btn-primary" role="button">Proposez un prix</a>
+                                  class="btn btn-primary" role="button">Proposer un prix</a>
                                 <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}"
-                                   class="btn btn-default" role="button">Voir</a>
+                                  class="btn btn-default" role="button">Contacter</a>
                             </p>
                         </div>
                     </div>

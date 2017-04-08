@@ -37,7 +37,7 @@
                                 <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}"
                                   class="btn btn-primary" role="button">Proposer un prix</a>
                                 <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}"
-                                  class="btn btn-default" role="button">Voir</a>
+                                  class="btn btn-default" role="button">Contacter</a>
                             </p>
                         </div>
                     </div>
@@ -49,25 +49,25 @@
     </div>
     <div class="row">
         <div class="col-md-12 text-center">
-        <ul class="pagination">
-            <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
-            {% for p in range(1, nbPages) %}
-                <li{% if p == page %} class="active"{% endif %}>
-                    <a href="{{ path('se_auction_advert_list', {'page': p}) }}">{{ p }}</a>
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
                 </li>
-            {% endfor %}
-            <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+                {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+                {% for p in range(1, nbPages) %}
+                    <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ path('se_auction_advert_list', {'page': p}) }}">{{ p }}</a>
+                    </li>
+                {% endfor %}
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 
             

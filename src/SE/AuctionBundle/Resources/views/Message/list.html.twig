@@ -1,0 +1,68 @@
+{% extends "SELayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Mes messages - {{ parent() }}
+{% endblock %}
+
+{% block se_layout_body %}
+
+<h4 class="cat-title">Mes conversations</h4>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            Message envoyés : 
+            <div id="content" class="col-md-12">
+                
+                {% for receive in listReceivers %}
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <i>A {{ receive.receiver }},</i>
+                        </div>
+                    </div>
+                    {% else %}
+                        <div>Pas (encore !) de messages envoyés</div>
+                    {% endfor %}
+            </div>
+        </div>
+            
+        <div class="row">
+            Message reçus :
+            <div id="content" class="col-md-12">
+                
+                {% for sender in listSenders %}
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <i>Par {{ sender.sender }},</i>
+                        </div>
+                    </div>
+                    {% else %}
+                        <div>Pas (encore !) de messages reçues</div>
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+                
+                    <div class="row">
+        <div class="col-md-12 text-center">
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+                {% for p in range(1, nbPages) %}
+                    <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ path('se_auction_message_list', {'page': p}) }}">{{ p }}</a>
+                    </li>
+                {% endfor %}
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

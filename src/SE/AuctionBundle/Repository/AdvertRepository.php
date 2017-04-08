@@ -14,16 +14,18 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getAdverts($page, $nbPerPage)
     {
-        $query = $this->createQueryBuilder('a')
+        $qb = $this->createQueryBuilder('a')
             ->leftJoin('a.image', 'i')
             ->addSelect('i')
             ->leftJoin('a.category', 'c')
             ->addSelect('c')
             ->orderBy('a.dateCreation', 'DESC');
 
-        $query->where($query->expr()->eq('a.isPublished', 1));
+        $qb->where($qb->expr()->eq('a.isPublished', 1))
+                ->andWhere($qb->expr()->eq('a.isDeleted', 0))
+                ->andWhere($qb->expr()->eq('a.isEnabled', 1));
 
-        $query
+        $qb
             ->getQuery()
             // On définit l'annonce à partir de laquelle commencer la liste
             ->setFirstResult(($page-1) * $nbPerPage)
@@ -32,7 +34,7 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
 
         // Enfin, on retourne l'objet Paginator correspondant à la requête construite
         // (n'oubliez pas le use correspondant en début de fichier)
-        return new Paginator($query, true);
+        return new Paginator($qb, true);
     }
     public function getAdvertWithCategory($catgeory, $limit)
     {
@@ -42,8 +44,10 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('a.category', 'c')
             ->addSelect('c');
 
-        $qb->where($qb->expr()->eq('c.slug', "'".$catgeory."'"));
-
+        $qb->where($qb->expr()->eq('c.slug', "'".$catgeory."'"))
+        ->andWhere($qb->expr()->eq('a.isPublished', 1))
+        ->andWhere($qb->expr()->eq('a.isDeleted', 0))
+        ->andWhere($qb->expr()->eq('a.isEnabled', 1));
         $qb->setMaxResults($limit);
 
         return $qb
@@ -64,7 +68,10 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
                 
             ->orderBy('a.dateCreation', 'DESC');
 
-        $qb->where($qb->expr()->eq('r.slug', "'".$region."'"));
+        $qb->where($qb->expr()->eq('r.slug', "'".$region."'"))
+        ->andWhere($qb->expr()->eq('a.isPublished', 1))
+        ->andWhere($qb->expr()->eq('a.isDeleted', 0))
+        ->andWhere($qb->expr()->eq('a.isEnabled', 1));
 
         $qb->setMaxResults($limit);
 
@@ -73,7 +80,7 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-        public function getAdvertByUser($userId, $limit){
+    public function getAdvertByUser($userId, $limit){
         
      $qb=$this->createQueryBuilder('a');
 
@@ -98,7 +105,10 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('a.category', 'c')
             ->addSelect('c');
 
-        $qb->where($qb->expr()->eq('c.id', $catgeoryId));
+        $qb->where($qb->expr()->eq('c.id', $catgeoryId))        
+                ->andWhere($qb->expr()->eq('a.isPublished', 1))
+                ->andWhere($qb->expr()->eq('a.isDeleted', 0))
+                ->andWhere($qb->expr()->eq('a.isEnabled', 1));
 
         return $qb
             ->getQuery()

@@ -16,11 +16,9 @@ class DefaultController extends Controller
             ->getManager()->getRepository('SEPortalBundle:Category')
             ->findAllOrder();
 
-        //TODO DB
         $listRegion =$this->getDoctrine()
             ->getManager()->getRepository('SEPortalBundle:Region')
             ->findAllOrder();
-
 
         return $this->render('SELayoutBundle:Default:index.html.twig', array(
             'listCategory'=>$listCategory,

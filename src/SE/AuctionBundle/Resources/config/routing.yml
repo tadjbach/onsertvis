@@ -64,3 +64,17 @@ se_auction_auction_list_by_user:
         page:        1
     requirements:
         page: \d*
+
+#Account - Message
+se_auction_message_list:
+    path: /tableau-de-bord/mes-messages/{page}
+    defaults:
+        _controller: SEAuctionBundle:Message:list
+        page:        1
+    requirements:
+        page: \d*
+        
+se_auction_message_add:
+    path:     /contact/envoi-message/{advertId}
+    defaults:
+        _controller: SEAuctionBundle:Message:add
