@@ -56,8 +56,9 @@ class AdvertController extends Controller
          $listAdverts = $this->getDoctrine()
             ->getManager()
             ->getRepository('SEAuctionBundle:Advert')
-            ->getAdverts($page, $nbPerPage)
-        ;
+            ->getAdverts($page, $nbPerPage);
+         
+       
 
         $nbPages = ceil(count($listAdverts)/$nbPerPage);
 
@@ -80,12 +81,21 @@ class AdvertController extends Controller
 
         $advert=$em->find('SEAuctionBundle:Advert', $id);
 
+        $listAuctions=$em->getRepository('SEAuctionBundle:Auction')
+            ->findBy(
+                array('advert'=>$advert),
+                array('value'=>'asc'),
+                $limit=null,
+                $offset=null);
+
+           
         if (null===$advert){
             throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
         }
 
         return $this->render('SEAuctionBundle:Advert:view.html.twig', array(
-            'advert'=>$advert
+            'advert'=>$advert,
+            'listAuctions'=>$listAuctions
         ));
     }
 

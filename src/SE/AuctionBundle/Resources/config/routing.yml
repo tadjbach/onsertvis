@@ -64,6 +64,11 @@ se_auction_auction_list_by_user:
         page:        1
     requirements:
         page: \d*
+        
+se_auction_add:
+    path:     /annonce/propser-enchere/{advertId}
+    defaults:
+        _controller: SEAuctionBundle:Auction:add
 
 #Account - Message
 se_auction_message_list:

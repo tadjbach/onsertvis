@@ -24,7 +24,16 @@
             <div class="well">
                 Enchères en cours :
                 <ul>
-                    <li>Soyez le premier à proposer une enchère</li>
+                    {% for auction in listAuctions %}
+                        <li>
+                            Enchère à {{ auction.value }} €,
+                            le {{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:m:s') }},
+                            par {{ auction.user }}
+                        </li>
+                    {% else %}
+                        <li>Soyez le premier à proposer une enchère</li>
+                    {% endfor %}
+
                 </ul>
             </div>
         </div>
@@ -58,6 +67,8 @@
                             <i class="glyphicon glyphicon-trash"></i>
                             Supprimer l'annonce
                         </a>
+                             <a href="{{ path('se_auction_add', {'advertId':advert.id}) }}"
+                                  class="btn btn-primary" >Proposer un prix</a>
                         <a href="{{ path('se_auction_message_add',{'advertId':advert.id}) }}"
                                   class="btn btn-default" >
                             <i class="glyphicon glyphicon-envelope"></i>

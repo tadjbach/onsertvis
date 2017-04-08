@@ -86,8 +86,7 @@ class Message
         
         $this->state = 0;
         $this->isPublished=1;
-        $this->isDeleted=0;
-              
+        $this->isDeleted=0;      
     }
     
 
