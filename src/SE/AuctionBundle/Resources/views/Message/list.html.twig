@@ -10,13 +10,20 @@
 <div class="row">
     <div class="col-md-12">
         <div class="row">
-            Message envoyés : 
             <div id="content" class="col-md-12">
-                
-                {% for receive in listReceivers %}
+                {% for conversation in listConversation %}
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
-                            <i>A {{ receive.receiver }},</i>
+                            <div class="caption">
+                                <h4>{{ conversation.advert.title }}</h4>
+                                <p>{{ conversation.dateCreation|date('d/m/Y') }} à {{ conversation.dateCreation|date('H:m') }}</p>
+                                <p>
+                                    <a href="{{ path('se_auction_advert_edit',{'id':conversation.id}) }}" class="btn btn-success">
+                                <i class="glyphicon glyphicon-comment"></i>
+                                    Voir
+                                </a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                     {% else %}
@@ -24,45 +31,29 @@
                     {% endfor %}
             </div>
         </div>
-            
-        <div class="row">
-            Message reçus :
-            <div id="content" class="col-md-12">
-                
-                {% for sender in listSenders %}
-                    <div class="col-sm-6 col-md-4">
-                        <div class="thumbnail">
-                            <i>Par {{ sender.sender }},</i>
-                        </div>
-                    </div>
-                    {% else %}
-                        <div>Pas (encore !) de messages reçues</div>
-                    {% endfor %}
-            </div>
-        </div>
     </div>
 </div>
                 
-                    <div class="row">
-        <div class="col-md-12 text-center">
-            <ul class="pagination">
-                <li>
-                    <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+            {% for p in range(1, nbPages) %}
+                <li{% if p == page %} class="active"{% endif %}>
+                    <a href="{{ path('se_auction_message_list', {'page': p}) }}">{{ p }}</a>
                 </li>
-                {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
-                {% for p in range(1, nbPages) %}
-                    <li{% if p == page %} class="active"{% endif %}>
-                        <a href="{{ path('se_auction_message_list', {'page': p}) }}">{{ p }}</a>
-                    </li>
-                {% endfor %}
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+            {% endfor %}
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
     </div>
+</div>
 {% endblock %}

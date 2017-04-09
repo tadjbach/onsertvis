@@ -64,12 +64,17 @@ class MessageController extends Controller
         $listReceivers = $this->getDoctrine()
             ->getManager()
             ->getRepository('SEAuctionBundle:Message')
-            ->getMessageBySender($user->getId(), $page, $nbPerPage);
+            ->getMessageReceive($user->getId(), $page, $nbPerPage);
 
         $listSenders = $this->getDoctrine()
             ->getManager()
             ->getRepository('SEAuctionBundle:Message')
-            ->getMessageByReceiver($user->getId(), $page, $nbPerPage);
+            ->getMessageSender($user->getId(), $page, $nbPerPage);
+        
+         $listConversation = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('SEAuctionBundle:Message')
+            ->getMessageConversation($user->getId(), $page, $nbPerPage);
         
         $nbPages = ceil(count($listSenders)/$nbPerPage);
 
@@ -81,8 +86,7 @@ class MessageController extends Controller
         return $this->render('SEAuctionBundle:Message:list.html.twig', array(
             'nbPages'     => $nbPages,
             'page'        => $page,
-            'listSenders'=> $listSenders,
-            'listReceivers'=> $listReceivers
+            'listConversation'=> $listConversation
         ));
     }
 
