@@ -18,12 +18,14 @@ class Advert
 {
     /**
      * @ORM\ManyToOne(targetEntity="SE\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid()
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\Category")
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid()
      */
     private $category;

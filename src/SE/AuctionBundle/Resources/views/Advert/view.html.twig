@@ -59,15 +59,7 @@
                             <i class="glyphicon glyphicon-chevron-left"></i>
                             Retour à la liste
                         </a>
-                        <a href="{{ path('se_auction_advert_edit',{'id':advert.id}) }}" class="btn btn-success">
-                            <i class="glyphicon glyphicon-edit"></i>
-                            Modifier l'annonce
-                        </a>
-                        <a href="{{ path('se_auction_advert_delete',{'id':advert.id}) }}" class="btn btn-danger">
-                            <i class="glyphicon glyphicon-trash"></i>
-                            Supprimer l'annonce
-                        </a>
-                             <a href="{{ path('se_auction_add', {'advertId':advert.id}) }}"
+                        <a href="{{ path('se_auction_add', {'advertId':advert.id}) }}"
                                   class="btn btn-primary" >Proposer un prix</a>
                         <a href="{{ path('se_auction_message_add',{'advertId':advert.id}) }}"
                                   class="btn btn-default" >

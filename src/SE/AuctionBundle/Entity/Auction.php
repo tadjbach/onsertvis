@@ -18,12 +18,14 @@ class Auction
 {
     /**
      * @ORM\ManyToOne(targetEntity="SE\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid()
      */
     protected $user;
     
     /**
      * @ORM\ManyToOne(targetEntity="SE\AuctionBundle\Entity\Advert")
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid()
      */
     private $advert;

@@ -14,30 +14,7 @@
                 {% endfor %}
             </h4>
             {% for advert in listAdverts %}
-                <div class="col-sm-6 col-md-4">
-                    <div class="thumbnail">
-                        <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}">
-                            {% if advert.image is not null %}
-                                <img style="width: 300px; height: 200px;" src="{{ asset(advert.image.webPath) }}" alt="{{ advert.image.alt }}">
-                              {% else %}
-                                <img style="width: 300px; height: 200px;" src="../../uploads/img/no_image.png"
-                                     alt="no-image">
-                                 {% endif %}
-                        </a>
-                        <div class="caption">
-                            <h3>{{ advert.title }}</h3>
-                            <p>Dans : {{ advert.category.labelNormal }}</p>
-                            <p>Postée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
-                            <p>Enchère : </p>
-                            <p>
-                               <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}"
-                                  class="btn btn-primary" role="button">Proposer un prix</a>
-                                <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}"
-                                  class="btn btn-default" role="button">Contacter</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                {{ include('@SEAuction/Advert/item.html.twig') }}
             {% else %}
                 <div>Pas (encore !) d'annonces dans cette catégorie</div>
             {% endfor %}

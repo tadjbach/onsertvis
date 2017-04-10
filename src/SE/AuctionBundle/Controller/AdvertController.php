@@ -58,14 +58,11 @@ class AdvertController extends Controller
             ->getRepository('SEAuctionBundle:Advert')
             ->getAdverts($page, $nbPerPage);
          
-       
-
         $nbPages = ceil(count($listAdverts)/$nbPerPage);
 
         if ($page<1){
             throw new NotFoundHttpException('page"'.$page.'" inexistante');
         }
-
 
         return $this->render('SEAuctionBundle:Advert:list.html.twig', array(
             'nbPages'     => $nbPages,
@@ -88,7 +85,6 @@ class AdvertController extends Controller
                 $limit=null,
                 $offset=null);
 
-           
         if (null===$advert){
             throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
         }
