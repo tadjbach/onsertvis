@@ -29,15 +29,15 @@ class AdvertType extends AbstractType
                 ))
                 ->add('title', TextType::class, array('label'=> 'Titre'))
                 ->add('detail', TextareaType::class, array('label'=> 'Détail'))
-                ->add('address', TextType::class, array('label'=> 'Adresse'))
+                //->add('address', TextType::class, array('label'=> 'Adresse'))
                 //->add('city', TextType::class, array('label'=> 'Ville'))
                 
-                ->add('image', ImageType::class, 
+              /*  ->add('image', ImageType::class, 
                                 array('label'=> ' ',
                                     'attr'   =>  array(
                                                 'class'   => 'fileUpload btn btn-primary'),
                                       'required'  => false))
-           
+           */
                 ->add('save', SubmitType::class, 
                                 array('label'=> 'Enregistrer',
                                     'attr'   =>  array(
@@ -61,6 +61,4 @@ class AdvertType extends AbstractType
     {
         return 'se_auctionbundle_advert';
     }
-
-
 }

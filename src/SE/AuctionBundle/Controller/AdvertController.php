@@ -67,9 +67,9 @@ class AdvertController extends Controller
         }
 
         return $this->render('SEAuctionBundle:Advert:list.html.twig', array(
-            'nbPages'     => $nbPages,
-            'page'        => $page,
-            'listAdverts'=> $listAdverts
+          'listAdverts'=> $listAdverts,
+          'nbPages'     => $nbPages,
+          'page'        => $page,
         ));
     }
 
@@ -180,7 +180,7 @@ class AdvertController extends Controller
 
         $listAdverts=$this->getDoctrine()
             ->getManager()->getRepository('SEAuctionBundle:Advert')
-            ->getAdvertWithCategory($catgeory, 10);
+            ->getAdvertByCategory($catgeory, 10);
 
 
 

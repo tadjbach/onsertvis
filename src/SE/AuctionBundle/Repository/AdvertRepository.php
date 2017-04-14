@@ -14,23 +14,20 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getAdverts($page, $nbPerPage)
     {
-        $qb = $this->createQueryBuilder('ad');
-        
-        $qb->leftJoin('ad.image', 'img')
+        $qb = $this->createQueryBuilder('ad')
+            ->leftJoin('ad.image', 'img')
             ->addSelect('img')
             ->leftJoin('ad.category', 'cat')
-            ->addSelect('cat');
-            
-                
-        $qb->orderBy('ad.dateCreation', 'DESC');
-
-        $qb->where($qb->expr()->eq('ad.isPublished', 1))
+            ->addSelect('cat')
+            ->orderBy('ad.dateCreation', 'DESC');
+        
+             $qb =   $qb->where($qb->expr()->eq('ad.isPublished', 1))
                 ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
-                ->andWhere($qb->expr()->eq('ad.isEnabled', 1));
-
-        $qb->getQuery()
+                ->andWhere($qb->expr()->eq('ad.isEnabled', 1))
+                ->getQuery();
+        
             // On définit l'annonce à partir de laquelle commencer la liste
-            ->setFirstResult(($page-1) * $nbPerPage)
+            $qb->setFirstResult(($page-1) * $nbPerPage)
             // Ainsi que le nombre d'annonce à afficher sur une page
             ->setMaxResults($nbPerPage);
 
@@ -55,7 +52,7 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
          return $qb->getQuery()->getResult();
     }
     
-    public function getAdvertWithCategory($catgeory, $limit)
+    public function getAdvertByCategory($catgeory, $limit)
     {
         $qb=$this->createQueryBuilder('a');
 

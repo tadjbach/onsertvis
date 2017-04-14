@@ -16,7 +16,7 @@
                         <h4>{{ conversation.advert.title }}</h4>
                         <p>{{ conversation.dateCreation|date('d/m/Y') }} à {{ conversation.dateCreation|date('H:m') }}</p>
                         <p>
-                            <a href="{{ path('se_auction_advert_edit',{'id':conversation.id}) }}" class="btn btn-success">
+                            <a href="{{ path('se_auction_message_list',{'id':conversation.id}) }}" class="btn btn-success">
                         <i class="glyphicon glyphicon-comment"></i>
                             Voir
                         </a>
