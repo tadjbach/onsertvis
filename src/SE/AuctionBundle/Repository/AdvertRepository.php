@@ -14,19 +14,21 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getAdverts($page, $nbPerPage)
     {
-        $qb = $this->createQueryBuilder('a')
-            ->leftJoin('a.image', 'i')
-            ->addSelect('i')
-            ->leftJoin('a.category', 'c')
-            ->addSelect('c')
-            ->orderBy('a.dateCreation', 'DESC');
+        $qb = $this->createQueryBuilder('ad');
+        
+        $qb->leftJoin('ad.image', 'img')
+            ->addSelect('img')
+            ->leftJoin('ad.category', 'cat')
+            ->addSelect('cat');
+            
+                
+        $qb->orderBy('ad.dateCreation', 'DESC');
 
-        $qb->where($qb->expr()->eq('a.isPublished', 1))
-                ->andWhere($qb->expr()->eq('a.isDeleted', 0))
-                ->andWhere($qb->expr()->eq('a.isEnabled', 1));
+        $qb->where($qb->expr()->eq('ad.isPublished', 1))
+                ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
+                ->andWhere($qb->expr()->eq('ad.isEnabled', 1));
 
-        $qb
-            ->getQuery()
+        $qb->getQuery()
             // On définit l'annonce à partir de laquelle commencer la liste
             ->setFirstResult(($page-1) * $nbPerPage)
             // Ainsi que le nombre d'annonce à afficher sur une page
@@ -36,6 +38,23 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
         // (n'oubliez pas le use correspondant en début de fichier)
         return new Paginator($qb, true);
     }
+    
+ 
+     public function getListAdverts()
+    {
+         
+         $qb = $this->createQueryBuilder('SELECT *
+          FROM advert tp
+          JOIN image i ON tp.image_id = i.id 
+          JOIN category c ON tp.category_id = c.id
+          JOIN auction tl ON tl.advert_id = tp.id
+          JOIN (SELECT t.advert_id, MAX(t.dateCreation) AS max_date
+                FROM auction t
+                GROUP BY t.advert_id) x ON x.advert_id = tl.advert_id AND x.max_date = tl.dateCreation');
+         
+         return $qb->getQuery()->getResult();
+    }
+    
     public function getAdvertWithCategory($catgeory, $limit)
     {
         $qb=$this->createQueryBuilder('a');
@@ -114,5 +133,6 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getScalarResult();
     }
+
 
 }

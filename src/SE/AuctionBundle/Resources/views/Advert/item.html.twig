@@ -10,9 +10,14 @@
         </a>
         <div class="caption">
             <h3>{{ advert.title }}</h3>
-            <p>Catégorie : {{ advert.category.labelNormal }}</p>
-            <p>Date : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
-            <p>Enchère :</p>
+            {% if advert.category.labelNormal != 'Autres' %}
+                <p>{{ advert.category.labelNormal }}</p>
+                {% else %}
+                <p>Sans catégorie</p>
+            {% endif %}
+            <p>Dépsée le {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
+            
+            <p>Dernière enchère à </p>
             <p>
                 <a href="{{ path('se_auction_add', {'advertId':advert.id}) }}"
                   class="btn btn-primary" role="button">Proposer un prix</a>

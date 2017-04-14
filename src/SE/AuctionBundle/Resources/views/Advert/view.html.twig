@@ -32,6 +32,10 @@
                         </li>
                     {% else %}
                         <li>Soyez le premier à proposer une enchère</li>
+                        <br>
+                        
+                        <a href="{{ path('se_auction_add', {'advertId':advert.id}) }}"
+                                  class="btn btn-primary" >Proposer un prix</a>
                     {% endfor %}
 
                 </ul>

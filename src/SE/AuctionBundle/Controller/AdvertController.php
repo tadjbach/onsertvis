@@ -51,10 +51,12 @@ class AdvertController extends Controller
     
     public function listAction($page)
     {
+        $em=$this->getDoctrine()
+            ->getManager();
+        
         $nbPerPage = 9;
 
-         $listAdverts = $this->getDoctrine()
-            ->getManager()
+         $listAdverts = $em
             ->getRepository('SEAuctionBundle:Advert')
             ->getAdverts($page, $nbPerPage);
          
@@ -116,7 +118,9 @@ class AdvertController extends Controller
 
             if ($form->isValid()){
                 $em = $this->getDoctrine()->getManager();
-
+                
+                $advert->setDateUpdate(new \DateTime());
+                
                 $em->flush();
 
                 $request->getSession()->getFlashBag()->add('info', 'Annonce bien modifiée');

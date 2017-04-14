@@ -38,7 +38,7 @@ class AuctionController extends Controller
      * @Security("has_role('ROLE_AUTEUR')")
      */
     public function addAction(Request $request, $advertId){
-      $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
       
         $advert=$em->find('SEAuctionBundle:Advert', $advertId);
         
