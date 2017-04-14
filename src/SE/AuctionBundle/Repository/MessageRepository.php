@@ -23,12 +23,11 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
                 
         $qb->where($qb->expr()->eq('r.id', $userId))
             ->andWhere($qb->expr()->eq('m.isPublished', 1))
-            ->andWhere($qb->expr()->eq('m.isDeleted', 0));
-
-        $qb
-            ->getQuery()
+            ->andWhere($qb->expr()->eq('m.isDeleted', 0))
+            ->getQuery();
+            
             // On définit l'annonce à partir de laquelle commencer la liste
-            ->setFirstResult(($page-1) * $nbPerPage)
+            $qb->setFirstResult(($page-1) * $nbPerPage)
             // Ainsi que le nombre d'annonce à afficher sur une page
             ->setMaxResults($nbPerPage);
 
@@ -48,12 +47,11 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
                 
         $qb->where($qb->expr()->eq('r.id', $userId))
             ->andWhere($qb->expr()->eq('m.isPublished', 1))
-            ->andWhere($qb->expr()->eq('m.isDeleted', 0));
-
-        $qb
-            ->getQuery()
+            ->andWhere($qb->expr()->eq('m.isDeleted', 0))        
+            ->getQuery();
+        
             // On définit l'annonce à partir de laquelle commencer la liste
-            ->setFirstResult(($page-1) * $nbPerPage)
+            $qb->setFirstResult(($page-1) * $nbPerPage)
             // Ainsi que le nombre d'annonce à afficher sur une page
             ->setMaxResults($nbPerPage);
 
@@ -73,12 +71,11 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
                 
         $qb->where($qb->expr()->eq('s.id', $userId))
             ->andWhere($qb->expr()->eq('m.isPublished', 1))
-            ->andWhere($qb->expr()->eq('m.isDeleted', 0));
-
-        $qb
-            ->getQuery()
+            ->andWhere($qb->expr()->eq('m.isDeleted', 0))
+            ->getQuery();
+        
             // On définit l'annonce à partir de laquelle commencer la liste
-            ->setFirstResult(($page-1) * $nbPerPage)
+            $qb->setFirstResult(($page-1) * $nbPerPage)
             // Ainsi que le nombre d'annonce à afficher sur une page
             ->setMaxResults($nbPerPage);
 

@@ -30,11 +30,11 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
 
         $qb->where($qb->expr()->eq('ad.isPublished', 1))
                 ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
-                ->andWhere($qb->expr()->eq('ad.isEnabled', 1));
-
-        $qb->getQuery()
+                ->andWhere($qb->expr()->eq('ad.isEnabled', 1))
+                ->getQuery();
+        
             // On définit l'annonce à partir de laquelle commencer la liste
-            ->setFirstResult(($page-1) * $nbPerPage)
+        $qb->setFirstResult(($page-1) * $nbPerPage)
             // Ainsi que le nombre d'annonce à afficher sur une page
             ->setMaxResults($nbPerPage);
 
