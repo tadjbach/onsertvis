@@ -20,8 +20,6 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
          $qb
             ->leftJoin('au.advert', 'ad')
             ->addSelect('ad')
-            ->leftJoin('ad.image', 'img')
-            ->addSelect('img')
             ->leftJoin('ad.category', 'cat')
             ->addSelect('cat');
             
@@ -33,13 +31,35 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere($qb->expr()->eq('ad.isEnabled', 1))
                 ->getQuery();
         
-            // On définit l'annonce à partir de laquelle commencer la liste
+            // On définit l'demande à partir de laquelle commencer la liste
         $qb->setFirstResult(($page-1) * $nbPerPage)
-            // Ainsi que le nombre d'annonce à afficher sur une page
+            // Ainsi que le nombre d'demande à afficher sur une page
             ->setMaxResults($nbPerPage);
 
         // Enfin, on retourne l'objet Paginator correspondant à la requête construite
         // (n'oubliez pas le use correspondant en début de fichier)
         return new Paginator($qb, true);
+    }
+    
+    
+    public function getLastAuction($advertId){
+         $qb = $this->createQueryBuilder('au');
+        
+         $qb
+            ->leftJoin('au.advert', 'ad')
+            ->addSelect('ad');
+         
+        $qb->where($qb->expr()->eq('ad.id', $advertId));
+            
+        $qb->orderBy('au.dateCreation', 'DESC');
+
+        
+                
+        $qb->setMaxResults(1);
+        $qb->getQuery();
+        
+        return $qb
+            ->getQuery()
+            ->getResult(); 
     }
 }

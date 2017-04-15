@@ -1,50 +1,44 @@
 {% extends "SELayoutBundle::layout.html.twig" %}
 
 {% block title %}
-    Mes annonces - {{ parent() }}
+    Mes demandes - {{ parent() }}
 {% endblock %}
 
 {% block se_layout_body %}
-    <div class="row">
-        <div id="content" class="col-md-12">
-            
-            {% for advert in listAdverts %}
-                <div class="col-sm-6 col-md-4">
-                    <div class="thumbnail">
-                        <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}">
-                            {% if advert.image is not null %}
-                                <img style="width: 300px; height: 200px;" src="{{ asset(advert.image.webPath) }}" alt="{{ advert.image.alt }}">
-                              {% else %}
-                                <img style="width: 300px; height: 200px;" src="../../uploads/img/no_image.png"
-                                     alt="no-image">
-                                 {% endif %}
+<div class="row">
+    <div class="col-md-12 thumbnail nocadre">
+        <h4 class="cat-title">{{count}} Demandes</h4>
+        <div class="row">
+            <div id="content" class="col-md-12">
+                {% for advert in listAdverts %}
+                    {{ include('@SEAuction/Advert/itemUser.html.twig') }}
+                {% else %}
+                        <div>Pas (encore !) d'demandes</div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Précédent">
+                            <span aria-hidden="true">&laquo;</span>
                         </a>
-                        <div class="caption">
-                            <h3>{{ advert.title }}</h3>
-                            <p>Dans : {{ advert.category.labelNormal }}</p>
-                            <p>Postée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
-                            <p>Enchère : </p>
-                            <p>
-                        
-                        <a href="{{ path('se_auction_advert_edit',{'id':advert.id}) }}" class="btn btn-success">
-                            <i class="glyphicon glyphicon-edit"></i>
-                            Modifier l'annonce
+                    </li>
+                    {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+                    {% for p in range(1, nbPages) %}
+                        <li{% if p == page %} class="active"{% endif %}>
+                            <a href="{{ path('se_auction_advert_list', {'page': p}) }}">{{ p }}</a>
+                        </li>
+                    {% endfor %}
+                    <li>
+                        <a href="#" aria-label="Suivant">
+                            <span aria-hidden="true">&raquo;</span>
                         </a>
-                        <a href="{{ path('se_auction_advert_delete',{'id':advert.id}) }}" class="btn btn-danger">
-                            <i class="glyphicon glyphicon-trash"></i>
-                            Supprimer l'annonce
-                        </a>
-
-                    </p>
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <div>Pas (encore !) d'annonces dans cette catégorie</div>
-            {% endfor %}
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-
-
-    <hr>
+</div>
 {% endblock %}

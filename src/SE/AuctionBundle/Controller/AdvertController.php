@@ -13,9 +13,11 @@ use SE\AuctionBundle\Form\AdvertType;
 use SE\AuctionBundle\Entity\Advert;
 use SE\AuctionBundle\Event\MessagePostEvent;
 use SE\AuctionBundle\Event\AuctionEvents;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdvertController extends Controller
 {
+    private $nbPerPage = 36;
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
@@ -38,9 +40,9 @@ class AdvertController extends Controller
                 $em->persist($advert);
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+                $request->getSession()->getFlashBag()->add('notice', 'Demande bien enregistrée.');
 
-                return $this->redirectToRoute('se_auction_advert_view', array('id'=>$advert->getId()));
+                return $this->redirectToRoute('se_auction_advert_view', array('slug'=>$advert->getSlug()));
             }
         }
 
@@ -53,23 +55,36 @@ class AdvertController extends Controller
     {
         $em=$this->getDoctrine()
             ->getManager();
-        
-        $nbPerPage = 9;
 
          $listAdverts = $em
             ->getRepository('SEAuctionBundle:Advert')
-            ->getAdverts($page, $nbPerPage);
+            ->getAdverts($page, $this->nbPerPage);
          
-        $nbPages = ceil(count($listAdverts)/$nbPerPage);
+         $listCategory=$em
+                 ->getRepository('SEPortalBundle:Category')
+                 ->findAll();
+
+        $listRegions=$em
+                ->getRepository('SEPortalBundle:Region')
+                ->findAll();
+
+        $listDpt = $em->getRepository('SEPortalBundle:Departement')
+                    ->findAll();
+        
+        $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
 
         if ($page<1){
             throw new NotFoundHttpException('page"'.$page.'" inexistante');
         }
 
         return $this->render('SEAuctionBundle:Advert:list.html.twig', array(
-          'listAdverts'=> $listAdverts,
-          'nbPages'     => $nbPages,
-          'page'        => $page,
+            'listAdverts'=> $listAdverts,
+            'listCategory'=>$listCategory,
+            'listRegions'=>$listRegions,
+            'listDpt'=>$listDpt,
+            'nbPages'     => $nbPages,
+            'page'        => $page,
+            'count'     => count($listAdverts)
         ));
     }
 
@@ -88,7 +103,7 @@ class AdvertController extends Controller
                 $offset=null);
 
         if (null===$advert){
-            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+            throw new NotFoundHttpException("Oops, La demande  que vous cherchez n'existe pas.");
         }
 
         return $this->render('SEAuctionBundle:Advert:view.html.twig', array(
@@ -106,8 +121,8 @@ class AdvertController extends Controller
             ->getManager()
             ->find('SEAuctionBundle:Advert', $id);
 
-        if (null === $advert) {
-            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+         if (null===$advert){
+            throw new NotFoundHttpException("Oops, La demande  que vous cherchez n'existe pas.");
         }
 
         $form = $this->createForm(AdvertEditType::class, $advert);
@@ -123,9 +138,9 @@ class AdvertController extends Controller
                 
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add('info', 'Annonce bien modifiée');
+                $request->getSession()->getFlashBag()->add('info', 'Demande bien modifiée');
 
-                return $this->redirectToRoute('se_auction_advert_view', array('id'=>$advert->getId()));
+                return $this->redirectToRoute('se_auction_advert_view', array('slug'=>$advert->getSlug()));
             }
         }
 
@@ -142,24 +157,24 @@ class AdvertController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        // On récupère l'annonce $id
+        // On récupère l'demande $id
         $advert = $em->getRepository('SEAuctionBundle:Advert')->find($id);
 
-        if (null === $advert) {
-            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+       if (null===$advert){
+            throw new NotFoundHttpException("Oops, La demande que vous cherchez n'existe pas.");
         }
 
         // On crée un formulaire vide, qui ne contiendra que le champ CSRF
-        // Cela permet de protéger la suppression d'annonce contre cette faille
+        // Cela permet de protéger la suppression d'demande contre cette faille
         $form = $this->createFormBuilder()->getForm();
 
         if ($form->handleRequest($request)->isValid()) {
             $em->remove($advert);
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('info', "L'annonce a bien été supprimée.");
+            $request->getSession()->getFlashBag()->add('info', "La demande a bien été supprimée.");
 
-            return $this->redirect($this->generateUrl('se_layout_homepage'));
+            return $this->redirect($this->generateUrl('se_auction_advert_list_by_user'));
         }
 
         // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
@@ -216,20 +231,41 @@ class AdvertController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function listByUserAction()
+    public function listByUserAction($page)
     {
         $user = $this->getUser();
         $listAdverts=$this->getDoctrine()
             ->getManager()->getRepository('SEAuctionBundle:Advert')
-            ->getAdvertByUser($user->getId(), 10);
+            ->getAdvertByUser($user->getId(), $page, $this->nbPerPage);
 
-
+        $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
 
         return $this->render('SEAuctionBundle:Advert:listByUser.html.twig', array(
-            'listAdverts'=>$listAdverts
+            'listAdverts'=>$listAdverts,
+            'nbPages'     => $nbPages,
+            'page'        => $page,
+            'count'     => count($listAdverts)
 
         ));
     }
-
+    
+        public function viewLastAuctionAction($advertId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $auctionValue = 'Aucune enchère';
+        
+        $lastAuction = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getLastAuction($advertId);
+        
+            if (count($lastAuction) > 0) {
+               $price =  number_format($lastAuction[0]->getValue(),0,' ',' ');
+                $auctionValue = $price.' €';
+            }
+        return new Response(
+            $auctionValue
+        );
+        
+    }
 }
 

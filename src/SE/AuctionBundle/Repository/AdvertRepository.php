@@ -12,11 +12,48 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class AdvertRepository extends \Doctrine\ORM\EntityRepository
 {
+       public function getAdvertsByFilter($category, $region, $dpt, $city, $page, $nbPerPage)
+    {
+        $qb = $this->createQueryBuilder('ad')
+            ->innerJoin('ad.user', 'u')
+            ->addSelect('u')
+            
+            ->innerJoin('u.city', 'c')
+            ->addSelect('c')    
+                
+            ->leftJoin('ad.category', 'cat')
+            ->addSelect('cat')
+            
+            
+            ->leftJoin('c.departement', 'd')
+            ->addSelect('d')
+            ->leftJoin('d.region', 'r')
+            ->addSelect('r')
+            ->orderBy('ad.dateCreation', 'DESC');
+        
+             $qb =   $qb->where($qb->expr()->eq('ad.isPublished', 1))
+                ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
+                ->andWhere($qb->expr()->eq('ad.isEnabled', 1))
+                     ->andWhere($qb->expr()->eq('cat.slug', "'".$category."'"))
+                     ->andWhere($qb->expr()->eq('r.slug', "'".$region."'"))
+                     ->andWhere($qb->expr()->eq('d.slug', "'".$dpt."'"))
+                     ->andWhere($qb->expr()->eq('c.slug', "'".$city."'"))
+                     ->andWhere($qb->expr()->eq('c.postalCode', "'".$city."'"))
+                ->getQuery();
+        
+            // On définit l'demande à partir de laquelle commencer la liste
+            $qb->setFirstResult(($page-1) * $nbPerPage)
+            // Ainsi que le nombre d'demande à afficher sur une page
+            ->setMaxResults($nbPerPage);
+
+        // Enfin, on retourne l'objet Paginator correspondant à la requête construite
+        // (n'oubliez pas le use correspondant en début de fichier)
+        return new Paginator($qb, true);
+    }
+    
     public function getAdverts($page, $nbPerPage)
     {
         $qb = $this->createQueryBuilder('ad')
-            ->leftJoin('ad.image', 'img')
-            ->addSelect('img')
             ->leftJoin('ad.category', 'cat')
             ->addSelect('cat')
             ->orderBy('ad.dateCreation', 'DESC');
@@ -26,9 +63,9 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere($qb->expr()->eq('ad.isEnabled', 1))
                 ->getQuery();
         
-            // On définit l'annonce à partir de laquelle commencer la liste
+            // On définit l'demande à partir de laquelle commencer la liste
             $qb->setFirstResult(($page-1) * $nbPerPage)
-            // Ainsi que le nombre d'annonce à afficher sur une page
+            // Ainsi que le nombre d'demande à afficher sur une page
             ->setMaxResults($nbPerPage);
 
         // Enfin, on retourne l'objet Paginator correspondant à la requête construite
@@ -75,7 +112,9 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
         $qb=$this->createQueryBuilder('a');
 
         $qb
-            ->innerJoin('a.city', 'c')
+           ->innerJoin('a.user', 'u')
+            ->addSelect('u')
+            ->innerJoin('u.city', 'c')
             ->addSelect('c')
             ->leftJoin('c.departement', 'd')
             ->addSelect('d')
@@ -96,21 +135,21 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getAdvertByUser($userId, $limit){
+    public function getAdvertByUser($userId, $page, $nbPerPage){
         
      $qb=$this->createQueryBuilder('a');
 
-        $qb
-            ->innerJoin('a.user', 'u')
+        $qb->innerJoin('a.user', 'u')
             ->addSelect('u');
 
         $qb->where($qb->expr()->eq('u.id', $userId));
 
-        $qb->setMaxResults($limit);
+        $qb->getQuery();
 
-        return $qb
-            ->getQuery()
-            ->getResult();   
+        $qb->setFirstResult(($page-1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+            
+        return new Paginator($qb, true);
     }
 
     public function getCountAdvertByCategory($catgeoryId)
@@ -126,10 +165,10 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere($qb->expr()->eq('a.isDeleted', 0))
                 ->andWhere($qb->expr()->eq('a.isEnabled', 1));
 
-        return $qb
+         $qb
             ->getQuery()
             ->getScalarResult();
     }
-
+     
 
 }

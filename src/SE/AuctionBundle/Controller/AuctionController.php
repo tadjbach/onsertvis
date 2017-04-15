@@ -59,9 +59,9 @@ class AuctionController extends Controller
                 $em->persist($auction);
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add('notice', 'Message enchère est validée.');
+                $request->getSession()->getFlashBag()->add('notice', 'Votre enchère est validée.');
 
-                return $this->redirectToRoute('se_auction_advert_view', array('id'=>$advert->getId()));
+                return $this->redirectToRoute('se_auction_advert_view', array('id'=> $advertId));
             }
         }
 
@@ -75,4 +75,6 @@ class AuctionController extends Controller
     {
         return $this->render('SEPortalBundle:Auction:view.html.twig');
     }
+    
+
 }

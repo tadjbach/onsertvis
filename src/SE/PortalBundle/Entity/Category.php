@@ -34,6 +34,20 @@ class Category
      * @ORM\Column(name="label_normal", type="string", length=255)
      */
     private $labelNormal;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="color", type="string", length=10)
+     */
+    private $color;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255)
+     */
+    private $image;
 
     /**
      * @var int
@@ -42,6 +56,18 @@ class Category
      */
     private $position;
 
+    
+    public function getUploadDir()
+    {
+        // On retourne le chemin relatif vers l'image pour un navigateur
+        return 'uploads/img';
+    }
+    
+    public function getWebPath()
+    {
+        return $this->getUploadDir().'/'.$this->getSlug().'.jpeg';
+    }
+    
     /**
      * Get id
      *
@@ -122,5 +148,53 @@ class Category
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Set color
+     *
+     * @param string $color
+     *
+     * @return Category
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Category
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

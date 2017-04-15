@@ -31,17 +31,6 @@ class Advert
     private $category;
     
     /**
-     * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\City")
-     */
-    private $city;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="SE\AuctionBundle\Entity\Image", cascade={"persist", "remove"})
-     * @Assert\Valid()
-     */
-    private $image;
-    
-    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -71,12 +60,6 @@ class Advert
      */
     private $dateUpdate;
 
-     /**
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=255)
-     */
-    private $address;
     
     /**
      * @var string
@@ -115,8 +98,6 @@ class Advert
     public function __construct()
     {
         $this->dateCreation=new \DateTime();
-        
-        $this->city = null;
     }
     
     /**
@@ -322,30 +303,6 @@ class Advert
     }
 
     /**
-     * Set image
-     *
-     * @param \SE\AuctionBundle\Entity\Image $image
-     *
-     * @return Advert
-     */
-    public function setImage(\SE\AuctionBundle\Entity\Image $image = null)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return \SE\AuctionBundle\Entity\Image
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
      * Set user
      *
      * @param \SE\UserBundle\Entity\User $user
@@ -391,30 +348,6 @@ class Advert
     public function getCategory()
     {
         return $this->category;
-    }
-
-    /**
-     * Set city
-     *
-     * @param string $city
-     *
-     * @return Advert
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return string
-     */
-    public function getCity()
-    {
-        return $this->city;
     }
 
     /**

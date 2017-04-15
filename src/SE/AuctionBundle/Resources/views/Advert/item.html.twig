@@ -1,28 +1,37 @@
-<div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-        <a href="{{ path('se_auction_advert_view', {'id':advert.id}) }}">
-            {% if advert.image is not null %}
-                <img style="width: 300px; height: 200px;" src="{{ asset(advert.image.webPath) }}" alt="{{ advert.image.alt }}">
-             {% else %}
-                <img style="width: 300px; height: 200px;" src="../../uploads/img/no_image.png"
-                     alt="no-image">
-                 {% endif %}
+<div class="col-sm-4 col-md-4">
+    <div class="thumbnail cadre">
+        <a href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">
+            <img style="width: 300px; height: 200px;" src="{{ asset(advert.category.webPath) }}" alt="{{ asset(advert.category.webPath) }}"> 
         </a>
         <div class="caption">
-            <h3>{{ advert.title }}</h3>
+            <h3 class="truncate">
+                <a  class="slogan-link" href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">{{ advert.title }}</a>
+            </h3>
             {% if advert.category.labelNormal != 'Autres' %}
                 <p>{{ advert.category.labelNormal }}</p>
                 {% else %}
                 <p>Sans catégorie</p>
             {% endif %}
-            <p>Dépsée le {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
+            <p>{{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
             
-            <p>Dernière enchère à </p>
-            <p>
+            <h4 class="price text-right">
+                {{ render(controller('SEAuctionBundle:Advert:viewLastAuction', { 'advertId': advert.id })) }}
+            </h4>
+            <br>
+            <p class="text-center">
                 <a href="{{ path('se_auction_add', {'advertId':advert.id}) }}"
-                  class="btn btn-primary" role="button">Proposer un prix</a>
+                  class="btn btn-primary" 
+                  role="button" 
+                  >
+                    <i class="glyphicon glyphicon-euro"></i>
+                    Proposez un prix
+                </a>
                 <a href="{{ path('se_auction_message_add', {'advertId':advert.id}) }}"
-                  class="btn btn-default" role="button">Contacter</a>
+                  class="btn btn-default" 
+                  role="button" >
+                    <i class="glyphicon glyphicon-envelope"></i>
+                    Contacter
+                </a>
             </p>
         </div>
     </div>

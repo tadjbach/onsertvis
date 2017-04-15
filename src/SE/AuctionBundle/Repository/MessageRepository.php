@@ -26,9 +26,9 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere($qb->expr()->eq('m.isDeleted', 0))
             ->getQuery();
             
-            // On définit l'annonce à partir de laquelle commencer la liste
+            // On définit l'demande à partir de laquelle commencer la liste
             $qb->setFirstResult(($page-1) * $nbPerPage)
-            // Ainsi que le nombre d'annonce à afficher sur une page
+            // Ainsi que le nombre d'demande à afficher sur une page
             ->setMaxResults($nbPerPage);
 
         // Enfin, on retourne l'objet Paginator correspondant à la requête construite
@@ -50,9 +50,9 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere($qb->expr()->eq('m.isDeleted', 0))        
             ->getQuery();
         
-            // On définit l'annonce à partir de laquelle commencer la liste
+            // On définit l'demande à partir de laquelle commencer la liste
             $qb->setFirstResult(($page-1) * $nbPerPage)
-            // Ainsi que le nombre d'annonce à afficher sur une page
+            // Ainsi que le nombre d'demande à afficher sur une page
             ->setMaxResults($nbPerPage);
 
         // Enfin, on retourne l'objet Paginator correspondant à la requête construite
@@ -74,9 +74,9 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere($qb->expr()->eq('m.isDeleted', 0))
             ->getQuery();
         
-            // On définit l'annonce à partir de laquelle commencer la liste
+            // On définit l'demande à partir de laquelle commencer la liste
             $qb->setFirstResult(($page-1) * $nbPerPage)
-            // Ainsi que le nombre d'annonce à afficher sur une page
+            // Ainsi que le nombre d'demande à afficher sur une page
             ->setMaxResults($nbPerPage);
 
         // Enfin, on retourne l'objet Paginator correspondant à la requête construite

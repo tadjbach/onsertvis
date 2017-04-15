@@ -1,58 +1,77 @@
 {% extends "SELayoutBundle::layout.html.twig" %}
 
 {% block title %}
-    Annonce - {{ parent() }}
+    Demande - {{ parent() }}
 {% endblock %}
 
 {% block se_layout_body %}
 
-    <h4 class="cat-title">{{ advert.title }}</h4>
+    <h3 class="cat-title">{{ advert.title }}</h3>
     <div class="col-md-12">
         <i>Par {{ advert.user }}, le {{ advert.dateCreation|date('d/m/Y') }}</i>
         <div class="row">
-            <div class="col-xs-6 col-md-6">
-                <div class="thumbnail">
-                    {% if advert.image is not null %}
-                        <img class="viewImage" src="{{ asset(advert.image.webPath) }}" alt="{{ advert.image.alt }}">
-                        {% else %}
-                    <img class="viewImage" src="../uploads/img/no_image.png"
-                         alt="no-image">
-                     {% endif %}
+            <div class="col-md-6">
+                <div class="thumbnail cadre">
+                    <img style="width: 300px; height: 200px;" src="{{ asset(advert.category.webPath) }}" alt="{{ asset(advert.category.webPath) }}"> 
                 </div>
             </div>
-        <div class="col-lg-6">
-            <div class="well">
-                Enchères en cours :
-                <ul>
-                    {% for auction in listAuctions %}
-                        <li>
-                            Enchère à {{ auction.value }} €,
-                            le {{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:m:s') }},
-                            par {{ auction.user }}
-                        </li>
-                    {% else %}
-                        <li>Soyez le premier à proposer une enchère</li>
-                        <br>
-                        
-                        <a href="{{ path('se_auction_add', {'advertId':advert.id}) }}"
-                                  class="btn btn-primary" >Proposer un prix</a>
-                    {% endfor %}
-
-                </ul>
-            </div>
-        </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6">  
+                <div class="panel">
+                    
+                    <div class="panel-body">
+                      <p class="">
+                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            {{ render(controller('SEAuctionBundle:Auction:add', {'advertId':advert.id} )) }}
+                         {% else %}
+                             <a href="{{ path('se_auction_add', {'advertId':advert.id}) }}"
+                                    class="btn btn-success" 
+                                    role="button" 
+                                    >
+                                      <i class="glyphicon glyphicon-euro"></i>
+                                      Proposez un prix
+                            </a>
+                         {% endif %}
+                            
+                            <a href="{{ path('se_auction_message_add', {'advertId':advert.id}) }}"
+                              class="btn btn-warning" 
+                              role="button" >
+                                <i class="glyphicon glyphicon-envelope"></i>
+                                Contacter
+                            </a>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-lg-6">
-                <div class="well">
-                    Détail :
-                    <br>
-                    {{ advert.detail }}
+            <div class="col-lg-6">  
+                <div class="panel panel-default cadre">
+                    <div class="panel-heading text-center">Détail de la demande</div>
+                    <div class="panel-body">
+                      <p>{{ advert.detail }}</p>
+                    </div>
                 </div>
             </div>
+                    <div class="col-lg-6">
+            <div class="panel panel-default cadre">
+                    <div class="panel-heading text-center">Historique des Enchères</div>
+                    <div class="panel-body">
+                      <ul>
+                        {% for auction in listAuctions %}
+                            <li>
+                                Enchère à {{ auction.value }} €,
+                                le {{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:m:s') }},
+                                par {{ auction.user }}
+                            </li>
+                        {% else %}
+                            <li>Soyez le premier à proposer une enchère</li>
+
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+        </div>
         </div>
 
         <div class="row">

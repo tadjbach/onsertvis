@@ -43,7 +43,8 @@ class MessageController extends Controller
 
                 $request->getSession()->getFlashBag()->add('notice', 'Message bien envoyé.');
 
-                return $this->redirectToRoute('se_auction_advert_view', array('id'=>$advert->getId()));
+                return $this->redirectToRoute('se_auction_advert_view', array('slug'=>$advert->getSlug(), 
+                    'id'=>$advert->getId()));
             }
         }
 

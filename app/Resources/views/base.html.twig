@@ -15,7 +15,7 @@
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         {% endblock %}
 
-        <link rel="stylesheet" href="../../css/main.css" type="text/css" />
+        <link rel="stylesheet" href="../../../css/main.css" type="text/css" />
 
     </head>
 
@@ -38,8 +38,6 @@
     {{ include('@SELayout/Default/footer.html.twig') }}
 
     <!-- PAGE - JS TODO -->
-    <script src="../../js/france.js" ></script>
-    <script src="../../js/cmap.js" ></script>
 
     {% block javascripts %}
 
@@ -49,5 +47,14 @@
                 crossorigin="anonymous">
         </script>
     {% endblock %}
+    
+        <script src="../../js/france.js" ></script>
+    <script src="../../js/cmap.js" ></script>
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
+    </script>
+    
     </body>
 </html>

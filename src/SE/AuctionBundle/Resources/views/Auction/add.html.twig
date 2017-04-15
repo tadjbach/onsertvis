@@ -1,17 +1,1 @@
-{% extends "SELayoutBundle::layout.html.twig" %}
-
-{% block title %}
-    Proposez un prix - {{ parent() }}
-{% endblock %}
-
-{% block se_layout_body %}
-
-   
-        <h4 class="cat-title">Votre prix</h4>
-         <div class="col-sm-6 col-md-4">
-                  {{ include('SEAuctionBundle:Auction:form.html.twig') }}
-            </div>
-    
-
-{% endblock %}
-
+{{ include('SEAuctionBundle:Auction:form.html.twig') }}

@@ -1,24 +1,24 @@
 {% extends "SELayoutBundle::layout.html.twig" %}
 
 {% block title %}
-    Supprimer une annonce - {{ parent() }}
+    Supprimer une demande - {{ parent() }}
 {% endblock %}
 
 {% block se_layout_body %}
 
-        <h4 class="cat-title">Supprimer une annonce</h4>
+        <h4 class="cat-title">Supprimer une demande</h4>
 
 
             <div class="col-md-12">
                 <p>
-        Etes-vous certain de vouloir supprimer l'annonce "{{ advert.title }}" ?
+        Etes-vous certain de vouloir supprimer l'demande "{{ advert.title }}" ?
     </p>
     
-        {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+        {# On met l'id de l'demande dans la route de l'action du formulaire #}
     <form action="{{ path('se_auction_advert_delete', {'id': advert.id}) }}" method="post">
-        <a href="{{ path('se_auction_advert_view', {'id': advert.id}) }}" class="btn btn-default">
+        <a href="{{ path('se_auction_advert_view', {'slug': advert.slug, 'id': advert.id}) }}" class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i>
-            Retour à l'annonce
+            Retour à l'demande
         </a>
         {# Ici j'ai écrit le bouton de soumission à la main #}
         <input type="submit" value="Supprimer" class="btn btn-danger" />

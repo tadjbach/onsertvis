@@ -1,6 +1,6 @@
 #Auction - Advert
 se_auction_advert_list:
-    path:     /annonce/liste/{page}
+    path:     /demande/liste/{page}
     defaults:
         _controller: SEAuctionBundle:Advert:list
         page:        1
@@ -8,7 +8,7 @@ se_auction_advert_list:
         page: \d*
 
 se_auction_advert_list_by_region:
-    path:     /annonce/region/{region}/{page}
+    path:     /demande/region/{region}/{page}
     defaults:
         _controller: SEAuctionBundle:Advert:listByRegion
         page:        1
@@ -16,7 +16,7 @@ se_auction_advert_list_by_region:
         page: \d*
 
 se_auction_advert_list_by_category:
-    path:     /annonce/category/{catgeory}/{page}
+    path:     /demande/category/{catgeory}/{page}
     defaults:
         _controller: SEAuctionBundle:Advert:listByCategory
         page:        1
@@ -24,33 +24,33 @@ se_auction_advert_list_by_category:
         page: \d*
 
 se_auction_advert_view:
-    path:     /annonce/{id}
+    path:     /demande/{id}
     defaults:
         _controller: SEAuctionBundle:Advert:view
     requirements:
         id: \d+
 
 se_auction_advert_add:
-    path:     /annonce/deposer
+    path:     /demande/deposer
     defaults:
         _controller: SEAuctionBundle:Advert:add
 
 se_auction_advert_edit:
-    path:     /annonce/modifier/{id}
+    path:     /demande/modifier/{id}
     defaults:
         _controller: SEAuctionBundle:Advert:edit
     requirements:
         id: \d+
 
 se_auction_advert_delete:
-    path:     /annonce/supprimer/{id}
+    path:     /demande/supprimer/{id}
     defaults:
         _controller: SEAuctionBundle:Advert:delete
     requirements:
         id: \d+
         
 se_auction_advert_list_by_user:
-    path:     /tableau-de-bord/mes-annonces/{page}
+    path:     /tableau-de-bord/mes-demandes/{page}
     defaults:
         _controller: SEAuctionBundle:Advert:listByUser
         page:        1
@@ -66,7 +66,7 @@ se_auction_auction_list_by_user:
         page: \d*
         
 se_auction_add:
-    path:     /annonce/propser-enchere/{advertId}
+    path:     /demande/propser-enchere/{advertId}
     defaults:
         _controller: SEAuctionBundle:Auction:add
 

@@ -1,7 +1,7 @@
 {% extends "SELayoutBundle::layout.html.twig" %}
 
 {% block title %}
-    Annonces par régions - {{ parent() }}
+    Demandes par régions - {{ parent() }}
 {% endblock %}
 
 {% block se_layout_body %}
@@ -16,7 +16,7 @@
             {% for advert in listAdverts %}
                 {{ include('@SEAuction/Advert/item.html.twig') }}
             {% else %}
-                <div>Pas (encore !) d'annonces dans cette catégorie</div>
+                <div>Pas (encore !) d'demandes dans cette catégorie</div>
             {% endfor %}
         </div>
     </div>

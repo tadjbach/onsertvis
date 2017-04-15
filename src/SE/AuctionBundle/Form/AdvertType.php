@@ -23,21 +23,22 @@ class AdvertType extends AbstractType
     {
         $builder
                 ->add('category', EntityType::class, array(
-                    'label'=>'Catégorie',
-                   'class'=>'SE\PortalBundle\Entity\Category',
+                    'label'=>'Catégorie *',
+                    'class'=>'SE\PortalBundle\Entity\Category',
                     'choice_label'=>'labelNormal'
                 ))
-                ->add('title', TextType::class, array('label'=> 'Titre'))
-                ->add('detail', TextareaType::class, array('label'=> 'Détail'))
-                //->add('address', TextType::class, array('label'=> 'Adresse'))
-                //->add('city', TextType::class, array('label'=> 'Ville'))
                 
-              /*  ->add('image', ImageType::class, 
-                                array('label'=> ' ',
-                                    'attr'   =>  array(
-                                                'class'   => 'fileUpload btn btn-primary'),
-                                      'required'  => false))
-           */
+                ->add('title', TextType::class, array('label'=> 'Titre *',
+                    'attr' => array('maxlength' => 50,
+                    'placeholder' => 'Le titre ne doit pas dépasser 50 caratères maximum')
+                    ))
+                
+                ->add('detail', TextareaType::class, array('label'=> 'Détail *', 
+                    'attr' => array('maxlength' => 4000, 
+                        'class' => 'form-control textarea',
+                        'placeholder' => 'Le détail ne doit pas dépasser 4000 caratères maximum')
+                    ))
+
                 ->add('save', SubmitType::class, 
                                 array('label'=> 'Enregistrer',
                                     'attr'   =>  array(

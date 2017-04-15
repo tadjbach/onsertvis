@@ -1,0 +1,52 @@
+
+    <form>
+        <div class="form-group">
+            <div class="row filter">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Que cherchez-vous?">
+                </div>
+                <div class="col-md-3">
+                        <select class="form-control">
+                            <option class="active"><a href="#">Toutes les catégories</a></option>
+                            {% for category in listCategory %}
+                                <option>
+                                    <a href="#">{{ category.labelNormal }}</a>
+                                </option>
+                            {% endfor %}
+                        </select>
+                </div>
+                <div class="col-md-3">
+                        <select class="form-control">
+                            <option><a href="#">Toutes les régions</a></option>
+                            {% for region in listRegions %}
+                                <option>
+                                    <a href="#">{{ region.labelNormal }}</a>
+                                </option>
+                            {% endfor %}
+                        </select>
+                </div>
+              </div>           
+            <div class="row filter">
+                <div class="col-md-6">
+                    <select class="form-control">
+                        <option><a href="#">Tous les départements</a></option>
+                        {% for dpt in listDpt %}
+                            <option>
+                                <a href="#">{{ dpt.labelNormal }}</a>
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                        
+                 <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="Ville ou code postale">
+                </div>
+                        
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-success btnIcon-search">
+                        <i class="glyphicon glyphicon-search" ></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
