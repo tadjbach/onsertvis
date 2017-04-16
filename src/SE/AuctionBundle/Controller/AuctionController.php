@@ -14,30 +14,14 @@ use SE\AuctionBundle\Entity\Auction;
 
 class AuctionController extends Controller
 {
-     /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
-    public function listAction($page){
-        $nbPerPage = 9;
+     private $nbPerPage = 36;
 
-        $listAdverts = array();
-
-        $nbPages = ceil(count($listAdverts)/$nbPerPage);
-
-        if ($page<1){
-            throw new NotFoundHttpException('page"'.$page.'" inexistante');
-        }
-
-        return $this->render('SEPortalBundle:Account:auctionList.html.twig', array(
-            'nbPages'     => $nbPages,
-            'page'        => $page
-        ));
-    }
     
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
     public function addAction(Request $request, $advertId){
+        
         $em = $this->getDoctrine()->getManager();
       
         $advert=$em->find('SEAuctionBundle:Advert', $advertId);
@@ -46,29 +30,25 @@ class AuctionController extends Controller
         
         $auction->setUser($this->getUser());
         $auction->setAdvert($advert);
-        
-        // On crée le FormBuilder grâce au service form factory
-        $form = $this->createForm(AuctionType::class, $auction);
+       
+        $form = $this->createForm(AuctionType::class, $auction,
+                array('action' => $this->generateUrl('se_auction_advert_view', array('id' => $advertId))));
 
         if ($request->isMethod('POST')){
             $form->handleRequest($request);
 
             if ($form->isValid()){
                 
-                
                 $em->persist($auction);
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add('notice', 'Votre enchère est validée.');
-
-                return $this->redirectToRoute('se_auction_advert_view', array('id'=> $advertId));
+               $request->getSession()->getFlashBag()->add('notice', 'Votre enchère est validée.');
             }
         }
 
         return $this->render('SEAuctionBundle:Auction:add.html.twig', array(
             'form' => $form->createView()
         ));
-       
     }
 
     public function viewAction($id)
@@ -76,5 +56,32 @@ class AuctionController extends Controller
         return $this->render('SEPortalBundle:Auction:view.html.twig');
     }
     
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */ 
+    public function listAction($page)
+    {
+         $user = $this->getUser();
+         
+        $em=$this->getDoctrine()
+            ->getManager();
 
+         $listAuction = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getAuctionUser($user->getId(), $page, $this->nbPerPage);
+         
+        
+        $nbPages = ceil(count($listAuction)/$this->nbPerPage);
+
+        if ($page<1){
+            throw new NotFoundHttpException('page "'.$page.'" inexistante');
+        }
+
+        return $this->render('SEAuctionBundle:Auction:list.html.twig', array(
+            'listAuction'=> $listAuction,
+            'nbPages'     => $nbPages,
+            'page'        => $page,
+            'count'     => count($listAuction)
+        ));
+    }
 }

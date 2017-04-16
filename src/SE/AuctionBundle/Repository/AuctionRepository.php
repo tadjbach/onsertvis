@@ -62,4 +62,20 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult(); 
     }
+     public function getAuctionUser($userId, $page, $nbPerPage){
+        
+     $qb=$this->createQueryBuilder('a');
+
+        $qb->innerJoin('a.user', 'u')
+            ->addSelect('u');
+
+        $qb->where($qb->expr()->eq('u.id', $userId));
+
+        $qb->getQuery();
+
+        $qb->setFirstResult(($page-1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+            
+        return new Paginator($qb, true);
+    }
 }

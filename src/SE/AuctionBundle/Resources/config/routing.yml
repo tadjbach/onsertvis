@@ -7,6 +7,14 @@ se_auction_advert_list:
     requirements:
         page: \d*
 
+se_auction_advert_list_by_criteria:
+    path:     /demande/liste/{category}/{region}/{dpt}/{city}/{page}
+    defaults:
+        _controller: SEAuctionBundle:Advert:listByCriteria
+        page:        1
+    requirements:
+        page: \d*
+        
 se_auction_advert_list_by_region:
     path:     /demande/region/{region}/{page}
     defaults:
@@ -60,7 +68,7 @@ se_auction_advert_list_by_user:
 se_auction_auction_list_by_user:
     path:     /tableau-de-bord/mes-encheres/{page}
     defaults:
-        _controller: SEPortalBundle:Account:auctionList
+        _controller: SEAuctionBundle:Auction:list
         page:        1
     requirements:
         page: \d*

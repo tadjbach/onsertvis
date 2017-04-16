@@ -1,11 +1,19 @@
 {% extends "SELayoutBundle::layout.html.twig" %}
 
 {% block title %}
-    Demande - {{ parent() }}
+    {{ advert.title }} - {{ parent() }}
 {% endblock %}
 
 {% block se_layout_body %}
-
+    
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    
     <h3 class="cat-title">{{ advert.title }}</h3>
     <div class="col-md-12">
         <i>Par {{ advert.user }}, le {{ advert.dateCreation|date('d/m/Y') }}</i>
@@ -21,23 +29,38 @@
                     <div class="panel-body">
                       <p class="">
                          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                            {{ render(controller('SEAuctionBundle:Auction:add', {'advertId':advert.id} )) }}
-                         {% else %}
-                             <a href="{{ path('se_auction_add', {'advertId':advert.id}) }}"
+                            <button type="button" 
                                     class="btn btn-success" 
+                                    data-toggle="modal" 
+                                    data-target="#modalAuctionAdd">
+                                    <i class="glyphicon glyphicon-euro" 
+                                       
+                                       ></i>
+                                    Proposez un prix
+                            </button>
+                            
+                            <button type="button" 
+                                    class="btn btn-success" 
+                                    data-toggle="modal" 
+                                    data-target="#modalMessageAdd">
+                                    <i class="glyphicon glyphicon-euro" ></i>
+                                    Contacter
+                            </button>
+                         {% else %}
+                             <button class="btn btn-success disabled"
                                     role="button" 
                                     >
-                                      <i class="glyphicon glyphicon-euro"></i>
-                                      Proposez un prix
-                            </a>
+                                 <i class="glyphicon glyphicon-euro" 
+                                    
+                                    ></i>Proposez un prix
+                            </button>
+                             
+                             <button class="btn btn-warning disabled"
+                                    role="button" 
+                                    >
+                                 <i class="glyphicon glyphicon-envelope" ></i>Contacter
+                            </button>
                          {% endif %}
-                            
-                            <a href="{{ path('se_auction_message_add', {'advertId':advert.id}) }}"
-                              class="btn btn-warning" 
-                              role="button" >
-                                <i class="glyphicon glyphicon-envelope"></i>
-                                Contacter
-                            </a>
                         </p>
                     </div>
                 </div>
@@ -66,33 +89,30 @@
                             </li>
                         {% else %}
                             <li>Soyez le premier à proposer une enchère</li>
-
                         {% endfor %}
                         </ul>
                     </div>
                 </div>
         </div>
         </div>
-
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="">
-                    <p>
-                        <a href="{{ path('se_auction_advert_list') }}" class="btn btn-default">
-                            <i class="glyphicon glyphicon-chevron-left"></i>
-                            Retour à la liste
-                        </a>
-                        <a href="{{ path('se_auction_add', {'advertId':advert.id}) }}"
-                                  class="btn btn-primary" >Proposer un prix</a>
-                        <a href="{{ path('se_auction_message_add',{'advertId':advert.id}) }}"
-                                  class="btn btn-default" >
-                            <i class="glyphicon glyphicon-envelope"></i>
-                            Contacter
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
+                        
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <div class="modal fade" 
+             id="modalAuctionAdd" 
+             tabindex="-1" 
+             role="dialog" 
+             aria-labelledby="modalAuctionAddLabel">
+            {{ render(controller('SEAuctionBundle:Auction:add', {'request': app.request,'advertId':advert.id} )) }}
+        </div>
+        
+        <div class="modal fade" 
+             id="modalMessageAdd" 
+             tabindex="-1" 
+             role="dialog" 
+             aria-labelledby="modalMessageAddLabel">
+            {{ render(controller('SEAuctionBundle:Message:add', {'request': app.request,'advertId':advert.id} )) }}
+        </div>
+    {% endif %}
 
 {% endblock %}

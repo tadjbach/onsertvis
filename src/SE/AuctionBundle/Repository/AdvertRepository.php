@@ -12,12 +12,12 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class AdvertRepository extends \Doctrine\ORM\EntityRepository
 {
-       public function getAdvertsByFilter($category, $region, $dpt, $city, $page, $nbPerPage)
+    public function getAdvertsByFilter($category, $region, $dpt, $city, $page, $nbPerPage)
     {
         $qb = $this->createQueryBuilder('ad')
             ->innerJoin('ad.user', 'u')
             ->addSelect('u')
-            
+                
             ->innerJoin('u.city', 'c')
             ->addSelect('c')    
                 
@@ -34,11 +34,10 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
              $qb =   $qb->where($qb->expr()->eq('ad.isPublished', 1))
                 ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
                 ->andWhere($qb->expr()->eq('ad.isEnabled', 1))
-                     ->andWhere($qb->expr()->eq('cat.slug', "'".$category."'"))
-                     ->andWhere($qb->expr()->eq('r.slug', "'".$region."'"))
-                     ->andWhere($qb->expr()->eq('d.slug', "'".$dpt."'"))
-                     ->andWhere($qb->expr()->eq('c.slug', "'".$city."'"))
-                     ->andWhere($qb->expr()->eq('c.postalCode', "'".$city."'"))
+                     ->andWhere($qb->expr()->eq('cat.id', $category))
+                     ->andWhere($qb->expr()->eq('r.id', $region))
+                     ->andWhere($qb->expr()->eq('d.id', $dpt))
+                     ->andWhere($qb->expr()->eq('c.id', $city))
                 ->getQuery();
         
             // On définit l'demande à partir de laquelle commencer la liste
@@ -109,6 +108,7 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
     }
     
     public function getAdvertByRegion($region, $limit){
+        
         $qb=$this->createQueryBuilder('a');
 
         $qb
@@ -151,24 +151,43 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
             
         return new Paginator($qb, true);
     }
-
-    public function getCountAdvertByCategory($catgeoryId)
-    {
+    
+    public function getCountByCategory($categoryId){
         $qb=$this->createQueryBuilder('a');
 
         $qb
             ->innerJoin('a.category', 'c')
             ->addSelect('c');
 
-        $qb->where($qb->expr()->eq('c.id', $catgeoryId))        
+        $qb->where($qb->expr()->eq('c.id', $categoryId))        
                 ->andWhere($qb->expr()->eq('a.isPublished', 1))
                 ->andWhere($qb->expr()->eq('a.isDeleted', 0))
                 ->andWhere($qb->expr()->eq('a.isEnabled', 1));
 
-         $qb
+        $qb->setMaxResults(1);
+        
+        return $qb
             ->getQuery()
-            ->getScalarResult();
+            ->getResult(); 
     }
-     
+    
+     public function getCountByRegion($regionId){
+        
+         $qb=$this->createQueryBuilder('a');
 
+        $qb
+            ->innerJoin('a.user', 'u')
+           ;
+        
+        $qb->where($qb->expr()->eq('u.id', $regionId))        
+                ->andWhere($qb->expr()->eq('a.isPublished', 1))
+                ->andWhere($qb->expr()->eq('a.isDeleted', 0))
+                ->andWhere($qb->expr()->eq('a.isEnabled', 1));
+        
+        $qb->addSelect('a');
+        
+        return $qb
+            ->getQuery()
+            ->getResult(); 
+    }
 }

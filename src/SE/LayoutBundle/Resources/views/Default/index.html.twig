@@ -5,42 +5,54 @@
 {% endblock %}
 
 {% block se_layout_body %}
-
-
-<div class="panel-body">
+ <br>
+<div class="well se-well">
+    
     <div class="slogan"><p>Trouvez le bon service au bon prix !</p></div>
+    <br>
+    <div class="panel-body">
 
-        <div class="col-md-6">
-            <h3>Vous cherchez une aide?</h3>
-            <p><span class="badge">1</span> <a class="slogan-link" href="{{ path('se_auction_advert_add') }}">Postez votre demande</a></p>
-            <p><span class="badge">2</span> Recevez des enchères</p>
-            <p><span class="badge">3</span> Choisissez le meilleur enchérisseur</p>
-        </div>
-        <div class="col-md-6">
-            <h3>Vous proposez vos services?</h3>
-            <p><span class="badge">1</span> <a class="slogan-link" href="{{ path('fos_user_registration_register') }}">Inscrivez vous</a></p>
-            <p><span class="badge">2</span> Recevez des demandes</p>
-            <p><span class="badge">3</span> Enchérissez et gagnez</p>
-        </div>
+            <div class="col-md-6">
+                <h3 class="cat-title">Vous cherchez une aide ?</h3>
+
+                <h4>
+                    <span class="label label-default se-badge">1</span> 
+                    <a class="slogan-link" href="{{ path('se_auction_advert_add') }}">Postez votre demande</a>
+                </h4>
+                <h4><span class="label label-default se-badge">2</span> Recevez des enchères</h4>
+                <h4><span class="label label-default se-badge">3</span> Choisissez le meilleur enchérisseur</h4>
+            </div>
+            <div class="col-md-6">
+                <h3 class="cat-title">Vous proposez vos services ?</h3>
+
+                <h4>
+                    <span class="label label-default se-badge">1</span> 
+                    <a class="slogan-link" href="{{ path('fos_user_registration_register') }}">Inscrivez vous</a>
+                </h4>
+                <h4><span class="label label-default se-badge">2</span> Recevez des demandes</h4>
+                <h4><span class="label label-default se-badge">3</span> Enchérissez et gagnez</h4>
+            </div>
+    </div>
 </div>
 
 <!-- CATGEORY - CARTE DE FRANCE -->
+<div class="well se-well">
     <div class="index-container" >
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h4 class="cat-title">Par Catégories</h4>
                 <ul class="ul-cat">
                     {% for category in listCategory %}
                         <li>
                             <a class="cat-link" href="{{ path('se_auction_advert_list_by_category', { 'catgeory': category.slug } ) }}">
-                                {{ category.labelNormal }}
+                                {{ category.labelNormal }} 
+                                {{ render(controller('SEAuctionBundle:Advert:countByCategory', { 'categoryId': category.id })) }}
                             </a>
                         </li>
                     {% endfor %}
                 </ul>
-            </div>
-            <div class="col-md-4">
-                <h4 class="cat-title">Par Régions</h4>
+                <br>
+                 <h4 class="cat-title">Par Régions</h4>
                 <ul class="ul-cat">
                     {% for region in listRegion %}
                         <li>
@@ -51,10 +63,10 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="col-md-4">
-                <h4 class="cat-title">Par Carte</h4>
+            <div class="col-md-9 text-center">
                 <div id="cmap"></div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

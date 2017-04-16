@@ -19,7 +19,8 @@ class MessageController extends Controller
      * @Security("has_role('ROLE_AUTEUR')")
      */
     public function addAction(Request $request, $advertId){
-      $em = $this->getDoctrine()->getManager();
+      
+        $em = $this->getDoctrine()->getManager();
       
         $advert=$em->find('SEAuctionBundle:Advert', $advertId);
         
@@ -29,22 +30,18 @@ class MessageController extends Controller
         $message->setAdvert($advert);
         $message->setReceiver($advert->getUser());
         
-        // On crée le FormBuilder grâce au service form factory
-        $form = $this->createForm(MessageType::class, $message);
+        $form = $this->createForm(MessageType::class, $message,
+                 array('action' => $this->generateUrl('se_auction_advert_view', array('id' => $advertId))));
 
         if ($request->isMethod('POST')){
             $form->handleRequest($request);
 
             if ($form->isValid()){
-                
-                
+               
                 $em->persist($message);
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add('notice', 'Message bien envoyé.');
-
-                return $this->redirectToRoute('se_auction_advert_view', array('slug'=>$advert->getSlug(), 
-                    'id'=>$advert->getId()));
+                $request->getSession()->getFlashBag()->add('success', 'Message bien envoyé.');
             }
         }
 
@@ -89,22 +86,6 @@ class MessageController extends Controller
             'page'        => $page,
             'listConversation'=> $listConversation
         ));
-    }
-
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
-    public function viewAction($id)
-    {
-       
-    }
-
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
-    public function deleteAction($id, Request $request)
-    {
-        
     }
 }
 

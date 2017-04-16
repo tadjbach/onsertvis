@@ -9,7 +9,7 @@ html, body{
     font-size: 14px;
     line-height: 1.43;
     color: #484848;
-    background-color: #fff;
+    background-color: rgba(72, 72, 72, 0.15);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -24,10 +24,8 @@ html, body{
     color: #484848;
 }
 .se-header{
-        padding-left: 55px;
-    padding-right: 55px;
-}
-.well-footer{
+        padding-left: 50px;
+    padding-right: 50px;
 }
 
 .well-footer .row{
@@ -65,7 +63,9 @@ li.hd-icon{
     border-color:#fff;
     background-color: #007F6A;
     color: #FFF;
+    
 }
+
 .navbar-default .navbar-nav>li>a,
 .well-footer>div>div>ul>li>a,
 .well-footer>div>div>h5
@@ -78,6 +78,7 @@ li.hd-icon{
     background-color: #fff;
     border-color:#fff;
 }
+
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus{
     border-color:#fff;
@@ -89,14 +90,15 @@ li.hd-icon{
     background-color:#fff;
     color:#007F6A;
 }
+
 .navbar-default .navbar-nav>li>a:hover,
 .well-footer>div>div>ul>li>a:hover
 {
     color: #FFF;
+    text-decoration: underline;
 }
 
 /* HEADER 2 */
-
 .slogan{
     font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
     font-size: 48px !important;
@@ -108,7 +110,8 @@ li.hd-icon{
 .slogan >p{
     margin-bottom: 2px;
 }
-.badge{
+
+.se-badge{
     background-color: #007F6A;
 }
 
@@ -139,6 +142,7 @@ a.cat-link{
 a.title-link{
     color: #484848;
 }
+
 a.title-link:hover,
 a.title-link:focus{
     color: #484848;
@@ -166,6 +170,7 @@ a.title-link:focus{
     min-width: 1170px;
     min-height: 714px;
 }
+
 .container .row{
    
     padding-bottom: 5px;
@@ -176,10 +181,10 @@ a.title-link:focus{
 }
 
 .index-container{
-    min-height: 500px;
+    min-height: 460px;
     height: auto;
     padding: 19px;
-    margin-bottom: 20px;
+    margin-top: 60px;
 }
 
 /* General Demo Style */
@@ -255,7 +260,15 @@ a.title-link:focus{
 }
 
 .cadre{
-    border: 1px solid #007F6A;
+    border: 2px solid #484848;
+}
+
+.cadre:hover{
+    border: 2px solid #007F6A;
+}
+
+.cadre>a>img{
+    width: 200px; height: 150px;
 }
 
 .nocadre{
@@ -265,4 +278,8 @@ a.title-link:focus{
 .price{
  color:#B20942;
  font-weight: bold;
+}
+
+.se-well{
+    background-color: #fff;
 }

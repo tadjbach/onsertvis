@@ -42,7 +42,7 @@ class AdvertController extends Controller
 
                 $request->getSession()->getFlashBag()->add('notice', 'Demande bien enregistrée.');
 
-                return $this->redirectToRoute('se_auction_advert_view', array('slug'=>$advert->getSlug()));
+                return $this->redirectToRoute('se_auction_advert_view', array('id'=>$advert->getId()));
             }
         }
 
@@ -140,7 +140,7 @@ class AdvertController extends Controller
 
                 $request->getSession()->getFlashBag()->add('info', 'Demande bien modifiée');
 
-                return $this->redirectToRoute('se_auction_advert_view', array('slug'=>$advert->getSlug()));
+                return $this->redirectToRoute('se_auction_advert_view', array('id'=>$advert->getId()));
             }
         }
 
@@ -186,7 +186,6 @@ class AdvertController extends Controller
 
    public function listByCategoryAction($catgeory)
     {
-
           $catgeoryLabelNormal=$this->getDoctrine()
             ->getManager()->getRepository('SEPortalBundle:Category')
             ->findBy(
@@ -197,19 +196,15 @@ class AdvertController extends Controller
             ->getManager()->getRepository('SEAuctionBundle:Advert')
             ->getAdvertByCategory($catgeory, 10);
 
-
-
         return $this->render('SEAuctionBundle:Advert:listByCategory.html.twig', array(
             'listAdverts'=>$listAdverts,
             'catgeoryLabelNormal'=>$catgeoryLabelNormal
-
         ));
     }
     
     public function listByRegionAction($region)
     {
-
-          $regionLabelNormal=$this->getDoctrine()
+        $regionLabelNormal=$this->getDoctrine()
             ->getManager()->getRepository('SEPortalBundle:Region')
             ->findBy(
                 array('slug'=>$region)
@@ -219,12 +214,9 @@ class AdvertController extends Controller
             ->getManager()->getRepository('SEAuctionBundle:Advert')
             ->getAdvertByRegion($region, 10);
 
-
-
         return $this->render('SEAuctionBundle:Advert:listByRegion.html.twig', array(
             'listAdverts'=>$listAdverts,
             'regionLabelNormal'=>$regionLabelNormal
-
         ));
     }
     
@@ -249,7 +241,7 @@ class AdvertController extends Controller
         ));
     }
     
-        public function viewLastAuctionAction($advertId)
+    public function viewLastAuctionAction($advertId)
     {
         $em = $this->getDoctrine()->getManager();
         $auctionValue = 'Aucune enchère';
@@ -265,7 +257,61 @@ class AdvertController extends Controller
         return new Response(
             $auctionValue
         );
+    }
+    
+    public function countByCategoryAction($categoryId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $res = '(0)';
         
+        $countByCategory = $em
+            ->getRepository('SEAuctionBundle:Advert')
+            ->getCountByCategory($categoryId);
+        
+            if (count($countByCategory) > 0) {
+               $count = count($countByCategory);
+                $res = '('.number_format($count, 0, ' ' ,' ').')';
+            }
+        return new Response(
+            $res
+        );
+    }
+    
+     public function listByCriteriaAction($category, $region, $dpt, $city, $page)
+    {
+        $em=$this->getDoctrine()
+            ->getManager();
+
+         $listAdverts = $em
+            ->getRepository('SEAuctionBundle:Advert')
+            ->getAdvertsByFilter($category, $region, $dpt, $city, $page, $this->nbPerPage);
+         
+         $listCategory=$em
+                 ->getRepository('SEPortalBundle:Category')
+                 ->findAll();
+
+        $listRegions=$em
+                ->getRepository('SEPortalBundle:Region')
+                ->findAll();
+
+        $listDpt = $em->getRepository('SEPortalBundle:Departement')
+                    ->findAll();
+        
+        $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
+
+        if ($page<1){
+            throw new NotFoundHttpException('page"'.$page.'" inexistante');
+        }
+
+        return $this->render('SEAuctionBundle:Advert:list.html.twig', array(
+            'listAdverts'=> $listAdverts,
+            'listCategory'=>$listCategory,
+            'listRegions'=>$listRegions,
+            'listDpt'=>$listDpt,
+            'nbPages'     => $nbPages,
+            'page'        => $page,
+            'count'     => count($listAdverts)
+        ));
     }
 }
 

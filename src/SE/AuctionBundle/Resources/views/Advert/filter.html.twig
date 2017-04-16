@@ -43,9 +43,16 @@
                 </div>
                         
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-success btnIcon-search">
+                    <a class="btn btn-success btnIcon-search" href="
+                            {{ path('se_auction_advert_list_by_criteria', 
+                                                {   'category': 1, 
+                                                    'region': 10, 
+                                                    'dpt': 34,
+                                                    'city': 12679
+                                                }) }}"
+                            >
                         <i class="glyphicon glyphicon-search" ></i>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

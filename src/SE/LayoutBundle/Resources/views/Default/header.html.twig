@@ -16,12 +16,14 @@
 
                 <li>
                     <a href="{{ path('se_auction_advert_list')  }}">
-                        Liste des demandes
+                        
+                        {{ 'Liste des demandes'|upper }}
                     </a>
                 </li>
                 <li><a href="{{ path('se_auction_advert_add') }}">
-                        Déposer une demande
-                        </a></li>
+                        {{ 'Déposer une demande'|upper }}
+                        </a>
+                </li>
 
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li role="presentation" class="dropdown">
@@ -42,7 +44,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="{{ path('fos_user_profile_show') }}" >Mon profile</a></li>
                                 <li><a href="{{ path('se_auction_advert_list_by_user') }}">Mes demandes</a></li>
-                                <li><a href="{{ path('se_layout_homepage') }}">Mon enchères</a></li>
+                                <li><a href="{{ path('se_auction_auction_list_by_user') }}">Mon enchères</a></li>
                                 <li><a href="{{ path('se_auction_message_list') }}">Mes messages</a></li>
                                 <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
                             </ul>
