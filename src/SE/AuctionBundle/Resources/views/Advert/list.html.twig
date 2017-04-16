@@ -19,7 +19,9 @@
         <div class="row">
             <div id="content" class="col-md-12">
                 {% for advert in listAdverts %}
+                    <div class="col-sm-4 col-md-4">
                     {{ include('@SEAuction/Advert/item.html.twig') }}
+                    </div>
                 {% else %}
                         <div>Pas (encore !) d'demandes</div>
                 {% endfor %}

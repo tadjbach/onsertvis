@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AdvertController extends Controller
 {
     private $nbPerPage = 36;
+    private $countAuction = 0;
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
@@ -244,21 +245,37 @@ class AdvertController extends Controller
     public function viewLastAuctionAction($advertId)
     {
         $em = $this->getDoctrine()->getManager();
-        $auctionValue = 'Aucune enchère';
+        $auctionValue = 'Aucune enchère <br> --- €';
         
         $lastAuction = $em
             ->getRepository('SEAuctionBundle:Auction')
             ->getLastAuction($advertId);
         
-            if (count($lastAuction) > 0) {
-               $price =  number_format($lastAuction[0]->getValue(),0,' ',' ');
-                $auctionValue = $price.' €';
-            }
+        
+        $suffix = count($lastAuction) == 1 ? 'Une enchère' : count($lastAuction).' enchères';
+        
+        if (count($lastAuction) > 0) {
+           $price =  number_format($lastAuction[0]->getValue(),0,' ',' ');
+           $auctionValue = $suffix.' <br> '.$price.' €';
+        }
         return new Response(
             $auctionValue
         );
     }
     
+    public function viewCityAction($advertId){
+        $em = $this->getDoctrine()->getManager();
+        
+        $cityAdvert = $em
+            ->getRepository('SEAuctionBundle:Advert')
+            ->getCityByAdvert($advertId);
+        
+         return new Response(
+            $cityAdvert[0]->getId()
+        );
+    }
+
+
     public function countByCategoryAction($categoryId)
     {
         $em = $this->getDoctrine()->getManager();

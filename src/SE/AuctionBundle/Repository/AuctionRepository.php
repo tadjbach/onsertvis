@@ -52,16 +52,14 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
         $qb->where($qb->expr()->eq('ad.id', $advertId));
             
         $qb->orderBy('au.dateCreation', 'DESC');
-
         
-                
-        $qb->setMaxResults(1);
         $qb->getQuery();
         
         return $qb
             ->getQuery()
             ->getResult(); 
     }
+    
      public function getAuctionUser($userId, $page, $nbPerPage){
         
      $qb=$this->createQueryBuilder('a');

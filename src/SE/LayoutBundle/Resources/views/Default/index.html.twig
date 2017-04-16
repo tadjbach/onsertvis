@@ -46,7 +46,7 @@
                         <li>
                             <a class="cat-link" href="{{ path('se_auction_advert_list_by_category', { 'catgeory': category.slug } ) }}">
                                 {{ category.labelNormal }} 
-                                {{ render(controller('SEAuctionBundle:Advert:countByCategory', { 'categoryId': category.id })) }}
+                               <!-- {{ render(controller('SEAuctionBundle:Advert:countByCategory', { 'categoryId': category.id })) }}-->
                             </a>
                         </li>
                     {% endfor %}

@@ -1,9 +1,9 @@
-<div class="col-sm-4 col-md-4">
-    <div class="thumbnail cadre">
-        <a href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">
+<div class="panel panel-default">
+  <div class="panel-body">
+    <a href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">
             <img src="{{ asset(advert.category.webPath) }}" alt="{{ asset(advert.category.webPath) }}"> 
         </a>
-        <div class="caption">
+        <div>
             <h3 class="truncate">
                 <a  class="slogan-link" href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">{{ advert.title }}</a>
             </h3>
@@ -13,10 +13,12 @@
                 <p>Sans catégorie</p>
             {% endif %}
             <p>{{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
-            
-            <h4 class="price text-right">
-                {{ render(controller('SEAuctionBundle:Advert:viewLastAuction', { 'advertId': advert.id })) }}
-            </h4>
+            <p>CP Ville / Dpt</p>
         </div>
+  </div>
+    <div class="panel-footer text-center price">
+       <h4 class="">
+           {{ render(controller('SEAuctionBundle:Advert:viewLastAuction', { 'advertId': advert.id })) }}
+       </h4>
     </div>
 </div>

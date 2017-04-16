@@ -190,4 +190,21 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult(); 
     }
+    
+      public function getCityByAdvert($advertId){
+          
+         $qb = $this->createQueryBuilder('ad')
+            ->leftJoin('ad.user', 'u')
+            ->addSelect('u')
+            ->leftJoin('u.city', 'c')
+            ->addSelect('c');
+         
+        $qb->where($qb->expr()->eq('ad.id', $advertId));
+            
+        $qb->setMaxResults(1);
+        
+        return $qb
+            ->getQuery()
+            ->getResult(); 
+    }
 }

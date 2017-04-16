@@ -10,4 +10,5 @@ namespace SE\PortalBundle\Repository;
  */
 class CityRepository extends \Doctrine\ORM\EntityRepository
 {
+  
 }

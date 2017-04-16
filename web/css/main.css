@@ -210,7 +210,7 @@ a.title-link:focus{
     border-color:#007F6A
 }*/
 
-.thumbnail>img.viewImage, .thumbnail a>img.viewImage
+.panel-body>img.viewImage, .panel-body a>img.viewImage
 {
     height: 450px;
     width: 100%;
@@ -267,7 +267,7 @@ a.title-link:focus{
     border: 2px solid #007F6A;
 }
 
-.cadre>a>img{
+.panel-body>a>img{
     width: 200px; height: 150px;
 }
 
@@ -276,8 +276,15 @@ a.title-link:focus{
 }
 
 .price{
- color:#B20942;
+ background-color: #007F6A;
  font-weight: bold;
+ color:#fff;
+ padding-bottom: 2px;
+    padding-top: 2px;
+}
+
+.price>h4{
+        line-height: 30px;
 }
 
 .se-well{
