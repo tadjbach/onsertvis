@@ -290,3 +290,18 @@ a.title-link:focus{
 .se-well{
     background-color: #fff;
 }
+
+.rate-success{
+    color:#5cb85c;
+}
+.rate-warning{
+    color: #f0ad4e;
+}
+
+.rate-danger{
+    color: #d9534f;
+}
+
+.modal-dialog{
+    width: 70%;
+}

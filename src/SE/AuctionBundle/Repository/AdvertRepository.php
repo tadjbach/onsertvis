@@ -114,7 +114,9 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
         $qb
            ->innerJoin('a.user', 'u')
             ->addSelect('u')
-            ->innerJoin('u.city', 'c')
+            ->innerJoin('u.postalCode', 'pc')
+            ->addSelect('pc')
+            ->innerJoin('pc.city', 'c')
             ->addSelect('c')
             ->leftJoin('c.departement', 'd')
             ->addSelect('d')
@@ -185,23 +187,6 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere($qb->expr()->eq('a.isEnabled', 1));
         
         $qb->addSelect('a');
-        
-        return $qb
-            ->getQuery()
-            ->getResult(); 
-    }
-    
-      public function getCityByAdvert($advertId){
-          
-         $qb = $this->createQueryBuilder('ad')
-            ->leftJoin('ad.user', 'u')
-            ->addSelect('u')
-            ->leftJoin('u.city', 'c')
-            ->addSelect('c');
-         
-        $qb->where($qb->expr()->eq('ad.id', $advertId));
-            
-        $qb->setMaxResults(1);
         
         return $qb
             ->getQuery()

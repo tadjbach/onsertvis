@@ -14,6 +14,15 @@
             
             <p>Dernière enchère à </p>
             <p class="text-right">
+                 <button class="btn btn-primary btnIcon"
+                                    role="button" 
+                                    data-toggle="tooltip" 
+                                    title="Historique des enchères"
+                                    data-toggle="modal" 
+                                    data-target="#modalAuctionShow" >
+                                 <i class="glyphicon glyphicon-list-alt" ></i>
+                </button>
+                
                 <a href="{{ path('se_auction_advert_edit',{'id':advert.id}) }}"
                   class="btn btn-success btnIcon" 
                   role="button" 

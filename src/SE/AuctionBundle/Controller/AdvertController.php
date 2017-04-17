@@ -99,7 +99,7 @@ class AdvertController extends Controller
         $listAuctions=$em->getRepository('SEAuctionBundle:Auction')
             ->findBy(
                 array('advert'=>$advert),
-                array('value'=>'asc'),
+                array('dateCreation'=>'desc'),
                 $limit=null,
                 $offset=null);
 
@@ -109,7 +109,8 @@ class AdvertController extends Controller
 
         return $this->render('SEAuctionBundle:Advert:view.html.twig', array(
             'advert'=>$advert,
-            'listAuctions'=>$listAuctions
+            'listAuctions'=>$listAuctions,
+            'countAuctions'=>count($listAuctions)
         ));
     }
 
@@ -255,27 +256,18 @@ class AdvertController extends Controller
         $suffix = count($lastAuction) == 1 ? 'Une enchère' : count($lastAuction).' enchères';
         
         if (count($lastAuction) > 0) {
-           $price =  number_format($lastAuction[0]->getValue(),0,' ',' ');
-           $auctionValue = $suffix.' <br> '.$price.' €';
+           $price = $this->priceFormat($lastAuction[0]->getValue());
+           $auctionValue = $suffix.' <br> '.$price;
         }
         return new Response(
             $auctionValue
         );
     }
     
-    public function viewCityAction($advertId){
-        $em = $this->getDoctrine()->getManager();
-        
-        $cityAdvert = $em
-            ->getRepository('SEAuctionBundle:Advert')
-            ->getCityByAdvert($advertId);
-        
-         return new Response(
-            $cityAdvert[0]->getId()
-        );
+    private function priceFormat($price){
+        return number_format($price, 0,' ',' ').' €';
     }
-
-
+   
     public function countByCategoryAction($categoryId)
     {
         $em = $this->getDoctrine()->getManager();

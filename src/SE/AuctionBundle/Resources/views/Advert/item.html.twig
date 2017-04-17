@@ -13,7 +13,7 @@
                 <p>Sans catégorie</p>
             {% endif %}
             <p>{{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
-            <p>CP Ville / Dpt</p>
+            <p>{{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }} / {{ advert.user.PostalCode.city.departement.labelNormal }}</p>
         </div>
   </div>
     <div class="panel-footer text-center price">

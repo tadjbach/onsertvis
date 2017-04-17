@@ -54,10 +54,10 @@ class User extends BaseUser
     private $address;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\City")
+     * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\PostalCode")
      * @Assert\Valid()
      */
-    private $city;
+    private $postalCode;
 
     /**
      * @var \DateTime
@@ -106,11 +106,18 @@ class User extends BaseUser
      */
     private $categories;
     
-
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="rate", type="integer")
+     */
+    private $rate;
+    
     public function __construct()
     {
         $this->dateCreation=new \DateTime();
         $this->isAcountComplete=false;
+        $this->rate = -1;
 
         $this->setRoles(array('ROLE_AUTEUR'));
     }
@@ -437,5 +444,53 @@ class User extends BaseUser
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Set postalCode
+     *
+     * @param \SE\PortalBundle\Entity\PostalCode $postalCode
+     *
+     * @return User
+     */
+    public function setPostalCode(\SE\PortalBundle\Entity\PostalCode $postalCode = null)
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get postalCode
+     *
+     * @return \SE\PortalBundle\Entity\PostalCode
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * Set rate
+     *
+     * @param integer $rate
+     *
+     * @return User
+     */
+    public function setRate($rate)
+    {
+        $this->rate = $rate;
+
+        return $this;
+    }
+
+    /**
+     * Get rate
+     *
+     * @return integer
+     */
+    public function getRate()
+    {
+        return $this->rate;
     }
 }
