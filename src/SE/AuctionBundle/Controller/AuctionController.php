@@ -66,22 +66,109 @@ class AuctionController extends Controller
         $em=$this->getDoctrine()
             ->getManager();
 
-         $listAuction = $em
+         $listAuctions = $em
             ->getRepository('SEAuctionBundle:Auction')
             ->getAuctionUser($user->getId(), $page, $this->nbPerPage);
          
         
-        $nbPages = ceil(count($listAuction)/$this->nbPerPage);
+        $nbPages = ceil(count($listAuctions)/$this->nbPerPage);
 
         if ($page<1){
             throw new NotFoundHttpException('page "'.$page.'" inexistante');
         }
 
         return $this->render('SEAuctionBundle:Auction:list.html.twig', array(
-            'listAuction'=> $listAuction,
+            'listAuctions'=> $listAuctions,
             'nbPages'     => $nbPages,
             'page'        => $page,
-            'count'     => count($listAuction)
+            'countAuctions'     => count($listAuctions)
+        ));
+    }
+
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function listProposedAction($page)
+    {
+        $user = $this->getUser();
+
+        $em=$this->getDoctrine()
+            ->getManager();
+
+        $listAuctions = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getProposedAuctionUser($user->getId(), $page, $this->nbPerPage);
+
+
+        $nbPages = ceil(count($listAuctions)/$this->nbPerPage);
+
+        if ($page<1){
+            throw new NotFoundHttpException('page "'.$page.'" inexistante');
+        }
+
+        return $this->render('SEAuctionBundle:Auction:list.html.twig', array(
+            'listAuctions'=> $listAuctions,
+            'nbPages'     => $nbPages,
+            'page'        => $page,
+            'countAuctions'     => count($listAuctions)
+        ));
+    }
+
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function listReceiveAction($page)
+    {
+        $user = $this->getUser();
+
+        $em=$this->getDoctrine()
+            ->getManager();
+
+        $listAuctions = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getReceiveAuctionUser($user->getId(), $page, $this->nbPerPage);
+
+
+        $nbPages = ceil(count($listAuctions)/$this->nbPerPage);
+
+        if ($page<1){
+            throw new NotFoundHttpException('page "'.$page.'" inexistante');
+        }
+
+        return $this->render('SEAuctionBundle:Auction:list.html.twig', array(
+            'listAuctions'=> $listAuctions,
+            'nbPages'     => $nbPages,
+            'page'        => $page,
+            'countAuctions'     => count($listAuctions)
+        ));
+    }
+
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function listTerminatedAction($page)
+    {
+        $user = $this->getUser();
+
+        $em=$this->getDoctrine()
+            ->getManager();
+
+        $listAuctions = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getTerminatedAuctionUser($user->getId(), $page, $this->nbPerPage);
+
+
+        $nbPages = ceil(count($listAuctions)/$this->nbPerPage);
+
+        if ($page<1){
+            throw new NotFoundHttpException('page "'.$page.'" inexistante');
+        }
+
+        return $this->render('SEAuctionBundle:Auction:list.html.twig', array(
+            'listAuctions'=> $listAuctions,
+            'nbPages'     => $nbPages,
+            'page'        => $page,
+            'countAuctions'     => count($listAuctions)
         ));
     }
 }

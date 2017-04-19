@@ -1,23 +1,16 @@
+{# Modifier une Demande - Action #}
+
 {% extends "SELayoutBundle::layout.html.twig" %}
 
-{% block title %}
-    Modifier une demande - {{ parent() }}
-{% endblock %}
+    {% block title %}
+        Modifier une demande - {{ parent() }}
+    {% endblock %}
 
-{% block se_layout_body %}
-    <h4 class="cat-title">Modification d'une demande</h4>
-    <div class="col-sm-6 col-md-6">
-           {{ include('SEAuctionBundle:Advert:form.html.twig') }}
-    </div>
-       
-    <div class="row">
-        <div class="col-12">
-            <a href="{{ path('se_auction_advert_view',{'id':advert.id}) }}" class="btn btn-default">
-        <i class="glyphicon glyphicon-chevron-left"></i>
-        Retour à l'demande
-        </a>
+    {% block se_layout_body %}
+
+        <h4 class="cat-title">Modification d'une demande</h4>
+        <div class="col-sm-6 col-md-6">
+               {{ include('SEAuctionBundle:Advert:form.html.twig') }}
         </div>
-    </div>
 
-
-{% endblock %}
+    {% endblock %}

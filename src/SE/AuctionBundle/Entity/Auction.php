@@ -64,7 +64,7 @@ class Auction
     {
         $this->dateCreation=new \DateTime();
         
-        $this->state = 0;     
+        $this->state = 1;
     }
     
     /**

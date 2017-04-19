@@ -1,24 +1,72 @@
+{# Une Demande - Sans Action #}
+
 <div class="panel panel-default">
+
   <div class="panel-body">
-    <a href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">
+
+      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user == advert.user %}
+          {% if advert.isPublished == 0 %}
+              <span class="label label-danger">En cours de validation</span>
+          {% else %}
+              <span class="label label-success">Demande en ligne</span>
+          {% endif %}
+      {% endif %}
+
+        <a href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">
             <img src="{{ asset(advert.category.webPath) }}" alt="{{ asset(advert.category.webPath) }}"> 
         </a>
         <div>
+
             <h3 class="truncate">
                 <a  class="slogan-link" href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">{{ advert.title }}</a>
             </h3>
+
             {% if advert.category.labelNormal != 'Autres' %}
                 <p>{{ advert.category.labelNormal }}</p>
                 {% else %}
                 <p>Sans catégorie</p>
             {% endif %}
+
             <p>{{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
             <p>{{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }} / {{ advert.user.PostalCode.city.departement.labelNormal }}</p>
+
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user == advert.user %}
+
+                <p class="text-right">
+                    <button class="btn btn-primary btnIcon"
+                            role="button"
+                            data-toggle="tooltip"
+                            title="Historique des enchères"
+                            data-toggle="modal"
+                            data-target="#modalAuctionShow" >
+                        <i class="glyphicon glyphicon-list-alt" ></i>
+                    </button>
+
+                    <a href="{{ path('se_auction_advert_edit',{'id':advert.id}) }}"
+                       class="btn btn-success btnIcon"
+                       role="button"
+                       data-toggle="tooltip"
+                       title="Modifier">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+
+                    <a href="{{ path('se_auction_advert_delete',{'id':advert.id}) }}"
+                       class="btn btn-danger btnIcon"
+                       role="button"
+                       data-toggle="tooltip"
+                       title="Supprimer">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </p>
+            {% endif %}
+
         </div>
-  </div>
+    </div>
+
     <div class="panel-footer text-center price">
        <h4 class="">
            {{ render(controller('SEAuctionBundle:Advert:viewLastAuction', { 'advertId': advert.id })) }}
        </h4>
     </div>
+
 </div>

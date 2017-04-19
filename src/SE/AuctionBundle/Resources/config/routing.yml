@@ -65,6 +65,30 @@ se_auction_advert_list_by_user:
     requirements:
         page: \d*
 
+se_auction_auction_list_by_user_proposed:
+    path:     /tableau-de-bord/mes-encheres/proposees/{page}
+    defaults:
+        _controller: SEAuctionBundle:Auction:listProposed
+        page:        1
+    requirements:
+        page: \d*
+
+se_auction_auction_list_by_user_receive:
+    path:     /tableau-de-bord/mes-encheres/recues/{page}
+    defaults:
+        _controller: SEAuctionBundle:Auction:listReceive
+        page:        1
+    requirements:
+        page: \d*
+
+se_auction_auction_list_by_user_terminated:
+    path:     /tableau-de-bord/mes-encheres/terminees/{page}
+    defaults:
+        _controller: SEAuctionBundle:Auction:listTerminated
+        page:        1
+    requirements:
+        page: \d*
+
 se_auction_auction_list_by_user:
     path:     /tableau-de-bord/mes-encheres/{page}
     defaults:
@@ -91,3 +115,10 @@ se_auction_message_add:
     path:     /contact/envoi-message/{advertId}
     defaults:
         _controller: SEAuctionBundle:Message:add
+
+se_user_view:
+    path:     /enchirisseur/profile/{id}
+    defaults:
+        _controller: SEUserBundle:User:view
+    requirements:
+        id: \d+

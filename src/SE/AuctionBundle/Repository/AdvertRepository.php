@@ -144,7 +144,8 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
         $qb->innerJoin('a.user', 'u')
             ->addSelect('u');
 
-        $qb->where($qb->expr()->eq('u.id', $userId));
+        $qb->where($qb->expr()->eq('u.id', $userId))
+            ->andWhere($qb->expr()->eq('a.isDeleted', 0));
 
         $qb->getQuery();
 

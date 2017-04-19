@@ -49,8 +49,11 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('au.advert', 'ad')
             ->addSelect('ad');
          
-        $qb->where($qb->expr()->eq('ad.id', $advertId));
-            
+        $qb->where($qb->expr()->eq('ad.id', $advertId))
+            ->andWhere($qb->expr()->eq('ad.isPublished', 1))
+            ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
+            ->andWhere($qb->expr()->eq('ad.isEnabled', 1));
+
         $qb->orderBy('au.dateCreation', 'DESC');
         
         $qb->getQuery();
@@ -65,15 +68,84 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
      $qb=$this->createQueryBuilder('a');
 
         $qb->innerJoin('a.user', 'u')
-            ->addSelect('u');
+            ->addSelect('u')
+            ->leftJoin('a.advert', 'ad')
+            ->addSelect('ad');
 
-        $qb->where($qb->expr()->eq('u.id', $userId));
+        $qb->where($qb->expr()->eq('u.id', $userId))
+            ->andWhere($qb->expr()->eq('ad.isPublished', 1))
+            ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
+            ->andWhere($qb->expr()->eq('ad.isEnabled', 1));
 
         $qb->getQuery();
 
         $qb->setFirstResult(($page-1) * $nbPerPage)
             ->setMaxResults($nbPerPage);
             
+        return new Paginator($qb, true);
+    }
+
+    public function getProposedAuctionUser($userId, $page, $nbPerPage){
+
+        $qb=$this->createQueryBuilder('a');
+
+        $qb->innerJoin('a.user', 'u')
+            ->addSelect('u')
+            ->leftJoin('a.advert', 'ad')
+            ->addSelect('ad');
+
+        $qb->where($qb->expr()->eq('u.id', $userId))
+            ->andWhere($qb->expr()->eq('ad.isPublished', 1))
+            ->andWhere($qb->expr()->eq('a.state', 1))
+            ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
+            ->andWhere($qb->expr()->eq('ad.isEnabled', 1));
+
+        $qb->getQuery();
+
+        $qb->setFirstResult(($page-1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+
+        return new Paginator($qb, true);
+    }
+
+    public function getTerminatedAuctionUser($userId, $page, $nbPerPage){
+
+        $qb=$this->createQueryBuilder('a');
+
+        $qb->innerJoin('a.user', 'u')
+            ->addSelect('u')
+            ->leftJoin('a.advert', 'ad')
+            ->addSelect('ad');
+
+        $qb->where($qb->expr()->eq('u.id', $userId))
+            ->andWhere($qb->expr()->eq('a.state', 0));
+
+        $qb->getQuery();
+
+        $qb->setFirstResult(($page-1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+
+        return new Paginator($qb, true);
+    }
+
+    public function getReceiveAuctionUser($userId, $page, $nbPerPage){
+
+        $qb=$this->createQueryBuilder('a');
+
+        $qb->innerJoin('a.user', 'u')
+            ->addSelect('u')
+            ->leftJoin('a.advert', 'ad')
+            ->addSelect('ad')
+            ->leftJoin('a.user', 'u2')
+            ->addSelect('u2');
+
+        $qb->where($qb->expr()->eq('u2.id', $userId));
+
+        $qb->getQuery();
+
+        $qb->setFirstResult(($page-1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+
         return new Paginator($qb, true);
     }
 }

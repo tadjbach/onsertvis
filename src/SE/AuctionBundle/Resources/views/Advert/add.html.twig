@@ -1,15 +1,17 @@
+{# Ajouter une Demande - Action #}
+
 {% extends "SELayoutBundle::layout.html.twig" %}
 
-{% block title %}
-    Déposer une demande - {{ parent() }}
-{% endblock %}
+    {% block title %}
+        Déposer une demande - {{ parent() }}
+    {% endblock %}
 
-{% block se_layout_body %}
+    {% block se_layout_body %}
 
-    <h4 class="cat-title">Déposer une demande</h4>
-    <div class="col-sm-6 col-md-6">
-        {{ include('SEAuctionBundle:Advert:form.html.twig') }}
-    </div>
-   
-{% endblock %}
+        <h4 class="cat-title">Déposer une demande</h4>
+        <div class="col-sm-6 col-md-6">
+            {{ include('SEAuctionBundle:Advert:form.html.twig') }}
+        </div>
+
+    {% endblock %}
 
