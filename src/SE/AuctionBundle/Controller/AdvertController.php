@@ -52,14 +52,20 @@ class AdvertController extends Controller
         ));
     }
     
-    public function listAction($page)
+    public function listAction(Request $request, $page)
     {
+        $title = $request->get('title');
+        $category = $request->get('category');
+        $region = $request->get('region');
+        $departement = $request->get('departement');
+        $city = $request->get('city');
+        
         $em=$this->getDoctrine()
             ->getManager();
 
          $listAdverts = $em
             ->getRepository('SEAuctionBundle:Advert')
-            ->getAdverts($page, $this->nbPerPage);
+            ->getAdverts($title, $category, $region, $departement, $city, $page, $this->nbPerPage);
          
          $listCategory=$em
                  ->getRepository('SEPortalBundle:Category')
@@ -70,10 +76,13 @@ class AdvertController extends Controller
                 ->findAll();
 
         $listDpt = $em->getRepository('SEPortalBundle:Departement')
-                    ->findAll();
+                    ->getDptByRegion($region);
         
         $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
 
+        $count = count($listAdverts) > 1 ? count($listAdverts).' résultats' :  
+            count($listAdverts).' résultat';
+        
         if ($page<1){
             throw new NotFoundHttpException('page"'.$page.'" inexistante');
         }
@@ -85,7 +94,7 @@ class AdvertController extends Controller
             'listDpt'=>$listDpt,
             'nbPages'     => $nbPages,
             'page'        => $page,
-            'count'     => count($listAdverts)
+            'count'     => $count
         ));
     }
 

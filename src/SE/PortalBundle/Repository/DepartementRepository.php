@@ -10,4 +10,22 @@ namespace SE\PortalBundle\Repository;
  */
 class DepartementRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getDptByRegion($region)
+    {
+         $qb=$this->createQueryBuilder('d');
+
+        $qb
+           ->innerJoin('d.region', 'r')
+            ->addSelect('r');
+
+         if($region !== NULL && $region !== '0')
+        {
+              $qb->where($qb->expr()->eq('r.id', $region));
+        }
+      
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
 }

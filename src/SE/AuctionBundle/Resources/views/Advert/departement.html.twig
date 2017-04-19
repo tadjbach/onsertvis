@@ -1,0 +1,5 @@
+{% for dpt in listDpt %}
+    <option {{ app.request.query.get('departement')== dpt.id ? ' selected ' : ' ' }} 
+        value={{ dpt.id }}>{{ dpt.labelNormal }}
+     </option>
+{% endfor %}

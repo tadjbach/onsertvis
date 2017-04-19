@@ -1,57 +1,75 @@
-
-    <form>
+                           
+    <script type="text/javascript">
+        function reloadDpt(s) {
+            if (s[s.selectedIndex].value !== '0') {
+               $('#departement_id').prop('disabled', false);
+            }
+            else{
+                 $('#departement_id').prop('disabled', 'disabled');
+            }
+          }
+    </script>
+    
+    <form id="form_recherche" action="" method="get">
         <div class="form-group">
             <div class="row filter">
                 <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="Que cherchez-vous?">
+                    <input name="title" type="text" value="{{ app.request.query.get('title') }}" 
+                           class="form-control" 
+                           placeholder="Que cherchez-vous?">
                 </div>
                 <div class="col-md-3">
-                        <select class="form-control">
-                            <option class="active"><a href="#">Toutes les catégories</a></option>
+                        <select class="form-control" name="category">
+                            <option value='0' >Toutes les catégories</option>
                             {% for category in listCategory %}
-                                <option>
-                                    <a href="#">{{ category.labelNormal }}</a>
+                                <option {{ app.request.query.get('category')== category.id ? ' selected ' : ' ' }} 
+                                    value={{ category.id }}>{{ category.labelNormal }}
                                 </option>
                             {% endfor %}
                         </select>
                 </div>
                 <div class="col-md-3">
-                        <select class="form-control">
-                            <option><a href="#">Toutes les régions</a></option>
+                        <select class="form-control" 
+                                name="region" 
+                                id="region" 
+                                onchange="reloadDpt(this)">
+                            <option value='0'>Toutes les régions</option>
                             {% for region in listRegions %}
-                                <option>
-                                    <a href="#">{{ region.labelNormal }}</a>
-                                </option>
+                                 <option {{ app.request.query.get('region')== region.id ? ' selected ' : ' ' }} 
+                                    value={{ region.id }}>{{ region.labelNormal }}
+                                 </option>
                             {% endfor %}
                         </select>
                 </div>
               </div>           
             <div class="row filter">
                 <div class="col-md-6">
-                    <select class="form-control">
-                        <option><a href="#">Tous les départements</a></option>
-                        {% for dpt in listDpt %}
-                            <option>
-                                <a href="#">{{ dpt.labelNormal }}</a>
-                            </option>
-                        {% endfor %}
+                    <select class="form-control" 
+                            name="departement" 
+                            id="departement_id" >
+                        <option value='0'>Tous les départements</option>
+                         {{ include('@SEAuction/Advert/departement.html.twig') }}
                     </select>
                 </div>
                         
                  <div class="col-md-3">
-                    <input type="text" class="form-control" placeholder="Ville ou code postale">
+                    <input name="city" 
+                           type="text" 
+                           class="form-control" 
+                           value="{{ app.request.query.get('city') }}"
+                           placeholder="Ville ou code postale">
                 </div>
                         
-                <div class="col-md-3">
-                    <a class="btn btn-primary btnIcon-search" href="
-                            {{ path('se_auction_advert_list_by_criteria', 
-                                                {   'category': 1, 
-                                                    'region': 10, 
-                                                    'dpt': 34,
-                                                    'city': 12679
-                                                }) }}"
-                            >
-                        <i class="glyphicon glyphicon-search" ></i>
+                <div class="col-md-2">
+                    <input 
+                        class="btn btn-success btnIcon-search"
+                        type="submit" value="Recherche"  />
+                    
+                </div>
+                <div class="col-md-1">
+                    <a class="btn btn-danger" 
+                       href="{{ path('se_auction_advert_list')  }}">
+                        Reset
                     </a>
                 </div>
             </div>

@@ -50,25 +50,66 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($qb, true);
     }
     
-    public function getAdverts($page, $nbPerPage)
+    public function getAdverts($title, $category, $region, $departement, $city, $page, $nbPerPage)
     {
         $qb = $this->createQueryBuilder('ad')
-            ->leftJoin('ad.category', 'cat')
-            ->addSelect('cat')
-            ->orderBy('ad.dateCreation', 'DESC');
+                ->innerJoin('ad.user', 'u')
+                ->addSelect('u')
+                
+                ->innerJoin('u.postalCode', 'cp')
+                ->addSelect('cp')   
+                
+                ->innerJoin('cp.city', 'city')
+                ->addSelect('city')  
+                
+                ->innerJoin('city.departement', 'dpt')
+                ->addSelect('dpt') 
+                
+                ->innerJoin('dpt.region', 'region')
+                ->addSelect('region') 
+                
+                ->leftJoin('ad.category', 'cat')
+                ->addSelect('cat');
         
-             $qb =   $qb->where($qb->expr()->eq('ad.isPublished', 1))
-                ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
-                ->andWhere($qb->expr()->eq('ad.isEnabled', 1))
-                ->getQuery();
+        $qb->where($qb->expr()->eq('ad.isPublished', 1))
+           ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
+           ->andWhere($qb->expr()->eq('ad.isEnabled', 1));
         
-            // On définit l'demande à partir de laquelle commencer la liste
-            $qb->setFirstResult(($page-1) * $nbPerPage)
-            // Ainsi que le nombre d'demande à afficher sur une page
-            ->setMaxResults($nbPerPage);
-
-        // Enfin, on retourne l'objet Paginator correspondant à la requête construite
-        // (n'oubliez pas le use correspondant en début de fichier)
+        if($title !== NULL && $title !== '')
+        {   
+            $qb->andWhere("ad.title LIKE '%$title%'");
+            $qb->orWhere("ad.detail LIKE '%$title%'");
+        }
+       
+        if($category !== NULL && $category !== '0')
+        {
+            $qb->andWhere($qb->expr()->eq('cat.id', $category));
+        }
+        
+        if($region !== NULL && $region !== '0')
+        {
+            $qb->andWhere($qb->expr()->eq('region.id', $region));
+        }
+        
+        if($departement !== NULL && $departement !== '0')
+        {
+            $qb->andWhere($qb->expr()->eq('dpt.id', $departement));
+        }
+        
+         if($city !== NULL && $city !== '')
+        {
+            $qb->andWhere("city.labelNormal LIKE '%$city%'");
+            $qb->orWhere("cp.value LIKE '%$city%'");
+        }
+        
+        $qb->orderBy('ad.dateCreation', 'DESC');   
+        
+        $qb->getQuery();
+        
+        $qb->setFirstResult(($page-1) * $nbPerPage)
+                
+        ->setMaxResults($nbPerPage);
+        
         return new Paginator($qb, true);
     }
     
@@ -176,7 +217,7 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
     
      public function getCountByRegion($regionId){
         
-         $qb=$this->createQueryBuilder('a');
+    $qb=$this->createQueryBuilder('a');
 
         $qb
             ->innerJoin('a.user', 'u')
