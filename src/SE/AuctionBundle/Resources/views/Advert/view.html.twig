@@ -1,209 +1,131 @@
+{# Afficher une demande - Action #}
+
 {% extends "SELayoutBundle::layout.html.twig" %}
 
-{% block title %}
-    {{ advert.title }} - {{ parent() }}
-{% endblock %}
+    {% block title %}
+        {{ advert.title }} - {{ parent() }}
+    {% endblock %}
 
-{% block se_layout_body %}
-    
-    {% if app.session.flashBag.has('success') %}
-        <div class="alert alert-success">
-            {% for msg in app.session.flashBag.get('success') %}
-                {{ msg }}
-            {% endfor %}
-        </div>
-    {% endif %}
-    
-    <h3 class="cat-title">{{ advert.title }}</h3>
-    <div class="col-md-12">
-        <i>Par {{ advert.user }}, le {{ advert.dateCreation|date('d/m/Y') }}</i>
-        <div class="row">
-            <div class="col-md-6">
-               {{ include('@SEAuction/Advert/item.html.twig') }}
+    {% block se_layout_body %}
+
+        {% if app.session.flashBag.has('success') %}
+            <div class="alert alert-success">
+                {% for msg in app.session.flashBag.get('success') %}
+                    {{ msg }}
+                {% endfor %}
             </div>
-            <div class="col-md-6">  
-                <div class="panel">
-                    <div class="panel-body">
-                      <p class="">
-                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user != advert.user %}
-                            <button type="button" 
-                                    class="btn btn-primary" 
-                                    data-toggle="modal" 
-                                    data-target="#modalAuctionAdd">
-                                    <i class="glyphicon glyphicon-euro" ></i> Proposez un prix
-                            </button>
-                            
-                            <button type="button" 
-                                    class="btn btn-primary" 
-                                    data-toggle="modal" 
-                                    data-target="#modalMessageAdd">
-                                    <i class="glyphicon glyphicon-euro" ></i> Contacter
-                            </button>
-                            
-                            {% elseif is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                <a href="{{ path('se_auction_advert_edit',{'id':advert.id}) }}"
-                                  class="btn btn-success" 
-                                  role="button" 
-                                  data-toggle="tooltip" 
-                                  title="Modifier">
-                                    <i class="glyphicon glyphicon-edit"></i> Modifier
-                                </a>
-                                <a href="{{ path('se_auction_advert_delete',{'id':advert.id}) }}"
-                                  class="btn btn-danger" 
-                                  role="button" 
-                                  data-toggle="tooltip" 
-                                  title="Supprimer">
-                                    <i class="glyphicon glyphicon-trash"></i> Supprimer
-                                </a>
-            
-                         {% else %}
-                             <button class="btn btn-primary disabled"
-                                    role="button"  >
-                                 <i class="glyphicon glyphicon-euro" ></i> Proposez un prix
-                            </button>
-                             
-                             <button class="btn btn-primary disabled"
-                                    role="button"  >
-                                 <i class="glyphicon glyphicon-envelope" ></i> Contacter
-                            </button>
-                         {% endif %}
-                            <button class="btn btn-primary"
-                                    role="button" 
-                                    data-toggle="modal" 
-                                    data-target="#modalAuctionShow" >
-                                 <i class="glyphicon glyphicon-list-alt" ></i> Enchères
-                            </button>
-                        </p>
+        {% endif %}
+
+        <h3 class="cat-title">{{ advert.title }}</h3>
+        <div class="col-md-12">
+            <i>Par {{ advert.user }}, le {{ advert.dateCreation|date('d/m/Y') }}</i>
+            <div class="row">
+                <div class="col-md-6">
+                   {{ include('@SEAuction/Advert/item.html.twig') }}
+                </div>
+                <div class="col-md-6">
+                    <div class="panel">
+                        <div class="panel-body">
+                          <p class="">
+                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user != advert.user %}
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        data-toggle="modal"
+                                        data-target="#modalAuctionAdd">
+                                        <i class="glyphicon glyphicon-euro" ></i> Proposez un prix
+                                </button>
+
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        data-toggle="modal"
+                                        data-target="#modalMessageAdd">
+                                        <i class="glyphicon glyphicon-euro" ></i> Contacter
+                                </button>
+
+                                {% elseif is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                    <a href="{{ path('se_auction_advert_edit',{'id':advert.id}) }}"
+                                      class="btn btn-success"
+                                      role="button"
+                                      data-toggle="tooltip"
+                                      title="Modifier">
+                                        <i class="glyphicon glyphicon-edit"></i> Modifier
+                                    </a>
+                                    <a href="{{ path('se_auction_advert_delete',{'id':advert.id}) }}"
+                                      class="btn btn-danger"
+                                      role="button"
+                                      data-toggle="tooltip"
+                                      title="Supprimer">
+                                        <i class="glyphicon glyphicon-trash"></i> Supprimer
+                                    </a>
+
+                             {% else %}
+                                 <button class="btn btn-primary disabled"
+                                        role="button"  >
+                                     <i class="glyphicon glyphicon-euro" ></i> Proposez un prix
+                                </button>
+
+                                 <button class="btn btn-primary disabled"
+                                        role="button"  >
+                                     <i class="glyphicon glyphicon-envelope" ></i> Contacter
+                                </button>
+                             {% endif %}
+                                <button class="btn btn-primary"
+                                        role="button"
+                                        data-toggle="modal"
+                                        data-target="#modalAuctionShow" >
+                                     <i class="glyphicon glyphicon-list-alt" ></i> Enchères
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-default cadre">
+                        <div class="panel-heading text-center">Détail de la demande</div>
+                        <div class="panel-body">
+                          <p>{{ advert.detail |nl2br }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-6">  
-                <div class="panel panel-default cadre">
-                    <div class="panel-heading text-center">Détail de la demande</div>
-                    <div class="panel-body">
-                      <p>{{ advert.detail |nl2br }}</p>
-                    </div>
-                </div>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <div class="modal fade"
+                 id="modalAuctionAdd"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="modalAuctionAddLabel">
+                {{ render(controller('SEAuctionBundle:Auction:add', {'request': app.request,'advertId':advert.id} )) }}
             </div>
-        </div>
-    </div>
-                        
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <div class="modal fade" 
-             id="modalAuctionAdd" 
-             tabindex="-1" 
-             role="dialog" 
-             aria-labelledby="modalAuctionAddLabel">
-            {{ render(controller('SEAuctionBundle:Auction:add', {'request': app.request,'advertId':advert.id} )) }}
-        </div>
-        
-        <div class="modal fade" 
-             id="modalMessageAdd" 
-             tabindex="-1" 
-             role="dialog" 
-             aria-labelledby="modalMessageAddLabel">
-            {{ render(controller('SEAuctionBundle:Message:add', {'request': app.request,'advertId':advert.id} )) }}
-        </div>
-    {% endif %}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        <div class="modal fade" 
-             id="modalAuctionShow" 
-             tabindex="-1" 
-             role="dialog" 
-             aria-labelledby="modalAuctionShowLabel">
-                <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Historique d'enchère</h4>
+
+            <div class="modal fade"
+                 id="modalMessageAdd"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="modalMessageAddLabel">
+                {{ render(controller('SEAuctionBundle:Message:add', {'request': app.request,'advertId':advert.id} )) }}
+            </div>
+        {% endif %}
+
+            <div class="modal fade"
+                 id="modalAuctionShow"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="modalAuctionShowLabel">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Historique d'enchère</h4>
+                      </div>
+                      <div class="modal-body">
+                          {{ include('@SEAuction/Advert/listAuction.html.twig') }}
+                      </div>
+                    </div>
                   </div>
-                  <div class="modal-body">
-                 {% if countAuctions > 0 %}
-                    <table class="table" id="tblGrid">
-                        <thead id="tblHead">
-                          <tr>
-                            <th>Enchérisseur</th>
-                            <th>Note</th>
-                            <th class="text-center">Montant</th>
-                            <th class="text-center">Date</th>
-                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user == advert.user %}
-                                <th class="text-center">Mon choix</th>
-                            {% endif %}
-                          </tr>
-                        </thead>
-                        <tbody>
-                            {% for auction in listAuctions %}
-                                <tr>
-                                    <td class="text-left">{{ auction.user }}</td>
-                                    <td class="text-left">
-                                        {% if auction.user.rate == -1 or auction.user.rate == null or auction.user.rate == 0 %}
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                        {% elseif auction.user.rate == 1 %}
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                        {% elseif auction.user.rate == 2 %}
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                         {% elseif auction.user.rate == 3 %}
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                         {% elseif auction.user.rate == 4 %}
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star-empty"></i> 
-                                            {% elseif auction.user.rate == 5 %}
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                            <i class="glyphicon glyphicon-star rate-success"></i> 
-                                        {% endif %}
-                                    </td>
-                                    <td class="text-right bold">{{ auction.value|number_format(0, ' ', ' ') }} €</td>
-                                    <td class="text-right">{{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:m:s') }}</td>
-                                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user == advert.user %}
-                                        <td class="text-center">
-                                            <a href="{{ path('se_auction_auction_list_by_user') }}"
-                                               type="button" class="btn btn-success" >
-                                                <i class="glyphicon glyphicon-thumbs-up" ></i>
-                                            </a>
-                                        </td>
-                                    {% endif %}
-                                </tr>
-                              {% endfor %}
-                        </tbody>
-                      </table>
-                {% else %}
-                    <div>Aucune enchère pour l'instant</div>
-                {% endif %}
-                  </div>
-                </div>
-              </div>
-        </div>  
-{% endblock %}
+            </div>
+    {% endblock %}

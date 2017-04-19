@@ -1,3 +1,5 @@
+{# Afficher les enchère - Action #}
+
 {% extends "SELayoutBundle::layout.html.twig" %}
 
 {% block title %}
@@ -11,17 +13,39 @@
         <div class="row">
             <div id="menu" class="col-md-12">
                 <h4 class="cat-title">Filter les résultats</h4>
-                filter
+
+                <a href="{{ path('se_auction_auction_list_by_user') }}"
+                   class="btn btn-primary"
+                   role="button" >
+                    Toutes les enchères
+                </a>
+
+                <a href="{{ path('se_auction_auction_list_by_user_proposed') }}"
+                   class="btn btn-warning"
+                   role="button" >
+                    Enchères proposées
+                </a>
+
+                <a href="{{ path('se_auction_auction_list_by_user_receive') }}"
+                   class="btn btn-danger"
+                   role="button" >
+                    Enchères reçues
+                </a>
+
+                <a href="{{ path('se_auction_auction_list_by_user_terminated') }}"
+                   class="btn btn-success"
+                   role="button" >
+                    Enchères terminées
+                </a>
+
+
+
             </div>
         </div>
-        <h4 class="cat-title">{{count}} Enchères</h4>
+        <h4 class="cat-title">{{countAuctions}} Enchères</h4>
         <div class="row">
             <div id="content" class="col-md-12">
-                {% for auction in listAuction %}
-                    {{ include('@SEAuction/Auction/item.html.twig') }}
-                {% else %}
-                        <div>Pas (encore !) d'enchères</div>
-                {% endfor %}
+                {{ include('@SEAuction/Auction/listAuction.html.twig') }}
             </div>
         </div>
         <div class="row">

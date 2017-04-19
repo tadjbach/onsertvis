@@ -43,7 +43,7 @@ class AdvertController extends Controller
 
                 $request->getSession()->getFlashBag()->add('notice', 'Demande bien enregistrée.');
 
-                return $this->redirectToRoute('se_auction_advert_view', array('id'=>$advert->getId()));
+                return $this->redirectToRoute('se_auction_advert_list_by_user');
             }
         }
 
@@ -171,7 +171,11 @@ class AdvertController extends Controller
         $form = $this->createFormBuilder()->getForm();
 
         if ($form->handleRequest($request)->isValid()) {
-            $em->remove($advert);
+
+            $advert->setIsDeleted(true);
+            $advert->setIsPublished(false);
+            $advert->setIsEnabled(false);
+
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('info', "La demande a bien été supprimée.");
