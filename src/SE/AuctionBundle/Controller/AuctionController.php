@@ -16,6 +16,41 @@ class AuctionController extends Controller
 {
      private $nbPerPage = 36;
 
+    /**
+     * @var \Swift_Mailer
+     */
+    protected $mailer;
+
+    /**
+     * @var UrlGeneratorInterface
+     */
+    protected $router;
+
+    /**
+     * @var EngineInterface
+     */
+    protected $templating;
+
+    /**
+     * @var array
+     */
+    protected $parameters;
+
+    /**
+     * @param string $renderedTemplate
+     * @param string $fromEmail
+     * @param string $toEmail
+     */
+    protected function sendEmailMessage($body,  $subject, $fromEmail, $toEmail)
+    {
+        $message = \Swift_Message::newInstance()
+        ->setSubject($subject)
+        ->setFrom($fromEmail)
+        ->setTo($toEmail)
+        ->setBody($body);
+        
+        $this->get('mailer')->send($message);
+    }
     
     /**
      * @Security("has_role('ROLE_AUTEUR')")
@@ -43,6 +78,13 @@ class AuctionController extends Controller
                 $em->flush();
 
                $request->getSession()->getFlashBag()->add('notice', 'Votre enchère est validée.');
+               
+               //envoi de mail au proprio
+
+                $this->sendEmailMessage('Une enchère sur votre demande'.$advert->getTitle(),
+                    'Une enchère sur votre demande '.$advert->getTitle(),
+                        'noreplay@serviceenchere.fr',
+                        (string) $advert->getUser()->getEmail());
             }
         }
 
@@ -68,9 +110,8 @@ class AuctionController extends Controller
 
          $listAuctions = $em
             ->getRepository('SEAuctionBundle:Auction')
-            ->getAuctionUser($user->getId(), $page, $this->nbPerPage);
+            ->getAllAuctionUser($user->getId(), $page, $this->nbPerPage);
          
-        
         $nbPages = ceil(count($listAuctions)/$this->nbPerPage);
 
         if ($page<1){
@@ -171,4 +212,36 @@ class AuctionController extends Controller
             'countAuctions'     => count($listAuctions)
         ));
     }
-}
+    
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function acceptAction( $auctionId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $auction=$em->find('SEAuctionBundle:Auction', $auctionId);
+        $user = $this->getUser();
+        $page = 1;
+        
+        if ($auction !== null && $user !== null){
+            $auction->setState(2);
+            $em->persist($auction);
+            $em->flush();
+        }
+        
+        $listAuctions = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getAllAuctionUser($user->getId(), $page, $this->nbPerPage);
+
+
+        $nbPages = ceil(count($listAuctions)/$this->nbPerPage);
+        
+        return $this->render('SEAuctionBundle:Auction:list.html.twig', array(
+            'listAuctions'=> $listAuctions,
+            'nbPages'     => $nbPages,
+            'page'        => $page,
+            'countAuctions'     => count($listAuctions)
+        ));
+    }
+    
+}  

@@ -15,16 +15,16 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getAuctionAdvert($page, $nbPerPage){
         
-        $qb = $this->createQueryBuilder('au');
+        $qb = $this->createQueryBuilder('auction');
         
          $qb
-            ->leftJoin('au.advert', 'ad')
-            ->addSelect('ad')
-            ->leftJoin('ad.category', 'cat')
-            ->addSelect('cat');
+            ->leftJoin('auction.advert', 'advert')
+            ->addSelect('advert')
+            ->leftJoin('advert.category', 'category')
+            ->addSelect('category');
             
                 
-        $qb->orderBy('ad.dateCreation', 'DESC');
+        $qb->orderBy('advert.dateCreation', 'DESC');
 
         $qb->where($qb->expr()->eq('ad.isPublished', 1))
                 ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
@@ -43,18 +43,18 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
     
     
     public function getLastAuction($advertId){
-         $qb = $this->createQueryBuilder('au');
+         $qb = $this->createQueryBuilder('auction');
         
          $qb
-            ->leftJoin('au.advert', 'ad')
-            ->addSelect('ad');
+            ->leftJoin('auction.advert', 'advert')
+            ->addSelect('advert');
          
-        $qb->where($qb->expr()->eq('ad.id', $advertId))
-            ->andWhere($qb->expr()->eq('ad.isPublished', 1))
-            ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
-            ->andWhere($qb->expr()->eq('ad.isEnabled', 1));
+        $qb->where($qb->expr()->eq('advert.id', $advertId))
+            ->andWhere($qb->expr()->eq('advert.isPublished', 1))
+            ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
+            ->andWhere($qb->expr()->eq('advert.isEnabled', 1));
 
-        $qb->orderBy('au.dateCreation', 'DESC');
+        $qb->orderBy('auction.dateCreation', 'DESC');
         
         $qb->getQuery();
         
@@ -63,19 +63,22 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->getResult(); 
     }
     
-     public function getAuctionUser($userId, $page, $nbPerPage){
+     public function getAllAuctionUser($userId, $page, $nbPerPage){
         
-     $qb=$this->createQueryBuilder('a');
+     $qb=$this->createQueryBuilder('auction');
 
-        $qb->innerJoin('a.user', 'u')
-            ->addSelect('u')
-            ->leftJoin('a.advert', 'ad')
-            ->addSelect('ad');
+        $qb->innerJoin('auction.user', 'user_auction')
+            ->addSelect('user_auction')
+            ->leftJoin('auction.advert', 'advert')
+            ->addSelect('advert')
+            ->leftJoin('advert.user', 'user_advert')
+            ->addSelect('user_advert');
 
-        $qb->where($qb->expr()->eq('u.id', $userId))
-            ->andWhere($qb->expr()->eq('ad.isPublished', 1))
-            ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
-            ->andWhere($qb->expr()->eq('ad.isEnabled', 1));
+        $qb->where($qb->expr()->eq('user_auction.id', $userId))
+                ->orWhere($qb->expr()->eq('user_advert.id', $userId))
+            ->andWhere($qb->expr()->eq('advert.isPublished', 1))
+            ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
+            ->andWhere($qb->expr()->eq('advert.isEnabled', 1));
 
         $qb->getQuery();
 
@@ -87,18 +90,18 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
 
     public function getProposedAuctionUser($userId, $page, $nbPerPage){
 
-        $qb=$this->createQueryBuilder('a');
+        $qb=$this->createQueryBuilder('auction');
 
-        $qb->innerJoin('a.user', 'u')
-            ->addSelect('u')
-            ->leftJoin('a.advert', 'ad')
-            ->addSelect('ad');
+        $qb->innerJoin('auction.user', 'user_auction')
+            ->addSelect('user_auction')
+            ->leftJoin('auction.advert', 'advert')
+            ->addSelect('advert');
 
-        $qb->where($qb->expr()->eq('u.id', $userId))
-            ->andWhere($qb->expr()->eq('ad.isPublished', 1))
-            ->andWhere($qb->expr()->eq('a.state', 1))
-            ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
-            ->andWhere($qb->expr()->eq('ad.isEnabled', 1));
+        $qb->where($qb->expr()->eq('user_auction.id', $userId))
+            ->andWhere($qb->expr()->eq('advert.isPublished', 1))
+            ->andWhere($qb->expr()->eq('auction.state', 1))
+            ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
+            ->andWhere($qb->expr()->eq('advert.isEnabled', 1));
 
         $qb->getQuery();
 
@@ -110,15 +113,15 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
 
     public function getTerminatedAuctionUser($userId, $page, $nbPerPage){
 
-        $qb=$this->createQueryBuilder('a');
+        $qb=$this->createQueryBuilder('auction');
 
-        $qb->innerJoin('a.user', 'u')
-            ->addSelect('u')
-            ->leftJoin('a.advert', 'ad')
-            ->addSelect('ad');
+        $qb->innerJoin('auction.user', 'user_auction')
+            ->addSelect('user_auction')
+            ->leftJoin('auction.advert', 'advert')
+            ->addSelect('advert');
 
-        $qb->where($qb->expr()->eq('u.id', $userId))
-            ->andWhere($qb->expr()->eq('a.state', 0));
+        $qb->where($qb->expr()->eq('user_auction.id', $userId))
+            ->andWhere($qb->expr()->eq('auction.state', 2));
 
         $qb->getQuery();
 
@@ -130,16 +133,16 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
 
     public function getReceiveAuctionUser($userId, $page, $nbPerPage){
 
-        $qb=$this->createQueryBuilder('a');
+        $qb=$this->createQueryBuilder('auction');
 
-        $qb->innerJoin('a.user', 'u')
-            ->addSelect('u')
-            ->leftJoin('a.advert', 'ad')
-            ->addSelect('ad')
-            ->leftJoin('a.user', 'u2')
-            ->addSelect('u2');
+        $qb->innerJoin('auction.user', 'user_auction')
+            ->addSelect('user_auction')
+            ->leftJoin('auction.advert', 'advert')
+            ->addSelect('advert')
+            ->leftJoin('advert.user', 'user_advert')
+            ->addSelect('user_advert');
 
-        $qb->where($qb->expr()->eq('u2.id', $userId));
+        $qb->where($qb->expr()->eq('user_advert.id', $userId));
 
         $qb->getQuery();
 

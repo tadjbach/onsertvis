@@ -101,6 +101,14 @@ se_auction_add:
     path:     /demande/propser-enchere/{advertId}
     defaults:
         _controller: SEAuctionBundle:Auction:add
+        
+se_auction_auction_accept:
+    path:     /tableau-de-bord/accepter-enchere/{auctionId}
+    defaults:
+        _controller: SEAuctionBundle:Auction:accept
+        page:        1
+    requirements:
+        page: \d*
 
 #Account - Message
 se_auction_message_list:

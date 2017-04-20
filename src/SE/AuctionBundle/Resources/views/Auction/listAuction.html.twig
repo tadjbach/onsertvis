@@ -64,10 +64,24 @@
                 <td class="text-right bold">{{ auction.value|number_format(0, ' ', ' ') }} €</td>
                 <td class="text-right">{{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:m:s') }}</td>
                     <td class="text-center">
-                        <a href="{{ path('se_auction_auction_list_by_user') }}"
-                           type="button" class="btn btn-success" >
+                        {% if auction.state == 1 %}
+                        <a href="{{ path('se_auction_auction_accept', {'auctionId': auction.id}) }}"
+                           type="button" class="btn btn-primary" >
                             <i class="glyphicon glyphicon-thumbs-up" ></i>
                         </a>
+                        {% elseif auction.state == 2%}
+                        <a href="#"
+                           type="button" class="btn btn-success" >
+                            <i class="glyphicon glyphicon-ok" ></i>
+                        </a>
+                        
+                        {% elseif auction.state == 3 %}
+                        <a href="#"
+                           type="button" class="btn btn-danger" >
+                            <i class="glyphicon glyphicon-ok" ></i>
+                        </a>
+                        
+                        {% endif %}
                     </td>
             </tr>
         {% endfor %}
