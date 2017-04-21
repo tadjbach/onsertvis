@@ -124,6 +124,20 @@ se_auction_message_add:
     defaults:
         _controller: SEAuctionBundle:Message:add
 
+#Account - Comment
+se_auction_comment_list:
+    path: /tableau-de-bord/mes-commentaires/{page}
+    defaults:
+        _controller: SEAuctionBundle:Comment:list
+        page:        1
+    requirements:
+        page: \d*
+        
+se_auction_comment_add:
+    path:     /contact/ajouter-comment/{advertId}
+    defaults:
+        _controller: SEAuctionBundle:Comment:add
+        
 se_user_view:
     path:     /enchirisseur/profile/{id}
     defaults:

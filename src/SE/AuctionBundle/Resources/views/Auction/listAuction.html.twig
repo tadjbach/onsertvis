@@ -70,11 +70,18 @@
                             <i class="glyphicon glyphicon-thumbs-up" ></i>
                         </a>
                         {% elseif auction.state == 2%}
+                        <button 
+                           class="btn btn-primary"
+                                        data-toggle="modal"
+                                        data-target="#modalCommentAdd">
+                            <i class="glyphicon glyphicon-comment" ></i>
+                            Evaluer
+                        </button>
                         <a href="#"
                            type="button" class="btn btn-success" >
                             <i class="glyphicon glyphicon-ok" ></i>
+                            Accepter
                         </a>
-                        
                         {% elseif auction.state == 3 %}
                         <a href="#"
                            type="button" class="btn btn-danger" >
@@ -90,3 +97,11 @@
 {% else %}
     <div>Aucune enchère pour l'instant</div>
 {% endif %}
+
+<div class="modal fade"
+    id="modalCommentAdd"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modalCommentAddLabel">
+    {{ render(controller('SEAuctionBundle:Comment:add', {'request': app.request,'advertId': 4} )) }}
+</div>
