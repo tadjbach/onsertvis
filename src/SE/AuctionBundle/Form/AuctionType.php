@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class AuctionType extends AbstractType
 {
@@ -21,11 +21,14 @@ class AuctionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                 ->add('value', TextType::class, array('label'=> 'Vous proposez combien ?'))
+                  ->add('value', NumberType::class, array('label'=> false,
+                    'attr' => array('maxlength' => 50,
+                    'placeholder' => 'Proposez un prix (en euro)')
+                    ))
                  ->add('save', SubmitType::class, 
                                 array('label'=> 'Enchérir',
                                     'attr'   =>  array(
-                                                'class'   => 'btn btn-primary')));
+                                                'class'   => 'btn se-btn-action')));
     }
     
     /**

@@ -1,5 +1,7 @@
+<!-- NEW -->
 <nav class="navbar navbar-default se-header">
     <div class="container-fluid">
+        <!-- LEFT - LOGO -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -8,36 +10,28 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand logo" href="{{ path('se_layout_homepage') }}">Service Enchère</a>
+            <a class="navbar-brand se-color-1 logo" href="{{ path('se_layout_homepage') }}">$ervice €nchère</a>
         </div>
 
+        <!-- RIGTH - MENU -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-
                 <li>
                     <a href="{{ path('se_auction_advert_list')  }}">
-                        
-                        {{ 'Liste des demandes'|upper }}
+                        Toutes les demandes
                     </a>
                 </li>
-                <li><a href="{{ path('se_auction_advert_add') }}">
-                        {{ 'Déposer une demande'|upper }}
-                        </a>
+                <li>
+                    <a href="{{ path('se_auction_advert_add') }}">
+                        Déposer une demande
+                    </a>
                 </li>
-
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li role="presentation" class="dropdown">
-                            <a class="dropdown-toggle" 
-                               data-toggle="dropdown" 
-                               href="#" 
-                               role="button" 
-                               aria-haspopup="true" 
-                               aria-expanded="false">
-                                
-                                <i class="glyphicon glyphicon-user" 
-                                   data-toggle="tooltip" 
-                                   data-placement="bottom"
-                                   title="Mon compte">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" 
+                               role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="glyphicon glyphicon-user"  data-toggle="tooltip" 
+                                   data-placement="bottom" title="Mon compte">
                                 </i>
                                 <span class="caret"></span>
                             </a>
@@ -50,16 +44,13 @@
                                 <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
                             </ul>
                         </li>
-                {% else %}
-                    <li>
-                        <a href="{{ path('fos_user_security_login') }}">
-                            <i class="glyphicon glyphicon-user" 
-                               data-toggle="tooltip" 
-                               data-placement="bottom"
-                               title="Mon compte"></i>
-                        </a>
-                    </li>
-                {% endif %}
+                    {% else %}
+                        <li>
+                            <a href="{{ path('fos_user_security_login') }}">
+                                Se connecter
+                            </a>
+                        </li>
+                    {% endif %}
             </ul>
         </div>
     </div>

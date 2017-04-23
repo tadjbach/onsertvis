@@ -1,12 +1,12 @@
 {% extends "SELayoutBundle::layout.html.twig" %}
 
 {% block title %}
-    {{ parent() }}
+    {{ parent() }} - Trouvez le bon service au bon prix
 {% endblock %}
 
 {% block se_layout_body %}
- <br>
-<div class="well se-well">
+
+<div class="well slogan-well">
     
     <div class="slogan"><p>Trouvez le bon service au bon prix !</p></div>
     <br>
@@ -29,8 +29,8 @@
                     <span class="label label-default se-badge">1</span> 
                     <a class="slogan-link" href="{{ path('fos_user_registration_register') }}">Inscrivez vous</a>
                 </h4>
-                <h4><span class="label label-default se-badge">2</span> Recevez des demandes</h4>
-                <h4><span class="label label-default se-badge">3</span> Enchérissez et gagnez</h4>
+                <h4><span class="label label-default se-badge">2</span> Passez des enchères et gagnez</h4>
+                <h4><span class="label label-default se-badge">3</span> Retrouver le demandeur</h4>
             </div>
     </div>
 </div>
@@ -39,31 +39,30 @@
 <div class="well se-well">
     <div class="index-container" >
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <h4 class="cat-title">Par Catégories</h4>
                 <ul class="ul-cat">
                     {% for category in listCategory %}
                         <li>
-                            <a class="cat-link" href="{{ path('se_auction_advert_list_by_category', { 'catgeory': category.slug } ) }}">
+                            <a class="cat-link" href="{{ path('se_auction_advert_list' , {'category' : category.id }) }}">
                                 {{ category.labelNormal }} 
-                               <!-- {{ render(controller('SEAuctionBundle:Advert:countByCategory', { 'categoryId': category.id })) }}-->
                             </a>
                         </li>
                     {% endfor %}
                 </ul>
-                <br>
-                 <h4 class="cat-title">Par Régions</h4>
+                <div class="seprate-white"></div>
+                <h4 class="cat-title">Par Régions</h4>
                 <ul class="ul-cat">
                     {% for region in listRegion %}
                         <li>
-                            <a class="cat-link" href="{{ path('se_auction_advert_list_by_region', { 'region': region.slug }) }}">
+                            <a class="cat-link" href="{{ path('se_auction_advert_list', { 'region': region.id }) }}">
                                 {{ region.labelNormal }}
                             </a>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
-            <div class="col-md-9 text-center">
+            <div class="col-md-8 text-center">
                 <div id="cmap"></div>
             </div>
         </div>

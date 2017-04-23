@@ -25,15 +25,9 @@
     {{ include('@SELayout/Default/header.html.twig') }}
 
     <!-- CONTAINER -->
-    <div class="container">
-        <!-- BODY -->
-        <div class="row">
-            <div id="content" class="col-md-12">
-                {% block body %}
-                {% endblock %}
-            </div>
-        </div>
-    </div>
+    {% block body %}
+    {% endblock %}
+            
     <!-- PAGE - FOOTER - SERVICE -->
     {{ include('@SELayout/Default/footer.html.twig') }}
 
@@ -48,7 +42,7 @@
         </script>
     {% endblock %}
     
-        <script src="../../js/france.js" ></script>
+    <script src="../../js/france.js" ></script>
     <script src="../../js/cmap.js" ></script>
     <script>
     $(document).ready(function(){

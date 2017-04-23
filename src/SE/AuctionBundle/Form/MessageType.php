@@ -17,11 +17,14 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                 ->add('content', TextareaType::class, array('label'=> 'Contenu'))
+                ->add('content', TextareaType::class, array('label'=> false,
+                    'attr' => array('maxlength' => 1000,
+                    'placeholder' => 'Demandez une information (1000 caratères maximum)')
+                    ))
                  ->add('save', SubmitType::class, 
                                 array('label'=> 'Envoyer',
                                     'attr'   =>  array(
-                                                'class'   => 'btn btn-primary')));
+                                                'class'   => 'btn se-btn-action')));
     }
     
     /**

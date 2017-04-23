@@ -78,10 +78,15 @@ class AdvertController extends Controller
         $listDpt = $em->getRepository('SEPortalBundle:Departement')
                     ->getDptByRegion($region);
         
+        $countAdvert = count($listAdverts);
+        
+        
         $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
 
-        $count = count($listAdverts) > 1 ? count($listAdverts).' résultats' :  
-            count($listAdverts).' résultat';
+        $titleResult = $countAdvert == 0 ?'Aucune demande trouvée !' :
+                (count($listAdverts) > 1 ? count($listAdverts).' résultats' :  
+            count($listAdverts).' résultat')
+                ;
         
         if ($page<1){
             throw new NotFoundHttpException('page"'.$page.'" inexistante');
@@ -94,7 +99,7 @@ class AdvertController extends Controller
             'listDpt'=>$listDpt,
             'nbPages'     => $nbPages,
             'page'        => $page,
-            'count'     => $count
+            'titleResult'     => $titleResult
         ));
     }
 
@@ -104,7 +109,17 @@ class AdvertController extends Controller
             ->getManager();
 
         $advert=$em->find('SEAuctionBundle:Advert', $id);
+        $countAuctions = '0 enchère';
 
+        $userConnect = $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        $userApp = $this->getUser();
+        $userAdvert = $advert->getUser();
+       
+        $owner = $userApp === $userAdvert;
+        
+        $disabled = $userConnect ? ($owner ? 'btn-default disabled' : 'se-btn-action')
+                : 'btn-default disabled';
+        
         $listAuctions=$em->getRepository('SEAuctionBundle:Auction')
             ->findBy(
                 array('advert'=>$advert),
@@ -112,6 +127,10 @@ class AdvertController extends Controller
                 $limit=null,
                 $offset=null);
 
+        if (count($listAuctions) > 0) {
+           $countAuctions = count($listAuctions) <= 1 ? count($listAuctions).' enchère' : count($listAuctions).' enchères';
+        }
+        
         if (null===$advert){
             throw new NotFoundHttpException("Oops, La demande  que vous cherchez n'existe pas.");
         }
@@ -119,7 +138,8 @@ class AdvertController extends Controller
         return $this->render('SEAuctionBundle:Advert:view.html.twig', array(
             'advert'=>$advert,
             'listAuctions'=>$listAuctions,
-            'countAuctions'=>count($listAuctions)
+            'countAuctions'=>$countAuctions,
+            'connectAndOwner'=>$disabled
         ));
     }
 
@@ -198,42 +218,6 @@ class AdvertController extends Controller
             'form'   => $form->createView()
         ));
     }
-
-   public function listByCategoryAction($catgeory)
-    {
-          $catgeoryLabelNormal=$this->getDoctrine()
-            ->getManager()->getRepository('SEPortalBundle:Category')
-            ->findBy(
-                array('slug'=>$catgeory)
-            );
-
-        $listAdverts=$this->getDoctrine()
-            ->getManager()->getRepository('SEAuctionBundle:Advert')
-            ->getAdvertByCategory($catgeory, 10);
-
-        return $this->render('SEAuctionBundle:Advert:listByCategory.html.twig', array(
-            'listAdverts'=>$listAdverts,
-            'catgeoryLabelNormal'=>$catgeoryLabelNormal
-        ));
-    }
-    
-    public function listByRegionAction($region)
-    {
-        $regionLabelNormal=$this->getDoctrine()
-            ->getManager()->getRepository('SEPortalBundle:Region')
-            ->findBy(
-                array('slug'=>$region)
-            );
-
-        $listAdverts=$this->getDoctrine()
-            ->getManager()->getRepository('SEAuctionBundle:Advert')
-            ->getAdvertByRegion($region, 10);
-
-        return $this->render('SEAuctionBundle:Advert:listByRegion.html.twig', array(
-            'listAdverts'=>$listAdverts,
-            'regionLabelNormal'=>$regionLabelNormal
-        ));
-    }
     
     /**
      * @Security("has_role('ROLE_AUTEUR')")
@@ -259,19 +243,20 @@ class AdvertController extends Controller
     public function viewLastAuctionAction($advertId)
     {
         $em = $this->getDoctrine()->getManager();
-        $auctionValue = 'Aucune enchère <br> --- €';
+        $suffix = '0 enchère';
+        $price = '-- €';
         
         $lastAuction = $em
             ->getRepository('SEAuctionBundle:Auction')
             ->getLastAuction($advertId);
         
-        
-        $suffix = count($lastAuction) == 1 ? 'Une enchère' : count($lastAuction).' enchères';
-        
         if (count($lastAuction) > 0) {
            $price = $this->priceFormat($lastAuction[0]->getValue());
-           $auctionValue = $suffix.' <br> '.$price;
+           $suffix = count($lastAuction) <= 1 ? count($lastAuction).' enchère' : count($lastAuction).' enchères';
         }
+        
+        $auctionValue = '<p class="text-left se-nb-auction">'.$suffix.'</p><div class="text-right"><span class="label se-price-badge">'.$price.'</span></div>';
+        
         return new Response(
             $auctionValue
         );
@@ -279,61 +264,6 @@ class AdvertController extends Controller
     
     private function priceFormat($price){
         return number_format($price, 0,' ',' ').' €';
-    }
-   
-    public function countByCategoryAction($categoryId)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $res = '(0)';
-        
-        $countByCategory = $em
-            ->getRepository('SEAuctionBundle:Advert')
-            ->getCountByCategory($categoryId);
-        
-            if (count($countByCategory) > 0) {
-               $count = count($countByCategory);
-                $res = '('.number_format($count, 0, ' ' ,' ').')';
-            }
-        return new Response(
-            $res
-        );
-    }
-    
-     public function listByCriteriaAction($category, $region, $dpt, $city, $page)
-    {
-        $em=$this->getDoctrine()
-            ->getManager();
-
-         $listAdverts = $em
-            ->getRepository('SEAuctionBundle:Advert')
-            ->getAdvertsByFilter($category, $region, $dpt, $city, $page, $this->nbPerPage);
-         
-         $listCategory=$em
-                 ->getRepository('SEPortalBundle:Category')
-                 ->findAll();
-
-        $listRegions=$em
-                ->getRepository('SEPortalBundle:Region')
-                ->findAll();
-
-        $listDpt = $em->getRepository('SEPortalBundle:Departement')
-                    ->findAll();
-        
-        $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
-
-        if ($page<1){
-            throw new NotFoundHttpException('page"'.$page.'" inexistante');
-        }
-
-        return $this->render('SEAuctionBundle:Advert:list.html.twig', array(
-            'listAdverts'=> $listAdverts,
-            'listCategory'=>$listCategory,
-            'listRegions'=>$listRegions,
-            'listDpt'=>$listDpt,
-            'nbPages'     => $nbPages,
-            'page'        => $page,
-            'count'     => count($listAdverts)
-        ));
     }
 }
 

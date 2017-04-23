@@ -7,9 +7,9 @@
  Author URI: http://www.cmap.comersis.com
  License: non-comercial
  */
-var mapfill = "#FFF";		// Couleur de remplissage des régions
-var maphover_fill = "#007F6A";	// Couleur de survol au passage de la souris
-var mapstroke = "#007F6A";		// Couleur des lignes de séparation des régions
+var mapfill = "#fff";		// Couleur de remplissage des régions
+var maphover_fill = "#E5DF16";	// Couleur de survol au passage de la souris
+var mapstroke = "#2A0540";		// Couleur des lignes de séparation des régions
 var mapstroke_width = 1.2;		// Epaisseur des lignes de séparation des régions (en points)
 var mapWidth=550;				// Largeur de la carte en pixels
 var mapHeight=550;				// Hauteur de la carte en pixels (facultatif)
@@ -26,55 +26,55 @@ var mapHeight=550;				// Hauteur de la carte en pixels (facultatif)
 var paths = {
         Z1: {
             title: "Alsace-Champagne-Ardenne-Lorraine",
-            url: "/demande/region/grand-est"
+            url: "/demande/liste?region=6"
         },
         Z2: {
             title: "Aquitaine-Limousin-Poitou-Charentes",
-            url: "/demande/region/nouvelle-aquitaine"
+            url: "/demande/liste?region=10"
         },
         Z3: {
             title: "Auvergne-Rhône-Alpes",
-            url: "/demande/region/auvergne-rhone-alpes"
+            url: "/demande/liste?region=1"
         },
         Z4: {
             title: "Bourgogne-Franche-Comté",
-            url: "/demande/region/bourgogne-franche-comte"
+            url: "/demande/liste?region=2"
         },
         Z5: {
             title: "Bretagne",
-            url: "/demande/region/bretagne"
+            url: "/demande/liste?region=3"
         },
         Z6: {
             title: "Centre",
-            url: "/demande/region/centre-val-de-loire"
+            url: "/demande/liste?region=4"
         },
         Z7: {
             title: "Corse",
-            url: "/demande/region/corse"
+            url: "/demande/liste?region=5"
         },
         Z8: {
             title: "Languedoc-Roussillon-Midi-Pyrénées",
-            url: "/demande/region/occitanie"
+            url: "/demande/liste?region=11"
         },
         Z9: {
             title: "Ile-de-France",
-            url: "/demande/region/ile-de-france"
+            url: "/demande/liste?region=8"
         },
         Z10: {
             title: "Nord-Pas-de-Calais-Picardie",
-            url: "/demande/region/hauts-de-france"
+            url: "/demande/liste?region=7"
         },
         Z11: {
             title: "Normandie",
-            url: "/demande/region/normandie"
+            url: "/demande/liste?region=9"
         },
         Z12: {
             title: "Pays-de-la-Loire",
-            url: "/demande/region/pays-de-la-loire"
+            url: "/demande/liste?region=12"
         },
         Z13: {
             title: "Provence-Alpes-Côte-d-Azur",
-            url: "/demande/region/provence-alpes-cote-dazur"
+            url: "/demande/liste?region=13"
         }
     }
 

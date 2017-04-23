@@ -12,13 +12,13 @@
     
     <form id="form_recherche" action="" method="get">
         <div class="form-group">
-            <div class="row filter">
-                <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4 filter">
                     <input name="title" type="text" value="{{ app.request.query.get('title') }}" 
                            class="form-control" 
                            placeholder="Que cherchez-vous?">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4 filter">
                         <select class="form-control" name="category">
                             <option value='0' >Toutes les catégories</option>
                             {% for category in listCategory %}
@@ -28,12 +28,20 @@
                             {% endfor %}
                         </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4 filter">
+                    <input 
+                        class="btn btnIcon-search"
+                        type="submit" value="Rechercher"  />
+                    
+                </div>
+              </div>           
+            <div class="row filter">
+                <div class="col-md-4 filter">
                         <select class="form-control" 
                                 name="region" 
                                 id="region" 
                                 onchange="reloadDpt(this)">
-                            <option value='0'>Toutes les régions</option>
+                            <option value='0'>Toutes la France</option>
                             {% for region in listRegions %}
                                  <option {{ app.request.query.get('region')== region.id ? ' selected ' : ' ' }} 
                                     value={{ region.id }}>{{ region.labelNormal }}
@@ -41,36 +49,25 @@
                             {% endfor %}
                         </select>
                 </div>
-              </div>           
-            <div class="row filter">
-                <div class="col-md-6">
+                <div class="col-md-4 filter">
                     <select class="form-control" 
                             name="departement" 
                             id="departement_id" >
-                        <option value='0'>Tous les départements</option>
-                         {{ include('@SEAuction/Advert/departement.html.twig') }}
+                            <option value='0'>Tous les départements</option>
+                         {% for dpt in listDpt %}
+                            <option {{ app.request.query.get('departement')== dpt.id ? ' selected ' : ' ' }} 
+                                value={{ dpt.id }}>{{ dpt.code }} - {{ dpt.labelNormal }}
+                             </option>
+                        {% endfor %}
                     </select>
                 </div>
                         
-                 <div class="col-md-3">
+                 <div class="col-md-4 filter">
                     <input name="city" 
                            type="text" 
                            class="form-control" 
                            value="{{ app.request.query.get('city') }}"
                            placeholder="Ville ou code postale">
-                </div>
-                        
-                <div class="col-md-2">
-                    <input 
-                        class="btn btn-success btnIcon-search"
-                        type="submit" value="Recherche"  />
-                    
-                </div>
-                <div class="col-md-1">
-                    <a class="btn btn-danger" 
-                       href="{{ path('se_auction_advert_list')  }}">
-                        Reset
-                    </a>
                 </div>
             </div>
         </div>

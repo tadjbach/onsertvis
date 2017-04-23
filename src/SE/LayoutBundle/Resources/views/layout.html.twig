@@ -5,15 +5,24 @@
 {% endblock %}
 
 {% block body %}
+
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user.isAcountComplete == 0 %}
+
         <div class="alert alert-danger" role="alert">
-
-            Bonjour {{ app.user.username }}, Votre profile n'est pas complet, merci de le compléter
-            <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >ICI</a>
+            Bonjour {{ app.user.username }}, Votre profile n'est pas complet, merci de le 
+            <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
         </div>
+
     {% endif %}
-    {% block se_layout_body %}
-
-    {% endblock %}
-
+    
+    <!-- <div class="container">
+        BODY 
+        <div class="row">
+            <div id="content" class="col-md-12">-->
+                {% block se_layout_body %}
+                {% endblock %}
+        <!--    </div>
+        </div>
+    </div>-->
+                    
 {% endblock %}

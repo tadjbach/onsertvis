@@ -3,15 +3,15 @@
 {% if countAuctions > 0 %}
     <table class="table" id="tblGrid">
         <thead id="tblHead">
-        <tr>
-            <th>Enchérisseur</th>
-            <th>Note</th>
-            <th class="text-center">Montant</th>
-            <th class="text-center">Date</th>
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user == advert.user %}
-                <th class="text-center">Mon choix</th>
-            {% endif %}
-        </tr>
+            <tr>
+                <th>Enchérisseur</th>
+                <th>Note</th>
+                <th class="text-center">Montant</th>
+                <th class="text-center">Date</th>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user == advert.user %}
+                    <th class="text-center">Mon choix</th>
+                {% endif %}
+            </tr>
         </thead>
         <tbody>
         {% for auction in listAuctions %}

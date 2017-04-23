@@ -7,30 +7,6 @@ se_auction_advert_list:
     requirements:
         page: \d*
 
-se_auction_advert_list_by_criteria:
-    path:     /demande/liste/{category}/{region}/{dpt}/{city}/{page}
-    defaults:
-        _controller: SEAuctionBundle:Advert:listByCriteria
-        page:        1
-    requirements:
-        page: \d*
-        
-se_auction_advert_list_by_region:
-    path:     /demande/region/{region}/{page}
-    defaults:
-        _controller: SEAuctionBundle:Advert:listByRegion
-        page:        1
-    requirements:
-        page: \d*
-
-se_auction_advert_list_by_category:
-    path:     /demande/category/{catgeory}/{page}
-    defaults:
-        _controller: SEAuctionBundle:Advert:listByCategory
-        page:        1
-    requirements:
-        page: \d*
-
 se_auction_advert_view:
     path:     /demande/{id}
     defaults:
