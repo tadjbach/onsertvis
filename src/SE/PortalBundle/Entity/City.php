@@ -129,30 +129,7 @@ class City
         return $this->labelNormal;
     }
 
-    /**
-     * Set position
-     *
-     * @param integer $position
-     *
-     * @return City
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * Get position
-     *
-     * @return int
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
+   
     /**
      * Set latitude
      *

@@ -120,3 +120,13 @@ se_user_view:
         _controller: SEUserBundle:User:view
     requirements:
         id: \d+
+
+se_dpt_by_region:
+    path: /demande/liste/getdptbyregion
+    defaults:
+        _controller: SEAuctionBundle:Advert:getDptByRegion
+        
+se_city_by_dpt_region:
+    path: /demande/liste/getcitybydptandregion
+    defaults:
+        _controller: SEAuctionBundle:Advert:getCityByRegionAndDpt

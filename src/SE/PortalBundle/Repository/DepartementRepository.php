@@ -12,18 +12,17 @@ class DepartementRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getDptByRegion($region)
     {
-         $qb=$this->createQueryBuilder('d');
+         $qb=$this->createQueryBuilder('departement');
 
         $qb
-           ->innerJoin('d.region', 'r')
-            ->addSelect('r');
+           ->innerJoin('departement.region', 'region')
+            ->addSelect('region');
 
-         if($region !== NULL && $region !== '0')
+        if($region !== NULL && $region !== '0')
         {
-              $qb->where($qb->expr()->eq('r.id', $region));
+              $qb->where($qb->expr()->eq('region.id', $region));
         }
       
-
         return $qb
             ->getQuery()
             ->getResult();

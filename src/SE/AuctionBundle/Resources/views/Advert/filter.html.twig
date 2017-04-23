@@ -1,14 +1,5 @@
                            
-    <script type="text/javascript">
-        function reloadDpt(s) {
-            if (s[s.selectedIndex].value !== '0') {
-               $('#departement_id').prop('disabled', false);
-            }
-            else{
-                 $('#departement_id').prop('disabled', 'disabled');
-            }
-          }
-    </script>
+   
     
     <form id="form_recherche" action="" method="get">
         <div class="form-group">
@@ -32,15 +23,15 @@
                     <input 
                         class="btn btnIcon-search"
                         type="submit" value="Rechercher"  />
-                    
                 </div>
               </div>           
             <div class="row filter">
+                
                 <div class="col-md-4 filter">
                         <select class="form-control" 
                                 name="region" 
-                                id="region" 
-                                onchange="reloadDpt(this)">
+                                id="region_id" 
+                                >
                             <option value='0'>Toutes la France</option>
                             {% for region in listRegions %}
                                  <option {{ app.request.query.get('region')== region.id ? ' selected ' : ' ' }} 
@@ -49,16 +40,17 @@
                             {% endfor %}
                         </select>
                 </div>
+                        
                 <div class="col-md-4 filter">
-                    <select class="form-control" 
+                    <select class="form-control"
                             name="departement" 
                             id="departement_id" >
-                            <option value='0'>Tous les départements</option>
-                         {% for dpt in listDpt %}
-                            <option {{ app.request.query.get('departement')== dpt.id ? ' selected ' : ' ' }} 
-                                value={{ dpt.id }}>{{ dpt.code }} - {{ dpt.labelNormal }}
-                             </option>
-                        {% endfor %}
+                            <option value='0' >Tous les départements</option>
+                            {% for dpt in listDpt %}
+                               <option {{ app.request.query.get('departement')== dpt.id ? ' selected ' : ' ' }} 
+                                   value={{ dpt.id }}>{{ dpt.code }} - {{ dpt.labelNormal }}
+                                </option>
+                           {% endfor %}
                     </select>
                 </div>
                         
@@ -66,6 +58,7 @@
                     <input name="city" 
                            type="text" 
                            class="form-control" 
+                           id="city_id"
                            value="{{ app.request.query.get('city') }}"
                            placeholder="Ville ou code postale">
                 </div>

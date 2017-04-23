@@ -14,6 +14,10 @@ use SE\AuctionBundle\Entity\Advert;
 use SE\AuctionBundle\Event\MessagePostEvent;
 use SE\AuctionBundle\Event\AuctionEvents;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 class AdvertController extends Controller
 {
@@ -70,7 +74,7 @@ class AdvertController extends Controller
          $listCategory=$em
                  ->getRepository('SEPortalBundle:Category')
                  ->findAll();
-
+         
         $listRegions=$em
                 ->getRepository('SEPortalBundle:Region')
                 ->findAll();
@@ -101,6 +105,53 @@ class AdvertController extends Controller
             'page'        => $page,
             'titleResult'     => $titleResult
         ));
+    }
+    
+    public function getDptByRegionAction(Request $request){
+        $em=$this->getDoctrine()
+            ->getManager();
+        
+        if($request->isXmlHttpRequest())
+        {
+            $regionId = $request->request->get('region');
+
+                $listDpt = $em->getRepository('SEPortalBundle:Departement')
+                        ->getDptByRegion($regionId);
+
+                $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new 
+JsonEncoder()));
+                
+                $json = $serializer->serialize($listDpt, 'json');
+
+                return new Response($json);
+        }
+        
+        return new Response(null);
+    }
+    
+    public function getCityByRegionAndDptAction(Request $request){
+        $em = $this
+                ->getDoctrine()
+                ->getManager();
+        
+        if($request->isXmlHttpRequest())
+        {
+            $regionId = $request->request->get('region');
+            $dptId = $request->request->get('departement');
+            
+            $listCity = $em
+                        ->getRepository('SEPortalBundle:City')
+                        ->getCityByRegionAndDpt($regionId, $dptId);
+
+            $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new 
+JsonEncoder()));
+                
+            $json = $serializer->serialize($listCity, 'json');
+
+            return new Response($json);
+        }
+        
+        return new Response(null);
     }
 
     public function viewAction($id)
