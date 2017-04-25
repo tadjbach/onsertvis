@@ -15,7 +15,11 @@
       </h4>
     <p>{{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }} / {{ advert.user.PostalCode.city.departement.labelNormal }}</p>
 
+    
     {{ render(controller('SEAuctionBundle:Advert:viewLastAuction', { 'advertId': advert.id })) }}
 
   </div>
 </div>
+
+    <span id="city_lat" class="hidden">{{ advert.user.PostalCode.city.latitude }}</span>
+    <span id="city_long" class="hidden">{{ advert.user.PostalCode.city.longitude }}</span>

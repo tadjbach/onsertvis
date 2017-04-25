@@ -26,7 +26,7 @@
                     {% for advert in listAdverts %}
                         <div class="col-sm-4 col-md-4">
                             <a class="item-link" href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">
-                                {{ include('@SEAuction/Advert/item.html.twig') }}
+                                {{ include('@SEAuction/Advert/itemTuile.html.twig') }}
                             </a>
                         </div>
                     {% else %}

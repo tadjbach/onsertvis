@@ -282,11 +282,16 @@ JsonEncoder()));
 
         $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
 
+        $titleResult = count($listAdverts) == 0 ?'Aucune demande trouvée !' :
+                (count($listAdverts) > 1 ? count($listAdverts).' résultats' :  
+            count($listAdverts).' résultat');
+        
         return $this->render('SEAuctionBundle:Advert:listByUser.html.twig', array(
             'listAdverts'=>$listAdverts,
             'nbPages'     => $nbPages,
             'page'        => $page,
-            'count'     => count($listAdverts)
+            'count'     => count($listAdverts),
+            'titleResult'     => $titleResult
 
         ));
     }
@@ -306,7 +311,24 @@ JsonEncoder()));
            $suffix = count($lastAuction) <= 1 ? count($lastAuction).' enchère' : count($lastAuction).' enchères';
         }
         
-        $auctionValue = '<p class="text-left se-nb-auction">'.$suffix.'</p><div class="text-right"><span class="label se-price-badge">'.$price.'</span></div>';
+        $auctionValue = '<p '
+                            . 'class="text-left se-nb-auction" '
+                            . 'data-toggle="modal" '
+                            . 'role="button" '
+                            . 'data-toggle="modal" '
+                            . 'data-target="#modalAuctionShow">'.$suffix.'</p><div class="text-right"><span class="label se-price-badge">'.$price.'</span></div>';
+        /*
+        $auctionValue = '<p '
+                            . 'class="btn se-btn-action" '
+                            . 'role="button" '
+                            . 'data-toggle="modal" '
+                            . 'data-target="#modalAuctionShow">'
+                            . '<i class="glyphicon glyphicon-list-alt" ></i>'
+                            .$suffix
+                        .'</p>'
+                . '<div class="text-right">'
+                    . '<span class="label se-price-badge">'.$price.'</span>'
+                . '</div>';*/
         
         return new Response(
             $auctionValue

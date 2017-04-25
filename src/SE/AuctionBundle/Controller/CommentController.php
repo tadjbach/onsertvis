@@ -84,7 +84,8 @@ class CommentController extends Controller
         return $this->render('SEAuctionBundle:Comment:list.html.twig', array(
             'nbPages'     => $nbPages,
             'page'        => $page,
-            'listComment'=> $listComment
+            'listComment'=> $listComment,
+            'countComment'=> count($listComment)
         ));
     }
 }

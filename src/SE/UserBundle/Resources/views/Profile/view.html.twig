@@ -1,0 +1,58 @@
+{% extends "SEPortalBundle::layout.html.twig" %}
+
+{% block title %}
+    Profile - {{ parent() }}
+{% endblock %}
+
+{% block se_dashboard %}
+
+    <div class="well slogan-well">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="cat-title">{{ user }}</h3>
+                    </div>
+                </div>
+            </div>
+    </div>
+    
+    <div class="well se-well">
+        <div class="index-container" >
+            <div class="row">
+                 <div id="content" class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body text-center se-item-link">
+                              <p>{{ user }}</p>
+                            </div>
+                            <div class="panel-footer se-panel-footer">
+                                <h4 class="truncate">
+                                  
+                                </h4>
+                              <p>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }} / {{ user.PostalCode.city.departement.labelNormal }}</p>
+
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body text-center se-item-link">
+                              <p>Enchères passées</p>
+                              <p>Enchères perdues</p>
+                              <p>Enchères gagnées</p>
+                            </div>
+                            <div class="panel-footer se-panel-footer">
+                                <h4 class="truncate">
+                                  
+                                </h4>
+                              <p>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }} / {{ user.PostalCode.city.departement.labelNormal }}</p>
+
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

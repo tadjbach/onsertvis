@@ -65,7 +65,7 @@ class Category
     
     public function getWebPath()
     {
-        return $this->getUploadDir().'/'.$this->getSlug().'.jpeg';
+        return $this->getUploadDir().'/'.$this->getSlug().'.png';
     }
     
     /**

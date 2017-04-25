@@ -84,7 +84,8 @@ class MessageController extends Controller
         return $this->render('SEAuctionBundle:Message:list.html.twig', array(
             'nbPages'     => $nbPages,
             'page'        => $page,
-            'listConversation'=> $listConversation
+            'listConversation'=> $listConversation,
+            'countConversation'=>count($listConversation)
         ));
     }
 }

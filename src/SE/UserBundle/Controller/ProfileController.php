@@ -46,6 +46,22 @@ class ProfileController extends Controller
             'user' => $user,
         ));
     }
+    
+    public function viewAction($id)
+    {
+        $em=$this->getDoctrine()
+            ->getManager();
+
+        $user=$em->find('SEUserBundle:User', $id);
+        
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+        
+         return $this->render('SEUserBundle:Profile:view.html.twig', array(
+             'user' => $user,
+        ));
+    }
 
     /**
      * Edit the user.

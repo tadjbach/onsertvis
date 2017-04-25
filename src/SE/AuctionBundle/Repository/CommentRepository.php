@@ -18,7 +18,7 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('comment.receiver', 'receiver')
             ->addSelect('receiver')
             ->leftJoin('comment.sender', 'sender')
-            ->addSelect('s')
+            ->addSelect('sender')
             ->add('groupBy', 'sender.id');
                 
         $qb->where($qb->expr()->eq('receiver.id', $userId))
@@ -33,7 +33,7 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($qb, true);
     }
 
-    public function getMessageSender($userId, $page, $nbPerPage)
+    public function getCommentSender($userId, $page, $nbPerPage)
     {
          $qb = $this->createQueryBuilder('comment')
             ->leftJoin('comment.receiver', 'receiver')
@@ -54,13 +54,13 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($qb, true);
     }
     
-     public function getMessageReceive($userId, $page, $nbPerPage)
+     public function getCommentReceive($userId, $page, $nbPerPage)
     {
         $qb = $this->createQueryBuilder('comment')
             ->leftJoin('comment.sender', 'sender')
             ->addSelect('sender')
             ->leftJoin('comment.receiver', 'receiver')
-            ->addSelect('r')
+            ->addSelect('receiver')
             ->add('groupBy', 'receiver.id');
                 
         $qb->where($qb->expr()->eq('sender.id', $userId))

@@ -1,5 +1,7 @@
 {# Afficher une demande - Action #}
 
+
+
 {% extends "SELayoutBundle::layout.html.twig" %}
 
     {% block title %}
@@ -20,7 +22,6 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="cat-title">{{ advert.title }}</h3>
                     </div>
                 </div>
             </div>
@@ -31,64 +32,61 @@
             <div class="row">
                  <div id="content" class="col-md-12">
                     <div class="col-md-6">
+                    <h4 class="cat-title">{{ advert.title }}</h4>
                     <i>Mise en ligne le {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</i>
                         Par {{ advert.user }}
-                        {{ include('@SEAuction/Advert/item.html.twig') }}
+                        {{ include('@SEAuction/Advert/itemTuile.html.twig') }}
                     </div>
                     <div class="col-md-6">
                         <h4 class="cat-title">Vous êtes intéressé par cette demande?</h4>
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             <div class="row">
-                                <div class="col-md-6">
-                                    {{ render(controller('SEAuctionBundle:Auction:add', {'request': app.request,'advertId':advert.id} )) }}
-                                </div>
-                                <div class="col-md-6 text-center">
-                                    <button class="btn btn-default"
-                                    role="button"
-                                    data-toggle="modal"
-                                    data-target="#modalAuctionShow" >
-                                    <i class="glyphicon glyphicon-list-alt" ></i> 
-                                        {{ countAuctions }}
-                                    </button>
-                                 </div>
-                             </div>
-                            <div class="row">
                                 <div class="col-md-12">
-                                {{ render(controller('SEAuctionBundle:Message:add', {'request': app.request,'advertId':advert.id} )) }}
+                                    {{ render(controller('SEAuctionBundle:Auction:add', {'request': app.request,'advertId':advert.id} )) }}
+                                    {{ render(controller('SEAuctionBundle:Message:add', {'request': app.request,'advertId':advert.id} )) }}
                                  </div>
                             </div>
                         
                         {% else %}
                             <div class="row" >
-                                <div class="col-md-12" 
-                                     data-toggle="tooltip" 
-                                   data-placement="left" title="Connectez-vous">
+                                <div class="col-md-12" data-toggle="tooltip" 
+                                        data-placement="left" title="Connectez-vous">
                                     <a href="{{ path('se_auction_add', {'advertId':advert.id}) }}"
-                                       class="btn se-btn-action disabled">
+                                       class="btn se-btn-action disabled"
+                                       
+                                       >
                                         Proposez un prix
                                     </a>
                                     <a href="{{ path('se_auction_message_add', {'advertId':advert.id}) }}"
                                        class="btn btn-default disabled">
                                         Envoyez un message
                                     </a>
-                                </div>
+                                </div> 
                             </div>
                         {% endif %}
                     </div>
+                    
+                    
+                    
                 </div>
             </div>          
             <div class="row">
                 <div id="content" class="col-md-12">
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <h4 class="cat-title">Description</h4>
                         <p>{{ advert.detail |nl2br }}</p>
                         
                     </div>
+                    <div class="col-md-6">
+                        <h4 class="cat-title">Localisation</h4>
+                        <div id="gmap-div" class="google-carte"></div>
+                    </div>
+                    
                 </div>
             </div>     
         </div>
     </div>
-                        
+
     <div class="modal fade"
          id="modalAuctionShow"
          tabindex="-1"
@@ -98,7 +96,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Historique d'enchère</h4>
+                <h4 class="modal-title" id="myModalLabel">Historique des enchères</h4>
               </div>
               <div class="modal-body">
                   {{ include('@SEAuction/Advert/listAuction.html.twig') }}
@@ -108,3 +106,4 @@
     </div>
               
     {% endblock %}
+    

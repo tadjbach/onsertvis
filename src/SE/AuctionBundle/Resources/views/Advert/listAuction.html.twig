@@ -16,7 +16,11 @@
         <tbody>
         {% for auction in listAuctions %}
             <tr>
-                <td class="text-left">{{ auction.user }}</td>
+                <td class="text-left">
+                    <a href="{{ path('se_user_view', {'id': auction.user.id}) }}" class="cat-link" >
+                        {{ auction.user }}
+                    </a>
+                </td>
                 <td class="text-left">
                     {% if auction.user.rate == -1 or auction.user.rate == null or auction.user.rate == 0 %}
                         <i class="glyphicon glyphicon-star-empty"></i>

@@ -7,14 +7,33 @@
 {% endblock %}
 
 {% block se_dashboard %}
-    <h4 class="cat-title">Modifier mon profile</h4>
-    <div class="col-md-8">
-        {% block fos_user_content %}
-            {% include "@FOSUser/Profile/edit_content.html.twig" %}
-        {% endblock fos_user_content %}
-    </div>
-    <div class="col-md-4">
+    
+        <div class="well slogan-well">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="cat-title">Modifier mon profile</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    <div class="well se-well">
+        <div class="index-container" >
+            <div class="row">
+                 <div id="content" class="col-md-12">
+                     
+                    <div class="col-md-8">
+                        {% block fos_user_content %}
+                            {% include "@FOSUser/Profile/edit_content.html.twig" %}
+                        {% endblock fos_user_content %}
+                    </div>
+                    <div class="col-md-4">
 
+                    </div>
+                 </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

@@ -115,9 +115,9 @@ se_auction_comment_add:
         _controller: SEAuctionBundle:Comment:add
         
 se_user_view:
-    path:     /enchirisseur/profile/{id}
+    path:     /encherisseur/profile/{id}
     defaults:
-        _controller: SEUserBundle:User:view
+        _controller: SEUserBundle:Profile:view
     requirements:
         id: \d+
 
