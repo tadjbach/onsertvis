@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  */
 class User extends BaseUser
-{
+{   
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -100,11 +100,19 @@ class User extends BaseUser
      * @ORM\Column(name="isNewsLetter", type="boolean")
      */
     private $isNewsLetter=false;
+
     
     /**
      * @ORM\ManyToMany(targetEntity="SE\PortalBundle\Entity\Category")
      */
     private $categories;
+
+        
+    /**
+     * @ORM\ManyToMany(targetEntity="SE\AuctionBundle\Entity\Calendar")
+     */
+    private $calendar;
+    
     
     /**
      * @var int
@@ -145,9 +153,7 @@ class User extends BaseUser
     {
         return $this->civility;
     }
-
-
-
+    
     /**
      * Set name
      *
@@ -492,5 +498,53 @@ class User extends BaseUser
     public function getRate()
     {
         return $this->rate;
+    }
+
+    /**
+     * Set calendar
+     *
+     * @param \SE\AuctionBundle\Entity\Calendar $calendar
+     *
+     * @return User
+     */
+    public function setCalendar(\SE\AuctionBundle\Entity\Calendar $calendar = null)
+    {
+        $this->calendar = $calendar;
+
+        return $this;
+    }
+
+    /**
+     * Get calendar
+     *
+     * @return \SE\AuctionBundle\Entity\Calendar
+     */
+    public function getCalendar()
+    {
+        return $this->calendar;
+    }
+
+    /**
+     * Add calendar
+     *
+     * @param \SE\AuctionBundle\Entity\Calendar $calendar
+     *
+     * @return User
+     */
+    public function addCalendar(\SE\AuctionBundle\Entity\Calendar $calendar)
+    {
+        $this->calendar[] = $calendar;
+
+        return $this;
+    }
+
+    /**
+     * Remove calendar
+     *
+     * @param \SE\AuctionBundle\Entity\Calendar $calendar
+     */
+    public function removeCalendar(\SE\AuctionBundle\Entity\Calendar $calendar)
+    {
+        $this->calendar->removeElement($calendar);
     }
 }

@@ -27,39 +27,7 @@
                     </a>
                 </td>
                 <td class="text-left">
-                    {% if auction.user.rate == -1 or auction.user.rate == null or auction.user.rate == 0 %}
-                        {% for i in 1..5 %}
-                            <i class="glyphicon glyphicon-star-empty"></i>
-                        {% endfor %}
-                    {% elseif auction.user.rate == 1 %}
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        {% for i in 1..5 - auction.user.rate %}
-                            <i class="glyphicon glyphicon-star-empty"></i>
-                        {% endfor %}
-                    {% elseif auction.user.rate == 2 %}
-                        {% for i in 1..auction.user.rate %}
-                            <i class="glyphicon glyphicon-star rate-success"></i>
-                        {% endfor %}
-                        {% for i in 1..5 - auction.user.rate %}
-                            <i class="glyphicon glyphicon-star-empty"></i>
-                        {% endfor %}
-                    {% elseif auction.user.rate == 3 %}
-                        {% for i in 1..auction.user.rate %}
-                            <i class="glyphicon glyphicon-star rate-success"></i>
-                        {% endfor %}
-                        {% for i in 1..5 - auction.user.rate %}
-                            <i class="glyphicon glyphicon-star-empty"></i>
-                        {% endfor %}
-                    {% elseif auction.user.rate == 4 %}
-                        {% for i in 1..auction.user.rate %}
-                            <i class="glyphicon glyphicon-star rate-success"></i>
-                        {% endfor %}
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                    {% elseif auction.user.rate == 5 %}
-                        {% for i in 1..auction.user.rate %}
-                            <i class="glyphicon glyphicon-star rate-success"></i>
-                        {% endfor %}
-                    {% endif %}
+                    {{ include('@SEAuction/Auction/rate.html.twig') }}
                 </td>
                 <td class="text-right bold">{{ auction.value|number_format(0, ' ', ' ') }} €</td>
                 <td class="text-right">{{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:m:s') }}</td>

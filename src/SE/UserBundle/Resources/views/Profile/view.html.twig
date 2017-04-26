@@ -22,31 +22,64 @@
                  <div id="content" class="col-md-12">
                     <div class="col-md-6">
                         <div class="panel panel-default">
-                            <div class="panel-body text-center se-item-link">
-                              <p>{{ user }}</p>
-                            </div>
-                            <div class="panel-footer se-panel-footer">
-                                <h4 class="truncate">
-                                  
-                                </h4>
+                              
+                            <div class="panel-body text-left se-item-link">
+                              <p>Nom : {{ user }}</p>
+                              <p>Email : {{ user.email }}</p>
+                              <p>Adresse : {{ user.address }}</p>
                               <p>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }} / {{ user.PostalCode.city.departement.labelNormal }}</p>
-
+                              <p>Détail {{ user.detail }}</p>
+                              <p>Tél : {{ user.phoneNumber }}</p>
                             </div>
+                            
                           </div>
                     </div>
                     <div class="col-md-6">
                         <div class="panel panel-default">
-                            <div class="panel-body text-center se-item-link">
-                              <p>Enchères passées</p>
+                            <div class="panel-body text-left se-item-link">
+                              <p>{{ countProposedAuction }} Enchères passées</p>
                               <p>Enchères perdues</p>
                               <p>Enchères gagnées</p>
-                            </div>
-                            <div class="panel-footer se-panel-footer">
-                                <h4 class="truncate">
-                                  
-                                </h4>
-                              <p>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }} / {{ user.PostalCode.city.departement.labelNormal }}</p>
-
+                            <p>Note :       
+                              {% if user.rate == -1 or user.rate == null or user.rate == 0 %}
+                                    {% for i in 1..5 %}
+                                        <i class="glyphicon glyphicon-star-empty"></i>
+                                    {% endfor %}
+                                {% elseif user.rate == 1 %}
+                                    <i class="glyphicon glyphicon-star rate-success"></i>
+                                    {% for i in 1..5 - user.rate %}
+                                        <i class="glyphicon glyphicon-star-empty"></i>
+                                    {% endfor %}
+                                {% elseif user.rate == 2 %}
+                                    {% for i in 1..user.rate %}
+                                        <i class="glyphicon glyphicon-star rate-success"></i>
+                                    {% endfor %}
+                                    {% for i in 1..5 - user.rate %}
+                                        <i class="glyphicon glyphicon-star-empty"></i>
+                                    {% endfor %}
+                                {% elseif user.rate == 3 %}
+                                    {% for i in 1..user.rate %}
+                                        <i class="glyphicon glyphicon-star rate-success"></i>
+                                    {% endfor %}
+                                    {% for i in 1..5 - user.rate %}
+                                        <i class="glyphicon glyphicon-star-empty"></i>
+                                    {% endfor %}
+                                {% elseif user.rate == 4 %}
+                                    {% for i in 1..user.rate %}
+                                        <i class="glyphicon glyphicon-star rate-success"></i>
+                                    {% endfor %}
+                                    <i class="glyphicon glyphicon-star-empty"></i>
+                                {% elseif user.rate == 5 %}
+                                    {% for i in 1..user.rate %}
+                                        <i class="glyphicon glyphicon-star rate-success"></i>
+                                    {% endfor %}
+                                {% endif %}
+                            </p>
+                            <p>Disponiblité : 
+                                {% for day in user.calendar %}
+                                    {{ day.dayFr }}
+                                {% endfor %}
+                            </p>
                             </div>
                           </div>
                     </div>

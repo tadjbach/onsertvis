@@ -54,12 +54,17 @@ class ProfileController extends Controller
 
         $user=$em->find('SEUserBundle:User', $id);
         
+        $listProposedAuctions = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getProposedAuctionUser($user->getId(), 1, 1);
+        
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
         
          return $this->render('SEUserBundle:Profile:view.html.twig', array(
              'user' => $user,
+             'countProposedAuction'=>count($listProposedAuctions)
         ));
     }
 
