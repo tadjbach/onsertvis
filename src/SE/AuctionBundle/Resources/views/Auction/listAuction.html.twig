@@ -1,4 +1,4 @@
-{# Liste les enchères - Sans Action #}
+{# Liste les offres - Sans Action #}
 
 {% if countAuctions > 0 %}
     <table class="table" id="tblGrid">
@@ -7,7 +7,7 @@
             <th>Demande</th>
             <th>Enchérisseur</th>
             <th>Note</th>
-            <th class="text-center">Montant</th>
+            <th class="text-center">Offre</th>
             <th class="text-center">Date</th>
             <th class="text-center">Mon choix</th>
         </tr>
@@ -63,7 +63,7 @@
         </tbody>
     </table>
 {% else %}
-    <div>Aucune enchère pour l'instant</div>
+    <div>Aucune offre pour l'instant</div>
 {% endif %}
 
 <div class="modal fade"

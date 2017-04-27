@@ -39,8 +39,8 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('comment.receiver', 'receiver')
             ->addSelect('receiver')
             ->leftJoin('comment.sender', 'sender')
-            ->addSelect('sender')
-            ->add('groupBy', 'sender.id');
+            ->addSelect('sender');
+           // ->add('groupBy', 'sender.id');
                 
         $qb->where($qb->expr()->eq('receiver.id', $userId))
             ->andWhere($qb->expr()->eq('comment.isPublished', 1))
@@ -60,8 +60,8 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('comment.sender', 'sender')
             ->addSelect('sender')
             ->leftJoin('comment.receiver', 'receiver')
-            ->addSelect('receiver')
-            ->add('groupBy', 'receiver.id');
+            ->addSelect('receiver');
+           // ->add('groupBy', 'receiver.id');
                 
         $qb->where($qb->expr()->eq('sender.id', $userId))
             ->andWhere($qb->expr()->eq('comment.isPublished', 1))

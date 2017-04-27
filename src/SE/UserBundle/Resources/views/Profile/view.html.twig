@@ -20,10 +20,10 @@
         <div class="index-container" >
             <div class="row">
                  <div id="content" class="col-md-12">
-                        <div class="panel panel-default">
+                        <div class="panel panel-default se-profile-panel">
                               
                             <div class="panel-body text-left se-item-link">
-                                  <h4 class="cat-title text-center"> {{ user }}</h4>
+                                  <h4 class="cat-title"> {{ user }}</h4>
                                   <div class="row">
                                       <div class="col-md-4">
                                           
@@ -56,11 +56,11 @@
                                           <p class="se-profile-value"> 
                                             {{ include('@SEAuction/Auction/rate.html.twig', {'user': user }) }} </p>
                                           <br>
-                                          <p class="se-profile-title">{{ countProposedAuction }} Enchères :</p>
+                                          <p class="se-profile-title">{{ countProposedAuction + countAcceptedAuction + countLosedAuction}} Offres :</p>
                                          
-                                            <p class="se-profile-value"><span class="label label-warning">3</span> Enchères encours</p>
-                                            <p class="se-profile-value"><span class="label label-success">1</span> Enchères gagnées</p>
-                                            <p class="se-profile-value"><span class="label label-danger">2</span> Enchères perdues</p>
+                                            <p class="se-profile-value"><span class="label label-warning">{{ countProposedAuction }}</span> Offres encours</p>
+                                            <p class="se-profile-value"><span class="label label-success">{{countAcceptedAuction}}</span> Offres gagnées</p>
+                                            <p class="se-profile-value"><span class="label label-danger">{{countLosedAuction}}</span> Offres perdues</p>
                                             
                                           
                                       </div>
@@ -80,9 +80,24 @@
                 
             <div class="row">
                  <div id="content" class="col-md-12">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default se-profile-panel">
                         <div class="panel-body text-left se-item-link">
-                            <h4 class="cat-title text-center">Avis</h4>
+                            <h4 class="cat-title">Avis</h4>
+                            {% for comment in listComment %}
+                                <div class="col-sm-12">
+                                    <i>Posté le {{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:m') }} par {{ comment.sender }}</i>
+                                    <div class="thumbnail">
+                                        
+                                        <div class="caption">
+                                            <p>
+                                             {{ comment.content }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div>Pas (encore !) de commentaire</div>
+                            {% endfor %}
                         </div>
                     </div>
                  </div>

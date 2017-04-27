@@ -56,7 +56,20 @@ class ProfileController extends Controller
         
         $listProposedAuctions = $em
             ->getRepository('SEAuctionBundle:Auction')
-            ->getProposedAuctionUser($user->getId(), 1, 1);
+            ->getStateAuctionUser($user->getId(), 1, 1);
+        
+        $listAcceptedAuctions = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getStateAuctionUser($user->getId(), 1, 2);
+        
+        $listLoseAuctions = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getStateAuctionUser($user->getId(), 0, 3);
+        
+        $listComment = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('SEAuctionBundle:Comment')
+            ->getCommentSender($id, 1, 50);
         
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
@@ -64,7 +77,10 @@ class ProfileController extends Controller
         
          return $this->render('SEUserBundle:Profile:view.html.twig', array(
              'user' => $user,
-             'countProposedAuction'=>count($listProposedAuctions)
+             'countProposedAuction'=>count($listProposedAuctions),
+             'countAcceptedAuction'=>count($listAcceptedAuctions),
+             'countLosedAuction'=>count($listLoseAuctions),
+             'listComment'=> $listComment
         ));
     }
 

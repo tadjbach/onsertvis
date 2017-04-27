@@ -1,9 +1,9 @@
-{# Afficher les enchère - Action #}
+{# Afficher les àoffre - Action #}
 
 {% extends "SELayoutBundle::layout.html.twig" %}
 
 {% block title %}
-    Mes enchères - {{ parent() }}
+    Mes offres - {{ parent() }}
 {% endblock %}
 
 {% block se_layout_body %}
@@ -12,29 +12,29 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-                    <h3 class="cat-title">Mes enchères</h3>
+                    <h3 class="cat-title">Mes offres</h3>
                     <a href="{{ path('se_auction_auction_list_by_user') }}"
                    class="btn btn-primary"
                    role="button" >
-                    Toutes les enchères
+                    Toutes les offres
                     </a>
 
                     <a href="{{ path('se_auction_auction_list_by_user_proposed') }}"
                        class="btn btn-warning"
                        role="button" >
-                        Enchères proposées
+                        Offres proposées
                     </a>
 
                     <a href="{{ path('se_auction_auction_list_by_user_receive') }}"
                        class="btn btn-danger"
                        role="button" >
-                        Enchères reçues
+                        Offres reçues
                     </a>
 
                     <a href="{{ path('se_auction_auction_list_by_user_terminated') }}"
                        class="btn btn-success"
                        role="button" >
-                        Enchères terminées
+                        Offres terminées
                     </a>
                 </div>
             </div>
@@ -45,7 +45,7 @@
         <div class="index-container" >
             <div class="row">
                  <div id="content" class="col-md-12">
-                     <h4 class="cat-title">{{countAuctions}} Enchères</h4>
+                     <h4 class="cat-title">{{countAuctions}} offres</h4>
                      {{ include('@SEAuction/Auction/listAuction.html.twig') }}
                  </div>
             </div>

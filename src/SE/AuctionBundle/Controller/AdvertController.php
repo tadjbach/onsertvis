@@ -160,7 +160,7 @@ JsonEncoder()));
             ->getManager();
 
         $advert=$em->find('SEAuctionBundle:Advert', $id);
-        $countAuctions = '0 enchère';
+        $countAuctions = '0 offre';
 
         $userConnect = $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
         $userApp = $this->getUser();
@@ -179,7 +179,7 @@ JsonEncoder()));
                 $offset=null);
 
         if (count($listAuctions) > 0) {
-           $countAuctions = count($listAuctions) <= 1 ? count($listAuctions).' enchère' : count($listAuctions).' enchères';
+           $countAuctions = count($listAuctions) <= 1 ? count($listAuctions).' offre' : count($listAuctions).' offres';
         }
         
         if (null===$advert){
@@ -299,7 +299,7 @@ JsonEncoder()));
     public function viewLastAuctionAction($advertId)
     {
         $em = $this->getDoctrine()->getManager();
-        $suffix = '0 enchère';
+        $suffix = '0 offre';
         $price = '-- €';
         
         $lastAuction = $em
@@ -308,7 +308,7 @@ JsonEncoder()));
         
         if (count($lastAuction) > 0) {
            $price = $this->priceFormat($lastAuction[0]->getValue());
-           $suffix = count($lastAuction) <= 1 ? count($lastAuction).' enchère' : count($lastAuction).' enchères';
+           $suffix = count($lastAuction) <= 1 ? count($lastAuction).' offre' : count($lastAuction).' offres';
         }
         
         $auctionValue = '<p '

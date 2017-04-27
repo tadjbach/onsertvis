@@ -151,4 +151,24 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
 
         return new Paginator($qb, true);
     }
+    
+    public function getStateAuctionUser($userId, $isPublished,  $state){
+
+        $qb=$this->createQueryBuilder('auction');
+
+        $qb->innerJoin('auction.user', 'user_auction')
+            ->addSelect('user_auction')
+            ->leftJoin('auction.advert', 'advert')
+            ->addSelect('advert');
+
+        $qb->where($qb->expr()->eq('user_auction.id', $userId))
+            ->andWhere($qb->expr()->eq('auction.state', $state))
+            ->andWhere($qb->expr()->eq('advert.isPublished', $isPublished))
+                ;
+
+
+        return $qb
+            ->getQuery()
+            ->getResult(); 
+    }
 }

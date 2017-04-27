@@ -26,7 +26,7 @@ class AuctionType extends AbstractType
                     'placeholder' => 'Proposez un prix (en euro)')
                     ))
                  ->add('save', SubmitType::class, 
-                                array('label'=> 'Enchérir',
+                                array('label'=> 'Valider mon offre',
                                     'attr'   =>  array(
                                                 'class'   => 'btn se-btn-action')));
     }

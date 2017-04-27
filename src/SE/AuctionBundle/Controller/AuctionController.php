@@ -77,12 +77,12 @@ class AuctionController extends Controller
                 $em->persist($auction);
                 $em->flush();
 
-               $request->getSession()->getFlashBag()->add('notice', 'Votre enchère est validée.');
+               $request->getSession()->getFlashBag()->add('notice', 'Votre offre est validée.');
                
                //envoi de mail au proprio
 
-                $this->sendEmailMessage('Une enchère sur votre demande'.$advert->getTitle(),
-                    'Une enchère sur votre demande '.$advert->getTitle(),
+                $this->sendEmailMessage('Une offre sur votre demande '.$advert->getTitle(),
+                    'Une offre sur votre demande '.$advert->getTitle(),
                         'noreplay@serviceenchere.fr',
                         (string) $advert->getUser()->getEmail());
             }

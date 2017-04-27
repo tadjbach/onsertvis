@@ -509,3 +509,7 @@ a.title-link:focus{
     color: #2A0540;
     margin-right: 5px;
 }
+
+.se-profile-panel{
+    border: 0;
+}
