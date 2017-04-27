@@ -10,7 +10,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="cat-title">{{ user }}</h3>
+                        <h3 class="cat-title">Profile de l'enchérisseur</h3>
                     </div>
                 </div>
             </div>
@@ -20,70 +20,72 @@
         <div class="index-container" >
             <div class="row">
                  <div id="content" class="col-md-12">
-                    <div class="col-md-6">
                         <div class="panel panel-default">
                               
                             <div class="panel-body text-left se-item-link">
-                              <p>Nom : {{ user }}</p>
-                              <p>Email : {{ user.email }}</p>
-                              <p>Adresse : {{ user.address }}</p>
-                              <p>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }} / {{ user.PostalCode.city.departement.labelNormal }}</p>
-                              <p>Détail {{ user.detail }}</p>
-                              <p>Tél : {{ user.phoneNumber }}</p>
-                            </div>
-                            
-                          </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-body text-left se-item-link">
-                              <p>{{ countProposedAuction }} Enchères passées</p>
-                              <p>Enchères perdues</p>
-                              <p>Enchères gagnées</p>
-                            <p>Note :       
-                              {% if user.rate == -1 or user.rate == null or user.rate == 0 %}
-                                    {% for i in 1..5 %}
-                                        <i class="glyphicon glyphicon-star-empty"></i>
-                                    {% endfor %}
-                                {% elseif user.rate == 1 %}
-                                    <i class="glyphicon glyphicon-star rate-success"></i>
-                                    {% for i in 1..5 - user.rate %}
-                                        <i class="glyphicon glyphicon-star-empty"></i>
-                                    {% endfor %}
-                                {% elseif user.rate == 2 %}
-                                    {% for i in 1..user.rate %}
-                                        <i class="glyphicon glyphicon-star rate-success"></i>
-                                    {% endfor %}
-                                    {% for i in 1..5 - user.rate %}
-                                        <i class="glyphicon glyphicon-star-empty"></i>
-                                    {% endfor %}
-                                {% elseif user.rate == 3 %}
-                                    {% for i in 1..user.rate %}
-                                        <i class="glyphicon glyphicon-star rate-success"></i>
-                                    {% endfor %}
-                                    {% for i in 1..5 - user.rate %}
-                                        <i class="glyphicon glyphicon-star-empty"></i>
-                                    {% endfor %}
-                                {% elseif user.rate == 4 %}
-                                    {% for i in 1..user.rate %}
-                                        <i class="glyphicon glyphicon-star rate-success"></i>
-                                    {% endfor %}
-                                    <i class="glyphicon glyphicon-star-empty"></i>
-                                {% elseif user.rate == 5 %}
-                                    {% for i in 1..user.rate %}
-                                        <i class="glyphicon glyphicon-star rate-success"></i>
-                                    {% endfor %}
-                                {% endif %}
-                            </p>
-                            <p>Disponiblité : 
-                                {% for day in user.calendar %}
-                                    {{ day.dayFr }}
-                                {% endfor %}
-                            </p>
+                                  <h4 class="cat-title text-center"> {{ user }}</h4>
+                                  <div class="row">
+                                      <div class="col-md-4">
+                                          
+                                          <i class="glyphicon glyphicon-map-marker"></i> 
+                                          <span class="se-profile-title">Adresse : </span>
+                                          <p class="se-profile-value"> {{ user.address }} 
+                                              <br>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }} 
+                                              <br>{{ user.PostalCode.city.departement.labelNormal }}</p>
+                                          
+                                          <br>
+                                        <i class="glyphicon glyphicon-phone-alt"></i> 
+                                          <span class="se-profile-title">Téléphone : </span>
+                                          <p class="se-profile-value"> {{ user.phoneNumber }}</p>
+                                          
+                                          <br>
+                                          <i class="glyphicon glyphicon-calendar"></i>
+                                            <span class="se-profile-title">Disponibilité : </span>
+                                            <div class="se-profile-value">
+                                                {% for day in user.calendar %}
+                                                    <span class=""> 
+                                                        {{ day.dayFr  }} - 
+                                                    </span>
+                                                {% endfor %}
+                                            </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                          
+                                          <i class="glyphicon glyphicon-thumbs-up"></i>
+                                          <span class="se-profile-title">Note : </span>
+                                          <p class="se-profile-value"> 
+                                            {{ include('@SEAuction/Auction/rate.html.twig', {'user': user }) }} </p>
+                                          <br>
+                                          <p class="se-profile-title">{{ countProposedAuction }} Enchères :</p>
+                                         
+                                            <p class="se-profile-value"><span class="label label-warning">3</span> Enchères encours</p>
+                                            <p class="se-profile-value"><span class="label label-success">1</span> Enchères gagnées</p>
+                                            <p class="se-profile-value"><span class="label label-danger">2</span> Enchères perdues</p>
+                                            
+                                          
+                                      </div>
+                                            
+                                    <div class="col-md-4">
+                                        <i class="glyphicon glyphicon-info-sign"></i> 
+                                        <span class="se-profile-title">A propos : </span>
+                                        <p class="se-profile-value"> {{ user.detail }}</p>
+                                    </div>
+                                      
+                                  </div>
                             </div>
                           </div>
-                    </div>
                 </div>
+            </div>
+                
+                
+            <div class="row">
+                 <div id="content" class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body text-left se-item-link">
+                            <h4 class="cat-title text-center">Avis</h4>
+                        </div>
+                    </div>
+                 </div>
             </div>
         </div>
     </div>

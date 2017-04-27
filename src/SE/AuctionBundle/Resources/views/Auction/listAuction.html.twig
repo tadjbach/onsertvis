@@ -27,7 +27,7 @@
                     </a>
                 </td>
                 <td class="text-left">
-                    {{ include('@SEAuction/Auction/rate.html.twig') }}
+                    {{ include('@SEAuction/Auction/rate.html.twig', {'user': auction.user }) }}
                 </td>
                 <td class="text-right bold">{{ auction.value|number_format(0, ' ', ' ') }} €</td>
                 <td class="text-right">{{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:m:s') }}</td>

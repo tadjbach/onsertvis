@@ -491,3 +491,21 @@ a.title-link:focus{
     position: relative;
     overflow: hidden;
 }
+
+.se-profile-title{
+    font-weight: bold;
+}
+
+.se-profile-value{
+    padding-left: 20px;
+}
+
+.mar-lef{
+    padding-left: 30px;
+}
+
+.se-profile-badge{
+    background-color: #E5DF16;
+    color: #2A0540;
+    margin-right: 5px;
+}

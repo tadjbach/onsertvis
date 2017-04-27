@@ -1,33 +1,33 @@
-{% if auction.user.rate == -1 or auction.user.rate == null or auction.user.rate == 0 %}
+{% if user.rate == -1 or user.rate == null or user.rate == 0 %}
                         {% for i in 1..5 %}
                             <i class="glyphicon glyphicon-star-empty"></i>
                         {% endfor %}
-                    {% elseif auction.user.rate == 1 %}
+                    {% elseif user.rate == 1 %}
                         <i class="glyphicon glyphicon-star rate-success"></i>
-                        {% for i in 1..5 - auction.user.rate %}
+                        {% for i in 1..5 - user.rate %}
                             <i class="glyphicon glyphicon-star-empty"></i>
                         {% endfor %}
-                    {% elseif auction.user.rate == 2 %}
-                        {% for i in 1..auction.user.rate %}
+                    {% elseif user.rate == 2 %}
+                        {% for i in 1..user.rate %}
                             <i class="glyphicon glyphicon-star rate-success"></i>
                         {% endfor %}
-                        {% for i in 1..5 - auction.user.rate %}
+                        {% for i in 1..5 - user.rate %}
                             <i class="glyphicon glyphicon-star-empty"></i>
                         {% endfor %}
-                    {% elseif auction.user.rate == 3 %}
-                        {% for i in 1..auction.user.rate %}
+                    {% elseif user.rate == 3 %}
+                        {% for i in 1..user.rate %}
                             <i class="glyphicon glyphicon-star rate-success"></i>
                         {% endfor %}
-                        {% for i in 1..5 - auction.user.rate %}
+                        {% for i in 1..5 - user.rate %}
                             <i class="glyphicon glyphicon-star-empty"></i>
                         {% endfor %}
-                    {% elseif auction.user.rate == 4 %}
-                        {% for i in 1..auction.user.rate %}
+                    {% elseif user.rate == 4 %}
+                        {% for i in 1..user.rate %}
                             <i class="glyphicon glyphicon-star rate-success"></i>
                         {% endfor %}
                         <i class="glyphicon glyphicon-star-empty"></i>
-                    {% elseif auction.user.rate == 5 %}
-                        {% for i in 1..auction.user.rate %}
+                    {% elseif user.rate == 5 %}
+                        {% for i in 1..user.rate %}
                             <i class="glyphicon glyphicon-star rate-success"></i>
                         {% endfor %}
                     {% endif %}
