@@ -91,7 +91,9 @@ class ProfileController extends Controller
              'countAcceptedAuction'=>count($listAcceptedAuctions),
              'countLosedAuction'=>count($listLoseAuctions),
              'listReceiveComment'=> $listReceiveComment,
-             'listSendComment'=> $llistSendComment
+             'count_listReceiveComment'=>count($listReceiveComment),
+             'listSendComment'=> $llistSendComment,
+             'count_listSendComment'=>count($llistSendComment)
         ));
     }
 

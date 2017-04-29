@@ -91,7 +91,7 @@
                      <div class="col-sm-6">
                         <div class="panel panel-default se-profile-panel">
                             <div class="panel-body text-left se-item-link">
-                                <h4 class="cat-title">Avis reçus</h4>
+                                <h4 class="cat-title">{{ count_listReceiveComment }} avis reçus</h4>
                                 {% for comment in listReceiveComment %}
                                         <i>Posté le {{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:m') }} par {{ comment.sender }}</i>
 
@@ -113,7 +113,7 @@
                     <div class="col-sm-6">
                         <div class="panel panel-default se-profile-panel">
                             <div class="panel-body text-left se-item-link">
-                                <h4 class="cat-title">Avis postés</h4>
+                                <h4 class="cat-title">{{ count_listSendComment }} avis postés</h4>
                                 {% for comment in listSendComment %}
                                         <i>Posté le {{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:m') }}</i>
 
