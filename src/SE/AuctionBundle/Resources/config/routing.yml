@@ -130,3 +130,8 @@ se_city_by_dpt_region:
     path: /demande/liste/getcitybydptandregion
     defaults:
         _controller: SEAuctionBundle:Advert:getCityByRegionAndDpt
+        
+se_cp_by_city:
+    path: /demande/liste/getpostalcodebycity
+    defaults:
+        _controller: SEAuctionBundle:Advert:getPostalCodeByCity

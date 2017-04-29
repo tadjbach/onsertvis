@@ -10,25 +10,19 @@ namespace SE\PortalBundle\Repository;
  */
 class CityRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getCityByRegionAndDpt($region, $dpt){
-         $qb=$this->createQueryBuilder('city');
+   public function getCityByRegionAndDpt($departement){
+       
+       $qb=$this->createQueryBuilder('city');
 
         $qb
-           ->leftJoin('city.departement', 'departement')
-            ->addSelect('departement')
-            ->leftJoin('departement.region', 'region')
-            ->addSelect('region');
-         
-        if($region !== NULL && $region !== '0')
+            ->innerJoin('city.departement', 'departement')
+            ->addSelect('departement');
+
+        if($departement !== NULL && $departement !== '0')
         {
-              $qb->where($qb->expr()->eq('region.id', $region));
-              
-              if($dpt !== NULL && $dpt !== '0')
-                {
-                    $qb->andwhere($qb->expr()->eq('departement.id', $dpt));
-                }
+            $qb->where($qb->expr()->eq('departement.id', $departement));
         }
-        
+      
         return $qb
             ->getQuery()
             ->getResult();

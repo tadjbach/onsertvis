@@ -63,13 +63,14 @@ class AdvertController extends Controller
         $region = $request->get('region');
         $departement = $request->get('departement');
         $city = $request->get('city');
+        $postalCode = $request->get('postalCode');
         
         $em=$this->getDoctrine()
             ->getManager();
 
          $listAdverts = $em
             ->getRepository('SEAuctionBundle:Advert')
-            ->getAdverts($title, $category, $region, $departement, $city, $page, $this->nbPerPage);
+            ->getAdverts($title, $category, $region, $departement, $city, $postalCode, $page, $this->nbPerPage);
          
          $listCategory=$em
                  ->getRepository('SEPortalBundle:Category')
@@ -136,17 +137,41 @@ JsonEncoder()));
         
         if($request->isXmlHttpRequest())
         {
-            $regionId = $request->request->get('region');
             $dptId = $request->request->get('departement');
             
             $listCity = $em
                         ->getRepository('SEPortalBundle:City')
-                        ->getCityByRegionAndDpt($regionId, $dptId);
-
+                        ->getCityByRegionAndDpt($dptId);
+            
             $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new 
 JsonEncoder()));
                 
             $json = $serializer->serialize($listCity, 'json');
+
+            return new Response($json);
+        }
+        
+        return new Response(null);
+    }
+    
+        public function getPostalCodeByCityAction(Request $request){
+            
+        $em = $this
+                ->getDoctrine()
+                ->getManager();
+        
+        if($request->isXmlHttpRequest())
+        {
+            $city = $request->request->get('city');
+            
+            $listPostalCode = $em
+                        ->getRepository('SEPortalBundle:PostalCode')
+                        ->getCpByRegionAndDpt($city);
+
+            $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new 
+JsonEncoder()));
+                
+            $json = $serializer->serialize($listPostalCode, 'json');
 
             return new Response($json);
         }

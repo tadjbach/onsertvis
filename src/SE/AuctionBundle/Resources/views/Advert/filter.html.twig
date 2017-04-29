@@ -4,12 +4,12 @@
     <form id="form_recherche" action="" method="get">
         <div class="form-group">
             <div class="row">
-                <div class="col-md-4 filter">
+                <div class="col-md-6 filter">
                     <input name="title" type="text" value="{{ app.request.query.get('title') }}" 
                            class="form-control" 
                            placeholder="Que cherchez-vous?">
                 </div>
-                <div class="col-md-4 filter">
+                <div class="col-md-3 filter">
                         <select class="form-control" name="category">
                             <option value='0' >Toutes les catégories</option>
                             {% for category in listCategory %}
@@ -19,7 +19,7 @@
                             {% endfor %}
                         </select>
                 </div>
-                <div class="col-md-4 filter">
+                <div class="col-md-3 filter">
                     <input 
                         class="btn btnIcon-search"
                         type="submit" value="Rechercher"  />
@@ -27,7 +27,7 @@
               </div>           
             <div class="row filter">
                 
-                <div class="col-md-4 filter">
+                <div class="col-md-3 filter">
                         <select class="form-control" 
                                 name="region" 
                                 id="region_id" 
@@ -41,7 +41,7 @@
                         </select>
                 </div>
                         
-                <div class="col-md-4 filter">
+                <div class="col-md-3 filter">
                     <select class="form-control"
                             name="departement" 
                             id="departement_id" >
@@ -54,13 +54,21 @@
                     </select>
                 </div>
                         
-                 <div class="col-md-4 filter">
+                 <div class="col-md-3 filter">
                     <input name="city" 
                            type="text" 
                            class="form-control" 
                            id="city_id"
                            value="{{ app.request.query.get('city') }}"
-                           placeholder="Ville ou code postale">
+                           placeholder="Ville">
+                </div>
+                <div class="col-md-3 filter">
+                    <input name="postalCode" 
+                           type="text" 
+                           class="form-control" 
+                           id="postalCode_id"
+                           value="{{ app.request.query.get('postalCode') }}"
+                           placeholder="Code postal">
                 </div>
             </div>
         </div>
