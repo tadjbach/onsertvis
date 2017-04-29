@@ -6,7 +6,7 @@
             <tr>
                 <th>Enchérisseur</th>
                 <th>Note</th>
-                <th class="text-center">Offre</th>
+                <th class="text-center">Proposition</th>
                 <th class="text-center">Date</th>
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user == advert.user %}
                     <th class="text-center">Mon choix</th>
@@ -22,43 +22,7 @@
                     </a>
                 </td>
                 <td class="text-left">
-                    {% if auction.user.rate == -1 or auction.user.rate == null or auction.user.rate == 0 %}
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                    {% elseif auction.user.rate == 1 %}
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                    {% elseif auction.user.rate == 2 %}
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                    {% elseif auction.user.rate == 3 %}
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                    {% elseif auction.user.rate == 4 %}
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star-empty"></i>
-                    {% elseif auction.user.rate == 5 %}
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                        <i class="glyphicon glyphicon-star rate-success"></i>
-                    {% endif %}
+                    {{ include('@SEAuction/Auction/rate.html.twig', {'item': auction.user }) }}
                 </td>
                 <td class="text-right bold">{{ auction.value|number_format(0, ' ', ' ') }} €</td>
                 <td class="text-right">{{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:m:s') }}</td>
@@ -75,5 +39,5 @@
         </tbody>
     </table>
 {% else %}
-    <div>Aucune offre pour l'instant</div>
+    <div>Aucune proposition pour l'instant</div>
 {% endif %}

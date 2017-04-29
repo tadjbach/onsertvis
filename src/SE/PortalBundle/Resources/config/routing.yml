@@ -5,12 +5,12 @@ se_portal_account_dashboard:
         _controller: SEPortalBundle:Account:dashboard
 
 se_portal_account_profile:
-    path:     /mon-profile
+    path:     /mon-profil
     defaults:
         _controller: FOSUserBundle:Profile:show
 
 se_portal_account_profile_edit:
-    path:     /modifier-mon-profile
+    path:     /modifier-mon-profil
     defaults:
         _controller: FOSUserBundle:Profile:edit
 

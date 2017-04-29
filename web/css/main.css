@@ -419,6 +419,10 @@ a.title-link:focus{
 
 .rate-success{
     color:#5cb85c;
+    font-size: 20px;
+}
+.rate-none{
+    font-size: 20px;
 }
 .rate-warning{
     color: #f0ad4e;
@@ -512,4 +516,8 @@ a.title-link:focus{
 
 .se-profile-panel{
     border: 0;
+}
+.se-auction-detail{
+    margin-left: 80px;
+    margin-bottom: 50px;
 }

@@ -1,7 +1,7 @@
 {% extends "SEPortalBundle::layout.html.twig" %}
 
 {% block title %}
-    Profile - {{ parent() }}
+    Profil - {{ parent() }}
 {% endblock %}
 
 {% block se_dashboard %}
@@ -10,7 +10,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="cat-title">Profile de l'enchérisseur</h3>
+                        <h3 class="cat-title">Profil de {{ user }}</h3>
                     </div>
                 </div>
             </div>
@@ -20,89 +20,105 @@
         <div class="index-container" >
             <div class="row">
                  <div id="content" class="col-md-12">
-                        <div class="panel panel-default se-profile-panel">
-                              
-                            <div class="panel-body text-left se-item-link">
-                                  <h4 class="cat-title"> {{ user }}</h4>
-                                  <div class="row">
-                                      <div class="col-md-4">
-                                          
-                                          <i class="glyphicon glyphicon-map-marker"></i> 
-                                          <span class="se-profile-title">Adresse : </span>
-                                          <p class="se-profile-value"> {{ user.address }} 
-                                              <br>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }} 
-                                              <br>{{ user.PostalCode.city.departement.labelNormal }}</p>
-                                          
-                                          <br>
-                                        <i class="glyphicon glyphicon-phone-alt"></i> 
-                                          <span class="se-profile-title">Téléphone : </span>
-                                          <p class="se-profile-value"> {{ user.phoneNumber }}</p>
-                                          
-                                          <br>
-                                          <i class="glyphicon glyphicon-calendar"></i>
-                                            <span class="se-profile-title">Disponibilité : </span>
-                                            <div class="se-profile-value">
-                                                {% for day in user.calendar %}
-                                                    <span class=""> 
-                                                        {{ day.dayFr  }} - 
-                                                    </span>
-                                                {% endfor %}
-                                            </div>
-                                      </div>
-                                      <div class="col-md-4">
-                                          
-                                          <i class="glyphicon glyphicon-thumbs-up"></i>
-                                          <span class="se-profile-title">Note : </span>
-                                          <p class="se-profile-value"> 
-                                            {{ include('@SEAuction/Auction/rate.html.twig', {'user': user }) }} </p>
-                                          <br>
-                                          <p class="se-profile-title">{{ countProposedAuction + countAcceptedAuction + countLosedAuction}} Offres :</p>
-                                         
-                                            <p class="se-profile-value"><span class="label label-warning">{{ countProposedAuction }}</span> Offres encours</p>
-                                            <p class="se-profile-value"><span class="label label-success">{{countAcceptedAuction}}</span> Offres gagnées</p>
-                                            <p class="se-profile-value"><span class="label label-danger">{{countLosedAuction}}</span> Offres perdues</p>
-                                            
-                                          
-                                      </div>
-                                            
-                                    <div class="col-md-4">
-                                        <i class="glyphicon glyphicon-info-sign"></i> 
-                                        <span class="se-profile-title">A propos : </span>
-                                        <p class="se-profile-value"> {{ user.detail }}</p>
+                    <div class="panel-footer se-panel-footer">
+                        <h4 class="truncate">
+                          {{ user }}
+                        </h4>
+                        <br>
+                        <div class="row">
+                              <div class="col-md-4">
+
+                                  <i class="glyphicon glyphicon-map-marker"></i> 
+                                  <span class="se-profile-title">Adresse : </span>
+                                  <p class="se-profile-value"> {{ user.address }} 
+                                      <br>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }} 
+                                      <br>{{ user.PostalCode.city.departement.labelNormal }}</p>
+
+                                  <br>
+                                <i class="glyphicon glyphicon-phone-alt"></i> 
+                                  <span class="se-profile-title">Téléphone : </span>
+                                  <p class="se-profile-value"> {{ user.phoneNumber }}</p>
+
+                                  <br>
+                                  <i class="glyphicon glyphicon-calendar"></i>
+                                    <span class="se-profile-title">Disponibilité : </span>
+                                    <div class="se-profile-value">
+                                        {% for day in user.calendar %}
+                                            <span class=""> 
+                                                {{ day.dayFr  }} - 
+                                            </span>
+                                        {% endfor %}
                                     </div>
-                                      
+                              </div>
+                            <div class="col-md-4">
+                                <i class="glyphicon glyphicon-info-sign"></i> 
+                                <span class="se-profile-title">A propos : </span>
+                                <p class="se-profile-value"> {{ user.detail|nl2br }}</p>
+                            </div>
+                            <div class="col-md-4">
+                                  <p class="se-profile-title text-center">{{ countProposedAuction + countAcceptedAuction + countLosedAuction}} Propositions</p>
+                                  <div class='se-auction-detail'>
+                                    <p class="se-profile-value"><span class="label label-warning">{{ countProposedAuction }}</span> Propositions encours</p>
+                                    <p class="se-profile-value"><span class="label label-success">{{countAcceptedAuction}}</span> Propositions gagnées</p>
+                                    <p class="se-profile-value"><span class="label label-danger">{{countLosedAuction}}</span> Propositions perdues</p>
                                   </div>
+                                  
+                                <p class="se-profile-title text-center">Evaluations</p>
+                                  <p class="se-profile-value text-center"> 
+                                    {{ include('@SEAuction/Auction/rate.html.twig', {'item': user }) }} </p>
                             </div>
                           </div>
+                    </div>
                 </div>
             </div>
                 
-                
             <div class="row">
                  <div id="content" class="col-md-12">
-                    <div class="panel panel-default se-profile-panel">
-                        <div class="panel-body text-left se-item-link">
-                            <h4 class="cat-title">Avis</h4>
-                            {% for comment in listComment %}
-                                <div class="col-sm-12">
-                                    <i>Posté le {{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:m') }} par {{ comment.sender }}</i>
-                                    <div class="thumbnail">
-                                        
-                                        <div class="caption">
-                                            <p>
-                                             {{ comment.content }}
-                                            </p>
+                     <div class="col-sm-6">
+                        <div class="panel panel-default se-profile-panel">
+                            <div class="panel-body text-left se-item-link">
+                                <h4 class="cat-title">Avis reçus</h4>
+                                {% for comment in listReceiveComment %}
+                                        <i>Posté le {{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:m') }} par {{ comment.sender }}</i>
+
+                                        <div class="thumbnail">
+                                            <div class="caption">
+                                                <p>{{ include('@SEAuction/Auction/rate.html.twig', {'item': comment }) }}</p>
+                                                <p>
+                                                 {{ comment.content|nl2br }}
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            {% else %}
-                                <div>Pas (encore !) de commentaire</div>
-                            {% endfor %}
+                                {% else %}
+                                    <div>Pas (encore !) d'avis reçus</div>
+                                {% endfor %}
+                            </div>
                         </div>
-                    </div>
+                     </div>
+                            
+                    <div class="col-sm-6">
+                        <div class="panel panel-default se-profile-panel">
+                            <div class="panel-body text-left se-item-link">
+                                <h4 class="cat-title">Avis postés</h4>
+                                {% for comment in listSendComment %}
+                                        <i>Posté le {{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:m') }}</i>
+
+                                        <div class="thumbnail">
+                                            <div class="caption">
+                                                <p>{{ include('@SEAuction/Auction/rate.html.twig', {'item': comment }) }}</p>
+                                                <p>
+                                                 {{ comment.content|nl2br }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                {% else %}
+                                    <div>Pas (encore !) d'avis posté</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                     </div>
                  </div>
             </div>
         </div>
     </div>
-
 {% endblock %}

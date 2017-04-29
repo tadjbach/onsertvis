@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Controller managing the user profile.
@@ -54,6 +55,10 @@ class ProfileController extends Controller
 
         $user=$em->find('SEUserBundle:User', $id);
         
+        if ($user === null) {
+            throw new NotFoundHttpException("Cet utilisateur n'existe pas");
+        }
+        
         $listProposedAuctions = $em
             ->getRepository('SEAuctionBundle:Auction')
             ->getStateAuctionUser($user->getId(), 1, 1);
@@ -66,10 +71,15 @@ class ProfileController extends Controller
             ->getRepository('SEAuctionBundle:Auction')
             ->getStateAuctionUser($user->getId(), 0, 3);
         
-        $listComment = $this->getDoctrine()
+        $listReceiveComment = $this->getDoctrine()
             ->getManager()
             ->getRepository('SEAuctionBundle:Comment')
-            ->getCommentSender($id, 1, 50);
+            ->getComment($id, false);
+
+        $llistSendComment = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('SEAuctionBundle:Comment')
+            ->getComment($id, true);
         
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
@@ -80,7 +90,8 @@ class ProfileController extends Controller
              'countProposedAuction'=>count($listProposedAuctions),
              'countAcceptedAuction'=>count($listAcceptedAuctions),
              'countLosedAuction'=>count($listLoseAuctions),
-             'listComment'=> $listComment
+             'listReceiveComment'=> $listReceiveComment,
+             'listSendComment'=> $llistSendComment
         ));
     }
 

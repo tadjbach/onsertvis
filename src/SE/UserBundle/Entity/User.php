@@ -113,7 +113,6 @@ class User extends BaseUser
      */
     private $calendar;
     
-    
     /**
      * @var int
      *

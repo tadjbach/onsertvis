@@ -39,7 +39,8 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('comment.receiver', 'receiver')
             ->addSelect('receiver')
             ->leftJoin('comment.sender', 'sender')
-            ->addSelect('sender');
+            ->addSelect('sender')
+            ->orderBy('comment.dateCreation', 'DESC');
            // ->add('groupBy', 'sender.id');
                 
         $qb->where($qb->expr()->eq('receiver.id', $userId))
@@ -73,6 +74,31 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->setMaxResults($nbPerPage);
             
         return new Paginator($qb, true);
+    }
+    
+     public function getComment($userId, $isSender)
+    {
+         $qb = $this->createQueryBuilder('comment')
+            ->leftJoin('comment.receiver', 'receiver')
+            ->addSelect('receiver')
+            ->leftJoin('comment.sender', 'sender')
+            ->addSelect('sender')
+            ->orderBy('comment.dateCreation', 'DESC');
+                
+        //$qb->where($qb->expr()->eq('receiver.id', $userId))
+            $qb->Where($qb->expr()->eq('comment.isPublished', 1))
+            ->andWhere($qb->expr()->eq('comment.isDeleted', 0))  ;
+            
+            if ($isSender) {
+                $qb->andWhere($qb->expr()->eq('sender.id', $userId));
+            } 
+            else{
+                $qb->andWhere($qb->expr()->eq('receiver.id', $userId));
+            }
+                    
+            return $qb
+            ->getQuery()
+            ->getResult(); 
     }
 }
 
