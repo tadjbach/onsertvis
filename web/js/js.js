@@ -1,3 +1,5 @@
+    
+    //getDepartementByRegion
     function getDepartementByRegion($regions, $departements, $city){
         $departements.empty();
                 $departements.append('<option value="0">Tous les départements</option>');
@@ -24,6 +26,7 @@
                     });
     }
 
+    //getCityByDepartement
     function getCityByDepartement($departements){
         var ajaxResult=[];
          
@@ -49,6 +52,7 @@
             });
     }
     
+    //getPostalCode
     function getPostalCode($city){
 
         var ajaxPostalCodeResult=[];
@@ -76,12 +80,15 @@
     }
     
     $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();  
+        
+        var $regions = $('#region_id');
         var $departements = $('#departement_id');
         var $city = $('#city_id');
         var $cp_id = $('#postalCode_id');
         
-        $('[data-toggle="tooltip"]').tooltip();  
-        
+        if ($regions.length > 0) {
+                           
         if ($departements.val() === '0') {
             $city.prop('disabled', true);
             $cp_id.prop('disabled', true);
@@ -91,29 +98,16 @@
             getPostalCode($city, $cp_id);
         }
         
-    });
-        
-    $(document).ready(function(){
-        var $regions = $('#region_id');
-        var $departements = $('#departement_id');
-        var $city = $('#city_id');
-        var $cp_id = $('#postalCode_id');
-        
         // à la sélection d une région dans la liste
     $regions.on('change', function() {
             $city.val('');
             $cp_id.val('');
         
             getDepartementByRegion($regions, $departements, $city);   
-            
                         
         if ($regions.val() === '0') {
             $city.prop('disabled', true);
             $cp_id.prop('disabled', true);
-            }
-        else{
-                $city.prop('disabled', false);
-                $cp_id.prop('disabled', false);
             }
         });
         
@@ -138,6 +132,8 @@
            $cp_id.val('');
             getPostalCode($city);
         });
+            }
+
         
     });
     

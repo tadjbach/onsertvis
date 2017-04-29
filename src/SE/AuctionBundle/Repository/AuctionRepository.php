@@ -17,13 +17,10 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
         
         $qb = $this->createQueryBuilder('auction');
         
-         $qb
-            ->leftJoin('auction.advert', 'advert')
-            ->addSelect('advert')
-            ->leftJoin('advert.category', 'category')
-            ->addSelect('category');
-            
-                
+        $qb->leftJoin('auction.advert', 'advert')
+           ->addSelect('advert')
+           ->leftJoin('advert.category', 'category')
+           ->addSelect('category');
         $qb->orderBy('advert.dateCreation', 'DESC');
 
         $qb->where($qb->expr()->eq('ad.isPublished', 1))
@@ -31,13 +28,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
                 ->andWhere($qb->expr()->eq('ad.isEnabled', 1))
                 ->getQuery();
         
-            // On définit l'demande à partir de laquelle commencer la liste
-        $qb->setFirstResult(($page-1) * $nbPerPage)
-            // Ainsi que le nombre d'demande à afficher sur une page
-            ->setMaxResults($nbPerPage);
-
-        // Enfin, on retourne l'objet Paginator correspondant à la requête construite
-        // (n'oubliez pas le use correspondant en début de fichier)
+        $qb->setFirstResult(($page-1) * $nbPerPage)->setMaxResults($nbPerPage);
+        
         return new Paginator($qb, true);
     }
     
@@ -45,8 +37,7 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
     public function getLastAuction($advertId){
          $qb = $this->createQueryBuilder('auction');
         
-         $qb
-            ->leftJoin('auction.advert', 'advert')
+         $qb->leftJoin('auction.advert', 'advert')
             ->addSelect('advert');
          
         $qb->where($qb->expr()->eq('advert.id', $advertId))
@@ -165,8 +156,12 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('advert');
 
         $qb->where($qb->expr()->eq('user_auction.id', $userId))
-            ->andWhere($qb->expr()->eq('auction.state', $state))
-            ->andWhere($qb->expr()->eq('advert.isPublished', $isPublished));
+            ->andWhere($qb->expr()->eq('auction.state', $state));
+           
+        if ($isPublished !== null) {
+                $qb->andWhere($qb->expr()->eq('advert.isPublished', $isPublished));
+            }
+            
         
         return $qb
             ->getQuery()

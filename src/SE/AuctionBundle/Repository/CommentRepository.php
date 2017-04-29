@@ -76,7 +76,7 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($qb, true);
     }
     
-     public function getComment($userId, $isSender)
+    public function getComment($userId, $isSender)
     {
          $qb = $this->createQueryBuilder('comment')
             ->leftJoin('comment.receiver', 'receiver')
@@ -85,7 +85,6 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('sender')
             ->orderBy('comment.dateCreation', 'DESC');
                 
-        //$qb->where($qb->expr()->eq('receiver.id', $userId))
             $qb->Where($qb->expr()->eq('comment.isPublished', 1))
             ->andWhere($qb->expr()->eq('comment.isDeleted', 0))  ;
             

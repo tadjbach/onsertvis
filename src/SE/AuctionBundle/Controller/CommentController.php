@@ -23,13 +23,28 @@ class CommentController extends Controller
         $em = $this->getDoctrine()->getManager();
       
         $advert=$em->find('SEAuctionBundle:Advert', $advertId);
-        
+        $userSender = $this->getUser();
+        $userReceiver = $advert->getUser();
         $comment = new Comment();
+        $rate = 0;
         
-        $comment->setSender($this->getUser());
+        
+        $listComment = $em
+                    ->getRepository('SEAuctionBundle:Comment')
+                    ->getComment($userReceiver->getId(), false);
+                
+        foreach ($listComment as $item) {
+            $rate = $rate + ($item->getRate() / count($listComment));
+        }
+        
+        
+        $userReceiver->setRate(round($rate));
+
+        $comment->setSender($userSender);
         $comment->setAdvert($advert);
-        $comment->setReceiver($advert->getUser());
+        $comment->setReceiver($userReceiver);
         
+                
         $form = $this->createForm(CommentType::class, $comment,
                  array('action' => $this->generateUrl('se_auction_auction_list_by_user')));
 
@@ -38,6 +53,8 @@ class CommentController extends Controller
 
             if ($form->isValid()){
                
+                
+                
                 $em->persist($comment);
                 $em->flush();
 
@@ -58,11 +75,6 @@ class CommentController extends Controller
     {
         $nbPerPage = 9;
         $user = $this->getUser();
-        
-        $listReceivers = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('SEAuctionBundle:Comment')
-            ->getCommentReceive($user->getId(), $page, $nbPerPage);
 
         $listSenders = $this->getDoctrine()
             ->getManager()

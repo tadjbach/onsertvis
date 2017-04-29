@@ -38,62 +38,20 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
 
           return $text;
         }
-    public function getAdvertsByFilter($category, $region, $dpt, $city, $page, $nbPerPage)
-    {
-        $qb = $this->createQueryBuilder('ad')
-            ->innerJoin('ad.user', 'u')
-            ->addSelect('u')
-                
-            ->innerJoin('u.city', 'c')
-            ->addSelect('c')    
-                
-            ->leftJoin('ad.category', 'cat')
-            ->addSelect('cat')
-            
-            
-            ->leftJoin('c.departement', 'd')
-            ->addSelect('d')
-            ->leftJoin('d.region', 'r')
-            ->addSelect('r')
-            ->orderBy('ad.dateCreation', 'DESC');
         
-             $qb =   $qb->where($qb->expr()->eq('ad.isPublished', 1))
-                ->andWhere($qb->expr()->eq('ad.isDeleted', 0))
-                ->andWhere($qb->expr()->eq('ad.isEnabled', 1))
-                     ->andWhere($qb->expr()->eq('cat.id', $category))
-                     ->andWhere($qb->expr()->eq('r.id', $region))
-                     ->andWhere($qb->expr()->eq('d.id', $dpt))
-                     ->andWhere($qb->expr()->eq('c.id', $city))
-                ->getQuery();
-        
-            // On définit l'demande à partir de laquelle commencer la liste
-            $qb->setFirstResult(($page-1) * $nbPerPage)
-            // Ainsi que le nombre d'demande à afficher sur une page
-            ->setMaxResults($nbPerPage);
-
-        // Enfin, on retourne l'objet Paginator correspondant à la requête construite
-        // (n'oubliez pas le use correspondant en début de fichier)
-        return new Paginator($qb, true);
-    }
-    
     public function getAdverts($title, $category, $region, $departement, $city, $postalCode, $page, $nbPerPage)
     {
         $qb = $this->createQueryBuilder('advert')
                 ->innerJoin('advert.user', 'user')
                 ->addSelect('user')
-                
                 ->innerJoin('user.postalCode', 'postalCode')
                 ->addSelect('postalCode')   
-                
                 ->innerJoin('postalCode.city', 'city')
                 ->addSelect('city')  
-                
                 ->innerJoin('city.departement', 'departement')
                 ->addSelect('departement') 
-                
                 ->innerJoin('departement.region', 'region')
                 ->addSelect('region') 
-                
                 ->leftJoin('advert.category', 'category')
                 ->addSelect('category');
         
@@ -103,120 +61,44 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
         
         if($title !== NULL && $title !== '')
         {   
-            $qb->andWhere("advert.title LIKE '%$title%'");
-            $qb->orWhere("advert.detail LIKE '%$title%'");
+            $qb->andWhere("advert.title LIKE '%$title%'")->orWhere("advert.detail LIKE '%$title%'");
         }
-       
         if($category !== NULL && $category !== '0')
         {
             $qb->andWhere($qb->expr()->eq('category.id', $category));
         }
-        
         if($region !== NULL && $region !== '0')
         {
             $qb->andWhere($qb->expr()->eq('region.id', $region));
         }
-        
         if($departement !== NULL && $departement !== '0')
         {
             $qb->andWhere($qb->expr()->eq('departement.id', $departement));
         }
-        
-         if($city !== NULL && $city !== '')
+        if($city !== NULL && $city !== '')
         {
              $city = $this->slugify($city);
             $qb->andWhere("city.slug LIKE '%$city%'");
         }
-        
         if ($postalCode !== null && $postalCode !== '') {
              $qb->andWhere("postalCode.value LIKE '%$postalCode%'");
         }
         
-        $qb->orderBy('advert.dateCreation', 'DESC');   
-        
-        $qb->getQuery();
-        
-        $qb->setFirstResult(($page-1) * $nbPerPage)
-                
-        ->setMaxResults($nbPerPage);
+        $qb->orderBy('advert.dateCreation', 'DESC')->getQuery();
+        $qb->setFirstResult(($page-1) * $nbPerPage)->setMaxResults($nbPerPage);    
         
         return new Paginator($qb, true);
-    }
-    
- 
-     public function getListAdverts()
-    {
-         
-         $qb = $this->createQueryBuilder('SELECT *
-          FROM advert tp
-          JOIN image i ON tp.image_id = i.id 
-          JOIN category c ON tp.category_id = c.id
-          JOIN auction tl ON tl.advert_id = tp.id
-          JOIN (SELECT t.advert_id, MAX(t.dateCreation) AS max_date
-                FROM auction t
-                GROUP BY t.advert_id) x ON x.advert_id = tl.advert_id AND x.max_date = tl.dateCreation');
-         
-         return $qb->getQuery()->getResult();
-    }
-    
-    public function getAdvertByCategory($catgeory, $limit)
-    {
-        $qb=$this->createQueryBuilder('a');
-
-        $qb
-            ->innerJoin('a.category', 'c')
-            ->addSelect('c');
-
-        $qb->where($qb->expr()->eq('c.slug', "'".$catgeory."'"))
-        ->andWhere($qb->expr()->eq('a.isPublished', 1))
-        ->andWhere($qb->expr()->eq('a.isDeleted', 0))
-        ->andWhere($qb->expr()->eq('a.isEnabled', 1));
-        $qb->setMaxResults($limit);
-
-        return $qb
-            ->getQuery()
-            ->getResult();
-    }
-    
-    public function getAdvertByRegion($region, $limit){
-        
-        $qb=$this->createQueryBuilder('a');
-
-        $qb
-           ->innerJoin('a.user', 'u')
-            ->addSelect('u')
-            ->innerJoin('u.postalCode', 'pc')
-            ->addSelect('pc')
-            ->innerJoin('pc.city', 'c')
-            ->addSelect('c')
-            ->leftJoin('c.departement', 'd')
-            ->addSelect('d')
-            ->leftJoin('d.region', 'r')
-            ->addSelect('r')
-                
-            ->orderBy('a.dateCreation', 'DESC');
-
-        $qb->where($qb->expr()->eq('r.slug', "'".$region."'"))
-        ->andWhere($qb->expr()->eq('a.isPublished', 1))
-        ->andWhere($qb->expr()->eq('a.isDeleted', 0))
-        ->andWhere($qb->expr()->eq('a.isEnabled', 1));
-
-        $qb->setMaxResults($limit);
-
-        return $qb
-            ->getQuery()
-            ->getResult();
     }
 
     public function getAdvertByUser($userId, $page, $nbPerPage){
         
-     $qb=$this->createQueryBuilder('a');
+     $qb=$this->createQueryBuilder('advert');
 
-        $qb->innerJoin('a.user', 'u')
-            ->addSelect('u');
+        $qb->innerJoin('advert.user', 'user')
+            ->addSelect('user');
 
-        $qb->where($qb->expr()->eq('u.id', $userId))
-            ->andWhere($qb->expr()->eq('a.isDeleted', 0));
+        $qb->where($qb->expr()->eq('user.id', $userId))
+            ->andWhere($qb->expr()->eq('advert.isDeleted', 0));
 
         $qb->getQuery();
 
@@ -224,44 +106,5 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
             ->setMaxResults($nbPerPage);
             
         return new Paginator($qb, true);
-    }
-    
-    public function getCountByCategory($categoryId){
-        $qb=$this->createQueryBuilder('a');
-
-        $qb
-            ->innerJoin('a.category', 'c')
-            ->addSelect('c');
-
-        $qb->where($qb->expr()->eq('c.id', $categoryId))        
-                ->andWhere($qb->expr()->eq('a.isPublished', 1))
-                ->andWhere($qb->expr()->eq('a.isDeleted', 0))
-                ->andWhere($qb->expr()->eq('a.isEnabled', 1));
-
-        $qb->setMaxResults(1);
-        
-        return $qb
-            ->getQuery()
-            ->getResult(); 
-    }
-    
-     public function getCountByRegion($regionId){
-        
-    $qb=$this->createQueryBuilder('a');
-
-        $qb
-            ->innerJoin('a.user', 'u')
-           ;
-        
-        $qb->where($qb->expr()->eq('u.id', $regionId))        
-                ->andWhere($qb->expr()->eq('a.isPublished', 1))
-                ->andWhere($qb->expr()->eq('a.isDeleted', 0))
-                ->andWhere($qb->expr()->eq('a.isEnabled', 1));
-        
-        $qb->addSelect('a');
-        
-        return $qb
-            ->getQuery()
-            ->getResult(); 
     }
 }

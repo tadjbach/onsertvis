@@ -481,7 +481,7 @@ a.title-link:focus{
 }
 
 .panel-default {
-    border-color: rgba(42, 5, 64, 0.42);
+    border-color: #484848;
 }
 
 .se-item-link{
@@ -587,4 +587,11 @@ a.ui-corner-all .ui-state-active {
 }
   .ui-menu-item{
         margin-left: 10px;
+  }
+  
+  .se-profile-value table th{
+      
+    padding-right: 10px;
+    color: #F0AD4E;
+
   }

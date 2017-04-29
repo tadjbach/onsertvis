@@ -1,7 +1,5 @@
 {# Afficher une demande - Action #}
 
-
-
 {% extends "SELayoutBundle::layout.html.twig" %}
 
     {% block title %}
@@ -52,9 +50,7 @@
                                 <div class="col-md-12" data-toggle="tooltip" 
                                         data-placement="left" title="Connectez-vous">
                                     <a href="{{ path('se_auction_add', {'advertId':advert.id}) }}"
-                                       class="btn se-btn-action disabled"
-                                       
-                                       >
+                                       class="btn se-btn-action disabled" >
                                         Proposez un prix
                                     </a>
                                     <a href="{{ path('se_auction_message_add', {'advertId':advert.id}) }}"
@@ -65,9 +61,6 @@
                             </div>
                         {% endif %}
                     </div>
-                    
-                    
-                    
                 </div>
             </div>          
             <div class="row">
@@ -77,10 +70,11 @@
                         <p>{{ advert.detail |nl2br }}</p>
                         
                     </div>
+                        <!--
                     <div class="col-md-6">
                         <h4 class="cat-title">Localisation</h4>
                         <div id="gmap-div" class="google-carte"></div>
-                    </div>
+                    </div>-->
                     
                 </div>
             </div>     

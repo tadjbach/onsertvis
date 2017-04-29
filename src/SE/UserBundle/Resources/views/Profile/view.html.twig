@@ -37,17 +37,31 @@
                                   <br>
                                 <i class="glyphicon glyphicon-phone-alt"></i> 
                                   <span class="se-profile-title">Téléphone : </span>
-                                  <p class="se-profile-value"> {{ user.phoneNumber }}</p>
+                                  <p class="se-profile-value"> {{ user.phoneNumber|join('|') }}</p>
 
                                   <br>
                                   <i class="glyphicon glyphicon-calendar"></i>
                                     <span class="se-profile-title">Disponibilité : </span>
                                     <div class="se-profile-value">
-                                        {% for day in user.calendar %}
-                                            <span class=""> 
-                                                {{ day.dayFr  }} - 
-                                            </span>
-                                        {% endfor %}
+                                        <table>
+                                        <thead id="tblHead">
+                                            <tr>
+                                                {% for day in user.calendar %}
+                                                <th> 
+                                                    {{ day.dayFr  }}
+                                                </th>
+                                                {% endfor %}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for day in user.calendar %}
+                                                <td> 
+                                                    
+                                                </td>
+                                                {% endfor %}
+                                        </tbody>
+                                        </table>
+                                        
                                     </div>
                               </div>
                             <div class="col-md-4">
