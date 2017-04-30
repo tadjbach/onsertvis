@@ -7,19 +7,36 @@
 
 {% block se_user %}
 
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-8">
-        <div class="alert alert-success" role="alert">
-        {% block fos_user_content %}
-        <p>
-            {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
-        </p>
-        {% endblock fos_user_content %}
+     <div class="well slogan-well">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="cat-title">Réinitialiser le mot de passe</h3>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-2">
+        <div class="well se-well">
+        <div class="index-container" >
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-8">
+                    <div class="alert alert-success" role="alert">
+                    {% block fos_user_content %}
+                    <p>
+                        {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+                    </p>
+                    {% endblock fos_user_content %}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+        </div>
     </div>
+                         
+
 
 
 {% endblock %}

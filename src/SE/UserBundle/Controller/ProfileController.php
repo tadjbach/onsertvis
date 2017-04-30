@@ -38,13 +38,32 @@ class ProfileController extends Controller
      */
     public function showAction()
     {
+        $em=$this->getDoctrine()
+            ->getManager();
+        
         $user = $this->getUser();
+        
+        $listProposedAuctions = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getStateAuctionUser($user->getId(), null, 1);
+        
+        $listAcceptedAuctions = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getStateAuctionUser($user->getId(), null, 2);
+        
+        $listLoseAuctions = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getStateAuctionUser($user->getId(), 0, 3);
+        
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
         return $this->render('@FOSUser/Profile/show.html.twig', array(
             'user' => $user,
+             'countProposedAuction'=>count($listProposedAuctions),
+             'countAcceptedAuction'=>count($listAcceptedAuctions),
+             'countLosedAuction'=>count($listLoseAuctions)
         ));
     }
     
@@ -74,12 +93,12 @@ class ProfileController extends Controller
         $listReceiveComment = $this->getDoctrine()
             ->getManager()
             ->getRepository('SEAuctionBundle:Comment')
-            ->getComment($id, false);
+            ->getComment($user->getId(), false);
 
         $llistSendComment = $this->getDoctrine()
             ->getManager()
             ->getRepository('SEAuctionBundle:Comment')
-            ->getComment($id, true);
+            ->getComment($user->getId(), true);
         
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');

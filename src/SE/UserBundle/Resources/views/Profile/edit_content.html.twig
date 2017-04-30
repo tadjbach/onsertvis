@@ -3,9 +3,67 @@
 {{ form_start(form, { 'action': path('fos_user_profile_edit'), 
                         'attr': { 'class': 'fos_user_profile_edit' } }) }}
 
-{{ form_widget(form) }}
+<div class="col-md-5">
+    <div class="form-group">
+        {{ form_label(form.accountType) }}
+        {{ form_widget(form.accountType)  }}
+     </div>
+    <div class="form-group">
+        {{ form_label(form.username) }}
+        {{ form_widget(form.username)  }}
+     </div>
+    <div class="form-group">
+        {{ form_label(form.civility) }}
+        {{ form_widget(form.civility)  }}
+     </div>
+    <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name)  }}
+     </div>
+     <div class="form-group">
+        {{ form_label(form.firstName) }}
+        {{ form_widget(form.firstName)  }}
+     </div>
+    <div class="form-group">
+        {{ form_label(form.address) }}
+        {{ form_widget(form.address)  }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.phoneNumber) }}
+        {{ form_widget(form.phoneNumber)  }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email)  }}
+     </div>
+    <div class="form-group">
+        {{ form_label(form.current_password) }}
+        {{ form_widget(form.current_password)  }}
+     </div>
 
-<div class="text-right">
+</div>
+<div class="col-md-2">
+</div>
+<div class="col-md-5">
+    <div class="form-group">
+        {{ form_label(form.detail) }}
+        {{ form_widget(form.detail)  }}
+     </div>
+    <div class="form-group opac">
+        {{ form_label(form.categories) }}
+        {{ form_widget(form.categories)  }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.calendar) }}
+        {{ form_widget(form.calendar)  }}
+     </div>
+          <div class="text-right">
         <input  class="btn btn-primary" type="submit" value="{{ 'profile.edit.submit'|trans }}" />
     </div>
+</div>
+
+</div>
+    
+
+    
 {{ form_end(form) }}

@@ -7,13 +7,29 @@
 
 {% block se_user %}
 
-    <div class="col-md-12 text-center">
-        <div class="alert alert-danger" role="alert">
-       {% block fos_user_content %}
-           <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
-       {% endblock fos_user_content %}
-         </div>
+    <div class="well slogan-well">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="cat-title">Vérification d'adresse mail</h3>
+                </div>
+            </div>
+        </div>
     </div>
+        <div class="well se-well">
+        <div class="index-container" >
+            <div class="row">
+                  <div class="col-md-12 text-center">
+                        <div class="alert alert-warning" role="alert">
+                       {% block fos_user_content %}
+                           <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+                       {% endblock fos_user_content %}
+                         </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+   
 
 
 {% endblock %}

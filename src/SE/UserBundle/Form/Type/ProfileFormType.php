@@ -99,12 +99,13 @@ class ProfileFormType extends AbstractType
         $builder
             ->add('accountType', ChoiceType::class, array('label'=> 'Vous êtes',
                 'choices'    => array(
-                    'Particulier' => 'Particulier',
-                    'Société' => 'Société',
-                    'Autre'=>'Autre'
+                    'Particulier' => 'Particular',
+                    'Société' => 'Society',
+                    'Autre'=>'Other'
                 ),
             ))
-            ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
+            ->add('username', null, array('label' => 'form.username', 
+                                            'translation_domain' => 'FOSUserBundle'))
 
             ->add('civility', ChoiceType::class, array('label'=> 'Civilité',
                 'choices'    => array(
@@ -118,9 +119,32 @@ class ProfileFormType extends AbstractType
             ->add('address', TextType::class, array('label'=> 'Adresse'))
             ->add('phoneNumber', TextType::class, array('label'=> 'N° téléphone'))
             ->add('detail', TextareaType::class, array('label'=> 'À propos de moi'))
-
+            ->add('categories', EntityType::class, 
+                    array('label'=>'Vos services préférés',
+                        'class'=> 'SEPortalBundle:Category',
+                        'choice_label'=>'labelNormal',
+                        'multiple'=>true,
+                        'expanded' => true,
+                        ))
+            
+                ->add('calendar', EntityType::class, 
+                    array('label'=>'Vos disponibilités',
+                        'class'=> 'SEAuctionBundle:Calendar',
+                        'choice_label'=>'day_fr',
+                        'multiple'=>true,
+                        'expanded' => true,
+                        ))
+                
+                 ->add('calendar', EntityType::class, 
+                    array('label'=>'Vos disponibilités',
+                        'class'=> 'SEAuctionBundle:Calendar',
+                        'choice_label'=>'day_fr',
+                        'multiple'=>true,
+                        'expanded' => true,
+                        ) )
+                
             ->add('email', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\EmailType'), array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'))
-
-        ;
+            ->add('isNewsLetter', CheckboxType::class, 
+                    array('label'=> 'Je souhaite être informé des prochaines demandes du site'));
     }
 }
