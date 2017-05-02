@@ -163,10 +163,11 @@ JsonEncoder()));
         if($request->isXmlHttpRequest())
         {
             $city = $request->request->get('city');
+            $dptId = $request->request->get('departement');
             
             $listPostalCode = $em
                         ->getRepository('SEPortalBundle:PostalCode')
-                        ->getCpByRegionAndDpt($city);
+                        ->getCpByRegionAndDpt($city, $dptId);
 
             $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new 
 JsonEncoder()));

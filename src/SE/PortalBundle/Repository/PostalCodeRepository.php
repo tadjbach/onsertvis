@@ -37,18 +37,20 @@ class PostalCodeRepository extends \Doctrine\ORM\EntityRepository
           return $text;
         }
         
-     public function getCpByRegionAndDpt($city){
+     public function getCpByRegionAndDpt($city, $departement){
          $qb=$this->createQueryBuilder('postalCode');
 
         $qb
             ->innerJoin('postalCode.city', 'city')
-            ->addSelect('city');
+            ->addSelect('city')
+            ->innerJoin('city.departement', 'departement')
+            ->addSelect('departement');
         
         if($city !== NULL && $city !== ' ')
         {
             $city = $this->slugify($city);
-            $qb->Where("city.slug LIKE '%$city%'");
-            
+            $qb->where("city.slug LIKE '$city'")
+                ->andWhere($qb->expr()->eq('departement.id', $departement)); 
         }
         
         return $qb

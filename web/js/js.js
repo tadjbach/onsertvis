@@ -53,11 +53,11 @@
     }
     
     //getPostalCode
-    function getPostalCode($city){
+    function getPostalCode($city, $departements){
 
         var ajaxPostalCodeResult=[];
 
-            var dataPostalCode = {city: $city.val()};
+            var dataPostalCode = {city: $city.val(), departement: $departements.val()};
 
             $.ajax({
                 url: 'liste/getpostalcodebycity',
@@ -65,15 +65,21 @@
                 data: dataPostalCode,
                 dataType: 'json',
                     success:function(json) {
-                        $.each(json, function(id) {
+                        if (json.length === 1) {
+                            $('#postalCode_id').val(json[0].value);
+                        }
+                        else{
+                             $.each(json, function(id) {
                             ajaxPostalCodeResult.push(json[id].value);                                             
                         });
+                        }
+                       
                     },
                     error: function (error) {
                         console.log(error);
                     }
                 });
-
+                
             $('#postalCode_id').autocomplete({
                     source : ajaxPostalCodeResult
                 });
@@ -96,7 +102,7 @@
         }
         else{
             getCityByDepartement($departements);
-            getPostalCode($city, $cp_id);
+            getPostalCode($city, $departements);
         }
         
         // à la sélection d une région dans la liste
@@ -129,7 +135,7 @@
         
     $city.on('change', function() {
            $cp_id.val('');
-            getPostalCode($city);
+            getPostalCode($city, $departements);
         });
           
      }
