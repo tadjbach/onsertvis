@@ -135,3 +135,8 @@ se_cp_by_city:
     path: /demande/liste/getpostalcodebycity
     defaults:
         _controller: SEAuctionBundle:Advert:getPostalCodeByCity
+        
+se_postalcode:
+    path: /getpostalcode
+    defaults:
+        _controller: SEPortalBundle:PostalCode:getPostalCode

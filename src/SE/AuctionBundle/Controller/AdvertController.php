@@ -342,18 +342,7 @@ JsonEncoder()));
                             . 'role="button" '
                             . 'data-toggle="modal" '
                             . 'data-target="#modalAuctionShow">'.$suffix.'</p><div class="text-right"><span class="label se-price-badge">'.$price.'</span></div>';
-        /*
-        $auctionValue = '<p '
-                            . 'class="btn se-btn-action" '
-                            . 'role="button" '
-                            . 'data-toggle="modal" '
-                            . 'data-target="#modalAuctionShow">'
-                            . '<i class="glyphicon glyphicon-list-alt" ></i>'
-                            .$suffix
-                        .'</p>'
-                . '<div class="text-right">'
-                    . '<span class="label se-price-badge">'.$price.'</span>'
-                . '</div>';*/
+        
         
         return new Response(
             $auctionValue

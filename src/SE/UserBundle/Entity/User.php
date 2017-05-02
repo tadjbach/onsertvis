@@ -53,11 +53,30 @@ class User extends BaseUser
      */
     private $address;
 
-    /**
+     /**
      * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\PostalCode")
      * @Assert\Valid()
      */
     private $postalCode;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cpCity", type="string", length=25, nullable=true)
+     */
+    private $cpCity;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="SE\UserBundle\Entity\Payment")
+     * @Assert\Valid()
+     */
+    private $payment;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="SE\UserBundle\Entity\SocietyType")
+     * @Assert\Valid()
+     */
+    private $societyType;
 
     /**
      * @var \DateTime
@@ -428,30 +447,6 @@ class User extends BaseUser
     }
 
     /**
-     * Set city
-     *
-     * @param \SE\PortalBundle\Entity\City $city
-     *
-     * @return User
-     */
-    public function setCity(\SE\PortalBundle\Entity\City $city = null)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return \SE\PortalBundle\Entity\City
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
      * Set postalCode
      *
      * @param \SE\PortalBundle\Entity\PostalCode $postalCode
@@ -545,5 +540,77 @@ class User extends BaseUser
     public function removeCalendar(\SE\AuctionBundle\Entity\Calendar $calendar)
     {
         $this->calendar->removeElement($calendar);
+    }
+
+    /**
+     * Set payment
+     *
+     * @param \SE\UserBundle\Entity\Payment $payment
+     *
+     * @return User
+     */
+    public function setPayment(\SE\UserBundle\Entity\Payment $payment = null)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get payment
+     *
+     * @return \SE\UserBundle\Entity\Payment
+     */
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+
+    /**
+     * Set societyType
+     *
+     * @param \SE\UserBundle\Entity\SocietyType $societyType
+     *
+     * @return User
+     */
+    public function setSocietyType(\SE\UserBundle\Entity\SocietyType $societyType = null)
+    {
+        $this->societyType = $societyType;
+
+        return $this;
+    }
+
+    /**
+     * Get societyType
+     *
+     * @return \SE\UserBundle\Entity\SocietyType
+     */
+    public function getSocietyType()
+    {
+        return $this->societyType;
+    }
+
+    /**
+     * Set cpCity
+     *
+     * @param string $cpCity
+     *
+     * @return User
+     */
+    public function setCpCity($cpCity)
+    {
+        $this->cpCity = $cpCity;
+
+        return $this;
+    }
+
+    /**
+     * Get cpCity
+     *
+     * @return string
+     */
+    public function getCpCity()
+    {
+        return $this->cpCity;
     }
 }

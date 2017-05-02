@@ -77,6 +77,7 @@
             $('#postalCode_id').autocomplete({
                     source : ajaxPostalCodeResult
                 });
+
     }
     
     $(document).ready(function(){
@@ -124,16 +125,49 @@
             $cp_id.prop('disabled', false);
             getCityByDepartement($departements);
         }
-        
-        
         });
         
     $city.on('change', function() {
            $cp_id.val('');
             getPostalCode($city);
         });
-            }
+          
+     }
 
         
+        var $socityType = $('#fos_user_profile_form_accountType');
+        var $postalCode = $('#fos_user_profile_form_cpCity');
+        
+        $socityType.on('change', function() {
+           alert($socityType.val());
+        });
+        
+        var pathPostalCode = $("#pathCpCity").attr("data-path");
+        var postalCodeResult=[];
+
+    $postalCode.on('blur', function() {
+            
+        var dataPostalCode = {codepostal: $postalCode.val()};
+             
+           $.ajax({
+                url: pathPostalCode,
+                type:'POST',
+                data: dataPostalCode,
+                dataType: 'json',
+                    success:function(json) {
+                         $.each(json, function(id) {
+                            postalCodeResult.push(json[id].value +' '+ json[id].city.labelNormal);
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+        });
+        
+    $postalCode.autocomplete({
+        source : postalCodeResult
     });
+    
+  });
     
