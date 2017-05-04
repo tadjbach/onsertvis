@@ -114,6 +114,7 @@ class ProfileFormType extends AbstractType
                     'Mlle' => 'mlle',
                 )
             ))
+            ->add('siret', TextType::class, array('label'=> 'SIRET'))
             ->add('name', TextType::class, array('label'=> 'Nom'))
             ->add('firstName', TextType::class, array('label'=> 'Prénom'))
             ->add('address', TextType::class, array('label'=> 'Adresse'))

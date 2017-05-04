@@ -1,7 +1,7 @@
     
     //getDepartementByRegion
     function getDepartementByRegion($regions, $departements, $city){
-        $departements.empty();
+                $departements.empty();
                 $departements.append('<option value="0">Tous les départements</option>');
                 $departements.prop('disabled', false);
 
@@ -87,6 +87,7 @@
     }
     
     $(document).ready(function(){
+        
         $('[data-toggle="tooltip"]').tooltip();  
         
         var $regions = $('#region_id');
@@ -143,9 +144,25 @@
         
         var $socityType = $('#fos_user_profile_form_accountType');
         var $postalCode = $('#fos_user_profile_form_cpCity');
+        var $siret = $('#fos_user_profile_form_siret');
+        
+        if ($siret.length > 0) {
+            $siret.prop('disabled', true);
+
+            if ($socityType.val() === 'Society') {
+               $siret.prop('disabled', false);
+            }
+        } 
         
         $socityType.on('change', function() {
-           alert($socityType.val());
+            $siret.prop('disabled', true);
+            
+            if ($socityType.val() === 'Society') {
+                 $siret.prop('disabled', false);
+            }
+            else{
+                $siret.val('');
+            }
         });
         
         var pathPostalCode = $("#pathCpCity").attr("data-path");
@@ -172,7 +189,31 @@
         });
         
     $postalCode.autocomplete({
-        source : postalCodeResult
+        
+        source : function (request, response) {
+            var dataPostalCode = {codepostal: $postalCode.val()};
+            $.ajax({
+                url: pathPostalCode,
+                type:'POST',
+                data: dataPostalCode,
+                dataType: 'json',
+                    success:function(json) {
+                        postalCodeResult=[];
+                        $.each(json, function(id) {
+                            postalCodeResult.push(json[id].value + ' ' + json[id].city.labelNormal);
+                        });
+                         response(postalCodeResult);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+        },
+        minLength: 2,
+        open: function() {},
+        close: function() {},
+        focus: function(event,ui) {},
+        select: function(event, ui) {}
     });
     
   });

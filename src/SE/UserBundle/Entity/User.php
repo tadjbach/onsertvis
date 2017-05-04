@@ -67,7 +67,7 @@ class User extends BaseUser
     private $cpCity;
     
     /**
-     * @ORM\ManyToOne(targetEntity="SE\UserBundle\Entity\Payment")
+     * @ORM\ManyToMany(targetEntity="SE\UserBundle\Entity\Payment")
      * @Assert\Valid()
      */
     private $payment;
@@ -131,6 +131,13 @@ class User extends BaseUser
      * @ORM\ManyToMany(targetEntity="SE\AuctionBundle\Entity\Calendar")
      */
     private $calendar;
+    
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="siret", type="string", length=50, nullable=true)
+     */
+    private $siret;
     
     /**
      * @var int
@@ -612,5 +619,53 @@ class User extends BaseUser
     public function getCpCity()
     {
         return $this->cpCity;
+    }
+
+    /**
+     * Set siret
+     *
+     * @param string $siret
+     *
+     * @return User
+     */
+    public function setSiret($siret)
+    {
+        $this->siret = $siret;
+
+        return $this;
+    }
+
+    /**
+     * Get siret
+     *
+     * @return string
+     */
+    public function getSiret()
+    {
+        return $this->siret;
+    }
+
+    /**
+     * Add payment
+     *
+     * @param \SE\UserBundle\Entity\Payment $payment
+     *
+     * @return User
+     */
+    public function addPayment(\SE\UserBundle\Entity\Payment $payment)
+    {
+        $this->payment[] = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Remove payment
+     *
+     * @param \SE\UserBundle\Entity\Payment $payment
+     */
+    public function removePayment(\SE\UserBundle\Entity\Payment $payment)
+    {
+        $this->payment->removeElement($payment);
     }
 }

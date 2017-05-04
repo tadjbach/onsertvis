@@ -60,12 +60,33 @@ class PostalCodeRepository extends \Doctrine\ORM\EntityRepository
      
     public function getPostalCode($cp)
     {
-        $qb=$this->createQueryBuilder('postalCode');
-        $qb->Where("postalCode.value LIKE '$cp%'");
+        $qb=$this->createQueryBuilder('postalCode')
+                ->innerJoin('postalCode.city', 'city')
+                ->addSelect('city');
+                
+        $qb->where("postalCode.value LIKE '$cp%'");
 
-        $qb->setMaxResults(1000);
+        $cp = $this->slugify($cp);
+            $qb->orWhere("city.slug LIKE '$cp%'");
+                    
+        $qb->setMaxResults(10000);
         
         return $qb->getQuery()
             ->getResult();
     }
+    
+    public function getPostalCodeByCpValue($postalCode)
+    {
+        $qb=$this->createQueryBuilder('postalCode');
+                
+        $pc = substr($postalCode, 0, 5);
+        
+        $qb->where("postalCode.value LIKE '$pc'");
+                    
+        $qb->setMaxResults(1);
+        
+        return $qb->getQuery()
+            ->getResult();
+    }
+    
 }

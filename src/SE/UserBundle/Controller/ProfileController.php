@@ -156,6 +156,15 @@ class ProfileController extends Controller
             $dispatcher->dispatch(FOSUserEvents::PROFILE_EDIT_SUCCESS, $event);
             $user->setDateUpdate(new \DateTime());
             $user->setIsAcountComplete(true);
+            
+            $em = $this->getDoctrine()->getManager();
+            $postalCode=$em->getRepository('SEPortalBundle:PostalCode')
+                   ->getPostalCodeByCpValue($user->getCpCity());
+            
+            foreach ($postalCode as $pc) {
+                $user->setPostalCode($pc);
+              }
+            
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {

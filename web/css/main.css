@@ -349,6 +349,10 @@ a.title-link:focus{
     line-height: normal;
 }
 
+textarea.form-control{
+    height: 250px;
+}
+
 .truncate {
   width: 300px;
   white-space: nowrap;
@@ -471,7 +475,10 @@ a.title-link:focus{
    color: #fff;
    background-color: #474747;
 }
-
+.se-panel-heading> h3{
+    color: #E5DF16;
+    font-weight: bold;
+}
 .se-nb-auction{
     margin-bottom: -20px;
     width: 40%;
@@ -483,7 +490,9 @@ a.title-link:focus{
 .panel-default {
     border-color: #484848;
 }
-
+.panel-primary{
+    border-color: 0;
+}
 .se-item-link{
     color:#484848;
 }
