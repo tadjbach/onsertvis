@@ -614,3 +614,14 @@ a.ui-corner-all .ui-state-active {
   .opac{
       opacity: 0.5;
   }
+ .se-tbl-head 
+  {
+          color: #E5DF16;
+    background-color: #474747;
+  }
+  
+a.se-tbl-link{
+    color: #484848;
+    font-weight: bold;
+    text-decoration: underline;   
+}

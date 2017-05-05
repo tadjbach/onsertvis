@@ -308,7 +308,7 @@ JsonEncoder()));
 
         $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
 
-        $titleResult = count($listAdverts) == 0 ?'Aucune demande trouvée !' :
+        $titleResult = count($listAdverts) == 0 ?'Aucune demande postée !' :
                 (count($listAdverts) > 1 ? count($listAdverts).' résultats' :  
             count($listAdverts).' résultat');
         
@@ -347,6 +347,31 @@ JsonEncoder()));
         
         return new Response(
             $auctionValue
+        );
+    }
+    
+    public function viewCountAuctionByUserAction($advertId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $nbAuction = '<td class="text-center"><h4><span class="label label-default">0</span></h4></td>';
+        $price = '<td class="text-center"><h4><span class="label label-default">-- €</span></h4></td>';
+        $result = $nbAuction.$price;
+        
+        $lastAuction = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getLastAuction($advertId);
+        
+        if (count($lastAuction) > 0) {
+            $price = $this->priceFormat($lastAuction[0]->getValue());
+            $nbAuction = '<h4><span class="label label-success">'.count($lastAuction).'</span></h4>';
+            
+            $result = '<td class="text-center">'.$nbAuction.'</td>'
+                    .'<td class="text-center"><h4><span class="label label-success">'
+                    .$price.'</span></h4></td>';
+        }
+       
+        return new Response(
+            $result
         );
     }
     

@@ -18,20 +18,59 @@
         </div>
     </div>
                 
-            <div class="well se-well">
+    <div class="well se-well">
         <div class="index-container" >
             <div class="row">
                  <div id="content" class="col-md-12">
                      <h4 class="cat-title">{{ titleResult }}</h4>
-                    {% for advert in listAdverts %}
-                        <div class="col-sm-4 col-md-4">
-                            <a class="item-link" href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">
-                                {{ include('@SEAuction/Advert/itemTuile.html.twig') }}
-                            </a>
-                        </div>
-                    {% else %}
-                            <div>Si vous effectuez une recherche par mots-clés, vérifiez bien qu'il n'y ait pas de faute de frappe.</div>
-                    {% endfor %}
+                        <table class="table" id="tblGrid">
+                            <thead class="se-tbl-head">
+                                <tr>
+                                    <th>Postée le</th>
+                                    <th>Titre</th>
+                                    <th>Catégorie</th>
+                                    <th class='text-center'>Offres reçus</th>
+                                    <th class='text-center'>Offres</th>
+                                    <th>En ligne</th>
+                                    <th>Action</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for advert in listAdverts %}
+                                <tr>
+                                    <td><h5>{{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m:s') }}</h5></td>
+                                    <td><h5><a class='se-tbl-link' href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">{{ advert.title }}</a></h5></td>
+                                    <td><h5>{{ advert.category.labelNormal }}</h5></td>
+                                        {{ render(controller('SEAuctionBundle:Advert:viewCountAuctionByUser', { 'advertId': advert.id })) }}
+                                    <td><h4>
+                                        {% if advert.isPublished == 1 %}
+                                            <span class="label label-success">En ligne</span>
+                                        {% else %}
+                                            <span class="label label-danger">Hors ligne</span>
+                                        {% endif %}
+                                        </h4>
+                                    </td>
+                                    <td>
+                                        <h5>
+                                            <a href="{{ path('se_auction_advert_edit', {'id': advert.id}) }}"
+                                                type="button" class="btn btn-default" >
+                                                <i class="glyphicon glyphicon-edit"></i> Modifier
+                                            </a>
+                                            <a href="{{ path('se_auction_advert_view', {'id': advert.id}) }}"
+                                                type="button" class="btn btn-default" >
+                                                <i class="glyphicon glyphicon-eye-open"></i> Offres
+                                            </a>
+                                            <a href="{{ path('se_auction_advert_delete', {'id': advert.id}) }}"
+                                                type="button" class="btn btn-danger" >
+                                                <i class="glyphicon glyphicon-remove"></i> Supprimer
+                                            </a>
+                                        </h5>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                 </div>
             </div>
         </div>
