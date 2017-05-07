@@ -42,7 +42,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         {{ render(controller('SEAuctionBundle:Auction:add', {'request': app.request,'advertId':advert.id} )) }}
-                                        {{ render(controller('SEAuctionBundle:Message:add', {'request': app.request,'advertId':advert.id} )) }}
+                                        {{ render(controller('SEAuctionBundle:Message:add', {'request': app.request,'advertId':advert.id, 'senderId': app.user.id, 'receiveId':advert.user.id} )) }}
                                      </div>
                                 </div>
                             {% else %} 

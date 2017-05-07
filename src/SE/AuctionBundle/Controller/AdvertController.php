@@ -341,9 +341,8 @@ JsonEncoder()));
         }
         
         return new Response(
-                '<td class="text-center">'
-                    .'<h3><span class="label label-success">'.$price.'</span></h3>'
-                    .'<h5><span class="label label-success">'.$nbAuctionPluriel.'</span></h5>'
+                '<h3><span class="label label-warning">'.$price.'</span></h3>'
+                    .'<h5><span class="label label-info">'.$nbAuctionPluriel.'</span></h5>'
                 .'</td>'
                 );
     }
@@ -391,12 +390,12 @@ JsonEncoder()));
         if (count($lastAuction) > 0) {
             $price = $this->priceFormat($lastAuction[0]->getValue());
             $nbAuctionPluriel = count($lastAuction) == 1 ? count($lastAuction).' enchère' : count($lastAuction).' enchères';
-            $cssClass1 = 'primary';
+            $cssClass1 = 'warning';
+            $cssClass2 = 'info';
         }
        
         return new Response(
-                '<td class="text-center">'
-                    .'<h3><span class="label label-'.$cssClass1.'">'.$price.'</span></h3>'
+                '<h3><span class="label label-'.$cssClass1.'">'.$price.'</span></h3>'
                     .'<h5><span class="label label-'.$cssClass2.'">'.$nbAuctionPluriel.'</span></h5>'
                 .'</td>'
         );

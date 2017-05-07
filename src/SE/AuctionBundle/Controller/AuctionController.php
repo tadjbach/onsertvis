@@ -115,11 +115,16 @@ class AuctionController extends Controller
         
          $listAuctions = $em
             ->getRepository('SEAuctionBundle:Auction')
-            ->getAllAuctionUser($advertId, $user->getId(), $page, $this->nbPerPage);
+            ->getAllAuctionUser($advertId, $user->getId(), 1, $this->nbPerPage);
         
         $comment = $em
                     ->getRepository('SEAuctionBundle:Comment')
                     ->getCommentByAdvert($advertId);
+        
+        /*$listConversation = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('SEAuctionBundle:Message')
+            ->getMessageByAdvert($advertId);*/
         
         $nbPages = ceil(count($listAuctions)/$this->nbPerPage);
 
@@ -133,7 +138,8 @@ class AuctionController extends Controller
             'page'        => $page,
             'countAuctions'     => count($listAuctions),
             'countComment'  => count($comment),
-            'advert'=>$advert
+            'advert'=>$advert,
+           // 'listConversation'=> $listConversation,
         ));
     }
 

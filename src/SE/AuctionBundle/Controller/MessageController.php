@@ -18,20 +18,21 @@ class MessageController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function addAction(Request $request, $advertId){
+    public function addAction(Request $request, $advertId, $senderId, $receiveId){
       
         $em = $this->getDoctrine()->getManager();
       
         $advert=$em->find('SEAuctionBundle:Advert', $advertId);
+        $userSender=$em->find('SEUserBundle:User', $senderId);
+        $userReceive=$em->find('SEUserBundle:User', $receiveId);
         
         $message = new Message();
         
-        $message->setSender($this->getUser());
+        $message->setSender($userSender);
         $message->setAdvert($advert);
-        $message->setReceiver($advert->getUser());
+        $message->setReceiver($userReceive);
         
-        $form = $this->createForm(MessageType::class, $message,
-                 array('action' => $this->generateUrl('se_auction_advert_view', array('id' => $advertId))));
+        $form = $this->createForm(MessageType::class, $message);
 
         if ($request->isMethod('POST')){
             $form->handleRequest($request);
@@ -54,11 +55,11 @@ class MessageController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function listAction($page)
+    public function listAction($advertId, $page)
     {
         $nbPerPage = 9;
         $user = $this->getUser();
-        
+        /*
         $listReceivers = $this->getDoctrine()
             ->getManager()
             ->getRepository('SEAuctionBundle:Message')
@@ -72,9 +73,14 @@ class MessageController extends Controller
          $listConversation = $this->getDoctrine()
             ->getManager()
             ->getRepository('SEAuctionBundle:Message')
-            ->getMessageConversation($user->getId(), $page, $nbPerPage);
+            ->getMessageConversation($user->getId(), $page, $nbPerPage);*/
         
-        $nbPages = ceil(count($listSenders)/$nbPerPage);
+        $listMessageByAdvert = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('SEAuctionBundle:Message')
+            ->getMessageByAdvert($advertId, $user->getId(), $page, $nbPerPage);
+        
+        $nbPages = ceil(count($listMessageByAdvert)/$nbPerPage);
 
         if ($page<1){
             throw new NotFoundHttpException('page"'.$page.'" inexistante');
@@ -84,8 +90,8 @@ class MessageController extends Controller
         return $this->render('SEAuctionBundle:Message:list.html.twig', array(
             'nbPages'     => $nbPages,
             'page'        => $page,
-            'listConversation'=> $listConversation,
-            'countConversation'=>count($listConversation)
+            'listMessage'=> $listMessageByAdvert,
+            'countMessage'=>count($listMessageByAdvert)
         ));
     }
 }

@@ -90,7 +90,7 @@
     <div>Aucune enchère pour l'instant</div>
 {% endif %}
 
-{% if countComment == 0 %}
+{% if countComment == 0 and countAuctions > 0 %}
 <div class="modal fade"
     id="modalCommentAdd"
     tabindex="-1"

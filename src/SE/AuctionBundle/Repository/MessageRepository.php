@@ -12,6 +12,34 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class MessageRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getMessageByAdvert($advertId, $recieveId,  $page, $nbPerPage)
+    {
+         $qb = $this->createQueryBuilder('message')
+            ->leftJoin('message.advert', 'advert')
+            ->addSelect('advert')
+            ->leftJoin('message.sender', 'sender')
+            ->addSelect('sender')
+            ->leftJoin('message.receiver', 'receiver')
+            ->addSelect('receiver')
+            ->add('groupBy', 'sender.id');
+                
+        $qb->where($qb->expr()->eq('advert.id', $advertId))
+            ->andWhere($qb->expr()->neq('sender.id', $recieveId))
+            ->andWhere($qb->expr()->eq('message.isPublished', 1))
+            ->andWhere($qb->expr()->eq('message.isDeleted', 0));
+        
+        $qb->addOrderBy('message.dateCreation', 'DESC')->getQuery();
+        
+         // On définit l'demande à partir de laquelle commencer la liste
+            $qb->setFirstResult(($page-1) * $nbPerPage)
+            // Ainsi que le nombre d'demande à afficher sur une page
+            ->setMaxResults($nbPerPage);
+
+        // Enfin, on retourne l'objet Paginator correspondant à la requête construite
+        // (n'oubliez pas le use correspondant en début de fichier)
+        return new Paginator($qb, true); 
+    }
+    
     public function getMessageConversation($userId, $page, $nbPerPage){
         
          $qb = $this->createQueryBuilder('m')

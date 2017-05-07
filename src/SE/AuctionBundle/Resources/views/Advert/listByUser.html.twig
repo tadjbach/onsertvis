@@ -24,75 +24,82 @@
                  <div id="content" class="col-md-12">
                      <h4 class="cat-title">{{ titleResult }}</h4>
                         <table class="table" id="tblGrid">
-
                             <tbody>
                             {% for advert in listAdverts %}
                                 <tr>
-                                    <td><h5>{{ advert.dateCreation|date('d/m/Y') }} 
-                                            <br>
-                                            {{ advert.dateCreation|date('H:m:s') }}</h5></td>
-                                    <td><img class="se-auction-img" src="{{ asset(advert.category.webPath) }}" alt="{{ asset(advert.category.webPath) }}"> </td>
-                                    <td><h5><a class='se-tbl-link' href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">{{ advert.title }}</a></h5></td>
-                                    
-                                    
-                                    <td><h4>
+                                    <td>
+                                        <h5>
+                                            {{ advert.dateCreation|date('d/m/Y') }} 
+                                        <br>
+                                            {{ advert.dateCreation|date('H:m:s') }}
+                                        </h5>
+                                    </td>
+                                    <td>
+                                        <img class="se-auction-img" src="{{ asset(advert.category.webPath) }}" alt="{{ asset(advert.category.webPath) }}"> 
+                                    </td>
+                                    <td>
+                                        <h5>
+                                            <a class='se-tbl-link' href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">{{ advert.title }}</a>
+                                        </h5>
+                                    </td>
+                                    <td class='text-center'>
+                                        <h4>
                                         {% if advert.isPublished == 1 %}
                                             <span class="label label-primary">Demande en cours</span>
                                         {% elseif advert.isPublished == 0 and advert.auctionState == 0 %}
                                             <span class="label label-warning">Publication en cours</span>
                                         {% elseif advert.isPublished == 0 and advert.auctionState != 0 %}
                                             <span class="label label-success">Enchère acceptée</span>
-                                            <div class="label label-danger"
+                                            <!--<div class="label label-danger"
                                                   data-toggle="tooltip" 
                                                         data-placement="bottom" title="La demande n'est plus visible sur le site">
-                                             <i class="glyphicon glyphicon-info-sign"> </i>
+                                             <i class="glyphicon glyphicon-info-sign"> </i>-->
                                             </div>
                                         {% endif %}
                                         </h4>
-                                    </td>
-                                        
+                                    
                                         {% if advert.isPublished == 0 and advert.auctionState != 0 %}
-                                        
-                                            {{ render(controller('SEAuctionBundle:Advert:viewAcceptAuction', { 'advertId': advert.id })) }}
-                                        
+                                            {{ render(controller('SEAuctionBundle:Advert:viewAcceptAuction', { 'advertId': advert.id })) }}                     
                                         {% else %}
                                             {{ render(controller('SEAuctionBundle:Advert:viewCountAuctionByUser', { 'advertId': advert.id })) }}
-                              
                                         {% endif %}
-                                        
                                      <td>
                                         <h5>
-                                            {% if advert.auctionState != 0 %}
-                                                <a href="{{ path('se_auction_list_auction_by_advert', {'advertId': advert.id}) }}"
-                                                    type="button" class="btn se-btn-action btn lrg" 
-                                                    data-toggle="tooltip" 
-                                                        data-placement="bottom" title="Consulter les offres"
-                                                    >
-                                                    Voir les enchères
-                                                </a>
-                                            
-                                            {% endif %}
-                                        </h5>
-                                        <h5>
-                                            {% if advert.isPublished == 0 and advert.auctionState != 0 %}
-                                           
-                                            {% else %}
-                                                <a href="{{ path('se_auction_advert_edit', {'id': advert.id}) }}"
-                                                type="button" class="btn btn-success lrg" data-toggle="tooltip" 
-                                                        data-placement="bottom" title="Modifier la demande">
-                                                Modifier
-                                                </a>
-                                            {% endif %}
-                                          </h5><!--
-                                           <h5>
-                                            <a href="{{ path('se_auction_advert_delete', {'id': advert.id}) }}"
-                                                type="button" class="btn btn-danger lrg" 
+                                            <a href="{{ path('se_auction_list_auction_by_advert', {'advertId': advert.id}) }}"
+                                                type="button" class="btn se-btn-action lrg" 
                                                 data-toggle="tooltip" 
-                                                        data-placement="bottom" title="Supprimer la demande">
-                                                Supprimer
+                                                    data-placement="bottom" title="Consulter les offres" >
+                                                Enchères
                                             </a>
-                                                
-                                        </h5>-->
+                                        <h5>
+                                        </h5>
+                                            <a href="{{ path('se_auction_message_list',{'advertId': advert.id}) }}"
+                                                type="button" class="btn se-btn-action lrg" 
+                                                data-toggle="tooltip" 
+                                                    data-placement="bottom" title="Consulter les conversations" >
+                                                Messages
+                                            </a>
+                                        </h5>
+                                     </td>
+                                     <td>
+                                            {% if advert.isPublished == 0 and advert.auctionState != 0 %}
+                                            {% else %}
+                                                <h5>
+                                                    <a href="{{ path('se_auction_advert_edit', {'id': advert.id}) }}"
+                                                    type="button" class="btn btn-success lrg" data-toggle="tooltip" 
+                                                            data-placement="bottom" title="Modifier la demande">
+                                                    Modifier
+                                                    </a>
+                                                <h5>
+                                                </h5>
+                                                     <a href="{{ path('se_auction_advert_delete', {'id': advert.id}) }}"
+                                                         type="button" class="btn btn-danger lrg" 
+                                                         data-toggle="tooltip" 
+                                                                 data-placement="bottom" title="Supprimer la demande">
+                                                         Supprimer
+                                                     </a>
+                                                </h5>
+                                            {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}

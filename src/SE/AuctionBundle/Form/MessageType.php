@@ -19,7 +19,7 @@ class MessageType extends AbstractType
         $builder
                 ->add('content', TextareaType::class, array('label'=> false,
                     'attr' => array('maxlength' => 1000,
-                    'placeholder' => 'Demandez une information (1000 caratères maximum)')
+                    'placeholder' => 'Ecrivez votre message ici (1000 caratères maximum)')
                     ))
                  ->add('save', SubmitType::class, 
                                 array('label'=> 'Envoyer',

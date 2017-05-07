@@ -628,5 +628,9 @@ a.se-tbl-link{
     text-decoration: underline;   
 }
 .lrg{
-    width:     100%;
+    width: 100%;
+}
+
+.med{
+    width: 50%;
 }

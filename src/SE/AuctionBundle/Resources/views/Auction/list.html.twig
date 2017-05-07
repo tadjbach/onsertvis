@@ -3,7 +3,7 @@
 {% extends "SELayoutBundle::layout.html.twig" %}
 
 {% block title %}
-    Mes offres - {{ parent() }}
+    Détails de la demande "{{ advert.title }}" - {{ parent() }}
 {% endblock %}
 
 {% block se_layout_body %}
@@ -12,7 +12,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-                    <h3 class="cat-title">Enchères reçues pour la demande "{{ advert.title }}"</h3>
+                    <h3 class="cat-title">Détails de la demande "{{ advert.title }}"</h3>
                 </div>
             </div>
         </div>
@@ -26,6 +26,7 @@
                      {{ include('@SEAuction/Auction/listAuction.html.twig') }}
                  </div>
             </div>
+
         </div>
     </div>
     {{ include('@SEAuction/Commun/pagination.html.twig') }}

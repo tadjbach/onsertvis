@@ -97,7 +97,7 @@ se_auction_auction_accept:
 
 #Account - Message
 se_auction_message_list:
-    path: /tableau-de-bord/mes-messages/{page}
+    path: /mes-messages/{advertId}/{page}
     defaults:
         _controller: SEAuctionBundle:Message:list
         page:        1
@@ -105,7 +105,7 @@ se_auction_message_list:
         page: \d*
         
 se_auction_message_add:
-    path:     /contact/envoi-message/{advertId}
+    path:     /contact/envoi-message/{advertId}/{senderId}/{receiveId}
     defaults:
         _controller: SEAuctionBundle:Message:add
 

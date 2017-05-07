@@ -20,25 +20,45 @@
         <div class="index-container" >
             <div class="row">
                  <div id="content" class="col-md-12">
-                     <h4 class="cat-title">{{countConversation}} conversations</h4>
-                     {% for conversation in listConversation %}
-                        <div class="col-sm-12">
-                            <div class="thumbnail">
-                                <div class="caption">
-                                    <h4>{{ conversation.advert.title }}</h4>
-                                    <p>{{ conversation.dateCreation|date('d/m/Y') }} à {{ conversation.dateCreation|date('H:m') }}</p>
-                                    <p>
-                                        <a href="{{ path('se_auction_message_list',{'id':conversation.id}) }}" class="btn btn-success">
-                                    <i class="glyphicon glyphicon-comment"></i>
-                                        Voir
-                                    </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        {% else %}
-                            <div>Pas (encore !) de messages envoyés</div>
-                        {% endfor %}
+                     <h4 class="cat-title">{{countMessage}} conversations</h4>
+                     <table class="table" id="tblGrid">
+                        <tbody>
+                            {% for msg in listMessage %}
+                                <tr>
+                                    <td class='text-left'>
+                                        <h5>
+                                            {{ msg.dateCreation|date('d/m/Y') }} à
+                                            {{ msg.dateCreation|date('H:m:s') }}
+                                        </h5>
+                                    </td>
+                                    <td class='text-center'>
+                                        <h5>
+                                            <a href="{{ path('se_user_view', {'id': msg.sender.id}) }}" class="se-tbl-link" >
+                                                {{ msg.sender }}
+                                            </a>
+                                            <br>
+                                            {{ include('@SEAuction/Auction/rate.html.twig', {'item': msg.sender }) }}
+                                        </h5>
+                                    </td>
+                                    <td>
+                                        <h5>
+                                            <a class='se-tbl-link' href="{{ path('se_auction_advert_view', {'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
+                                        </h5>
+                                    </td>
+                                    <td>
+                                        <p>
+                                        <a href="{{ path('se_auction_message_list',{'advertId':msg.advert.id}) }}" class="btn btn-success">
+                                        <i class="glyphicon glyphicon-comment"></i>
+                                            Voir
+                                        </a>
+                                        </p>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <div>Pas (encore !) de messages</div>
+                            {% endfor %}
+                     </tbody>
+                     </table>
                  </div>
             </div>
         </div>
@@ -46,3 +66,5 @@
     {{ include('@SEAuction/Commun/pagination.html.twig') }}
    
 {% endblock %}
+
+
