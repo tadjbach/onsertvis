@@ -41,7 +41,7 @@ class MessageController extends Controller
                 $em->persist($message);
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add('success', 'Message bien envoyé.');
+                //$request->getSession()->getFlashBag()->add('success', 'Message bien envoyé.');
             }
         }
 

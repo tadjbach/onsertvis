@@ -44,11 +44,13 @@ class CommentController extends Controller
         $listComment = $em
                     ->getRepository('SEAuctionBundle:Comment')
                     ->getComment($userReceiver->getId(), false);
+        $countComment = count($listComment) + 1;
         
         foreach ($listComment as $item) {
-            $rate = $rate + ($item->getRate() / count($listComment));
+            $rate = $rate + $item->getRate();
         }
         
+        $rate = $rate / $countComment;
         
         $userReceiver->setRate(round($rate));
 
@@ -59,7 +61,7 @@ class CommentController extends Controller
         $em->persist($comment);
         $em->flush();
 
-        $request->getSession()->getFlashBag()->add('success', 'Commentaire bien envoyé.');
+        //$request->getSession()->getFlashBag()->add('success', 'Commentaire bien envoyé.');
             }
         }
 

@@ -42,7 +42,7 @@ class AdvertType extends AbstractType
                 ->add('save', SubmitType::class, 
                                 array('label'=> 'Enregistrer',
                                     'attr'   =>  array(
-                                                'class'   => 'btn btn-primary')));
+                                                'class'   => 'btn se-btn-action btn')));
     }
     
     /**

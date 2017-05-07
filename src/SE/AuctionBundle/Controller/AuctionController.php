@@ -78,7 +78,7 @@ class AuctionController extends Controller
                 $em->persist($auction);
                 $em->flush();
 
-               $request->getSession()->getFlashBag()->add('notice', 'Votre offre est validée.');
+               //$request->getSession()->getFlashBag()->add('notice', 'Votre offre est validée.');
                
                //envoi de mail au proprio
 
@@ -109,6 +109,10 @@ class AuctionController extends Controller
         $em=$this->getDoctrine()
             ->getManager();
 
+        $advert=$this->getDoctrine()
+            ->getManager()
+            ->find('SEAuctionBundle:Advert', $advertId);
+        
          $listAuctions = $em
             ->getRepository('SEAuctionBundle:Auction')
             ->getAllAuctionUser($advertId, $user->getId(), $page, $this->nbPerPage);
@@ -128,7 +132,8 @@ class AuctionController extends Controller
             'nbPages'     => $nbPages,
             'page'        => $page,
             'countAuctions'     => count($listAuctions),
-            'countComment'  => count($comment)
+            'countComment'  => count($comment),
+            'advert'=>$advert
         ));
     }
 
@@ -254,7 +259,8 @@ class AuctionController extends Controller
             'nbPages'     => $nbPages,
             'page'        => $page,
             'countAuctions'     => count($listAuctions),
-            'countComment'  => count($comment)
+            'countComment'  => count($comment),
+            'advert'=>$advert
         ));
     }
     

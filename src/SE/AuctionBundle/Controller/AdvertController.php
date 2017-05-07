@@ -45,7 +45,7 @@ class AdvertController extends Controller
                 $em->persist($advert);
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add('notice', 'Demande bien enregistrée.');
+                //$request->getSession()->getFlashBag()->add('notice', 'Demande bien enregistrée.');
 
                 return $this->redirectToRoute('se_auction_advert_list_by_user');
             }
@@ -154,7 +154,7 @@ JsonEncoder()));
         return new Response(null);
     }
     
-        public function getPostalCodeByCityAction(Request $request){
+    public function getPostalCodeByCityAction(Request $request){
             
         $em = $this
                 ->getDoctrine()
@@ -208,7 +208,7 @@ JsonEncoder()));
            $countAuctions = count($listAuctions) <= 1 ? count($listAuctions).' offre' : count($listAuctions).' offres';
         }
         
-        if (null===$advert){
+        if (null===$advert || $advert->getAuctionState() === 1){
             throw new NotFoundHttpException("Oops, La demande  que vous cherchez n'existe pas.");
         }
 
@@ -246,7 +246,7 @@ JsonEncoder()));
                 
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add('info', 'Demande bien modifiée');
+                //$request->getSession()->getFlashBag()->add('info', 'Demande bien modifiée');
 
                 return $this->redirectToRoute('se_auction_advert_view', array('id'=>$advert->getId()));
             }
@@ -284,7 +284,7 @@ JsonEncoder()));
 
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('info', "La demande a bien été supprimée.");
+            //$request->getSession()->getFlashBag()->add('info', "La demande a bien été supprimée.");
 
             return $this->redirect($this->generateUrl('se_auction_advert_list_by_user'));
         }
@@ -330,13 +330,21 @@ JsonEncoder()));
         $acceptAuction = $em
             ->getRepository('SEAuctionBundle:Auction')
             ->getAcceptAuction($advertId);
+        $lastAuction = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getLastAuction($advertId);
         
         if (count($acceptAuction) > 0) {
            $price = $this->priceFormat($acceptAuction[0]->getValue());
+           
+           $nbAuctionPluriel = count($lastAuction) == 1 ? count($lastAuction).' enchère' : count($lastAuction).' enchères';
         }
         
         return new Response(
-                '<h4><span class="label label-success">'.$price.'</span></h4>'
+                '<td class="text-center">'
+                    .'<h3><span class="label label-success">'.$price.'</span></h3>'
+                    .'<h5><span class="label label-success">'.$nbAuctionPluriel.'</span></h5>'
+                .'</td>'
                 );
     }
     
@@ -371,9 +379,10 @@ JsonEncoder()));
     public function viewCountAuctionByUserAction($advertId)
     {
         $em = $this->getDoctrine()->getManager();
-        $nbAuction = '<td class="text-center"><h4><span class="label label-default">0</span></h4></td>';
-        $price = '<td class="text-center"><h4><span class="label label-default">-- €</span></h4></td>';
-        $result = $nbAuction.$price;
+        $nbAuctionPluriel = '0 enchère';
+        $price = '-- €';
+        $cssClass1 = 'default';
+        $cssClass2 = 'default';
         
         $lastAuction = $em
             ->getRepository('SEAuctionBundle:Auction')
@@ -381,15 +390,15 @@ JsonEncoder()));
         
         if (count($lastAuction) > 0) {
             $price = $this->priceFormat($lastAuction[0]->getValue());
-            $nbAuction = '<h4><span class="label label-success">'.count($lastAuction).'</span></h4>';
-            
-            $result = '<td class="text-center">'.$nbAuction.'</td>'
-                    .'<td class="text-center"><h4><span class="label label-warning">'
-                    .$price.'</span></h4></td>';
+            $nbAuctionPluriel = count($lastAuction) == 1 ? count($lastAuction).' enchère' : count($lastAuction).' enchères';
+            $cssClass1 = 'primary';
         }
        
         return new Response(
-            $result
+                '<td class="text-center">'
+                    .'<h3><span class="label label-'.$cssClass1.'">'.$price.'</span></h3>'
+                    .'<h5><span class="label label-'.$cssClass2.'">'.$nbAuctionPluriel.'</span></h5>'
+                .'</td>'
         );
     }
     

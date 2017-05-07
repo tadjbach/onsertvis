@@ -122,6 +122,11 @@ se_auction_comment_add:
     path:     /contact/ajouter-comment/{advertId}/{auctionUserId}
     defaults:
         _controller: SEAuctionBundle:Comment:add
+
+se_auction_comment_edit:
+    path:     /contact/modifier-comment/{advertId}/{auctionUserId}
+    defaults:
+        _controller: SEAuctionBundle:Comment:edit
         
 se_user_view:
     path:     /encherisseur/profile/{id}

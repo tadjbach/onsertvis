@@ -17,72 +17,60 @@
     {% endfor %}
 
     <table class="table" id="tblGrid">
-        <thead class="se-tbl-head">
-        <tr>
-            <th>Enchérisseur</th>
-            <th>Note</th>
-            <th class="text-center">Prix proposé</th>
-            <th class="text-center">Date</th>
-            <th class="text-center">Accepter</th>
-            <th class="">Evaluer</th>
-        </tr>
-        </thead>
         <tbody>
         {% for auction in listAuctions %}
             <tr>
                 <td class="text-left">
-                    <h4>
+                    <h5>
                     <a href="{{ path('se_user_view', {'id': auction.user.id}) }}" 
                        class="se-tbl-link" >
                         {{ auction.user }}
                     </a>
-                    </h4>
-                </td>
-                <td class="text-left">
-                    <h4>
-                    {{ include('@SEAuction/Auction/rate.html.twig', {'item': auction.user }) }}
-                    </h4>
+                     </h5>
+                        {{ include('@SEAuction/Auction/rate.html.twig', {'item': auction.user }) }}
+                   
                 </td>
                 <td class="text-right bold">
                     <h4>
                     {% if auction.state == 2 %}
                         <span class="label label-success">
-                        {{ auction.value|number_format(0, ' ', ' ') }} €
+                        Ecnhère à {{ auction.value|number_format(0, ' ', ' ') }} €
                         </span>
                     {% else %}
                         <span class="label label-default">
-                        {{ auction.value|number_format(0, ' ', ' ') }} €
+                        Ecnhère à {{ auction.value|number_format(0, ' ', ' ') }} €
                         </span>
                     {%endif%}
                     
                     </h4>
                     </td>
-                <td class="text-right">
-                    <h4>
+                <td class="text-center">
+                    <h5>
                     {{ auction.dateCreation|date('d/m/Y') }} 
-                    à {{ auction.dateCreation|date('H:m:s') }}
-                    </h4>
+                    <br>
+                    {{ auction.dateCreation|date('H:m:s') }}
+                    </h5>
                 </td>
                 <td class="text-center">
                     {% if auction.state == 2 %}
                         <h4>
-                            <span class="label label-success">Offre Acceptée</span>
+                            <span class="label label-success">Enchère Acceptée</span>
                         </h4>
-                    {% elseif auctionAccept != 1%}
+                    {% elseif auctionAccept != 1 %}
                          <a href="{{ path('se_auction_auction_accept', {'auctionId': auction.id}) }}"
-                            type="button" class="btn btn-primary" >
+                            type="button" class="btn se-btn-action btn" >
                              J'accepte
                         </a>
                     {% else %}
                         <h4>
-                            <span class="label label-default">Offre déclinée</span>
+                            <span class="label label-default">Enchère déclinée</span>
                         </h4>
                     {% endif %}
                 </td>
                 <td>
                     {% if auction.state == 2 and countComment == 0 %}
                     <button 
-                       class="btn btn-primary"
+                       class="btn se-btn-action btn"
                                     data-toggle="modal"
                                     data-target="#modalCommentAdd">
                         Evaluer
@@ -92,10 +80,6 @@
                             <span class="label label-success">Déja evalué</span>
                         </h4>
                     {% else %}
-                        <button 
-                       class="btn btn-primary" disabled='disabled'>
-                        Evaluer
-                        </button>
                     {%endif%}
                 </td>
             </tr>

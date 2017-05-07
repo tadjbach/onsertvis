@@ -99,8 +99,10 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
 
         $qb->where($qb->expr()->eq('user.id', $userId))
             ->andWhere($qb->expr()->eq('advert.isDeleted', 0));
-
-        $qb->getQuery();
+        
+       $qb->addOrderBy('advert.auctionState', 'ASC')->getQuery();
+        
+        // $qb->orderBy('advert.dateCreation', 'DESC')->getQuery();
 
         $qb->setFirstResult(($page-1) * $nbPerPage)
             ->setMaxResults($nbPerPage);
