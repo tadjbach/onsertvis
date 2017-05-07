@@ -18,21 +18,33 @@ class CommentController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function addAction(Request $request, $advertId){
+    public function addAction(Request $request, $advertId, $auctionUserId){
       
         $em = $this->getDoctrine()->getManager();
       
         $advert=$em->find('SEAuctionBundle:Advert', $advertId);
-        $userSender = $this->getUser();
-        $userReceiver = $advert->getUser();
-        $comment = new Comment();
-        $rate = 0;
+        $userReceiver = $em->find('SEUserBundle:User', $auctionUserId);
         
+        $userSender = $this->getUser();
+        
+        $comment = new Comment();
+
+        
+                
+        $form = $this->createForm(CommentType::class, $comment,
+                 array('action' => $this->generateUrl('se_auction_list_auction_by_advert', array('advertId' => $advertId))));
+
+        if ($request->isMethod('POST')){
+            $form->handleRequest($request);
+
+            if ($form->isValid()){
+                
+        $rate = $comment->getRate();
         
         $listComment = $em
                     ->getRepository('SEAuctionBundle:Comment')
                     ->getComment($userReceiver->getId(), false);
-                
+        
         foreach ($listComment as $item) {
             $rate = $rate + ($item->getRate() / count($listComment));
         }
@@ -43,22 +55,11 @@ class CommentController extends Controller
         $comment->setSender($userSender);
         $comment->setAdvert($advert);
         $comment->setReceiver($userReceiver);
-        
-                
-        $form = $this->createForm(CommentType::class, $comment,
-                 array('action' => $this->generateUrl('se_auction_auction_list_by_user')));
-
-        if ($request->isMethod('POST')){
-            $form->handleRequest($request);
-
-            if ($form->isValid()){
                
-                
-                
-                $em->persist($comment);
-                $em->flush();
+        $em->persist($comment);
+        $em->flush();
 
-                $request->getSession()->getFlashBag()->add('success', 'Commentaire bien envoyé.');
+        $request->getSession()->getFlashBag()->add('success', 'Commentaire bien envoyé.');
             }
         }
 

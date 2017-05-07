@@ -19,7 +19,7 @@ class CommentType extends AbstractType
     {
         $builder
                  ->add('content', TextareaType::class, array('label'=> 'Contenu'))
-                ->add('rate', ChoiceType::class, array(
+                ->add('rate', ChoiceType::class, array('label'=> 'Note',
                             'choices' => array(
                                 '0' => '0',
                                 '1' => '1',
@@ -28,9 +28,7 @@ class CommentType extends AbstractType
                                 '4' => '4',
                                 '5' => '5'
                             ),
-                            'required'    => false,
-                            'placeholder' => 'Note',
-                            'empty_data'  => null
+                            'required'    => false
                         ))
                 
                 

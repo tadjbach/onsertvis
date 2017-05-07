@@ -26,45 +26,80 @@
                         <table class="table" id="tblGrid">
                             <thead class="se-tbl-head">
                                 <tr>
-                                    <th>Postée le</th>
                                     <th>Titre</th>
+                                    <th>Postée le</th>
                                     <th>Catégorie</th>
-                                    <th class='text-center'>Offres reçus</th>
-                                    <th class='text-center'>Offres</th>
-                                    <th>En ligne</th>
-                                    <th>Action</th>
+                                    <th>Etat</th>
+                                    <th class='text-center'>Enchères reçus</th>
+                                    <th class='text-center'>Dernière enchère</th>
+                                    <th class='text-center'>Enchère acceptée</th>
+                                    <th></th>
                                     
                                 </tr>
                             </thead>
                             <tbody>
                             {% for advert in listAdverts %}
                                 <tr>
-                                    <td><h5>{{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m:s') }}</h5></td>
                                     <td><h5><a class='se-tbl-link' href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">{{ advert.title }}</a></h5></td>
+                                    <td><h5>{{ advert.dateCreation|date('d/m/Y') }} 
+                                            <br>
+                                            à {{ advert.dateCreation|date('H:m:s') }}</h5></td>
                                     <td><h5>{{ advert.category.labelNormal }}</h5></td>
-                                        {{ render(controller('SEAuctionBundle:Advert:viewCountAuctionByUser', { 'advertId': advert.id })) }}
                                     <td><h4>
                                         {% if advert.isPublished == 1 %}
-                                            <span class="label label-success">En ligne</span>
-                                        {% else %}
-                                            <span class="label label-danger">Hors ligne</span>
+                                            <span class="label label-warning">En ligne</span>
+                                        {% elseif advert.isPublished == 0 and advert.auctionState == 0 %}
+                                            <span class="label label-info">Validation en cours</span>
+                                        {% elseif advert.isPublished == 0 and advert.auctionState != 0 %}
+                                            <span class="label label-success">Accepté</span>
                                         {% endif %}
                                         </h4>
                                     </td>
-                                    <td>
+                                        {{ render(controller('SEAuctionBundle:Advert:viewCountAuctionByUser', { 'advertId': advert.id })) }}
+                                        <td class="text-center">
+                                        {% if advert.isPublished == 0 and advert.auctionState != 0 %}
+                                            {{ render(controller('SEAuctionBundle:Advert:viewAcceptAuction', { 'advertId': advert.id })) }}
+                                        {% else %}
+                                            <h4><span class="label label-default">-- €</span></h4>
+                                        {% endif %}
+                                        </td>
+                                     <td>
                                         <h5>
-                                            <a href="{{ path('se_auction_advert_edit', {'id': advert.id}) }}"
-                                                type="button" class="btn btn-default" >
-                                                <i class="glyphicon glyphicon-edit"></i> Modifier
+                                            
+                                            {% if advert.auctionState != 0 %}
+                                                <a href="{{ path('se_auction_list_auction_by_advert', {'advertId': advert.id}) }}"
+                                                    type="button" class="btn btn-success" 
+                                                    data-toggle="tooltip" 
+                                                        data-placement="bottom" title="Consulter les offres"
+                                                    >
+                                                    <i class="glyphicon glyphicon-eye-open"></i>
+                                                </a>
+                                            {% else %}
+                                                <a
+                                                    type="button" class="btn btn-default" disabled='disabled' >
+                                                    <i class="glyphicon glyphicon-eye-open"></i>
+                                                </a>
+                                            {% endif %}
+                                            {% if advert.isPublished == 0 and advert.auctionState != 0 %}
+                                            <a href="{{ path('se_auction_advert_edit', {'id': advert.id}) }}" disabled='disabled'
+                                                type="button" class="btn btn-default" data-toggle="tooltip" 
+                                                        data-placement="bottom" title="Modifier la demande">
+                                                <i class="glyphicon glyphicon-edit"></i>
                                             </a>
-                                            <a href="{{ path('se_auction_advert_view', {'id': advert.id}) }}"
-                                                type="button" class="btn btn-default" >
-                                                <i class="glyphicon glyphicon-eye-open"></i> Offres
-                                            </a>
+                                            {% else %}
+                                                <a href="{{ path('se_auction_advert_edit', {'id': advert.id}) }}"
+                                                type="button" class="btn btn-primary" data-toggle="tooltip" 
+                                                        data-placement="bottom" title="Modifier la demande">
+                                                <i class="glyphicon glyphicon-edit"></i>
+                                                </a>
+                                            {% endif %}
                                             <a href="{{ path('se_auction_advert_delete', {'id': advert.id}) }}"
-                                                type="button" class="btn btn-danger" >
-                                                <i class="glyphicon glyphicon-remove"></i> Supprimer
+                                                type="button" class="btn btn-danger" 
+                                                data-toggle="tooltip" 
+                                                        data-placement="bottom" title="Supprimer la demande">
+                                                <i class="glyphicon glyphicon-remove"></i>
                                             </a>
+                                                
                                         </h5>
                                     </td>
                                 </tr>

@@ -89,6 +89,13 @@ class Advert
      */
     private $isPublished=false;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="auctionState", type="integer")
+     */
+    private $auctionState;
+    
    /**
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
@@ -98,6 +105,7 @@ class Advert
     public function __construct()
     {
         $this->dateCreation=new \DateTime();
+        $this->auctionState=0;
     }
     
     /**
@@ -372,5 +380,29 @@ class Advert
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * Set auctionState
+     *
+     * @param integer $auctionState
+     *
+     * @return Advert
+     */
+    public function setAuctionState($auctionState)
+    {
+        $this->auctionState = $auctionState;
+
+        return $this;
+    }
+
+    /**
+     * Get auctionState
+     *
+     * @return integer
+     */
+    public function getAuctionState()
+    {
+        return $this->auctionState;
     }
 }

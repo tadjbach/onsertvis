@@ -60,6 +60,7 @@ class AuctionController extends Controller
         $em = $this->getDoctrine()->getManager();
       
         $advert=$em->find('SEAuctionBundle:Advert', $advertId);
+        $advert->setAuctionState(1);
         
         $auction = new Auction();
         
@@ -101,17 +102,21 @@ class AuctionController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */ 
-    public function listAction($page)
+    public function listAction($advertId, $page)
     {
-         $user = $this->getUser();
+        $user = $this->getUser();
          
         $em=$this->getDoctrine()
             ->getManager();
 
          $listAuctions = $em
             ->getRepository('SEAuctionBundle:Auction')
-            ->getAllAuctionUser($user->getId(), $page, $this->nbPerPage);
-         
+            ->getAllAuctionUser($advertId, $user->getId(), $page, $this->nbPerPage);
+        
+        $comment = $em
+                    ->getRepository('SEAuctionBundle:Comment')
+                    ->getCommentByAdvert($advertId);
+        
         $nbPages = ceil(count($listAuctions)/$this->nbPerPage);
 
         if ($page<1){
@@ -122,7 +127,8 @@ class AuctionController extends Controller
             'listAuctions'=> $listAuctions,
             'nbPages'     => $nbPages,
             'page'        => $page,
-            'countAuctions'     => count($listAuctions)
+            'countAuctions'     => count($listAuctions),
+            'countComment'  => count($comment)
         ));
     }
 
@@ -216,23 +222,30 @@ class AuctionController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function acceptAction( $auctionId)
+    public function acceptAction($auctionId)
     {
         $em = $this->getDoctrine()->getManager();
         $auction=$em->find('SEAuctionBundle:Auction', $auctionId);
+        $advert = $auction->getAdvert();
         $user = $this->getUser();
         $page = 1;
         
         if ($auction !== null && $user !== null){
+            
             $auction->setState(2);
+            $advert->setIsPublished(0);
+            
             $em->persist($auction);
             $em->flush();
         }
         
         $listAuctions = $em
             ->getRepository('SEAuctionBundle:Auction')
-            ->getAllAuctionUser($user->getId(), $page, $this->nbPerPage);
+            ->getAllAuctionUser($advert->getId(), $user->getId(), $page, $this->nbPerPage);
 
+        $comment = $em
+                    ->getRepository('SEAuctionBundle:Comment')
+                    ->getCommentByAdvert($advert->getId());
 
         $nbPages = ceil(count($listAuctions)/$this->nbPerPage);
         
@@ -240,7 +253,8 @@ class AuctionController extends Controller
             'listAuctions'=> $listAuctions,
             'nbPages'     => $nbPages,
             'page'        => $page,
-            'countAuctions'     => count($listAuctions)
+            'countAuctions'     => count($listAuctions),
+            'countComment'  => count($comment)
         ));
     }
     

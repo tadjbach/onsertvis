@@ -18,26 +18,17 @@ class Advert
 {
     /**
      * @ORM\ManyToOne(targetEntity="SE\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid()
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\Category")
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid()
      */
     private $category;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="SE\PortalBundle\Entity\City")
-     */
-    private $city;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="SE\AuctionBundle\Entity\Image", cascade={"persist", "remove"})
-     * @Assert\Valid()
-     */
-    private $image;
     
     /**
      * @var int
@@ -69,12 +60,6 @@ class Advert
      */
     private $dateUpdate;
 
-     /**
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=255)
-     */
-    private $address;
     
     /**
      * @var string
@@ -104,6 +89,13 @@ class Advert
      */
     private $isPublished=false;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="auctionState", type="integer")
+     */
+    private $auctionState=-1;
+    
    /**
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
@@ -113,8 +105,6 @@ class Advert
     public function __construct()
     {
         $this->dateCreation=new \DateTime();
-        
-        $this->city = null;
     }
     
     /**
@@ -320,30 +310,6 @@ class Advert
     }
 
     /**
-     * Set image
-     *
-     * @param \SE\AuctionBundle\Entity\Image $image
-     *
-     * @return Advert
-     */
-    public function setImage(\SE\AuctionBundle\Entity\Image $image = null)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return \SE\AuctionBundle\Entity\Image
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
      * Set user
      *
      * @param \SE\UserBundle\Entity\User $user
@@ -389,30 +355,6 @@ class Advert
     public function getCategory()
     {
         return $this->category;
-    }
-
-    /**
-     * Set city
-     *
-     * @param string $city
-     *
-     * @return Advert
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return string
-     */
-    public function getCity()
-    {
-        return $this->city;
     }
 
     /**

@@ -57,6 +57,15 @@ se_auction_auction_list_by_user_receive:
     requirements:
         page: \d*
 
+se_auction_list_auction_by_advert:
+    path:     /encheres-recues/{advertId}/{page}
+    defaults:
+        _controller: SEAuctionBundle:Auction:list
+        page:        1
+    requirements:
+        page: \d*
+        id: \d*
+        
 se_auction_auction_list_by_user_terminated:
     path:     /tableau-de-bord/mes-encheres/terminees/{page}
     defaults:
@@ -110,7 +119,7 @@ se_auction_comment_list:
         page: \d*
         
 se_auction_comment_add:
-    path:     /contact/ajouter-comment/{advertId}
+    path:     /contact/ajouter-comment/{advertId}/{auctionUserId}
     defaults:
         _controller: SEAuctionBundle:Comment:add
         

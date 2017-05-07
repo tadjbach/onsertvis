@@ -99,5 +99,25 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult(); 
     }
+    
+    public function getCommentByAdvert($advert)
+    {
+         $qb = $this->createQueryBuilder('comment')
+            ->leftJoin('comment.receiver', 'receiver')
+            ->addSelect('receiver')
+            ->leftJoin('comment.sender', 'sender')
+            ->addSelect('sender')
+            ->leftJoin('comment.advert', 'advert')
+            ->addSelect('advert')
+            ->orderBy('comment.dateCreation', 'DESC');
+                
+            $qb->Where($qb->expr()->eq('comment.isPublished', 1))
+            ->andWhere($qb->expr()->eq('comment.isDeleted', 0))
+            ->andWhere($qb->expr()->eq('advert.id', $advert));
+                    
+            return $qb
+            ->getQuery()
+            ->getResult(); 
+    }
 }
 

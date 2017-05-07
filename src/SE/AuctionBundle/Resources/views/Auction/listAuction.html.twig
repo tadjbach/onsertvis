@@ -1,75 +1,120 @@
 {# Liste les offres - Sans Action #}
 
 {% if countAuctions > 0 %}
+    
+    {% set auctionAccept = 0 %}
+    {% set break = false %}
+    {% set advertId = 0 %}
+    {% set auctionUserId = 0 %}
+    
+    {% for auction in listAuctions if not break %}
+        {% if auction.state == 2 %}
+            {% set auctionAccept = 1  %}
+            {% set auctionUserId = auction.user.id  %}
+            {% set break = true %}
+        {% endif %}
+        {% set advertId = auction.advert.id  %}
+    {% endfor %}
+
     <table class="table" id="tblGrid">
-        <thead id="tblHead">
+        <thead class="se-tbl-head">
         <tr>
-            <th>Demande</th>
             <th>Enchérisseur</th>
             <th>Note</th>
-            <th class="text-center">Offre</th>
+            <th class="text-center">Prix proposé</th>
             <th class="text-center">Date</th>
-            <th class="text-center">Mon choix</th>
+            <th class="text-center">Accepter</th>
+            <th class="">Evaluer</th>
         </tr>
         </thead>
         <tbody>
         {% for auction in listAuctions %}
             <tr>
                 <td class="text-left">
-                    <a href="{{ path('se_auction_advert_view', {'id': auction.advert.id}) }}" class="cat-link" >
-                        {{ auction.advert.title }}
-                    </a>
-
-                </td>
-                <td class="text-left">
-                    <a href="{{ path('se_user_view', {'id': auction.user.id}) }}" class="cat-link" >
+                    <h4>
+                    <a href="{{ path('se_user_view', {'id': auction.user.id}) }}" 
+                       class="se-tbl-link" >
                         {{ auction.user }}
                     </a>
+                    </h4>
                 </td>
                 <td class="text-left">
+                    <h4>
                     {{ include('@SEAuction/Auction/rate.html.twig', {'item': auction.user }) }}
+                    </h4>
                 </td>
-                <td class="text-right bold">{{ auction.value|number_format(0, ' ', ' ') }} €</td>
-                <td class="text-right">{{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:m:s') }}</td>
-                    <td class="text-center">
-                        {% if auction.state == 1 %}
-                        <a href="{{ path('se_auction_auction_accept', {'auctionId': auction.id}) }}"
-                           type="button" class="btn btn-primary" >
-                            <i class="glyphicon glyphicon-thumbs-up" ></i>
-                        </a>
-                        {% elseif auction.state == 2%}
-                        <button 
-                           class="btn btn-primary"
-                                        data-toggle="modal"
-                                        data-target="#modalCommentAdd">
-                            <i class="glyphicon glyphicon-comment" ></i>
-                            Evaluer
-                        </button>
-                        <a href="#"
-                           type="button" class="btn btn-success" >
-                            <i class="glyphicon glyphicon-ok" ></i>
-                            Accepter
-                        </a>
-                        {% elseif auction.state == 3 %}
-                        <a href="#"
-                           type="button" class="btn btn-danger" >
-                            <i class="glyphicon glyphicon-ok" ></i>
-                        </a>
-                        
-                        {% endif %}
+                <td class="text-right bold">
+                    <h4>
+                    {% if auction.state == 2 %}
+                        <span class="label label-success">
+                        {{ auction.value|number_format(0, ' ', ' ') }} €
+                        </span>
+                    {% else %}
+                        <span class="label label-default">
+                        {{ auction.value|number_format(0, ' ', ' ') }} €
+                        </span>
+                    {%endif%}
+                    
+                    </h4>
                     </td>
+                <td class="text-right">
+                    <h4>
+                    {{ auction.dateCreation|date('d/m/Y') }} 
+                    à {{ auction.dateCreation|date('H:m:s') }}
+                    </h4>
+                </td>
+                <td class="text-center">
+                    {% if auction.state == 2 %}
+                        <h4>
+                            <span class="label label-success">Offre Acceptée</span>
+                        </h4>
+                    {% elseif auctionAccept != 1%}
+                         <a href="{{ path('se_auction_auction_accept', {'auctionId': auction.id}) }}"
+                            type="button" class="btn btn-primary" >
+                             J'accepte
+                        </a>
+                    {% else %}
+                        <h4>
+                            <span class="label label-default">Offre déclinée</span>
+                        </h4>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if auction.state == 2 and countComment == 0 %}
+                    <button 
+                       class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#modalCommentAdd">
+                        Evaluer
+                    </button>
+                    {% elseif auction.state == 2 and countComment != 0 %}
+                        <h4>
+                            <span class="label label-success">Déja evalué</span>
+                        </h4>
+                    {% else %}
+                        <button 
+                       class="btn btn-primary" disabled='disabled'>
+                        Evaluer
+                        </button>
+                    {%endif%}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 {% else %}
-    <div>Aucune offre pour l'instant</div>
+    <div>Aucune enchère pour l'instant</div>
 {% endif %}
 
+{% if countComment == 0 %}
 <div class="modal fade"
     id="modalCommentAdd"
     tabindex="-1"
     role="dialog"
     aria-labelledby="modalCommentAddLabel">
-    {{ render(controller('SEAuctionBundle:Comment:add', {'request': app.request,'advertId': 4} )) }}
+    {{ render(controller('SEAuctionBundle:Comment:add', { 'request': app.request, 
+                                                        'advertId': advertId, 
+                                                        'auctionUserId': auctionUserId } 
+    )) }}
 </div>
+{% endif %}

@@ -309,8 +309,8 @@ JsonEncoder()));
         $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
 
         $titleResult = count($listAdverts) == 0 ?'Aucune demande postée !' :
-                (count($listAdverts) > 1 ? count($listAdverts).' résultats' :  
-            count($listAdverts).' résultat');
+                (count($listAdverts) > 1 ? count($listAdverts).' demandes' :  
+            count($listAdverts).' demande');
         
         return $this->render('SEAuctionBundle:Advert:listByUser.html.twig', array(
             'listAdverts'=>$listAdverts,
@@ -320,6 +320,24 @@ JsonEncoder()));
             'titleResult'     => $titleResult
 
         ));
+    }
+    
+    public function viewAcceptAuctionAction($advertId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $price = '-- €';
+        
+        $acceptAuction = $em
+            ->getRepository('SEAuctionBundle:Auction')
+            ->getAcceptAuction($advertId);
+        
+        if (count($acceptAuction) > 0) {
+           $price = $this->priceFormat($acceptAuction[0]->getValue());
+        }
+        
+        return new Response(
+                '<h4><span class="label label-success">'.$price.'</span></h4>'
+                );
     }
     
     public function viewLastAuctionAction($advertId)
@@ -366,7 +384,7 @@ JsonEncoder()));
             $nbAuction = '<h4><span class="label label-success">'.count($lastAuction).'</span></h4>';
             
             $result = '<td class="text-center">'.$nbAuction.'</td>'
-                    .'<td class="text-center"><h4><span class="label label-success">'
+                    .'<td class="text-center"><h4><span class="label label-warning">'
                     .$price.'</span></h4></td>';
         }
        

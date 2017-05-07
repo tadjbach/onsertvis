@@ -12,30 +12,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-                    <h3 class="cat-title">Mes offres</h3>
-                    <a href="{{ path('se_auction_auction_list_by_user') }}"
-                   class="btn btn-primary"
-                   role="button" >
-                    Toutes les offres
-                    </a>
-
-                    <a href="{{ path('se_auction_auction_list_by_user_proposed') }}"
-                       class="btn btn-warning"
-                       role="button" >
-                        Offres proposées
-                    </a>
-
-                    <a href="{{ path('se_auction_auction_list_by_user_receive') }}"
-                       class="btn btn-danger"
-                       role="button" >
-                        Offres reçues
-                    </a>
-
-                    <a href="{{ path('se_auction_auction_list_by_user_terminated') }}"
-                       class="btn btn-success"
-                       role="button" >
-                        Offres terminées
-                    </a>
+                    <h3 class="cat-title">Enchères reçues</h3>
                 </div>
             </div>
         </div>
@@ -45,7 +22,7 @@
         <div class="index-container" >
             <div class="row">
                  <div id="content" class="col-md-12">
-                     <h4 class="cat-title">{{countAuctions}} offres</h4>
+                     <h4 class="cat-title">{{countAuctions}} offre(s)</h4>
                      {{ include('@SEAuction/Auction/listAuction.html.twig') }}
                  </div>
             </div>
