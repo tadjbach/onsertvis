@@ -183,7 +183,7 @@ JsonEncoder()));
     public function viewAction($id)
     {
          $em=$this->getDoctrine()
-            ->getManager();
+                    ->getManager();
 
         $advert=$em->find('SEAuctionBundle:Advert', $id);
         $countAuctions = '0 offre';
@@ -208,7 +208,7 @@ JsonEncoder()));
            $countAuctions = count($listAuctions) <= 1 ? count($listAuctions).' offre' : count($listAuctions).' offres';
         }
         
-        if (null===$advert || $advert->getAuctionState() === 1){
+        if ( $advert->getIsPublished() == 0 || null===$advert ){
             throw new NotFoundHttpException("Oops, La demande  que vous cherchez n'existe pas.");
         }
 
@@ -375,29 +375,40 @@ JsonEncoder()));
         );
     }
     
-    public function viewCountAuctionByUserAction($advertId)
+    public function viewCountAuctionByAdvertAction($advertId)
     {
         $em = $this->getDoctrine()->getManager();
         $nbAuctionPluriel = '0 enchère';
-        $price = '-- €';
-        $cssClass1 = 'default';
-        $cssClass2 = 'default';
         
         $lastAuction = $em
             ->getRepository('SEAuctionBundle:Auction')
             ->getLastAuction($advertId);
         
         if (count($lastAuction) > 0) {
-            $price = $this->priceFormat($lastAuction[0]->getValue());
             $nbAuctionPluriel = count($lastAuction) == 1 ? count($lastAuction).' enchère' : count($lastAuction).' enchères';
-            $cssClass1 = 'warning';
-            $cssClass2 = 'info';
         }
        
         return new Response(
-                '<h3><span class="label label-'.$cssClass1.'">'.$price.'</span></h3>'
-                    .'<h5><span class="label label-'.$cssClass2.'">'.$nbAuctionPluriel.'</span></h5>'
-                .'</td>'
+            $nbAuctionPluriel
+        );
+    }
+    
+    public function viewCountMessageByAdvertAction($advertId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $nbMessagePluriel = '0 message';
+        $prefix = 'class="not-active" >';
+        $lastMessage = $em
+            ->getRepository('SEAuctionBundle:Message')
+            ->getCountMessage($advertId);
+        
+        if (count($lastMessage) > 0) {
+            $prefix = 'class="se-tbl-link" >';
+            $nbMessagePluriel = count($lastMessage) == 1 ? count($lastMessage).' message' : count($lastMessage).' messages';
+        }
+       
+        return new Response(
+            $prefix.$nbMessagePluriel
         );
     }
     

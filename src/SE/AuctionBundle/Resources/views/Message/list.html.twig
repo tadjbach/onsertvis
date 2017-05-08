@@ -1,7 +1,7 @@
 {% extends "SELayoutBundle::layout.html.twig" %}
 
 {% block title %}
-    Mes conversations - {{ parent() }}
+    Mes messages - {{ parent() }}
 {% endblock %}
 
 {% block se_layout_body %}
@@ -10,7 +10,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="cat-title">Mes conversations</h3>
+                        <h3 class="cat-title">Mes messages</h3>
                     </div>
                 </div>
             </div>
@@ -20,7 +20,7 @@
         <div class="index-container" >
             <div class="row">
                  <div id="content" class="col-md-12">
-                     <h4 class="cat-title">{{countMessage}} conversations</h4>
+                     <h4 class="cat-title">{{countMessage}} messages</h4>
                      <table class="table" id="tblGrid">
                         <tbody>
                             {% for msg in listMessage %}
@@ -47,7 +47,7 @@
                                     </td>
                                     <td>
                                         <p>
-                                        <a href="{{ path('se_auction_message_list',{'advertId':msg.advert.id}) }}" class="btn btn-success">
+                                        <a href="{{ path('se_auction_advert_message_list',{'advertId':msg.advert.id, 'senderId': msg.sender.id }) }}" class="btn btn-success">
                                         <i class="glyphicon glyphicon-comment"></i>
                                             Voir
                                         </a>

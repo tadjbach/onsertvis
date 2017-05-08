@@ -67,8 +67,7 @@ class AuctionController extends Controller
         $auction->setUser($this->getUser());
         $auction->setAdvert($advert);
        
-        $form = $this->createForm(AuctionType::class, $auction,
-                array('action' => $this->generateUrl('se_auction_advert_view', array('id' => $advertId))));
+        $form = $this->createForm(AuctionType::class, $auction);
 
         if ($request->isMethod('POST')){
             $form->handleRequest($request);

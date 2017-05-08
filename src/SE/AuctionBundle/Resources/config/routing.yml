@@ -34,7 +34,7 @@ se_auction_advert_delete:
         id: \d+
         
 se_auction_advert_list_by_user:
-    path:     /tableau-de-bord/mes-demandes/{page}
+    path:     /mes-demandes/{page}
     defaults:
         _controller: SEAuctionBundle:Advert:listByUser
         page:        1
@@ -42,7 +42,7 @@ se_auction_advert_list_by_user:
         page: \d*
 
 se_auction_auction_list_by_user_proposed:
-    path:     /tableau-de-bord/mes-encheres/proposees/{page}
+    path:     /mes-encheres/proposees/{page}
     defaults:
         _controller: SEAuctionBundle:Auction:listProposed
         page:        1
@@ -50,7 +50,7 @@ se_auction_auction_list_by_user_proposed:
         page: \d*
 
 se_auction_auction_list_by_user_receive:
-    path:     /tableau-de-bord/mes-encheres/recues/{page}
+    path:     /mes-encheres/recues/{page}
     defaults:
         _controller: SEAuctionBundle:Auction:listReceive
         page:        1
@@ -67,7 +67,7 @@ se_auction_list_auction_by_advert:
         id: \d*
         
 se_auction_auction_list_by_user_terminated:
-    path:     /tableau-de-bord/mes-encheres/terminees/{page}
+    path:     /mes-encheres/terminees/{page}
     defaults:
         _controller: SEAuctionBundle:Auction:listTerminated
         page:        1
@@ -75,7 +75,7 @@ se_auction_auction_list_by_user_terminated:
         page: \d*
 
 se_auction_auction_list_by_user:
-    path:     /tableau-de-bord/mes-encheres/{page}
+    path:     /mes-encheres/{page}
     defaults:
         _controller: SEAuctionBundle:Auction:list
         page:        1
@@ -88,7 +88,7 @@ se_auction_add:
         _controller: SEAuctionBundle:Auction:add
         
 se_auction_auction_accept:
-    path:     /tableau-de-bord/accepter-enchere/{auctionId}
+    path:     /accepter-enchere/{auctionId}
     defaults:
         _controller: SEAuctionBundle:Auction:accept
         page:        1
@@ -109,9 +109,14 @@ se_auction_message_add:
     defaults:
         _controller: SEAuctionBundle:Message:add
 
+se_auction_advert_message_list:
+    path:     /conversation/{advertId}/{senderId}
+    defaults:
+        _controller: SEAuctionBundle:Message:listConversation
+        
 #Account - Comment
 se_auction_comment_list:
-    path: /tableau-de-bord/mes-commentaires/{page}
+    path: /mes-commentaires/{page}
     defaults:
         _controller: SEAuctionBundle:Comment:list
         page:        1

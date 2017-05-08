@@ -94,5 +94,23 @@ class MessageController extends Controller
             'countMessage'=>count($listMessageByAdvert)
         ));
     }
+    
+    public function listConversationAction($advertId, $senderId)
+    {
+        $user = $this->getUser();
+        
+        $listConversation = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('SEAuctionBundle:Message')
+            ->getConversation($advertId, $user->getId(), $senderId);
+        
+        return $this->render('SEAuctionBundle:Message:conversation.html.twig', array(
+            'listConversation'     => $listConversation,
+            'countMessage'=>count($listConversation),
+            'advertId'=>$advertId,
+            'senderId'=>$user->getId(),
+            'receiveId'=>$senderId
+        ));
+    }
 }
 

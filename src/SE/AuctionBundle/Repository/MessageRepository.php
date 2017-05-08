@@ -111,4 +111,52 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
         // (n'oubliez pas le use correspondant en début de fichier)
         return new Paginator($qb, true);
     }
+    
+    public function getCountMessage($advertId)
+    {
+        $qb = $this->createQueryBuilder('message');
+        
+         $qb->leftJoin('message.advert', 'advert')
+            ->addSelect('advert');
+         
+        $qb->where($qb->expr()->eq('advert.id', $advertId))
+            ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
+            ->andWhere($qb->expr()->eq('advert.isEnabled', 1));
+        
+        $qb->getQuery();
+        
+        return $qb
+            ->getQuery()
+            ->getResult(); 
+    }
+    
+    public function getConversation($advertId, $userSenderId, $userReceiverId)
+    {
+        $qb = $this->createQueryBuilder('message');
+        
+        $qb = $this->createQueryBuilder('message')
+           ->leftJoin('message.advert', 'advert')
+           ->addSelect('advert')
+                
+           ->leftJoin('message.sender', 'sender')
+           ->addSelect('sender')
+           ->leftJoin('message.receiver', 'receiver')
+           ->addSelect('receiver')
+           ->andWhere($qb->expr()->eq('message.isDeleted', 0));
+           
+                
+        $qb->andWhere($qb->expr()->eq('sender.id', $userSenderId));
+        $qb->orWhere($qb->expr()->eq('receiver.id', $userSenderId));
+            
+        $qb->andWhere($qb->expr()->eq('receiver.id', $userReceiverId));
+        $qb->orWhere($qb->expr()->eq('sender.id', $userReceiverId));
+            
+         $qb->andWhere($qb->expr()->eq('advert.id', $advertId));
+        
+        $qb->orderBy('message.dateCreation', 'DESC')->getQuery();
+        
+        return $qb
+            ->getQuery()
+            ->getResult(); 
+    }
 }

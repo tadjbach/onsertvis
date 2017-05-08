@@ -65,7 +65,7 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere($qb->expr()->eq('advert.isPublished', 0))
             ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
             ->andWhere($qb->expr()->eq('advert.isEnabled', 1))
-                ->andWhere($qb->expr()->eq('auction.state', 2));
+            ->andWhere($qb->expr()->eq('auction.state', 2));
         
         $qb->getQuery();
         
@@ -86,9 +86,10 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('advert.user', 'user_advert')
             ->addSelect('user_advert');
 
+        $qb->orderBy('auction.dateCreation', 'DESC');
+        
         $qb->where($qb->expr()->eq('user_auction.id', $userId))
             ->orWhere($qb->expr()->eq('user_advert.id', $userId))
-            //->andWhere($qb->expr()->eq('advert.isPublished', 1))
             ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
             ->andWhere($qb->expr()->eq('advert.isEnabled', 1))
             ->andWhere($qb->expr()->eq('advert.id', $advertId))

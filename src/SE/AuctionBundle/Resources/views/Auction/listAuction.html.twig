@@ -27,30 +27,28 @@
                         {{ auction.user }}
                     </a>
                      </h5>
-                        {{ include('@SEAuction/Auction/rate.html.twig', {'item': auction.user }) }}
-                   
+                </td>
+                <td>
+                    {{ include('@SEAuction/Auction/rate.html.twig', {'item': auction.user }) }}
+                </td>
+                 <td class="text-center">
+                    <h5>
+                    {{ auction.dateCreation|date('d/m/Y') }} 
+                     à 
+                    {{ auction.dateCreation|date('H:m:s') }}
+                    </h5>
                 </td>
                 <td class="text-right bold">
                     <h4>
                     {% if auction.state == 2 %}
                         <span class="label label-success">
-                        Ecnhère à {{ auction.value|number_format(0, ' ', ' ') }} €
-                        </span>
                     {% else %}
                         <span class="label label-default">
-                        Ecnhère à {{ auction.value|number_format(0, ' ', ' ') }} €
-                        </span>
                     {%endif%}
-                    
+                        {{ auction.value|number_format(0, ' ', ' ') }} €
+                        </span>
                     </h4>
                     </td>
-                <td class="text-center">
-                    <h5>
-                    {{ auction.dateCreation|date('d/m/Y') }} 
-                    <br>
-                    {{ auction.dateCreation|date('H:m:s') }}
-                    </h5>
-                </td>
                 <td class="text-center">
                     {% if auction.state == 2 %}
                         <h4>
