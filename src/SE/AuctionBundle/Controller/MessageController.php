@@ -80,6 +80,7 @@ class MessageController extends Controller
             ->getRepository('SEAuctionBundle:Message')
             ->getMessageByAdvert($advertId, $user->getId(), $page, $nbPerPage);
         
+        $countMessage = count($listMessageByAdvert) <= 1 ? count($listMessageByAdvert).' conversation' : count($listMessageByAdvert).' conversations';
         $nbPages = ceil(count($listMessageByAdvert)/$nbPerPage);
 
         if ($page<1){
@@ -91,10 +92,13 @@ class MessageController extends Controller
             'nbPages'     => $nbPages,
             'page'        => $page,
             'listMessage'=> $listMessageByAdvert,
-            'countMessage'=>count($listMessageByAdvert)
+            'countMessage'=> $countMessage.' pour mes demandes'
         ));
     }
     
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function listConversationAction($advertId, $senderId)
     {
         $user = $this->getUser();
@@ -102,14 +106,47 @@ class MessageController extends Controller
         $listConversation = $this->getDoctrine()
             ->getManager()
             ->getRepository('SEAuctionBundle:Message')
-            ->getConversation($advertId, $user->getId(), $senderId);
+            ->getConversationRecive($advertId, $user->getId(), $senderId);
+        
+        $countMessage = count($listConversation) <= 1 ? count($listConversation).' message' 
+                : count($listConversation).' messages';
         
         return $this->render('SEAuctionBundle:Message:conversation.html.twig', array(
             'listConversation'     => $listConversation,
-            'countMessage'=>count($listConversation),
+            'countMessage'=> $countMessage,
             'advertId'=>$advertId,
             'senderId'=>$user->getId(),
             'receiveId'=>$senderId
+        ));
+    }
+    
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function listMessageSendAction($page)
+    {
+        $user = $this->getUser();
+         $nbPerPage = 9;
+         
+        $listConversation = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('SEAuctionBundle:Message')
+            ->getConversationSender($user->getId(), $page, $nbPerPage);
+        
+        $countMessage = count($listConversation) <= 1 ? count($listConversation).' conversation' 
+                : count($listConversation).' conversations';
+        
+        $nbPages = ceil(count($listConversation)/$nbPerPage);
+
+        if ($page<1){
+            throw new NotFoundHttpException('page"'.$page.'" inexistante');
+        }
+        
+        return $this->render('SEAuctionBundle:Message:listMessageSend.html.twig', array(
+            'nbPages'     => $nbPages,
+            'page'        => $page,
+            'listMessage'     => $listConversation,
+            'countMessage'=>$countMessage
         ));
     }
 }

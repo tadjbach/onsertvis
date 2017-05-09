@@ -110,9 +110,17 @@ se_auction_message_add:
         _controller: SEAuctionBundle:Message:add
 
 se_auction_advert_message_list:
-    path:     /conversation/{advertId}/{senderId}
+    path:     /message-recues/{advertId}/{senderId}
     defaults:
         _controller: SEAuctionBundle:Message:listConversation
+
+se_auction_user_message_list:
+    path:     /message-envoyes/{page}
+    defaults:
+        _controller: SEAuctionBundle:Message:listMessageSend
+        page:        1
+    requirements:
+        page: \d*
         
 #Account - Comment
 se_auction_comment_list:

@@ -641,3 +641,7 @@ a.se-tbl-link{
 .med{
     width: 50%;
 }
+
+#se_auctionbundle_message div>textarea.form-control{
+    height: 100px;
+}

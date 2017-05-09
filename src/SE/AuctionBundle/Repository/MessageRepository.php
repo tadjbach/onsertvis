@@ -24,19 +24,16 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
             ->add('groupBy', 'sender.id');
                 
         $qb->where($qb->expr()->eq('advert.id', $advertId))
-            ->andWhere($qb->expr()->neq('sender.id', $recieveId))
+            ->andWhere($qb->expr()->neq('sender.id', $recieveId)) // not equals
             ->andWhere($qb->expr()->eq('message.isPublished', 1))
             ->andWhere($qb->expr()->eq('message.isDeleted', 0));
         
         $qb->addOrderBy('message.dateCreation', 'DESC')->getQuery();
         
-         // On définit l'demande à partir de laquelle commencer la liste
-            $qb->setFirstResult(($page-1) * $nbPerPage)
-            // Ainsi que le nombre d'demande à afficher sur une page
-            ->setMaxResults($nbPerPage);
+        $qb->setFirstResult(($page-1) * $nbPerPage)
+                    
+        ->setMaxResults($nbPerPage);
 
-        // Enfin, on retourne l'objet Paginator correspondant à la requête construite
-        // (n'oubliez pas le use correspondant en début de fichier)
         return new Paginator($qb, true); 
     }
     
@@ -130,7 +127,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
             ->getResult(); 
     }
     
-    public function getConversation($advertId, $userSenderId, $userReceiverId)
+    public function getConversationRecive($advertId, $userSenderId, $userReceiverId)
     {
         $qb = $this->createQueryBuilder('message');
         
@@ -158,5 +155,33 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
         return $qb
             ->getQuery()
             ->getResult(); 
+    }
+    
+    public function getConversationSender($userSenderId, $page, $nbPerPage)
+    {
+        $qb = $this->createQueryBuilder('message');
+        
+        $qb = $this->createQueryBuilder('message')
+                
+           ->leftJoin('message.advert', 'advert')
+           ->addSelect('advert')
+                
+           ->leftJoin('message.sender', 'sender')
+           ->addSelect('sender')
+            ->add('groupBy', 'sender.id')
+           ->andWhere($qb->expr()->eq('message.isDeleted', 0));
+           
+                
+        $qb->andWhere($qb->expr()->eq('sender.id', $userSenderId));
+        $qb->andWhere($qb->expr()->neq('advert.user', $userSenderId));
+        
+        $qb->orderBy('message.dateCreation', 'DESC')->getQuery();
+        
+        $qb->getQuery();
+        
+            $qb->setFirstResult(($page-1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+
+        return new Paginator($qb, true);
     }
 }

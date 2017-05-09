@@ -20,7 +20,7 @@
         <div class="index-container" >
             <div class="row">
                  <div id="content" class="col-md-12">
-                     <h4 class="cat-title">{{countMessage}} conversations</h4>
+                     <h4 class="cat-title">{{countMessage}}</h4>
                      <table class="table" id="tblGrid">
                         <tbody>
                             <div class='panel-body'>
@@ -36,7 +36,7 @@
                                 <div class='panel panel-default'>
                                     <div class='panel-heading se-panel-heading'>
                                         <h4 class='panel-title text-left'>{{ conversation.sender }}</h4>
-                                        <h4 class='panel-title text-right'><i>{{ conversation.dateCreation|date('d/m/Y') }} à {{ conversation.dateCreation|date('H:m') }}</i></h4>
+                                        <h4 class='panel-title text-right'><i>{{ conversation.dateCreation|date('d/m/Y') }} à {{ conversation.dateCreation|date('H:i:s') }}</i></h4>
                                     </div>
                                     <div class='panel-body'>
                                         <div class="caption">

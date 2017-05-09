@@ -1,7 +1,7 @@
 {% extends "SELayoutBundle::layout.html.twig" %}
 
 {% block title %}
-    Mes messages - {{ parent() }}
+    Mes demandes d'information - {{ parent() }}
 {% endblock %}
 
 {% block se_layout_body %}
@@ -10,7 +10,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="cat-title">Mes messages</h3>
+                        <h3 class="cat-title">Mes demandes d'information</h3>
                     </div>
                 </div>
             </div>
@@ -33,11 +33,10 @@
                                     </td>
                                     <td class='text-center'>
                                         <h5>
-                                            <a href="{{ path('se_user_view', {'id': msg.sender.id}) }}" class="se-tbl-link" >
-                                                {{ msg.sender }}
+                                            <a href="{{ path('se_user_view', {'id': msg.receiver.id}) }}" class="se-tbl-link" >
+                                                {{ msg.receiver }}
                                             </a>
-                                            <br>
-                                            {{ include('@SEAuction/Auction/rate.html.twig', {'item': msg.sender }) }}
+                                            
                                         </h5>
                                     </td>
                                     <td>
