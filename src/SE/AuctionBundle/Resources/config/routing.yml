@@ -77,7 +77,7 @@ se_auction_auction_list_by_user_terminated:
 se_auction_auction_list_by_user:
     path:     /mes-encheres/{page}
     defaults:
-        _controller: SEAuctionBundle:Auction:list
+        _controller: SEAuctionBundle:Auction:listProposed
         page:        1
     requirements:
         page: \d*

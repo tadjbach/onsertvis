@@ -1,0 +1,33 @@
+{# Afficher les àoffre - Action #}
+
+{% extends "SELayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Mes propositions - {{ parent() }}
+{% endblock %}
+
+{% block se_layout_body %}
+    
+    <div class="well slogan-well">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="cat-title">Mes propositions</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="well se-well">
+        <div class="index-container" >
+            <div class="row">
+                 <div id="content" class="col-md-12">
+                     <h4 class="cat-title">{{countAuctions}}</h4>
+                     {{ include('@SEAuction/Auction/itemByUser.html.twig') }}
+                 </div>
+            </div>
+
+        </div>
+    </div>
+    {{ include('@SEAuction/Commun/pagination.html.twig') }}
+{% endblock %}

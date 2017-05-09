@@ -120,10 +120,6 @@ class AuctionController extends Controller
                     ->getRepository('SEAuctionBundle:Comment')
                     ->getCommentByAdvert($advertId);
         
-        /*$listConversation = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('SEAuctionBundle:Message')
-            ->getMessageByAdvert($advertId);*/
         
         $nbPages = ceil(count($listAuctions)/$this->nbPerPage);
 
@@ -138,7 +134,6 @@ class AuctionController extends Controller
             'countAuctions'     => count($listAuctions),
             'countComment'  => count($comment),
             'advert'=>$advert,
-           // 'listConversation'=> $listConversation,
         ));
     }
 
@@ -156,18 +151,20 @@ class AuctionController extends Controller
             ->getRepository('SEAuctionBundle:Auction')
             ->getProposedAuctionUser($user->getId(), $page, $this->nbPerPage);
 
-
+        $countAuctions = count($listAuctions) <= 1 ? count($listAuctions).' proposition' :
+            count($listAuctions).' propositions';
+        
         $nbPages = ceil(count($listAuctions)/$this->nbPerPage);
 
         if ($page<1){
             throw new NotFoundHttpException('page "'.$page.'" inexistante');
         }
 
-        return $this->render('SEAuctionBundle:Auction:list.html.twig', array(
+        return $this->render('SEAuctionBundle:Auction:auctionByUser.html.twig', array(
             'listAuctions'=> $listAuctions,
             'nbPages'     => $nbPages,
             'page'        => $page,
-            'countAuctions'     => count($listAuctions)
+            'countAuctions'     => $countAuctions
         ));
     }
 

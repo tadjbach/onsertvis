@@ -113,8 +113,7 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('advert');
 
         $qb->where($qb->expr()->eq('user_auction.id', $userId))
-            ->andWhere($qb->expr()->eq('advert.isPublished', 1))
-            ->andWhere($qb->expr()->eq('auction.state', 1))
+            
             ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
             ->andWhere($qb->expr()->eq('advert.isEnabled', 1));
 
