@@ -91,6 +91,9 @@ se_auction_auction_accept:
     path:     /accepter-enchere/{auctionId}
     defaults:
         _controller: SEAuctionBundle:Auction:accept
+        page:        1
+    requirements:
+        page: \d*
 
 #Account - Message
 se_auction_message_list:
