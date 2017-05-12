@@ -24,3 +24,5 @@ var/*
 
 app/config/parameters.yml
 app/config/parameters.yml.dist
+
+*.bat

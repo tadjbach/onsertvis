@@ -1,4 +1,0 @@
-services:
-#    se_layout.example:
-#        class: SE\LayoutBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
