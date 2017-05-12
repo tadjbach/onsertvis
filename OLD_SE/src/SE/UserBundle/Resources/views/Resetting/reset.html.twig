@@ -1,0 +1,22 @@
+
+{% trans_default_domain 'FOSUserBundle' %}
+{% extends 'SEUserBundle::layout.html.twig' %}
+
+{% block title %}
+    Rénisialisation de mot de passe - {{ parent() }}
+{% endblock %}
+
+{% block se_user %}
+
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+            {% block fos_user_content %}
+                {% include "@FOSUser/Resetting/reset_content.html.twig" %}
+            {% endblock fos_user_content %}
+    </div>
+    <div class="col-md-2">
+    </div>
+
+
+{% endblock %}

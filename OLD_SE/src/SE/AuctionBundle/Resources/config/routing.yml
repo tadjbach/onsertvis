@@ -1,0 +1,166 @@
+#Auction - Advert
+se_auction_advert_list:
+    path:     /demande/liste/{page}
+    defaults:
+        _controller: SEAuctionBundle:Advert:list
+        page:        1
+    requirements:
+        page: \d*
+
+se_auction_advert_view:
+    path:     /demande/{id}
+    defaults:
+        _controller: SEAuctionBundle:Advert:view
+    requirements:
+        id: \d+
+
+se_auction_advert_add:
+    path:     /demande/deposer
+    defaults:
+        _controller: SEAuctionBundle:Advert:add
+
+se_auction_advert_edit:
+    path:     /demande/modifier/{id}
+    defaults:
+        _controller: SEAuctionBundle:Advert:edit
+    requirements:
+        id: \d+
+
+se_auction_advert_delete:
+    path:     /demande/supprimer/{id}
+    defaults:
+        _controller: SEAuctionBundle:Advert:delete
+    requirements:
+        id: \d+
+        
+se_auction_advert_list_by_user:
+    path:     /mes-demandes/{page}
+    defaults:
+        _controller: SEAuctionBundle:Advert:listByUser
+        page:        1
+    requirements:
+        page: \d*
+
+se_auction_auction_list_by_user_proposed:
+    path:     /mes-encheres/proposees/{page}
+    defaults:
+        _controller: SEAuctionBundle:Auction:listProposed
+        page:        1
+    requirements:
+        page: \d*
+
+se_auction_auction_list_by_user_receive:
+    path:     /mes-encheres/recues/{page}
+    defaults:
+        _controller: SEAuctionBundle:Auction:listReceive
+        page:        1
+    requirements:
+        page: \d*
+
+se_auction_list_auction_by_advert:
+    path:     /encheres-recues/{advertId}/{page}
+    defaults:
+        _controller: SEAuctionBundle:Auction:list
+        page:        1
+    requirements:
+        page: \d*
+        id: \d*
+        
+se_auction_auction_list_by_user_terminated:
+    path:     /mes-encheres/terminees/{page}
+    defaults:
+        _controller: SEAuctionBundle:Auction:listTerminated
+        page:        1
+    requirements:
+        page: \d*
+
+se_auction_auction_list_by_user:
+    path:     /mes-encheres/{page}
+    defaults:
+        _controller: SEAuctionBundle:Auction:listProposed
+        page:        1
+    requirements:
+        page: \d*
+        
+se_auction_add:
+    path:     /demande/propser-enchere/{advertId}
+    defaults:
+        _controller: SEAuctionBundle:Auction:add
+        
+se_auction_auction_accept:
+    path:     /accepter-enchere/{auctionId}
+    defaults:
+        _controller: SEAuctionBundle:Auction:accept
+
+#Account - Message
+se_auction_message_list:
+    path: /mes-messages/{advertId}/{page}
+    defaults:
+        _controller: SEAuctionBundle:Message:list
+        page:        1
+    requirements:
+        page: \d*
+        
+se_auction_message_add:
+    path:     /contact/envoi-message/{advertId}/{senderId}/{receiveId}
+    defaults:
+        _controller: SEAuctionBundle:Message:add
+
+se_auction_advert_message_list:
+    path:     /message-recues/{advertId}/{senderId}
+    defaults:
+        _controller: SEAuctionBundle:Message:listConversation
+
+se_auction_user_message_list:
+    path:     /message-envoyes/{page}
+    defaults:
+        _controller: SEAuctionBundle:Message:listMessageSend
+        page:        1
+    requirements:
+        page: \d*
+        
+#Account - Comment
+se_auction_comment_list:
+    path: /mes-commentaires/{page}
+    defaults:
+        _controller: SEAuctionBundle:Comment:list
+        page:        1
+    requirements:
+        page: \d*
+        
+se_auction_comment_add:
+    path:     /contact/ajouter-comment/{advertId}/{auctionUserId}
+    defaults:
+        _controller: SEAuctionBundle:Comment:add
+
+se_auction_comment_edit:
+    path:     /contact/modifier-comment/{advertId}/{auctionUserId}
+    defaults:
+        _controller: SEAuctionBundle:Comment:edit
+        
+se_user_view:
+    path:     /encherisseur/profile/{id}
+    defaults:
+        _controller: SEUserBundle:Profile:view
+    requirements:
+        id: \d+
+
+se_dpt_by_region:
+    path: /demande/liste/getdptbyregion
+    defaults:
+        _controller: SEAuctionBundle:Advert:getDptByRegion
+        
+se_city_by_dpt_region:
+    path: /demande/liste/getcitybydptandregion
+    defaults:
+        _controller: SEAuctionBundle:Advert:getCityByRegionAndDpt
+        
+se_cp_by_city:
+    path: /demande/liste/getpostalcodebycity
+    defaults:
+        _controller: SEAuctionBundle:Advert:getPostalCodeByCity
+        
+se_postalcode:
+    path: /getpostalcode
+    defaults:
+        _controller: SEPortalBundle:PostalCode:getPostalCode

@@ -1,0 +1,67 @@
+{# Liste les offres - Sans Action #}
+
+{% if countAuctions > 0 %}
+    
+    {% set auctionAccept = 0 %}
+    {% set break = false %}
+    {% set advertId = 0 %}
+    {% set auctionUserId = 0 %}
+    
+    {% for auction in listAuctions if not break %}
+        {% if auction.state == 2 %}
+            {% set auctionAccept = 1  %}
+            {% set auctionUserId = auction.user.id  %}
+            {% set break = true %}
+        {% endif %}
+        {% set advertId = auction.advert.id  %}
+    {% endfor %}
+
+    <table class="table" id="tblGrid">
+        <tbody>
+        {% for auction in listAuctions %}
+            <tr>
+                <td class="text-left">
+                    <h5>
+                    <a class='se-tbl-link' href="{{ path('se_auction_advert_view', {'id': auction.advert.id}) }}">{{ auction.advert.title }}</a>
+                     </h5>
+                </td>
+                 <td class="text-center">
+                    <h5>
+                    {{ auction.dateCreation|date('d/m/Y') }} 
+                     à 
+                    {{ auction.dateCreation|date('H:i:s') }}
+                    </h5>
+                </td>
+                <td class="text-right bold">
+                    <h4>
+                    {% if auction.state == 2 %}
+                        <span class="label label-success">
+                    {% else %}
+                        <span class="label label-default">
+                    {%endif%}
+                        {{ auction.value|number_format(0, ' ', ' ') }} €
+                        </span>
+                    </h4>
+                    </td>
+                <td class="text-center">
+                    {% if auction.state == 2 %}
+                        <h4>
+                            <span class="label label-success">Enchère Acceptée</span>
+                        </h4>
+                    {% elseif auctionAccept != 1 %}
+                         <h4>
+                            <span class="label label-info">Enchère en cours</span>
+                        </h4>
+                    {% else %}
+                        <h4>
+                            <span class="label label-default">Enchère déclinée</span>
+                        </h4>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div>Aucune enchère pour l'instant</div>
+{% endif %}

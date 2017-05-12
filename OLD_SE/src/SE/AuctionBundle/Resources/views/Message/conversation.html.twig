@@ -1,0 +1,61 @@
+{% extends "SELayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Mes conversations - {{ parent() }}
+{% endblock %}
+
+{% block se_layout_body %}
+
+        <div class="well slogan-well">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="cat-title">Mes conversations</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="well se-well">
+        <div class="index-container" >
+            <div class="row">
+                 <div id="content" class="col-md-12">
+                     <h4 class="cat-title">{{countMessage}}</h4>
+                     <table class="table" id="tblGrid">
+                        <tbody>
+                            <div class='panel-body'>
+                                            Votre message : 
+                                        {{ render(controller('SEAuctionBundle:Message:add', {
+                                                                                    'request': app.request,
+                                                                                    'advertId': advertId,  
+                                                                                    'senderId': senderId, 
+                                                                                    'receiveId': receiveId } )) }}
+                            </div>
+                             {% for conversation in listConversation %}
+                            <div class='col-md-12'>
+                                <div class='panel panel-default'>
+                                    <div class='panel-heading se-panel-heading'>
+                                        <h4 class='panel-title text-left'>{{ conversation.sender }}</h4>
+                                        <h4 class='panel-title text-right'><i>{{ conversation.dateCreation|date('d/m/Y') }} à {{ conversation.dateCreation|date('H:i:s') }}</i></h4>
+                                    </div>
+                                    <div class='panel-body'>
+                                        <div class="caption">
+                                            <p>{{ conversation.content |nl2br }}</p>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div>Pas (encore !) de messages</div>
+                        {% endfor %}
+                     </tbody>
+                     </table>
+                 </div>
+            </div>
+        </div>
+    </div>
+   
+{% endblock %}
+
+

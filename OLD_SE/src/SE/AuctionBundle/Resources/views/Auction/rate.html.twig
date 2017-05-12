@@ -1,0 +1,33 @@
+{% if item.rate == -1 or item.rate == null or item.rate == 0 %}
+    {% for i in 1..5 %}
+        <i class="glyphicon glyphicon-star-empty rate-none"></i>
+    {% endfor %}
+    {% elseif item.rate == 1 %}
+        <i class="glyphicon glyphicon-star rate-success"></i>
+    {% for i in 1..5 - item.rate %}
+        <i class="glyphicon glyphicon-star-empty rate-none"></i>
+    {% endfor %}
+    {% elseif item.rate == 2 %}
+    {% for i in 1..item.rate %}
+        <i class="glyphicon glyphicon-star rate-success"></i>
+    {% endfor %}
+    {% for i in 1..5 - item.rate %}
+        <i class="glyphicon glyphicon-star-empty rate-none"></i>
+    {% endfor %}
+    {% elseif item.rate == 3 %}
+    {% for i in 1..item.rate %}
+        <i class="glyphicon glyphicon-star rate-success"></i>
+    {% endfor %}
+    {% for i in 1..5 - item.rate %}
+        <i class="glyphicon glyphicon-star-empty rate-none"></i>
+    {% endfor %}
+    {% elseif item.rate == 4 %}
+    {% for i in 1..item.rate %}
+        <i class="glyphicon glyphicon-star rate-success"></i>
+    {% endfor %}
+        <i class="glyphicon glyphicon-star-empty rate-none"></i>
+    {% elseif item.rate == 5 %}
+    {% for i in 1..item.rate %}
+        <i class="glyphicon glyphicon-star rate-success"></i>
+    {% endfor %}
+{% endif %}

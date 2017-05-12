@@ -1,0 +1,38 @@
+#Layout
+se_layout_allpage:
+    path:  /allPage
+    defaults: { _controller: SELayoutBundle:Default:allPage }
+
+se_layout_homepage:
+    path:     /
+    defaults: { _controller: SELayoutBundle:Default:index }
+
+se_layout_cgu:
+    path:     /conditions-generales-d-utilisations
+    defaults:
+        _controller: SELayoutBundle:Default:cgu
+
+se_layout_cgv:
+    path: /conditions-generales-de-vente
+    defaults:
+        _controller: SELayoutBundle:Default:cgv
+
+se_layout_contact:
+    path: /nous-contacter
+    defaults:
+        _controller: SELayoutBundle:Default:contactus
+
+se_layout_help:
+    path: /aide
+    defaults:
+        _controller: SELayoutBundle:Default:help
+
+se_layout_join:
+    path: /nous-rejoindre
+    defaults:
+        _controller: SELayoutBundle:Default:joinus
+
+se_layout_resum:
+    path: /qui-sommes-nous
+    defaults:
+        _controller: SELayoutBundle:Default:resum

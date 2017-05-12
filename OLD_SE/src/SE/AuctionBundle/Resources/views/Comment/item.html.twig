@@ -1,0 +1,14 @@
+<div class="col-sm-12">
+    <div class="thumbnail">
+        <div class="caption">
+            <h4>{{ comment.advert.title }}</h4>
+            <p>{{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:m') }}</p>
+            <p>
+                <a href="{{ path('se_auction_comment_list',{'id':comment.id}) }}" class="btn btn-success">
+            <i class="glyphicon glyphicon-comment"></i>
+                Voir
+            </a>
+            </p>
+        </div>
+    </div>
+</div>

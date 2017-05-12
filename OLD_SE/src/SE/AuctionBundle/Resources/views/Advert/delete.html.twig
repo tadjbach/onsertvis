@@ -1,0 +1,39 @@
+{# Supprimer une Demande - Action #}
+
+{% extends "SELayoutBundle::layout.html.twig" %}
+
+    {% block title %}
+        Supprimer une demande - {{ parent() }}
+    {% endblock %}
+
+    {% block se_layout_body %}
+
+        <div class="well slogan-well">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="cat-title">Supprimer la demande "{{ advert.title }}"</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="well se-well">
+            <div class="index-container" >
+                <div class="row">
+                     <div id="content" class="col-md-12">
+                        <div class="col-md-6">
+                            <p>Etes-vous certain de vouloir supprimer l'demande "{{ advert.title }}" ?</p>
+
+                            <form action="{{ path('se_auction_advert_delete', {'id': advert.id}) }}" method="post">
+                                
+                                <input type="submit" value="Supprimer" class="btn btn-danger" />
+                                {{ form_rest(form) }}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endblock %}

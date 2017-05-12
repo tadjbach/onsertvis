@@ -1,0 +1,42 @@
+{# Lister Demande - Action #}
+
+{% extends "SELayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Liste des demandes en cours - {{ parent() }}
+{% endblock %}
+
+{% block se_layout_body %}
+    
+    <div class="well slogan-well">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ include('@SEAuction/Advert/filter.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="well se-well">
+        <div class="index-container" >
+            <div class="row">
+                 <div id="content" class="col-md-12">
+                     <h4 class="cat-title">{{ titleResult }}</h4>
+                    {% for advert in listAdverts %}
+                        <div class="col-sm-4 col-md-4">
+                            <a class="item-link" href="{{ path('se_auction_advert_view', {'id': advert.id}) }}">
+                                {{ include('@SEAuction/Advert/itemTuile.html.twig') }}
+                            </a>
+                        </div>
+                    {% else %}
+                            <div>Si vous effectuez une recherche par mots-clés, vérifiez bien qu'il n'y ait pas de faute de frappe.</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+                
+   {{ include('@SEAuction/Commun/pagination.html.twig') }}
+   
+{% endblock %}
