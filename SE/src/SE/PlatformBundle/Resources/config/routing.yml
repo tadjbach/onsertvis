@@ -1,0 +1,53 @@
+se_platform_homepage:
+    path:     /
+    defaults:
+        _controller: SEPlatformBundle:Default:index
+
+se_platform_advert_add:
+    path:   /annonce/ajouter
+    defaults:
+        _controller: SEPlatformBundle:Advert:add
+
+se_platform_advert_view:
+    path:   /annonce/{slug}/{id}
+    defaults:
+        _controller: SEPlatformBundle:Advert:view
+    requirements:
+        id: \d+
+
+se_platform_advert_edit:
+    path:   /annonce/modifier/{slug}/{id}
+    defaults:
+        _controller: SEPlatformBundle:Advert:edit
+    requirements:
+        id: \d+
+
+se_platform_advert_delete:
+    path:   /annonce/supprimer/{slug}/{id}
+    defaults:
+        _controller: SEPlatformBundle:Advert:delete
+    requirements:
+        id: \d+
+
+se_platform_advert_list:
+    path:   /annonces-en-cours/{page}
+    defaults:
+        _controller: SEPlatformBundle:Advert:list
+        page:   1
+    requirements:
+        page: \d*
+
+se_platform_resum:
+    path: /qui-sommes-nous
+    defaults:
+        _controller: SEPlatformBundle:Default:resum
+
+se_platform_cgu:
+    path:     /conditions-generales-d-utilisations
+    defaults:
+        _controller: SEPlatformBundle:Default:cgu
+
+se_platform_help:
+    path: /aide
+    defaults:
+        _controller: SEPlatformBundle:Default:help

@@ -1,0 +1,36 @@
+{% extends "SEPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Qui sommes-nous ? - {{ parent() }}
+{% endblock %}
+
+{% block layout_header2 %}
+  <div class="col-md-12">
+      <h3 class="cat-title">Qui sommes nous?</h3>
+  </div>
+{% endblock %}
+{% block layout_body %}
+<div class="row">
+     <div id="content" class="col-md-12">
+        <div class="col-md-2" >
+        </div>
+        <div class="col-md-8" >
+            <h2>ServiceEnchère SARL</h2>
+            <p>Société à responsabilité limitée<br>
+                Société en cour d'immatriculation</p>
+            <p>Le Directeur de Publication de <a class="contact" href="http://www.serviceenchere.fr">www.serviceenchere.fr</a>
+                est Monsieur Bachir TADJER.</p>
+            <p>Contact :
+            <a class="contact" href="mailto:contact@serviceenchere.fr">contact@serviceenchere.fr</a>
+            </p>
+            <h2>Hébergement</h2>
+            <p>
+                Le site <a class="contact" href="http://www.serviceenchere.fr">www.serviceenchere.fr</a> est hébergé par la société OVH
+                <br>
+                RCS Lille Métropole 424 761 419 00045
+                Siège social : 2 rue Kellermann - 59100 Roubaix - France.
+            </p>
+        </div>
+    </div>
+  </div>
+{% endblock %}

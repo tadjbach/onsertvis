@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- PAGE - TITLE -->
+        <title>{% block title %}Service Enchère{% endblock %}</title>
+
+        <!-- PAGE - FAVICON -->
+        <link rel="icon" type="image/x-icon" href="{{ asset('fav.ico') }}" />
+
+        <!-- PAGE - CSS -->
+        {% block stylesheets %}
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        {% endblock %}
+
+        <link rel="stylesheet" href="../../css/main.css" type="text/css" />
+
+    </head>
+    <body>
+        <!-- HADER - MENU -->
+        {{ include('@SEPlatform/Default/header.html.twig') }}
+
+        <!-- CONTAINER -->
+        {% block body %}{% endblock %}
+
+        <!-- PAGE - FOOTER - SERVICE -->
+        {{ include('@SEPlatform/Default/footer.html.twig') }}
+
+        <!-- PAGE - JS -->
+        {% block javascripts %}
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                crossorigin="anonymous">
+        </script>
+        <script type="text/javascript" src="../../js/js.js" ></script>
+        <script type="text/javascript" src="../../js/france.js" ></script>
+        <script type="text/javascript" src="../../js/cmap.js" ></script>
+        {% endblock %}
+    </body>
+</html>

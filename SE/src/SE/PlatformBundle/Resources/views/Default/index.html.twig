@@ -1,0 +1,49 @@
+
+
+{% extends "SEPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Le bon service au bon prix
+{% endblock %}
+
+{% block layout_header2 %}
+      <div class="slogan"><p>Le bon service au bon prix !</p></div>
+    
+      <div class="col-md-6">
+          <h3 class="cat-title">Vous cherchez une aide ?</h3>
+          <h4>
+              <span class="label label-default se-badge">1</span>
+              <a class="slogan-link" href="{{ path('se_platform_advert_add') }}">Postez votre demande</a>
+          </h4>
+          <h4><span class="label label-default se-badge">2</span> Recevez des offres</h4>
+          <h4><span class="label label-default se-badge">3</span> Choisissez la meilleure offre</h4>
+      </div>
+      <div class="col-md-6">
+          <h3 class="cat-title">Vous proposez vos services ?</h3>
+          <h4>
+              <span class="label label-default se-badge">1</span>
+              <a class="slogan-link" href="#">Inscrivez vous</a>
+          </h4>
+          <h4><span class="label label-default se-badge">2</span> Proposez des offres et gagnez</h4>
+          <h4><span class="label label-default se-badge">3</span> Retrouver le demandeur</h4>
+      </div>
+{% endblock %}
+
+{% block layout_body %}
+<div class="row">
+  <!-- CATGEORY - CARTE DE FRANCE -->
+  <div class="col-md-4">
+      <h4 class="cat-title">Par Catégories</h4>
+      <ul class="ul-cat">
+      </ul>
+      <div class="seprate-white"></div>
+      <h4 class="cat-title">Par Régions</h4>
+      <ul class="ul-cat">
+      </ul>
+  </div>
+  <div class="col-md-8 text-center">
+      <div id="tip" style='display:none'></div>
+      <div id="cmap"></div>
+  </div>
+</div>
+{% endblock %}
