@@ -17,8 +17,16 @@
                 </div>
             </div>
         </div>
-    
     <div class="well se-well">
+                
+        {% if app.session.flashBag.has('success') %}
+            <div class="alert alert-success">
+                {% for msg in app.session.flashBag.get('success') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        
         <div class="index-container" >
             <div class="row">
                  <div id="content" class="col-md-12">
