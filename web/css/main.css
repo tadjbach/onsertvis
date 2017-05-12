@@ -27,19 +27,17 @@ html, body{
 }
 
 .se-header .logo{
-        margin-top: -5px;
-    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-    color: #2A0540;
-    font-weight: bold;
+    margin-top: -10px;
 }
 .logo_img{
-    padding-right: 10px;
+    width: 200px;
+    height: 40px;
+    background-size: 200px 40px;
     vertical-align: text-top;
+    background-repeat: no-repeat;
+    background-image: url('img/SE-logo.jpg');
 }
-.se-header .logo:hover{
-    color: #2A0540;
-    text-decoration:none;
-}
+
 
 .navbar{
     margin-bottom:0;

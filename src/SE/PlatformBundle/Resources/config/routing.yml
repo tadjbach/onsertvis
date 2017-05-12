@@ -37,6 +37,14 @@ se_platform_advert_list:
     requirements:
         page: \d*
 
+se_platform_advert_user_list:
+    path:   /mes-annonces/{page}
+    defaults:
+        _controller: SEPlatformBundle:Advert:userList
+        page:   1
+    requirements:
+        page: \d*
+
 se_platform_resum:
     path: /qui-sommes-nous
     defaults:

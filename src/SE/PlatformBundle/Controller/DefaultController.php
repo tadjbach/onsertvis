@@ -9,9 +9,19 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $content = $this->get('templating')->render('SEPlatformBundle:Default:index.html.twig');
 
-        return new Response($content);
+        $listCategory=$this->getDoctrine()
+            ->getManager()->getRepository('SEPlatformBundle:Category')
+            ->findAllOrder();
+
+        $listRegion =$this->getDoctrine()
+            ->getManager()->getRepository('SEPlatformBundle:Region')
+            ->findAllOrder();
+
+        return $this->render('SEPlatformBundle:Default:index.html.twig', array(
+            'listCategory'=>$listCategory,
+            'listRegion'=>$listRegion
+        ));
     }
 
     public function cguAction()
