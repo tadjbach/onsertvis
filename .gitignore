@@ -20,3 +20,8 @@ $RECYCLE.BIN/
 #############
 
 var/*
+*.log
+
+OLD_SE/var/cache/dev/annotations.map
+
+OLD_SE/var/cache/dev/annotations.php
