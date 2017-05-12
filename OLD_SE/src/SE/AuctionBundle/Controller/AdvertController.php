@@ -18,8 +18,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use SE\AuctionBundle\Entity\Auction;
-use SE\AuctionBundle\Entity\Message;
 
 class AdvertController extends Controller
 {
@@ -182,16 +180,12 @@ JsonEncoder()));
         return new Response(null);
     }
 
-    public function viewAction(Request $request, $id)
+    public function viewAction($id)
     {
-        $value = $request->get('auction_value');
-        $content = $request->get('message_content');
-        
-        $em=$this->getDoctrine()
+         $em=$this->getDoctrine()
                     ->getManager();
 
         $advert=$em->find('SEAuctionBundle:Advert', $id);
-        
         $countAuctions = '0 offre';
 
         $userConnect = $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
@@ -217,12 +211,7 @@ JsonEncoder()));
         if ( $advert->getIsPublished() == 0 || null===$advert ){
             throw new NotFoundHttpException("Oops, La demande  que vous cherchez n'existe pas.");
         }
-        if ($value !== NULL) {
-            $this->addAuction($em, $value, $advert, $userApp);
-        }    
-        if ($content !== NULL) {
-            $this->sendMessage($em, $content, $advert, $userApp, $userAdvert);
-        }
+
         return $this->render('SEAuctionBundle:Advert:view.html.twig', array(
             'advert'=>$advert,
             'listAuctions'=>$listAuctions,
@@ -425,90 +414,6 @@ JsonEncoder()));
     
     private function priceFormat($price){
         return number_format($price, 0,' ',' ').' €';
-    }
-    
-    private function addAuction($em, $value, $advert, $userApp){
-        
-        if ($advert !== null && $userApp !== null && $value !== NULL){
-
-            $advert->setAuctionState(1);
-
-            $auction = new Auction();
-
-            $auction->setUser($userApp);
-            $auction->setAdvert($advert);
-            $auction->setValue($value);
-
-            $em->persist($auction);
-            $em->flush();
-
-             $this->get('session')->getFlashBag()->add(
-            'notice',
-            array(
-                'alert' => 'success',
-                'title' => '',
-                'message' => 'Votre enchère à bien été validée.'
-                )
-                );
-               //envoi de mail au proprio
-            /*
-                $this->sendEmailMessage('Une offre sur votre demande '.$advert->getTitle(),
-                    'Une offre sur votre demande '.$advert->getTitle(),
-                        'noreplay@serviceenchere.fr',
-                        (string) $advert->getUser()->getEmail());*/
-        }
-        else{
-            $this->get('session')->getFlashBag()->add(
-            'notice',
-            array(
-                'alert' => 'danger',
-                'title' => '',
-                'message' => 'Un problème est survenue.'
-            )
-        );
-        }
-    }
-    
-    private function sendMessage($em, $content, $advert, $userSender, $userReceive){
-        
-        if ($advert !== null && $userSender !== null && $content !== NULL && $userReceive !== null){
-
-        $message = new Message();
-        
-        $message->setSender($userSender);
-        $message->setAdvert($advert);
-        $message->setReceiver($userReceive);
-        $message->setContent($content);
-        $em->persist($message);
-        $em->flush();
-
-        $this->get('session')->getFlashBag()->add(
-            'notice',
-            array(
-                'alert' => 'success',
-                'title' => '',
-                'message' => 'Votre message à bien été envoyé.'
-            )
-        );
-       // $request->getSession()->getFlashBag()->add('notice', 'Votre message à bien été envoyé.');
-
-            //envoi de mail au proprio
-         /*
-             $this->sendEmailMessage('Un message pour votre demande '.$advert->getTitle(),
-                 'Vous avez reçu un message à propos de '.$advert->getTitle(),
-                     'noreplay@serviceenchere.fr',
-                     (string) $advert->getUser()->getEmail());*/
-        }
-        else{
-            $this->get('session')->getFlashBag()->add(
-            'notice',
-            array(
-                'alert' => 'danger',
-                'title' => '',
-                'message' => 'Un problème est survenue.'
-            )
-        );
-        }
     }
 }
 

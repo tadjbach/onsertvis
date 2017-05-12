@@ -67,9 +67,7 @@ class AuctionController extends Controller
         $auction->setUser($this->getUser());
         $auction->setAdvert($advert);
        
-        $form = $this->createForm(AuctionType::class, $auction
-                , array('action' => $this->generateUrl('se_auction_advert_view', 
-                        array('id' => $advert->getId()))));
+        $form = $this->createForm(AuctionType::class, $auction);
 
         if ($request->isMethod('POST')){
             $form->handleRequest($request);
@@ -82,13 +80,11 @@ class AuctionController extends Controller
                //$request->getSession()->getFlashBag()->add('notice', 'Votre offre est validée.');
                
                //envoi de mail au proprio
+
                 $this->sendEmailMessage('Une offre sur votre demande '.$advert->getTitle(),
                     'Une offre sur votre demande '.$advert->getTitle(),
                         'noreplay@serviceenchere.fr',
                         (string) $advert->getUser()->getEmail());
-                /*
-                return $this->redirectToRoute('se_auction_advert_view', 
-                        array('id'=>$advert->getId()));*/
             }
         }
 
@@ -270,39 +266,4 @@ class AuctionController extends Controller
         ));
     }
     
-    public function AddAuctionAction(Request $request, $advertId){
-        
-        $value = $request->get('auction_value');
-        
-        $em = $this->getDoctrine()->getManager();
-      
-        $advert=$em->find('SEAuctionBundle:Advert', $advertId);
-        $user = $this->getUser();
-                
-        if ($advert !== null && $user !== null){
-            
-        $advert->setAuctionState(1);
-        
-        $auction = new Auction();
-        
-        $auction->setUser($this->getUser());
-        $auction->setAdvert($advert);
-        $auction->setValue($value);
-        
-        $em->persist($auction);
-        $em->flush();
-
-               //$request->getSession()->getFlashBag()->add('notice', 'Votre offre est validée.');
-               
-               //envoi de mail au proprio
-                $this->sendEmailMessage('Une offre sur votre demande '.$advert->getTitle(),
-                    'Une offre sur votre demande '.$advert->getTitle(),
-                        'noreplay@serviceenchere.fr',
-                        (string) $advert->getUser()->getEmail());
-                
-        return $this->redirectToRoute('se_auction_advert_view', 
-                array('id'=>$advert->getId()));
-        }
-        
-    }
 }  

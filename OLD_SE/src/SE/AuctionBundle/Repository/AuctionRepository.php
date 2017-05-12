@@ -117,8 +117,6 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
             ->andWhere($qb->expr()->eq('advert.isEnabled', 1));
 
-         $qb->orderBy('auction.dateCreation', 'DESC');
-         
         $qb->getQuery();
 
         $qb->setFirstResult(($page-1) * $nbPerPage)

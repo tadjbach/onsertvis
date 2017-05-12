@@ -8,15 +8,23 @@
 
     {% block se_layout_body %}
 
-    
-    <div class="well slogan-well">
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-12">
+        {% if app.session.flashBag.has('success') %}
+            <div class="alert alert-success">
+                {% for msg in app.session.flashBag.get('success') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <div class="well slogan-well">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    
     <div class="well se-well">
         <div class="index-container" >
             <div class="row">
@@ -32,59 +40,10 @@
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             {% if app.user != advert.user%}
                                 <div class="row">
-                                    <div class="col-md-8">
-                                        <form id="form_auction_add" action="" method="get">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">€ </span>
-                                                    <input type="text" 
-                                                           name="auction_value" 
-                                                           required="required" 
-                                                           maxlength="50" 
-                                                           placeholder="Proposez un prix (en euro)" 
-                                                           class="form-control">    
-                                                </div>
-                                            </div>
-                                            <div class="form-group text-right">
-                                                     <input 
-                                                    class="btn se-btn-action btn"
-                                                    type="submit" value="Enchérir"  />
-                                            </div>
-                                        </form>
-                                        
-                                        <form name="se_auctionbundle_message" action="" method="get">
-                                            <div id="se_auctionbundle_message">
-                                                <div class="form-group">
-                                                    <textarea id="message_content" 
-                                                              name="message_content" 
-                                                              required="required" 
-                                                              maxlength="1000" 
-                                                              placeholder="Ecrivez votre message ici (1000 caratères maximum)" 
-                                                              class="form-control" ></textarea>
-                                                </div>
-                                                <div class="form-group text-right">
-                                                    <input type="submit" 
-                                                            
-                                                            class="btn se-btn-action btn" value="Envoyer"/>
-                                                        
-                                                    </input>
-                                                </div>
-                                            </div>
-                                        </form>
-                                       
+                                    <div class="col-md-12">
+                                        {{ render(controller('SEAuctionBundle:Auction:add', {'request': app.request,'advertId':advert.id} )) }}
+                                        {{ render(controller('SEAuctionBundle:Message:add', {'request': app.request,'advertId':advert.id, 'senderId': app.user.id, 'receiveId':advert.user.id} )) }}
                                      </div>
-                                    <div class="col-md-8">
-                                     {% if app.session.started %}
-                                        {% for flashMessage in app.session.flashbag.get('notice') %}
-                                            <div class="alert alert-{{ flashMessage.alert }} alert-dismissible" role="alert">
-                                                <button type="button" class="close" data-dismiss="alert">
-                                                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                                                </button>
-                                                <strong>{{ flashMessage.title }}</strong> {{ flashMessage.message }}
-                                            </div>
-                                        {% endfor %}
-                                    {% endif %}
-                                    </div>
                                 </div>
                             {% else %} 
                                 <div class="row" >
@@ -126,12 +85,12 @@
                         <p>{{ advert.detail |nl2br }}</p>
                         
                     </div>
-                <!--
+                        <!--
                     <div class="col-md-6">
                         <h4 class="cat-title">Localisation</h4>
                         <div id="gmap-div" class="google-carte"></div>
-                    </div>
-                -->
+                    </div>-->
+                    
                 </div>
             </div>     
         </div>
