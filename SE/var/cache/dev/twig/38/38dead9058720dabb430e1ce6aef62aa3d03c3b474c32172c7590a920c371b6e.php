@@ -15,11 +15,11 @@ class __TwigTemplate_3131f4e293b4951be56489f0d7be79eeeffb5591bff78aead9908ca76c2
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        $__internal_c217b169726e44647f38f84f763f9d1646dc1e52258c8ed19a41cc5125a8b4d4 = $this->env->getExtension("Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension");
-        $__internal_c217b169726e44647f38f84f763f9d1646dc1e52258c8ed19a41cc5125a8b4d4->enter($__internal_c217b169726e44647f38f84f763f9d1646dc1e52258c8ed19a41cc5125a8b4d4_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "SEPlatformBundle:Default:footer.html.twig"));
+        $__internal_51d23b35ade3a373612039348fa270d53528c54cd7b0c2fad9fcbb13c4ab6eee = $this->env->getExtension("Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension");
+        $__internal_51d23b35ade3a373612039348fa270d53528c54cd7b0c2fad9fcbb13c4ab6eee->enter($__internal_51d23b35ade3a373612039348fa270d53528c54cd7b0c2fad9fcbb13c4ab6eee_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "SEPlatformBundle:Default:footer.html.twig"));
 
-        $__internal_71f5c6a750e8dc5ee445a4d9fb23e7388b5899b55ec7536a4a95925d14ece3a7 = $this->env->getExtension("Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension");
-        $__internal_71f5c6a750e8dc5ee445a4d9fb23e7388b5899b55ec7536a4a95925d14ece3a7->enter($__internal_71f5c6a750e8dc5ee445a4d9fb23e7388b5899b55ec7536a4a95925d14ece3a7_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "SEPlatformBundle:Default:footer.html.twig"));
+        $__internal_3c203c175256ce3cea17973420ab6dd66b61d5461ffd117ded54bbe64f32061e = $this->env->getExtension("Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension");
+        $__internal_3c203c175256ce3cea17973420ab6dd66b61d5461ffd117ded54bbe64f32061e->enter($__internal_3c203c175256ce3cea17973420ab6dd66b61d5461ffd117ded54bbe64f32061e_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "SEPlatformBundle:Default:footer.html.twig"));
 
         // line 1
         echo "<div class=\"well well-sm well-footer\">
@@ -64,10 +64,10 @@ class __TwigTemplate_3131f4e293b4951be56489f0d7be79eeeffb5591bff78aead9908ca76c2
 </div>
 ";
         
-        $__internal_c217b169726e44647f38f84f763f9d1646dc1e52258c8ed19a41cc5125a8b4d4->leave($__internal_c217b169726e44647f38f84f763f9d1646dc1e52258c8ed19a41cc5125a8b4d4_prof);
+        $__internal_51d23b35ade3a373612039348fa270d53528c54cd7b0c2fad9fcbb13c4ab6eee->leave($__internal_51d23b35ade3a373612039348fa270d53528c54cd7b0c2fad9fcbb13c4ab6eee_prof);
 
         
-        $__internal_71f5c6a750e8dc5ee445a4d9fb23e7388b5899b55ec7536a4a95925d14ece3a7->leave($__internal_71f5c6a750e8dc5ee445a4d9fb23e7388b5899b55ec7536a4a95925d14ece3a7_prof);
+        $__internal_3c203c175256ce3cea17973420ab6dd66b61d5461ffd117ded54bbe64f32061e->leave($__internal_3c203c175256ce3cea17973420ab6dd66b61d5461ffd117ded54bbe64f32061e_prof);
 
     }
 
