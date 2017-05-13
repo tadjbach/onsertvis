@@ -63,7 +63,7 @@ se_platform_advert_list:
 se_platform_advert_user_list:
     path:   /mes-annonces/{page}
     defaults:
-        _controller: SEPlatformBundle:Advert:userList
+        _controller: SEPlatformBundle:Advert:listUser
         page:   1
     requirements:
         page: \d*

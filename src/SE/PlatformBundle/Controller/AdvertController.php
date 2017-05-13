@@ -13,7 +13,8 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 class AdvertController extends Controller
 {
     /* PRIVATE VAR */
-private $em;
+    private $em;
+
         /* Search filter */
         private $search;
         private $category;
@@ -22,19 +23,53 @@ private $em;
         private $city;
         private $postalCode;
 
+        private $sadvert;
+        private $state;
 
     /* PRIVATE FUNCTION */
     private function getDoctrineManager(){
       return $this->getDoctrine()->getManager();
     }
 
-    private function getFilterAttributes(Request $request){
+    private function getListFilterAttributes(Request $request){
         $this->search = $request->query->get('search');
         $this->category = $request->query->get('category');
         $this->region = $request->query->get('region');
         $this->departement = $request->query->get('departement');
         $this->city = $request->query->get('city');
         $this->postalCode = $request->query->get('postalCode');
+    }
+
+    private function getListUserFilterAttributes(Request $request){
+        $this->advert = $request->query->get('advert');
+        $this->state = $request->query->get('state');
+    }
+
+    //TODO
+    private function getAdvertByUser(){
+      $em = $this->getDoctrineManager();
+      $user;
+      //return $em->getRepository('SEPlatformBundle:Advert')->findByUser($user);
+
+      $list = array(
+        array('id'=>1, 'title'=>'Mon annonce 1', 'state'=>1),
+        array('id'=>2, 'title'=>'Mon annonce 2', 'state'=>1),
+        array('id'=>3, 'title'=>'Mon annonce 3', 'state'=>2)
+      );
+      return $list;
+    }
+
+    //TODO
+    private function getAdvertState(){
+        $em = $this->getDoctrineManager();
+        //return $em->getRepository('SEPlatformBundle:Advert')->findAll();
+
+        $list = array(
+          array('id'=>1, 'labelNormal'=>'En ligne'),
+          array('id'=>2, 'labelNormal'=>'Hors ligne')
+        );
+
+        return $list;
     }
 
     private function getCategory(){
@@ -132,17 +167,13 @@ private $em;
                 }
 
 
-
-
-
-
     /* Action */
 
     public function listAction(Request $request)
     {
-        $this->getFilterAttributes($request);
+        $this->getListFilterAttributes($request);
 
-        $content = $this->render('SEPlatformBundle:Advert:list.html.twig',
+        return $this->render('SEPlatformBundle:Advert:list.html.twig',
                 array(
                     'search'=> $this->search,
                     'category'=> $this->category,
@@ -154,17 +185,19 @@ private $em;
                     'listRegions'=>$this->getRegion(),
                     'listDepartement'=>$this->getDepartement($this->region)
                 ));
-
-        return $content;
     }
 
-    public function userListAction(Request $request)
+    public function listUserAction(Request $request)
     {
-        $content = $this->render('SEPlatformBundle:Advert:userList.html.twig',
-                array(
-                ));
+      $this->getListUserFilterAttributes($request);
 
-        return $content;
+        return $this->render('SEPlatformBundle:Advert:listUser.html.twig',
+                array(
+                  'advert'=> $this->advert,
+                  'state'=> $this->state,
+                  'listAdvertUser'=>$this->getAdvertByUser(),
+                  'listState'=>$this->getAdvertState()
+                ));
     }
 
     public function addAction(Request $request){
