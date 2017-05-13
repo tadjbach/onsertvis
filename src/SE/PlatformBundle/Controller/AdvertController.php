@@ -23,7 +23,7 @@ class AdvertController extends Controller
         private $city;
         private $postalCode;
 
-        private $sadvert;
+        private $advert;
         private $state;
 
     /* PRIVATE FUNCTION */
@@ -62,7 +62,7 @@ class AdvertController extends Controller
     //TODO
     private function getAdvertState(){
         $em = $this->getDoctrineManager();
-        //return $em->getRepository('SEPlatformBundle:Advert')->findAll();
+        //return $em->getRepository('SEPlatformBundle:AdvertState')->findAll();
 
         $list = array(
           array('id'=>1, 'labelNormal'=>'En ligne'),

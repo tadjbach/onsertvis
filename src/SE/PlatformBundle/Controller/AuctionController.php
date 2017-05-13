@@ -8,12 +8,54 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuctionController extends Controller
 {
-    /* PRIVATE VAR */
+  /* PRIVATE VAR */
+  private $em;
+  private $advert;
+  private $stateReceive;
 
     /* PRIVATE FUNCTION */
+    private function getDoctrineManager(){
+      return $this->getDoctrine()->getManager();
+    }
+
+    private function getListUserReceiveFilterAttributes(Request $request){
+        $this->advert = $request->query->get('advert');
+        $this->stateReceive = $request->query->get('stateReceive');
+    }
+
+    //TODO
+    private function getAdvertByUser(){
+      $em = $this->getDoctrineManager();
+      $user;
+      //return $em->getRepository('SEPlatformBundle:Advert')->findByUser($user);
+
+      $list = array(
+        array('id'=>1, 'title'=>'Mon annonce 1', 'state'=>1),
+        array('id'=>2, 'title'=>'Mon annonce 2', 'state'=>1),
+        array('id'=>3, 'title'=>'Mon annonce 3', 'state'=>2)
+      );
+      return $list;
+    }
+
+    //TODO
+    private function getAuctionReceiveState(){
+        $em = $this->getDoctrineManager();
+        //return $em->getRepository('SEPlatformBundle:AuctionReceiveState')->findAll();
+
+        $list = array(
+          array('id'=>1, 'labelNormal'=>'En cours'),
+          array('id'=>2, 'labelNormal'=>'Acceptée'),
+          array('id'=>3, 'labelNormal'=>'Déclinée')
+        );
+
+        return $list;
+    }
+
+
+
+
 
     /* PUBLIC FUNCTION */
-
     //Admin
     public function addAction(Request $request){
     }
@@ -56,10 +98,12 @@ class AuctionController extends Controller
 //Admin
     public function userReceiveListAction(Request $request)
     {
-      $content = $this->render('SEPlatformBundle:Auction:userReceiveList.html.twig',
-              array(
-              ));
-
-      return $content;
+      return $this->render('SEPlatformBundle:Auction:userReceiveList.html.twig',
+          array(
+            'advert'=> $this->advert,
+            'stateReceive'=> $this->stateReceive,
+            'listAdvertUser'=>$this->getAdvertByUser(),
+            'listReceiveState'=>$this->getAuctionReceiveState()
+          ));
     }
 }
