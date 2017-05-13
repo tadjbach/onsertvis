@@ -4,6 +4,27 @@ se_platform_homepage:
     defaults:
         _controller: SEPlatformBundle:Default:index
 
+# Filter Routes :
+se_platform_departement_by_region:
+    path: /annonces-en-cours/getDepartementByRegion
+    defaults:
+        _controller: SEPlatformBundle:Advert:getDepartementByRegion
+
+se_platform_city_by_departement:
+    path: /annonces-en-cours/getCityByDepartement
+    defaults:
+        _controller: SEPlatformBundle:Advert:getCityByDepartement
+
+se_platform_postalCode_by_city_and_departement:
+    path: /annonces-en-cours/getPostalCodeByCityAndDepartement
+    defaults:
+        _controller: SEPlatformBundle:Advert:getPostalCodeByCityAndDepartement
+
+se_platform_postalCode:
+    path: /getpostalcode
+    defaults:
+        _controller: SEPlatformBundle:PostalCode:getPostalCode
+
 # Advert Routes :
 se_platform_advert_add:
     path:   /annonce/ajouter

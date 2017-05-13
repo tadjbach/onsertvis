@@ -1,4 +1,4 @@
-    
+
     //getDepartementByRegion
     function getDepartementByRegion($regions, $departements, $city){
                 $departements.empty();
@@ -7,11 +7,11 @@
 
                 $city.empty();
 
-                var data = {region: $regions.val(), 
+                var data = {region: $regions.val(),
                 departement: $departements.val()};
 
                 $.ajax({
-                    url: 'liste/getdptbyregion',
+                    url: 'annonces-en-cours/getDepartementByRegion',
                     type:'POST',
                     data: data,
                     dataType: 'json',
@@ -21,7 +21,7 @@
                                 });
                         },
                         error: function (error) {
-
+                            console.log(error);
                         }
                     });
     }
@@ -29,29 +29,29 @@
     //getCityByDepartement
     function getCityByDepartement($departements){
         var ajaxResult=[];
-         
+
         var data = {departement: $departements.val()};
-        
+
         $.ajax({
-            url: 'liste/getcitybydptandregion',
+            url: 'annonces-en-cours/getCityByDepartement',
             type:'POST',
             data: data,
             dataType: 'json',
                 success:function(json) {
                     $.each(json, function(id) {
-                        ajaxResult.push(json[id].labelNormal);                                             
+                        ajaxResult.push(json[id].labelNormal);
                     });
                 },
                 error: function (error) {
                     console.log(error);
                 }
             });
-            
+
         $('#city_id').autocomplete({
                 source : ajaxResult
             });
     }
-    
+
     //getPostalCode
     function getPostalCode($city, $departements){
 
@@ -60,7 +60,7 @@
             var dataPostalCode = {city: $city.val(), departement: $departements.val()};
 
             $.ajax({
-                url: 'liste/getpostalcodebycity',
+                url: 'annonces-en-cours/getPostalCodeByCityAndDepartement',
                 type:'POST',
                 data: dataPostalCode,
                 dataType: 'json',
@@ -70,33 +70,33 @@
                         }
                         else{
                              $.each(json, function(id) {
-                            ajaxPostalCodeResult.push(json[id].value);                                             
+                            ajaxPostalCodeResult.push(json[id].value);
                         });
                         }
-                       
+
                     },
                     error: function (error) {
                         console.log(error);
                     }
                 });
-                
+
             $('#postalCode_id').autocomplete({
                     source : ajaxPostalCodeResult
                 });
 
     }
-    
+
     $(document).ready(function(){
-        
-        $('[data-toggle="tooltip"]').tooltip();  
-        
+
+        $('[data-toggle="tooltip"]').tooltip();
+
         var $regions = $('#region_id');
         var $departements = $('#departement_id');
         var $city = $('#city_id');
         var $cp_id = $('#postalCode_id');
-        
+
         if ($regions.length > 0) {
-                           
+
         if ($departements.val() === '0') {
             $city.prop('disabled', true);
             $cp_id.prop('disabled', true);
@@ -105,24 +105,24 @@
             getCityByDepartement($departements);
             getPostalCode($city, $departements);
         }
-        
+
         // à la sélection d une région dans la liste
     $regions.on('change', function() {
             $city.val('');
             $cp_id.val('');
-        
-            getDepartementByRegion($regions, $departements, $city);   
-                        
+
+            getDepartementByRegion($regions, $departements, $city);
+
         if ($regions.val() === '0') {
             $city.prop('disabled', true);
             $cp_id.prop('disabled', true);
             }
         });
-        
+
     $departements.on('change', function() {
             $city.val('');
             $cp_id.val('');
-            
+
         if ($departements.val() === '0') {
             $city.prop('disabled', true);
             $cp_id.prop('disabled', true);
@@ -133,30 +133,30 @@
             getCityByDepartement($departements);
         }
         });
-        
+
     $city.on('change', function() {
            $cp_id.val('');
             getPostalCode($city, $departements);
         });
-          
+
      }
 
-        
+
         var $socityType = $('#fos_user_profile_form_accountType');
         var $postalCode = $('#fos_user_profile_form_cpCity');
         var $siret = $('#fos_user_profile_form_siret');
-        
+
         if ($siret.length > 0) {
             $siret.prop('disabled', true);
 
             if ($socityType.val() === 'Society') {
                $siret.prop('disabled', false);
             }
-        } 
-        
+        }
+
         $socityType.on('change', function() {
             $siret.prop('disabled', true);
-            
+
             if ($socityType.val() === 'Society') {
                  $siret.prop('disabled', false);
             }
@@ -164,14 +164,14 @@
                 $siret.val('');
             }
         });
-        
+
         var pathPostalCode = $("#pathCpCity").attr("data-path");
         var postalCodeResult=[];
 
     $postalCode.on('blur', function() {
-            
+
         var dataPostalCode = {codepostal: $postalCode.val()};
-             
+
            $.ajax({
                 url: pathPostalCode,
                 type:'POST',
@@ -187,9 +187,9 @@
                     }
                 });
         });
-        
+
     $postalCode.autocomplete({
-        
+
         source : function (request, response) {
             var dataPostalCode = {codepostal: $postalCode.val()};
             $.ajax({
@@ -215,6 +215,5 @@
         focus: function(event,ui) {},
         select: function(event, ui) {}
     });
-    
+
   });
-    

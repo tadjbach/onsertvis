@@ -14,8 +14,7 @@ class CityRepository extends \Doctrine\ORM\EntityRepository
 
        $qb=$this->createQueryBuilder('city');
 
-        $qb
-            ->innerJoin('city.departement', 'departement')
+        $qb->innerJoin('city.departement', 'departement')
             ->addSelect('departement');
 
         if($departement !== NULL && $departement !== '0')
@@ -23,8 +22,6 @@ class CityRepository extends \Doctrine\ORM\EntityRepository
             $qb->where($qb->expr()->eq('departement.id', $departement));
         }
 
-        return $qb
-            ->getQuery()
-            ->getResult();
+        return $qb->getQuery()->getResult();
     }
 }

@@ -3,9 +3,10 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-6 filter">
-                    <input name="title" type="text" value="{{ app.request.query.get('title') }}"
-                           class="form-control"
-                           placeholder="Que cherchez-vous?">
+                    <input name="title" type="text"
+                    value="{{ app.request.query.get('search') }}"
+                    class="form-control"
+                    placeholder="Que cherchez-vous?">
                 </div>
                 <div class="col-md-3 filter">
                         <select class="form-control" name="category">
@@ -44,7 +45,7 @@
                             name="departement"
                             id="departement_id" >
                             <option value='0' >Tous les départements</option>
-                            {% for dpt in listDpt %}
+                            {% for dpt in listDepartement %}
                                <option {{ app.request.query.get('departement')== dpt.id ? ' selected ' : ' ' }}
                                    value={{ dpt.id }}>{{ dpt.code }} - {{ dpt.labelNormal }}
                                 </option>
