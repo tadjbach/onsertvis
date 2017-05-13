@@ -152,7 +152,7 @@ class AdvertController extends Controller
                         $dptId = $request->request->get('departement');
 
                         $listPostalCode = $em
-                                    ->getRepository('SEPortalBundle:PostalCode')
+                                    ->getRepository('SEPlatformBundle:PostalCode')
                                     ->getCpByRegionAndDpt($city, $dptId);
 
                         $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new

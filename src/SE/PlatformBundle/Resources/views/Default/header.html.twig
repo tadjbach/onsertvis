@@ -28,7 +28,7 @@
                         Déposer une demande
                     </a>
                 </li>
-                {% if true %}
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li role="presentation" class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#"
                                role="button" aria-haspopup="true" aria-expanded="false">

@@ -27,7 +27,7 @@ se_platform_postalCode:
 
 # Advert Routes :
 se_platform_advert_add:
-    path:   /annonce/ajouter
+    path:   /mon-compte/annonce/ajouter
     defaults:
         _controller: SEPlatformBundle:Advert:add
 
@@ -39,14 +39,14 @@ se_platform_advert_view:
         id: \d+
 
 se_platform_advert_edit:
-    path:   /annonce/modifier/{slug}/{id}
+    path:   /mon-compte/annonce/modifier/{slug}/{id}
     defaults:
         _controller: SEPlatformBundle:Advert:edit
     requirements:
         id: \d+
 
 se_platform_advert_delete:
-    path:   /annonce/supprimer/{slug}/{id}
+    path:   /mon-compte/annonce/supprimer/{slug}/{id}
     defaults:
         _controller: SEPlatformBundle:Advert:delete
     requirements:
@@ -61,7 +61,7 @@ se_platform_advert_list:
         page: \d*
 
 se_platform_advert_user_list:
-    path:   /mes-annonces/{page}
+    path:   /mon-compte/mes-annonces/{page}
     defaults:
         _controller: SEPlatformBundle:Advert:listUser
         page:   1
@@ -70,7 +70,7 @@ se_platform_advert_user_list:
 
 # Auction Routes :
 se_platform_auction_user_receive:
-    path:   /encheres-recues/{page}
+    path:   /mon-compte/encheres-recues/{page}
     defaults:
         _controller: SEPlatformBundle:Auction:userReceiveList
         page:   1
@@ -78,7 +78,7 @@ se_platform_auction_user_receive:
         page: \d*
 
 se_platform_auction_user_send:
-    path:   /encheres-proposees/{page}
+    path:   /mon-compte/encheres-proposees/{page}
     defaults:
         _controller: SEPlatformBundle:Auction:userSendList
         page:   1
@@ -87,27 +87,27 @@ se_platform_auction_user_send:
 
 # Message Routes :
 se_platform_message_add:
-    path:   /envoyer-message
+    path:   /mon-compte/envoyer-message
     defaults:
         _controller: SEPlatformBundle:Message:add
 
 se_platform_message_view:
-    path:   /consulter-message
+    path:   /mon-compte/consulter-message
     defaults:
         _controller: SEPlatformBundle:Message:view
 
 se_platform_message_edit:
-    path:   /modifier-message
+    path:   /mon-compte/modifier-message
     defaults:
         _controller: SEPlatformBundle:Message:edit
 
 se_platform_message_delete:
-    path:   /supprimer-message
+    path:   /mon-compte/supprimer-message
     defaults:
         _controller: SEPlatformBundle:Message:supprimer
 
 se_platform_message_user_list:
-    path:   /mes-messages/{page}
+    path:   /mon-compte/mes-messages/{page}
     defaults:
         _controller: SEPlatformBundle:Message:listUser
         page:   1
@@ -116,27 +116,27 @@ se_platform_message_user_list:
 
 # Comment Routes :
 se_platform_comment_add:
-    path:   /ajouter-avis
+    path:   /mon-compte/ajouter-avis
     defaults:
         _controller: SEPlatformBundle:Comment:add
 
 se_platform_comment_view:
-    path:   /consulter-avis
+    path:   /mon-compte/consulter-avis
     defaults:
         _controller: SEPlatformBundle:Comment:view
 
 se_platform_comment_edit:
-    path:   /modifier-avis
+    path:   /mon-compte/modifier-avis
     defaults:
         _controller: SEPlatformBundle:Comment:edit
 
 se_platform_comment_delete:
-    path:   /supprimer-avis
+    path:   /mon-compte/supprimer-avis
     defaults:
         _controller: SEPlatformBundle:Comment:supprimer
 
 se_platform_comment_user_list:
-    path:   /mes-avis/{page}
+    path:   /mon-compte/mes-avis/{page}
     defaults:
         _controller: SEPlatformBundle:Comment:listUser
         page:   1
@@ -150,17 +150,17 @@ se_platform_user_add:
         _controller: SEPlatformBundle:User:add
 
 se_platform_user_view:
-    path:   /mon-compte
+    path:   /mon-compte/profil
     defaults:
         _controller: SEPlatformBundle:User:view
 
 se_platform_user_edit:
-    path:   /modifier-mon-compte
+    path:   /mon-compte/modifier
     defaults:
         _controller: SEPlatformBundle:User:edit
 
 se_platform_user_delete:
-    path:   /supprimer-mon-compte
+    path:   /mon-compte/supprimer
     defaults:
         _controller: SEPlatformBundle:User:supprimer
 
@@ -170,7 +170,7 @@ se_platform_user_login:
         _controller: SEPlatformBundle:User:login
 
 se_platform_user_logout:
-    path:   /se-déconnecter
+    path:   /mon-compte/se-déconnecter
     defaults:
         _controller: SEPlatformBundle:User:logout
 

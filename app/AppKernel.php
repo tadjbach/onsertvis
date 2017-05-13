@@ -10,7 +10,7 @@ class AppKernel extends Kernel
         date_default_timezone_set('Europe/Paris');
         parent::__construct($environment, $debug);
     }
-    
+
     public function registerBundles()
     {
         $bundles = [
@@ -22,6 +22,9 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new SE\PlatformBundle\SEPlatformBundle(),
+            new \Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
