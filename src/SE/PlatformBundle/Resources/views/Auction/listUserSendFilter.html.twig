@@ -7,7 +7,7 @@
                                 name="advert"
                                 id="advert_id" >
                             <option value='0' >Toutes les annonces</option>
-                            {% for advert in listAdvertUser %}
+                            {% for advert in listAdvertAuction %}
                                 <option {{ app.request.query.get('advert')== advert.id ? ' selected ' : ' ' }}
                                     value={{ advert.id }}>{{ advert.title }}
                                 </option>
@@ -30,7 +30,7 @@
                     <input class="btn btnIcon-search" type="submit" value="Afficher"  />
                 </div>
                 <div class="col-md-3 filter">
-                  <a href="{{ path('se_platform_auction_user_receive') }}"
+                  <a href="{{ path('se_platform_auction_user_send') }}"
                             type="button" class="btn btnIcon-search" >
                              Réinitialiser
                   </a>

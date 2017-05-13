@@ -11,16 +11,16 @@ class AuctionController extends Controller
   /* PRIVATE VAR */
   private $em;
   private $advert;
-  private $stateReceive;
+  private $state;
 
     /* PRIVATE FUNCTION */
     private function getDoctrineManager(){
       return $this->getDoctrine()->getManager();
     }
 
-    private function getListUserReceiveFilterAttributes(Request $request){
+    private function getListUserFilterAttributes(Request $request){
         $this->advert = $request->query->get('advert');
-        $this->stateReceive = $request->query->get('stateReceive');
+        $this->state = $request->query->get('state');
     }
 
     //TODO
@@ -38,7 +38,21 @@ class AuctionController extends Controller
     }
 
     //TODO
-    private function getAuctionReceiveState(){
+    private function getAdvertByAuction(){
+      $em = $this->getDoctrineManager();
+      $user;
+      //return $em->getRepository('SEPlatformBundle:Advert')->findByUser($user);
+
+      $list = array(
+        array('id'=>1, 'title'=>'Mon annonce 1', 'state'=>1),
+        array('id'=>2, 'title'=>'Mon annonce 2', 'state'=>1),
+        array('id'=>3, 'title'=>'Mon annonce 3', 'state'=>2)
+      );
+      return $list;
+    }
+
+    //TODO
+    private function getAuctionState(){
         $em = $this->getDoctrineManager();
         //return $em->getRepository('SEPlatformBundle:AuctionReceiveState')->findAll();
 
@@ -50,7 +64,6 @@ class AuctionController extends Controller
 
         return $list;
     }
-
 
 
 
@@ -89,8 +102,12 @@ class AuctionController extends Controller
     public function userSendListAction(Request $request)
     {
       $content = $this->render('SEPlatformBundle:Auction:userSendList.html.twig',
-              array(
-              ));
+      array(
+        'advert'=> $this->advert,
+        'state'=> $this->state,
+        'listAdvertAuction'=>$this->getAdvertByAuction(),
+        'listState'=>$this->getAuctionState()
+      ));
 
       return $content;
     }
@@ -101,9 +118,9 @@ class AuctionController extends Controller
       return $this->render('SEPlatformBundle:Auction:userReceiveList.html.twig',
           array(
             'advert'=> $this->advert,
-            'stateReceive'=> $this->stateReceive,
+            'state'=> $this->state,
             'listAdvertUser'=>$this->getAdvertByUser(),
-            'listReceiveState'=>$this->getAuctionReceiveState()
+            'listState'=>$this->getAuctionState()
           ));
     }
 }

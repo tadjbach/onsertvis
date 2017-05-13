@@ -86,10 +86,30 @@ se_platform_auction_user_send:
         page: \d*
 
 # Message Routes :
+se_platform_user_add:
+    path:   /envoyer-message
+    defaults:
+        _controller: SEPlatformBundle:Message:add
+
+se_platform_user_view:
+    path:   /consulter-message
+    defaults:
+        _controller: SEPlatformBundle:Message:view
+
+se_platform_user_edit:
+    path:   /modifier-message
+    defaults:
+        _controller: SEPlatformBundle:Message:edit
+
+se_platform_user_delete:
+    path:   /supprimer-message
+    defaults:
+        _controller: SEPlatformBundle:Message:supprimer
+
 se_platform_message_user_list:
     path:   /mes-messages/{page}
     defaults:
-        _controller: SEPlatformBundle:Message:userList
+        _controller: SEPlatformBundle:Message:listUser
         page:   1
     requirements:
         page: \d*

@@ -209,10 +209,13 @@ class AdvertController extends Controller
 
         $session->getFlashBag()->add('info','Annonce bien enregistré, elle sera validée dans moins de 24h.');
 
-
+        return  $this->render('SEPlatformBundle:Advert:add.html.twig',
+                array(
+                ));
+/*
         return $this->redirectToRoute('se_platform_advert_view',
                 array('slug'=> $slug,
-                        'id'=>1));
+                        'id'=>1));*/
     }
 
     public function editAction($id){

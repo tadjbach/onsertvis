@@ -190,7 +190,7 @@ li.hd-icon{
     line-height: 56px !important;
     letter-spacing: -0.8px !important;
     font-weight: 300 !important;
-    padding-bottom: 10px;
+    padding-bottom: 50px;
 }
 
 .slogan >p{
@@ -214,7 +214,9 @@ p.slogan-link,
 h3.slogan-link{
     color: #E5DF16;
 }
-
+h3{
+  margin-top: -15px;
+}
 h2{
     margin-bottom: 10px;
     color: #2A0540;
