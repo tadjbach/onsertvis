@@ -86,22 +86,22 @@ se_platform_auction_user_send:
         page: \d*
 
 # Message Routes :
-se_platform_user_add:
+se_platform_message_add:
     path:   /envoyer-message
     defaults:
         _controller: SEPlatformBundle:Message:add
 
-se_platform_user_view:
+se_platform_message_view:
     path:   /consulter-message
     defaults:
         _controller: SEPlatformBundle:Message:view
 
-se_platform_user_edit:
+se_platform_message_edit:
     path:   /modifier-message
     defaults:
         _controller: SEPlatformBundle:Message:edit
 
-se_platform_user_delete:
+se_platform_message_delete:
     path:   /supprimer-message
     defaults:
         _controller: SEPlatformBundle:Message:supprimer
@@ -110,6 +110,35 @@ se_platform_message_user_list:
     path:   /mes-messages/{page}
     defaults:
         _controller: SEPlatformBundle:Message:listUser
+        page:   1
+    requirements:
+        page: \d*
+
+# Comment Routes :
+se_platform_comment_add:
+    path:   /ajouter-avis
+    defaults:
+        _controller: SEPlatformBundle:Comment:add
+
+se_platform_comment_view:
+    path:   /consulter-avis
+    defaults:
+        _controller: SEPlatformBundle:Comment:view
+
+se_platform_comment_edit:
+    path:   /modifier-avis
+    defaults:
+        _controller: SEPlatformBundle:Comment:edit
+
+se_platform_comment_delete:
+    path:   /supprimer-avis
+    defaults:
+        _controller: SEPlatformBundle:Comment:supprimer
+
+se_platform_comment_user_list:
+    path:   /mes-avis/{page}
+    defaults:
+        _controller: SEPlatformBundle:Comment:listUser
         page:   1
     requirements:
         page: \d*
