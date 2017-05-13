@@ -10,7 +10,7 @@ namespace SE\PlatformBundle\Repository;
  */
 class DepartementRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getDptByRegion($region)
+    public function getDepartementByRegion($region)
     {
         $qb=$this->createQueryBuilder('departement');
 

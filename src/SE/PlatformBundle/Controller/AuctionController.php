@@ -14,13 +14,16 @@ class AuctionController extends Controller
 
     /* PUBLIC FUNCTION */
 
+    //Admin
     public function addAction(Request $request){
     }
 
+    //Admin
     public function editAction($id){
 
     }
 
+    //Admin
     public function deleteAction($id){
 
     }
@@ -30,8 +33,33 @@ class AuctionController extends Controller
 
     }
 
+    //Super ADMIN
     public function listAction(Request $request)
     {
-      
+      $content = $this->render('SEPlatformBundle:Auction:list.html.twig',
+              array(
+              ));
+
+      return $content;
+    }
+
+    //Admin
+    public function userSendListAction(Request $request)
+    {
+      $content = $this->render('SEPlatformBundle:Auction:userSendList.html.twig',
+              array(
+              ));
+
+      return $content;
+    }
+
+//Admin
+    public function userReceiveListAction(Request $request)
+    {
+      $content = $this->render('SEPlatformBundle:Auction:userReceiveList.html.twig',
+              array(
+              ));
+
+      return $content;
     }
 }

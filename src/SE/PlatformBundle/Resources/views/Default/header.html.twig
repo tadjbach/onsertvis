@@ -28,7 +28,7 @@
                         Déposer une demande
                     </a>
                 </li>
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {% if true %}
                         <li role="presentation" class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#"
                                role="button" aria-haspopup="true" aria-expanded="false">
@@ -38,18 +38,18 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Mes annonces</a></li>
-                                <li><a href="#">Mes enchères reçues</a></li>
-                                <li><a href="#">Mes propositions</a></li>
-                                <li><a href="#">Mes messages</a></li>
-                                <li><a href="#" >Mon compte</a></li>
+                                <li><a href="{{ path('se_platform_advert_user_list') }}">Mes annonces</a></li>
+                                <li><a href="{{ path('se_platform_auction_user_receive') }}">Enchères reçues</a></li>
+                                <li><a href="{{ path('se_platform_auction_user_send') }}">Enchères proposées</a></li>
+                                <li><a href="{{ path('se_platform_message_user_list') }}">Mes messages</a></li>
+                                <li><a href="{{ path('se_platform_user_view') }}" >Mon compte</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Se déconnecter</a></li>
+                                <li><a href="{{path('se_platform_user_logout')}}">Se déconnecter</a></li>
                             </ul>
                         </li>
                     {% else %}
                         <li>
-                            <a href="#">
+                            <a href="{{path('se_platform_user_login')}}">
                                 Se connecter
                             </a>
                         </li>

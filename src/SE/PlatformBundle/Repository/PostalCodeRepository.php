@@ -10,7 +10,7 @@ namespace SE\PlatformBundle\Repository;
  */
 class PostalCodeRepository extends \Doctrine\ORM\EntityRepository
 {
-     static public function slugify($text)
+     private function slugify($text)
         {
           // replace non letter or digits by -
           $text = preg_replace('~[^\pL\d]+~u', '-', $text);
@@ -37,7 +37,7 @@ class PostalCodeRepository extends \Doctrine\ORM\EntityRepository
           return $text;
         }
 
-     public function getCpByRegionAndDpt($city, $departement){
+     public function getpostalCodeByCityAndDepartement($city, $departement){
          $qb=$this->createQueryBuilder('postalCode');
 
         $qb
@@ -75,7 +75,7 @@ class PostalCodeRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getPostalCodeByCpValue($postalCode)
+    public function getPostalCodeByValue($postalCode)
     {
         $qb=$this->createQueryBuilder('postalCode');
 

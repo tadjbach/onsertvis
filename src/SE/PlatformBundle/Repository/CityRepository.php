@@ -10,7 +10,7 @@ namespace SE\PlatformBundle\Repository;
  */
 class CityRepository extends \Doctrine\ORM\EntityRepository
 {
-   public function getCityByRegionAndDpt($departement){
+   public function getCityByDepartement($departement){
 
        $qb=$this->createQueryBuilder('city');
 

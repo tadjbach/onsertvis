@@ -29,10 +29,6 @@ class AdvertController extends Controller
         $this->postalCode = $request->query->get('postalCode');
     }
 
-    /* PUBLIC FUNCTION */
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
     public function addAction(Request $request){
 
         $session = $request->getSession();
@@ -48,18 +44,20 @@ class AdvertController extends Controller
                         'id'=>1));
     }
 
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
     public function editAction($id){
+      $content = $this->render('SEPlatformBundle:Advert:edit.html.twig',
+              array(
+              ));
 
+      return $content;
     }
 
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
     public function deleteAction($id){
+      $content = $this->render('SEPlatformBundle:Advert:delete.html.twig',
+              array(
+              ));
 
+      return $content;
     }
 
     public function viewAction($slug, $id)
@@ -98,13 +96,8 @@ class AdvertController extends Controller
         return $content;
     }
 
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
     public function userListAction(Request $request)
     {
-       $this->getFilterAttributes($request);
-
         $content = $this->render('SEPlatformBundle:Advert:userList.html.twig',
                 array(
                 ));

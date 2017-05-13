@@ -14,24 +14,39 @@ class MessageController extends Controller
 
     /* PUBLIC FUNCTION */
 
+//Admin
     public function addAction(Request $request){
     }
 
+//Admin
     public function editAction($id){
 
     }
 
+//Admin
     public function deleteAction($id){
 
     }
 
+//Admin
     public function viewAction($slug, $id)
     {
 
     }
 
+//Super ADMIN
     public function listAction(Request $request)
     {
 
+    }
+
+//Admin
+    public function userListAction(Request $request)
+    {
+      $content = $this->render('SEPlatformBundle:Message:userList.html.twig',
+              array(
+              ));
+
+      return $content;
     }
 }
