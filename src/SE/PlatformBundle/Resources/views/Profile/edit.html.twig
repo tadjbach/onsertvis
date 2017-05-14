@@ -1,0 +1,25 @@
+
+
+{% extends "SEPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Mon compte - {{ parent() }}
+{% endblock %}
+
+{% block layout_header2 %}
+  <div class="col-md-12">
+      <h3 class="cat-title">Modifier mon compte</h3>
+  </div>
+{% endblock %}
+
+{% block layout_body %}
+
+    <div class="row">
+         <div id="content" class="col-md-12">
+            {% block fos_user_content %}
+                {% include "@FOSUser/Profile/edit_content.html.twig" %}
+            {% endblock fos_user_content %}
+         </div>
+    </div>
+
+{% endblock %}

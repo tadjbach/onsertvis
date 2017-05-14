@@ -6,11 +6,11 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi: ~
-    #translator: { fallbacks: ['%locale%'] }
+    translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:
         resource: '%kernel.root_dir%/config/routing.yml'
@@ -76,7 +76,7 @@ assetic:
 fos_user:
     db_driver:     orm                       # Le type de BDD à utiliser, nous utilisons l'ORM Doctrine depuis le début
     firewall_name: main                      # Le nom du firewall derrière lequel on utilisera ces utilisateurs
-    user_class:    SE\Platform\Entity\User # La classe de l'entité User que nous utilisons
+    user_class:    SE\PlatformBundle\Entity\User   # La classe de l'entité User que nous utilisons
     from_email:
             address: noreplay@serviceenchere.fr
             sender_name: Service Enchère
@@ -91,6 +91,9 @@ fos_user:
             from_email:
                 address:        noreplay@serviceenchere.fr
                 sender_name:    Service Enchère - Rénisialisation de mot de passe
+    profile:
+        form:
+            type: SE\PlatformBundle\Form\Type\ProfileFormType
 
 stof_doctrine_extensions:
     orm:

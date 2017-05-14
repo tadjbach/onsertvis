@@ -1,0 +1,74 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+ <div class="well se-well">
+           <div class="index-container" >
+               <div class="row">
+                    <div id="content" class="col-md-12">
+                       <div class="panel-footer se-panel-footer">
+                           <h4 class="truncate">
+                             {{ user }}
+                           </h4>
+                           <br>
+                           <div class="row">
+                                 <div class="col-md-4">
+
+                                     <i class="glyphicon glyphicon-map-marker"></i>
+                                     <span class="se-profile-title">Adresse : </span>
+                                     <p class="se-profile-value"> {{ user.address }}
+                                         <br>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
+                                         <br>{{ user.PostalCode.city.departement.labelNormal }}</p>
+                                     <br>
+                                   <i class="glyphicon glyphicon-phone-alt"></i>
+                                     <span class="se-profile-title">Téléphone : </span>
+                                     <p class="se-profile-value"> {{ user.phoneNumber|join('|') }}</p>
+
+                                     <br>
+                                     <i class="glyphicon glyphicon-calendar"></i>
+                                       <span class="se-profile-title">Disponibilité : </span>
+                                       <div class="se-profile-value">
+                                           <table>
+                                           <thead id="tblHead">
+                                               <tr>
+                                                   {% for day in user.calendar %}
+                                                   <th>
+                                                       {{ day.dayFr  }}
+                                                   </th>
+                                                   {%else%}
+                                                       <th>
+                                                       Nous contacter
+                                                       </th>
+                                                   {% endfor %}
+                                               </tr>
+                                           </thead>
+                                           <tbody>
+                                               {% for day in user.calendar %}
+                                                   <td>
+
+                                                   </td>
+                                                   {% endfor %}
+                                           </tbody>
+                                           </table>
+
+                                       </div>
+                                 </div>
+                               <div class="col-md-4">
+                                   <i class="glyphicon glyphicon-info-sign"></i>
+                                   <span class="se-profile-title">A propos : </span>
+                                   <p class="se-profile-value"> {{ user.detail|nl2br }}</p>
+                               </div>
+                               <div class="col-md-4">
+                                  
+                               </div>
+                             </div>
+                       </div>
+                        <br>
+                        <div class="text-right">
+                            <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary">
+                                Modifier mon compte
+                            </a>
+                        </div>
+                   </div>
+               </div>
+
+           </div>
+       </div>

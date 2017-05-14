@@ -1,0 +1,32 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% extends "SEPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Mot de passe oublié ? - {{ parent() }}
+{% endblock %}
+
+{% block layout_header2 %}
+  <div class="col-md-12">
+      <h3 class="cat-title">Réinitialiser le mot de passe</h3>
+  </div>
+{% endblock %}
+
+{% block layout_body %}
+
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <div class="alert alert-success" role="alert">
+            {% block fos_user_content %}
+            <p>
+                {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+            </p>
+            {% endblock fos_user_content %}
+            </div>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+    
+{% endblock %}

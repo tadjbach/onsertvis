@@ -45,12 +45,12 @@
                                   <li><a href="{{ path('se_platform_comment_user_list') }}">Mes avis</a></li>
                                 <li><a href="{{ path('se_platform_user_view') }}" >Mon compte</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="{{path('se_platform_user_logout')}}">Se déconnecter</a></li>
+                                <li><a href="{{path('fos_user_security_logout')}}">Se déconnecter</a></li>
                             </ul>
                         </li>
                     {% else %}
                         <li>
-                            <a href="{{path('se_platform_user_login')}}">
+                            <a href="{{path('fos_user_security_login')}}">
                                 Se connecter
                             </a>
                         </li>

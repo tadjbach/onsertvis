@@ -1,0 +1,111 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, { 'action': path('fos_user_profile_edit'),
+                        'attr': { 'class': 'fos_user_profile_edit' } }) }}
+
+<div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading se-panel-heading">
+        <h3 class="panel-title">Mes informations</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+            {{ form_label(form.accountType) }}
+            {{ form_widget(form.accountType)  }}
+        </div>
+        <div class="form-group" id='isSiret' >
+            {{ form_label(form.siret) }}
+            {{ form_widget(form.siret)  }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.username) }}
+            {{ form_widget(form.username)  }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.civility) }}
+            {{ form_widget(form.civility)  }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name)  }}
+         </div>
+        <div class="form-group">
+            {{ form_label(form.firstName) }}
+            {{ form_widget(form.firstName)  }}
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading se-panel-heading">
+            <h3 class="panel-title">Adresse et détails</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                {{ form_label(form.address) }}
+                {{ form_widget(form.address)  }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.cpCity) }}
+                {{ form_widget(form.cpCity)  }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.phoneNumber) }}
+                {{ form_widget(form.phoneNumber)  }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.detail) }}
+                {{ form_widget(form.detail)  }}
+             </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-md-6">
+    <div class="panel panel-default">
+          <div class="panel-heading se-panel-heading">
+            <h3 class="panel-title">Mes préferences</h3>
+          </div>
+          <div class="panel-body">
+               <div class="form-group">
+                    {{ form_label(form.payment) }}
+                    {{ form_widget(form.payment)  }}
+                </div>
+                <div class="form-group opac">
+                    {{ form_label(form.categories) }}
+                    {{ form_widget(form.categories)  }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.calendar) }}
+                    {{ form_widget(form.calendar)  }}
+                 </div>
+          </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading se-panel-heading">
+            <h3 class="panel-title">Mail et mot de passe</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group opac">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email)  }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.current_password) }}
+                {{ form_widget(form.current_password)  }}
+             </div>
+             <div class="form-group">
+                 {{ form_widget(form.plainPassword)  }}
+             </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="text-center">
+        <input  class="btn se-btn-action" type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+    </div>
+</div>
+
+{{ form_end(form) }}
