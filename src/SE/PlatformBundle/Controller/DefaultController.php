@@ -4,9 +4,38 @@ namespace SE\PlatformBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
+  public function getPostalCodeAction(Request $request){
+
+        $em = $this
+                ->getDoctrine()
+                ->getManager();
+
+    if($request->isXmlHttpRequest())
+        {
+            $cp = $request->request->get('codepostal');
+
+            $listPostalCode=$em
+                 ->getRepository('SEPlatformBundle:PostalCode')
+                 ->getPostalCode($cp);
+
+            $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new JsonEncoder()));
+
+            $json = $serializer->serialize($listPostalCode, 'json');
+
+            return new Response($json);
+        }
+
+        return new Response(null);
+    }
+
     public function indexAction()
     {
 

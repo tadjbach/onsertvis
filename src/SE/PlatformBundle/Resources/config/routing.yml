@@ -23,7 +23,7 @@ se_platform_postalCode_by_city_and_departement:
 se_platform_postalCode:
     path: /getpostalcode
     defaults:
-        _controller: SEPlatformBundle:PostalCode:getPostalCode
+        _controller: SEPlatformBundle:Default:getPostalCode
 
 # Advert Routes :
 se_platform_advert_add:

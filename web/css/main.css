@@ -30,18 +30,19 @@ html, body{
     margin-top: -10px;
 }
 .logo_img{
-    width: 200px;
-    height: 40px;
-    background-size: 200px 40px;
-    vertical-align: text-top;
-    background-repeat: no-repeat;
-    background-image: url('img/SE-logo.jpg');
+  width: 200px;
+  height: 50px;
+  background-size: 136px 50px;
+  vertical-align: text-top;
+  background-repeat: no-repeat;
+  background-image: url(img/BT-04.jpg);
 }
 
 
 .navbar{
     margin-bottom:0;
     border:0;
+        min-height: 60px;
 }
 
 .navbar-nav>li {
@@ -349,6 +350,9 @@ a.title-link:focus{
     padding: 10px;
     padding: 1rem;
     line-height: normal;
+}
+#fos_user_profile_form_detail{
+height: 250px;
 }
 
 textarea.form-control{

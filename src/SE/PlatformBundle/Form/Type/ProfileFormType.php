@@ -75,6 +75,9 @@ class ProfileFormType extends AbstractType
                       'multiple'=>true,
                       'expanded' => true))
 
+          ->add('isNewsLetter', CheckboxType::class,
+                    array('label'=> 'Je souhaite recevoir les nouvelles du site.', 'required' => false))
+
           ->add('email', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\EmailType'),
                   array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'));
 
