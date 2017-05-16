@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class User extends BaseUser
 {
@@ -161,6 +162,14 @@ class User extends BaseUser
 
         $this->setRoles(array('ROLE_AUTEUR'));
     }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function updateDate()
+     {
+       $this->dateUpdate(new \Datetime());
+     }
 
     /**
      * Set civility
