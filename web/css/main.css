@@ -481,10 +481,9 @@ textarea.form-control{
 .se-panel-footer,
 .panel-default>.se-panel-heading{
    color: #fff;
-   background-color: #474747;
+   background-color: #2A0540;
 }
 .se-panel-heading> h3{
-    color: #E5DF16;
     font-weight: bold;
 }
 .se-nb-auction{
@@ -496,7 +495,7 @@ textarea.form-control{
 }
 
 .panel-default {
-    border-color: #484848;
+    border-color: #2A0540;
 }
 .panel-primary{
     border-color: 0;

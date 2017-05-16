@@ -1,12 +1,12 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Déposer une annonce - {{ parent() }}
+  Enchérir - {{ parent() }}
 {% endblock %}
 
 {% block layout_header2 %}
   <div class="col-md-12">
-      <h3 class="cat-title">Déposer une annonce</h3>
+      <h3 class="cat-title">Enchérir</h3>
   </div>
 {% endblock %}
 {% block layout_body %}
@@ -18,7 +18,7 @@
                    <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
                </div>
          {% else %}
-           Déposer une annonce
+           Enchérir
          {% endif %}
 
        </div>

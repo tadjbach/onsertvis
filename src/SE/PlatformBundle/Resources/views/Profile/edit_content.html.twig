@@ -75,28 +75,31 @@
                  </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group">
-                    {{ form_label(form.calendar) }}
-                    {{ form_widget(form.calendar)  }}
-                 </div>
-              </div>
-                <div class="form-group opac">
-                    {{ form_label(form.categories) }}
-                    {{ form_widget(form.categories)  }}
-                </div>
-                 <div class="form-group">
-                   <label class="control-label">Inscrire à la newsletter</label>
-                     {{ form_label(form.isNewsLetter) }}
-                     {{ form_widget(form.isNewsLetter)  }}
+                  <div class="form-group">
+                        {{ form_label(form.calendar) }}
+                        {{ form_widget(form.calendar)  }}
+
                   </div>
-          </div>
+                </div>
+  <div class="col-md-8">
+                  <div class="form-group opac">
+                      {{ form_label(form.categories) }}
+                      {{ form_widget(form.categories)  }}
+                  </div>
+                   <div class="form-group">
+                     <label class="control-label">Inscrire à la newsletter</label>
+                       {{ form_label(form.isNewsLetter) }}
+                       {{ form_widget(form.isNewsLetter)  }}
+                    </div>
+                </div>
+                  </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading se-panel-heading">
             <h3 class="panel-title">Mail et mot de passe</h3>
         </div>
         <div class="panel-body">
-            <div class="form-group opac">
+            <div class="form-group">
                     {{ form_label(form.email) }}
                     {{ form_widget(form.email)  }}
             </div>

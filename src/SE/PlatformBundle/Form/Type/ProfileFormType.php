@@ -32,7 +32,7 @@ class ProfileFormType extends AbstractType
                   'Société' => 'Society',
                   'Autre'=>'Other')))
 
-          ->add('username', null, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
+          ->add('username', null, array('label' => 'Nom d\'utilisateur ou de société'))
 
           ->add('civility', ChoiceType::class, array('label'=> 'Civilité',
               'choices'    => array(

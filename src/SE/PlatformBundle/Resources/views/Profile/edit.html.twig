@@ -14,9 +14,27 @@
 
 {% block layout_body %}
 
+          {% for flash_message in app.session.flashBag.get('updateSuccess') %}
+              <div class="alert alert-success text-center" role="alert">
+                  {{ flash_message }}
+              </div>
+          {% endfor %}
+
+          {% for flash_message in app.session.flashBag.get('updateError') %}
+              <div class="alert alert-danger text-center" role="alert">
+                  {{ flash_message }}
+              </div>
+          {% endfor %}
+
     <div class="row">
          <div id="content" class="col-md-12">
             {% block fos_user_content %}
+            {% if app.user.isAcountComplete == 0 %}
+                  <div class="alert alert-danger" role="alert">
+                      Bonjour {{ app.user.username }}, Votre profil n'est pas complet, merci de le
+                      compléter
+                  </div>
+              {% endif %}
                 {% include "@FOSUser/Profile/edit_content.html.twig" %}
             {% endblock fos_user_content %}
          </div>
