@@ -13,7 +13,80 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         Mes annonces
+         <h4 class="cat-title">{{ titleResult }}</h4>
+            <table class="table" id="tblGrid">
+                <tbody>
+                {% for advert in listAdvertUser %}
+                    <tr>
+                        <td>
+                            <img class="se-auction-img" src="{{ asset(advert.category.webPath) }}" alt="{{ asset(advert.category.webPath) }}">
+                        </td>
+                        <td>
+                            <h5>
+                                <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
+                                <h5>
+                                {{ advert.dateCreation|date('d/m/Y') }}
+                                à
+                                 {{ advert.dateCreation|date('H:i:s') }}
+                                </h5>
+                            </h5>
+                        </td>
+                        <td class='text-left td_center'>
+                            <h5>
+                            {% if advert.isPublished == 1 %}
+                                <span class="label label-info">Demande en cours</span>
+                            {% elseif advert.isPublished == 0 and advert.auctionState == 0 %}
+                                <span class="label label-warning">Publication en cours</span>
+                            {% elseif advert.isPublished == 0 and advert.auctionState == 1 %}
+                                <span class="label label-success">Vous avez accepté</span>
+                                <div class="label label-danger"
+                                      data-toggle="tooltip"
+                                            data-placement="bottom" title="La demande n'est plus visible sur le site">
+                                 <i class="glyphicon glyphicon-info-sign"> </i>
+                                </div>
+                            {% endif %}
+                            </h5>
+                        </td>
+                         <td class='text-center'>
+                                <h5>
+                                    <a href="{{ path('se_platform_advert_edit', {'slug': advert.slug,'id': advert.id}) }}"
+                                    type="button"
+                                    class='{% if advert.isPublished == 0 and advert.auctionState != 0 %} btn btn-success not-active {% else %} btn btn-success  {% endif %}'
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+
+                                    title="Modifier la demande">
+                                    <i class='glyphicon glyphicon-edit'></i>
+                                    </a>
+                                    <a href="{{ path('se_platform_advert_delete', {'slug': advert.slug,'id': advert.id}) }}"
+                                        type="button"
+                                        data-toggle="tooltip"
+                                        class='{% if advert.isPublished == 0 and advert.auctionState != 0 %} btn btn-danger not-active {% else %} btn btn-danger  {% endif %}'
+                                        data-placement="bottom" title="Supprimer la demande">
+                                    <i class='glyphicon glyphicon-remove'></i>
+                                    </a>
+                                </h5>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
        </div>
    </div>
+
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <ul class="pagination">
+            {% if nbPages > 1 %}
+                {% for p in range(1, nbPages) %}
+                    <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ path('se_platform_advert_user_list', {'page': p}) }}">{{ p }}</a>
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+</div>
 {% endblock %}

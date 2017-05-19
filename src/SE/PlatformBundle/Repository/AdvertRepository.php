@@ -90,7 +90,7 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
         return new Paginator($qb, true);
     }
 
-    public function getAdvertByUser($userId, $page, $nbPerPage){
+    public function getAdvertByUser($advertId, $advertState, $userId, $page, $nbPerPage){
 
      $qb=$this->createQueryBuilder('advert');
 
@@ -100,9 +100,28 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
         $qb->where($qb->expr()->eq('user.id', $userId))
             ->andWhere($qb->expr()->eq('advert.isDeleted', 0));
 
-       $qb->OrderBy('advert.auctionState', 'DESC')->getQuery();
+        if($advertId !== NULL && $advertId !== '0')
+        {
+            $qb->andWhere($qb->expr()->eq('advert.id', $advertId));
+        }
 
-        // $qb->orderBy('advert.dateCreation', 'DESC')->getQuery();
+        if($advertState !== NULL && $advertState !== '0')
+        {
+          if ($advertState === '1') {
+            $qb->andWhere($qb->expr()->eq('advert.isPublished', 0));
+            $qb->andWhere($qb->expr()->eq('advert.auctionState', 0));
+          }
+          elseif ($advertState === '2') {
+            $qb->andWhere($qb->expr()->eq('advert.isPublished', 1));
+          }
+          elseif ($advertState === '3') {
+            $qb->andWhere($qb->expr()->eq('advert.isPublished', 0));
+              $qb->andWhere($qb->expr()->eq('advert.auctionState', 1));
+          }
+
+        }
+
+       $qb->OrderBy('advert.auctionState', 'DESC')->getQuery();
 
         $qb->setFirstResult(($page-1) * $nbPerPage)
             ->setMaxResults($nbPerPage);

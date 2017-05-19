@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Advert
  *
  * @ORM\Table(name="advert")
- * @ORM\Entity(repositoryClass="SE\PlatformBundleBundle\Repository\AdvertRepository")
+ * @ORM\Entity(repositoryClass="SE\PlatformBundle\Repository\AdvertRepository")
  */
 class Advert
 {
@@ -105,7 +105,7 @@ class Advert
     public function __construct()
     {
         $this->dateCreation=new \DateTime();
-        $this->auctionState=0;
+        $this->auctionState=1;//en cours de validation
     }
 
     /**

@@ -16,6 +16,7 @@ use SE\PlatformBundle\Entity\Advert;
 class AdvertController extends Controller
 {
     /* PRIVATE VAR */
+    private $nbPerPage = 36;
     private $em;
 
         /* Search filter */
@@ -48,18 +49,24 @@ class AdvertController extends Controller
         $this->state = $request->query->get('state');
     }
 
-    //TODO
-    private function getAdvertByUser(){
+    private function getAllAdvertByUser(){
       $em = $this->getDoctrineManager();
-      $user;
-      //return $em->getRepository('SEPlatformBundle:Advert')->findByUser($user);
+      $user = $this->getUser();
 
-      $list = array(
-        array('id'=>1, 'title'=>'Mon annonce 1', 'state'=>1),
-        array('id'=>2, 'title'=>'Mon annonce 2', 'state'=>1),
-        array('id'=>3, 'title'=>'Mon annonce 3', 'state'=>2)
-      );
-      return $list;
+      $listAdverstByUser=$em->getRepository('SEPlatformBundle:Advert')
+           ->getAdvertByUser(null, null, $user->getId(), 1, 100000);
+
+      return $listAdverstByUser;
+    }
+
+    private function getAdvertByUser($page){
+      $em = $this->getDoctrineManager();
+      $user = $this->getUser();
+
+      $listAdverstByUser=$em->getRepository('SEPlatformBundle:Advert')
+           ->getAdvertByUser($this->advert, $this->state, $user->getId(), $page, $this->nbPerPage);
+
+      return $listAdverstByUser;
     }
 
     //TODO
@@ -68,8 +75,9 @@ class AdvertController extends Controller
         //return $em->getRepository('SEPlatformBundle:AdvertState')->findAll();
 
         $list = array(
-          array('id'=>1, 'labelNormal'=>'En ligne'),
-          array('id'=>2, 'labelNormal'=>'Hors ligne')
+          array('id'=>1, 'labelNormal'=>'Validation en cours'),
+          array('id'=>2, 'labelNormal'=>'En ligne - Enchère en cours'),
+          array('id'=>3, 'labelNormal'=>'Hors ligne - Enchère terminée')
         );
 
         return $list;
@@ -190,15 +198,27 @@ class AdvertController extends Controller
                 ));
     }
 
-    public function listUserAction(Request $request)
+    public function listUserAction(Request $request, $page)
     {
       $this->getListUserFilterAttributes($request);
+      $listAdverstByUser = $this->getAdvertByUser($page);
+      $listAdverstByUserFilter = $this->getAllAdvertByUser();
+
+      $titleResult = count($listAdverstByUser) == 0 ?'Aucune annonce postée !' :
+              (count($listAdverstByUser) > 1 ? count($listAdverstByUser).' annonces' :
+          count($listAdverstByUser).' annonce');
+
+        $nbPages = ceil(count($listAdverstByUser)/$this->nbPerPage);
 
         return $this->render('SEPlatformBundle:Advert:listUser.html.twig',
                 array(
+                  'titleResult'=>$titleResult,
+                  'nbPages'     => $nbPages,
+                  'page'        => $page,
                   'advert'=> $this->advert,
                   'state'=> $this->state,
-                  'listAdvertUser'=>$this->getAdvertByUser(),
+                  'listAdvertUserFilter'=>$listAdverstByUserFilter,
+                  'listAdvertUser'=>$listAdverstByUser,
                   'listState'=>$this->getAdvertState()
                 ));
     }
