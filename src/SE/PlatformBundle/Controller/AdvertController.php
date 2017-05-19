@@ -9,6 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use SE\PlatformBundle\Form\AdvertEditType;
+use SE\PlatformBundle\Form\AdvertType;
+use SE\PlatformBundle\Entity\Advert;
 
 class AdvertController extends Controller
 {
@@ -203,19 +206,32 @@ class AdvertController extends Controller
     public function addAction(Request $request){
 
         $session = $request->getSession();
+        // On crée un objet Advert
+        $advert = new Advert();
 
-        //Add Advert in DB
-        $slug = 'annonce-title';
+        $advert->setUser($this->getUser());
 
-        $session->getFlashBag()->add('info','Annonce bien enregistré, elle sera validée dans moins de 24h.');
+        // On crée le FormBuilder grâce au service form factory
+        $form = $this->createForm(AdvertType::class, $advert);
 
-        return  $this->render('SEPlatformBundle:Advert:add.html.twig',
-                array(
-                ));
-/*
-        return $this->redirectToRoute('se_platform_advert_view',
-                array('slug'=> $slug,
-                        'id'=>1));*/
+        if ($request->isMethod('POST')){
+            $form->handleRequest($request);
+
+            if ($form->isValid()){
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($advert);
+                $em->flush();
+
+                $session->getFlashBag()->add('addSuccess','Annonce bien enregistrée, elle sera validée dans moins de 24h.');
+
+                return $this->redirectToRoute('se_platform_advert_validate');
+            }
+        }
+
+        return $this->render('SEPlatformBundle:Advert:add.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
     public function editAction($id){
@@ -234,6 +250,14 @@ class AdvertController extends Controller
       return $content;
     }
 
+    public function validateAction()
+    {
+      $content = $this->render('SEPlatformBundle:Advert:validate.html.twig',
+              array(
+              ));
+
+      return $content;
+    }
     public function viewAction($slug, $id)
     {
        /*

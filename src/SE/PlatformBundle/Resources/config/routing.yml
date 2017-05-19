@@ -38,6 +38,11 @@ se_platform_advert_view:
     requirements:
         id: \d+
 
+se_platform_advert_validate:
+    path:   /annonce/validee
+    defaults:
+        _controller: SEPlatformBundle:Advert:validate
+
 se_platform_advert_edit:
     path:   /annonce/modifier/{slug}/{id}
     defaults:

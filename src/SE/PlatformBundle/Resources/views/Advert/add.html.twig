@@ -18,7 +18,9 @@
                    <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
                </div>
          {% else %}
-           Déposer une annonce
+           <div class="col-md-6">
+                           {{ include('SEPlatformBundle:Advert:form.html.twig') }}
+           </div>
          {% endif %}
 
        </div>

@@ -32,17 +32,17 @@ html, body{
 .logo_img{
   width: 200px;
   height: 50px;
-  background-size: 136px 50px;
+  background-size: 200px 50px;
   vertical-align: text-top;
   background-repeat: no-repeat;
-  background-image: url(img/BT-04.jpg);
+  background-image: url(img/BT-01.jpg);
 }
 
 
 .navbar{
     margin-bottom:0;
     border:0;
-        min-height: 60px;
+        min-height: 55px;
 }
 
 .navbar-nav>li {
@@ -77,9 +77,9 @@ html, body{
 
 .navbar-default .navbar-nav>li>a:hover
 {
-    border-color: #fff;
-    background-color: #2A0540;
-    color: #FFF;
+  border-color: #fff; */
+  color: #2A0540;
+  text-decoration: underline;
 }
 
 .dropdown-menu>li>a:hover,

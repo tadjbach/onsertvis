@@ -21,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class ProfileFormType extends AbstractType
 {
@@ -32,7 +33,11 @@ class ProfileFormType extends AbstractType
                   'Société' => 'Society',
                   'Autre'=>'Other')))
 
-          ->add('username', null, array('label' => 'Nom d\'utilisateur ou de société'))
+          ->add('username', null, array('label' => 'Nom d\'utilisateur ou de société',
+                            'attr' => array('maxlength' => 50,
+                            'placeholder' => 'Le Nom d\'utilisateur ne doit pas dépasser 50 caractères')
+
+                          ))
 
           ->add('civility', ChoiceType::class, array('label'=> 'Civilité',
               'choices'    => array(
@@ -40,18 +45,38 @@ class ProfileFormType extends AbstractType
                   'Mme' => 'mme',
                   'Mlle' => 'mlle')))
 
-          ->add('name', TextType::class, array('label'=> 'Nom'))
-          ->add('firstName', TextType::class, array('label'=> 'Prénom'))
-          ->add('siret', TextType::class, array('label'=> 'SIRET',
-                                      'required' => false))
+          ->add('name', TextType::class, array('label'=> 'Nom',
+          'attr' => array('maxlength' => 50,
+          'placeholder' => 'Le Nom ne doit pas dépasser 50 caractères')))
 
-          ->add('address', TextType::class, array('label'=> 'Adresse'))
+          ->add('firstName', TextType::class, array('label'=> 'Prénom',
+          'attr' => array('maxlength' => 50,
+          'placeholder' => 'Le Prénom ne doit pas dépasser 50 caractères')))
+
+          ->add('siret', TextType::class, array('label'=> 'SIRET',
+                    'required' => false,
+                    'attr' => array('maxlength' => 14,
+                                    'minlength' => 14,
+                                    'placeholder' => 'Le numéro de SIRET doit être composé uniquement de chiffre.')
+                    ))
+
+
+          ->add('address', TextType::class, array('label'=> 'Adresse',
+          'attr' => array('maxlength' => 100,
+          'placeholder' => 'L\'adresse ne doit pas dépasser 100 caractères')))
 
           ->add('cpCity', TextType::class,
              array('label'=>'Code postal'))
 
-          ->add('phoneNumber', TextType::class, array('label'=> 'N° téléphone'))
-          ->add('detail', TextareaType::class, array('label'=> 'À propos de moi'))
+          ->add('phoneNumber', TextType::class, array('label'=> 'N° téléphone',
+          'attr' => array('maxlength' => 10,
+                          'minlength' => 10,
+                          'placeholder' => '')))
+
+          ->add('detail', TextareaType::class, array('label'=> 'À propos de moi',
+          'attr' => array('maxlength' => 4000,
+                          'class' => 'form-control textarea',
+                          'placeholder' => 'Le détail ne doit pas dépasser 4000 caratères')))
 
           ->add('payment', EntityType::class,
               array('label'=>'Vos modes de paimenent préférés',
@@ -106,4 +131,6 @@ class ProfileFormType extends AbstractType
  public function getName(){
      return $this->getBlockPrefix();
  }
+
+
 }
