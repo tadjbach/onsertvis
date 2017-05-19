@@ -243,6 +243,17 @@ h3.slogan-link:focus{
     margin-bottom: 20px;
 }
 
+.ad-title{
+  border-bottom: 2px solid #2A0540;
+  color:#2A0540;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.cat-title>a{
+    color: #E5DF16;
+}
+
 h4.cat-title{
     border-bottom: 2px solid #2A0540;
     color: #2A0540;
@@ -496,7 +507,20 @@ textarea.form-control{
 
 .panel-default {
     border-color: #2A0540;
+    padding-top: 5px;
 }
+.detail-footer{
+  height: 70px;
+
+      padding-top: 18px;
+}
+.detail-body{
+   height: 230px;
+}
+.ad-date{
+  margin-left: 10px;
+}
+
 .panel-primary{
     border-color: 0;
 }

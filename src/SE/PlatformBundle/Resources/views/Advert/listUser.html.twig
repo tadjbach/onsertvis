@@ -19,26 +19,31 @@
                 {% for advert in listAdvertUser %}
                     <tr>
                         <td>
-                            <img class="se-auction-img" src="{{ asset(advert.category.webPath) }}" alt="{{ asset(advert.category.webPath) }}">
+                          <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">
+                              <img class="se-auction-img" src="{{ asset(advert.category.webPath) }}" alt="{{ asset(advert.category.webPath) }}">
+                          </a>
                         </td>
                         <td>
                             <h5>
                                 <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
                                 <h5>
-                                {{ advert.dateCreation|date('d/m/Y') }}
-                                à
-                                 {{ advert.dateCreation|date('H:i:s') }}
+                                  {{ advert.category.labelNormal }}
+                                </h5>
+                                <h5>
+                                  {{ advert.dateCreation|date('d/m/Y') }}
+                                  à
+                                  {{ advert.dateCreation|date('H:i:s') }}
                                 </h5>
                             </h5>
                         </td>
                         <td class='text-left td_center'>
                             <h5>
                             {% if advert.isPublished == 1 %}
-                                <span class="label label-info">Demande en cours</span>
+                                <span class="label label-primary">En ligne (Enchères encours)</span>
                             {% elseif advert.isPublished == 0 and advert.auctionState == 0 %}
-                                <span class="label label-warning">Publication en cours</span>
+                                <span class="label label-warning">Validation en cours</span>
                             {% elseif advert.isPublished == 0 and advert.auctionState == 1 %}
-                                <span class="label label-success">Vous avez accepté</span>
+                                <span class="label label-danger">Hors ligne (Enchère terminée)</span>
                                 <div class="label label-danger"
                                       data-toggle="tooltip"
                                             data-placement="bottom" title="La demande n'est plus visible sur le site">

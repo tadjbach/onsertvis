@@ -16,7 +16,7 @@ use SE\PlatformBundle\Entity\Advert;
 class AdvertController extends Controller
 {
     /* PRIVATE VAR */
-    private $nbPerPage = 36;
+    private $nbPerPage = 30;
     private $em;
 
         /* Search filter */
@@ -76,8 +76,8 @@ class AdvertController extends Controller
 
         $list = array(
           array('id'=>1, 'labelNormal'=>'Validation en cours'),
-          array('id'=>2, 'labelNormal'=>'En ligne - Enchère en cours'),
-          array('id'=>3, 'labelNormal'=>'Hors ligne - Enchère terminée')
+          array('id'=>2, 'labelNormal'=>'En ligne (Enchère en cours)'),
+          array('id'=>3, 'labelNormal'=>'Hors ligne (Enchère terminée)')
         );
 
         return $list;
@@ -179,7 +179,6 @@ class AdvertController extends Controller
 
 
     /* Action */
-
     public function listAction(Request $request)
     {
         $this->getListFilterAttributes($request);
@@ -280,6 +279,10 @@ class AdvertController extends Controller
     }
     public function viewAction($slug, $id)
     {
+      $em = $this->getDoctrineManager();
+
+      $advert=$em->find('SEPlatformBundle:Advert', $id);
+
        /*
        - Pour une URL complete, par exemple pour un mail utiliser
         $url = $this
@@ -293,7 +296,7 @@ class AdvertController extends Controller
         */
 
         return $this->render('SEPlatformBundle:Advert:view.html.twig',
-                    array('slug'=> $slug,
-                        'id'=> $id));
+                    array(
+                      'advert'=> $advert));
     }
 }

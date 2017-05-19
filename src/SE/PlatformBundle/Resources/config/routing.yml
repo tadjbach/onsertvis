@@ -32,7 +32,7 @@ se_platform_advert_add:
         _controller: SEPlatformBundle:Advert:add
 
 se_platform_advert_view:
-    path:   /annonce/{slug}/{id}
+    path:   /annonce/{slug}_{id}
     defaults:
         _controller: SEPlatformBundle:Advert:view
     requirements:
@@ -44,14 +44,14 @@ se_platform_advert_validate:
         _controller: SEPlatformBundle:Advert:validate
 
 se_platform_advert_edit:
-    path:   /annonce/modifier/{slug}/{id}
+    path:   /annonce/modifier/{slug}_{id}
     defaults:
         _controller: SEPlatformBundle:Advert:edit
     requirements:
         id: \d+
 
 se_platform_advert_delete:
-    path:   /annonce/supprimer/{slug}/{id}
+    path:   /annonce/supprimer/{slug}_{id}
     defaults:
         _controller: SEPlatformBundle:Advert:delete
     requirements:
