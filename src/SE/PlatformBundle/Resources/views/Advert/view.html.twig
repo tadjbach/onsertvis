@@ -38,8 +38,8 @@
                      {{ advert.title }}
                    </h4>
                    <p>{{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }}
-                     / {{ advert.user.PostalCode.city.departement.labelNormal }}
-                     / {{ advert.user.PostalCode.city.departement.region.labelNormal }}
+                     ({{ advert.user.PostalCode.city.departement.labelNormal }} -
+                     {{ advert.user.PostalCode.city.departement.region.labelNormal }})
                    </p>
                 </div>
             </div>
@@ -47,26 +47,51 @@
 
          <div class="col-md-6">
            <div class="panel panel-default">
+             <i class="ad-date"><span class="label label-success">Enchère en cours</span></i>
                 <div class="panel-body text-center se-item-link detail-body">
+                  <div class="col-md-12 text-center">
+                      <div class="text-center pad-price">
+                        <span class="label se-price-badge">500 €</span>
+                      </div>
+                      <div class="text-center pad-price">
+                        <a class="cat-link"
+                              href="#">Historique des enchères
+                        </a>
+                      </div>
 
-                </div>
-                <div class="panel-footer se-panel-footer text-center detail-footer">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                             <a href="#" class="form-control btn se-btn-action">
-                                 Enchérir
-                             </a>
-                        </div>
-                        <div class="col-md-6">
-                            <a href="#" class="form-control btn se-btn-action">
-                                Contacter
-                            </a>
-                        </div>
-                    </div>
+                      <div class="col-md-12">
+                          <div class="col-md-6">
+                               <a href="#" class="form-control btn se-btn-action">
+                                   Enchérir
+                               </a>
+                          </div>
+                          <div class="col-md-6">
+                              <a href="#" class="form-control btn se-btn-action">
+                                  Contacter
+                              </a>
+                          </div>
+                      </div>
+
+                  </div>
                 </div>
             </div>
          </div>
 
        </div>
+   </div>
+   <div class="row">
+     <div id="content" class="col-md-12">
+       <div class="col-md-6">
+            <h4 class="cat-title">Description</h4>
+            <p>{{ advert.detail |nl2br }}</p>
+        </div>
+        <div class="col-md-6">
+             <h4 class="cat-title">Demandeur</h4>
+             <p><i class="glyphicon glyphicon-user"></i> {{ advert.user }}</p>
+             <p><i class="glyphicon glyphicon-phone-alt"></i> {{ advert.user.phoneNumber }}</p>
+             <p><i class="glyphicon glyphicon-map-marker"></i> {{ advert.user.address }} {{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }}
+                ({{ advert.user.PostalCode.city.departement.labelNormal }})</p>
+         </div>
+    </div>
    </div>
 {% endblock %}

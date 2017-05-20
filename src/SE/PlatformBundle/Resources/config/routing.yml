@@ -39,7 +39,7 @@ se_platform_advert_view:
         id: \d+
 
 se_platform_advert_validate:
-    path:   /annonce/validee
+    path:   /annonce/validee/{action}
     defaults:
         _controller: SEPlatformBundle:Advert:validate
 
@@ -90,26 +90,43 @@ se_platform_auction_user_send:
     requirements:
         page: \d*
 
+se_platform_auction_add:
+    path:     /enchere/propser-enchere/{adevrtSlug}_{advertId}
+    defaults:
+        _controller: SEPlatformBundle:Auction:add
+    requirements:
+        advertId: \d+
+
 # Message Routes :
 se_platform_message_add:
-    path:   /envoyer-message
+    path:   /envoyer-message/{adevrtSlug}_{advertId}_{receiveId}
     defaults:
         _controller: SEPlatformBundle:Message:add
+    requirements:
+        advertId: \d+
+        receiveId: \d+
+
 
 se_platform_message_view:
-    path:   /consulter-message
+    path:   /consulter-message/{adevrtSlug}_{advertId}
     defaults:
         _controller: SEPlatformBundle:Message:view
+    requirements:
+        advertId: \d+
 
 se_platform_message_edit:
-    path:   /modifier-message
+    path:   /modifier-message/{id}
     defaults:
         _controller: SEPlatformBundle:Message:edit
+    requirements:
+        id: \d+
 
 se_platform_message_delete:
-    path:   /supprimer-message
+    path:   /supprimer-message/{id}
     defaults:
         _controller: SEPlatformBundle:Message:supprimer
+    requirements:
+        id: \d+
 
 se_platform_message_user_list:
     path:   /mes-messages/{page}

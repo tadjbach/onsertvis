@@ -203,9 +203,16 @@ li.hd-icon{
     color: #2A0540;
 }
 .se-price-badge{
-    background-color: #E5DF16;
-    color: #2A0540;
-    font-size: 18px;
+    background-color: #2A0540;
+    color: #E5DF16;
+    font-size: 26px;
+}
+.pad-price{
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.pad-msg{
+  padding: 15px;
 }
 .se-price-badge:hover{
     text-decoration: none;
@@ -515,7 +522,7 @@ textarea.form-control{
       padding-top: 18px;
 }
 .detail-body{
-   height: 230px;
+   height: 280px;
 }
 .ad-date{
   margin-left: 10px;

@@ -105,7 +105,7 @@ class Advert
     public function __construct()
     {
         $this->dateCreation=new \DateTime();
-        $this->auctionState=1;//en cours de validation
+        $this->auctionState=0;
     }
 
     /**

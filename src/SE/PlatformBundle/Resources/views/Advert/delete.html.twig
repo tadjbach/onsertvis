@@ -1,18 +1,33 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Supprimer l'annonce (title) - {{ parent() }}
+  Supprimer l'annonce {{advert.title}} - {{ parent() }}
 {% endblock %}
 
 {% block layout_header2 %}
   <div class="col-md-12">
-      <h3 class="cat-title">Supprimer l'annonce (title)</h3>
+      <h3 class="cat-title">Supprimer l'annonce {{advert.title}}</h3>
   </div>
 {% endblock %}
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         supprimer une annonce
+         <div class="col-md-6">
+              <p class="pad-msg">Etes-vous certain de vouloir supprimer la demande "{{ advert.title }}" ?</p>
+              <div class="col-md-6">
+                <a href="{{ path('se_platform_advert_user_list') }}" class="form-control btn se-btn-action">
+                    Retour à la liste
+                </a>
+              </div>
+              <div class="col-md-6">
+                  <form action="{{ path('se_platform_advert_delete', {'slug':advert.slug,  'id': advert.id}) }}" method="post">
+
+                      <input type="submit" value="Supprimer" class="btn btn-danger" />
+                      {{ form_rest(form) }}
+
+                  </form>
+              </div>
+          </div>
        </div>
    </div>
 {% endblock %}

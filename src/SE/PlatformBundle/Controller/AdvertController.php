@@ -197,13 +197,16 @@ class AdvertController extends Controller
                 ));
     }
 
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function listUserAction(Request $request, $page)
     {
       $this->getListUserFilterAttributes($request);
       $listAdverstByUser = $this->getAdvertByUser($page);
       $listAdverstByUserFilter = $this->getAllAdvertByUser();
 
-      $titleResult = count($listAdverstByUser) == 0 ?'Aucune annonce postée !' :
+      $titleResult = count($listAdverstByUser) == 0 ?'Aucune annonce' :
               (count($listAdverstByUser) > 1 ? count($listAdverstByUser).' annonces' :
           count($listAdverstByUser).' annonce');
 
@@ -222,6 +225,9 @@ class AdvertController extends Controller
                 ));
     }
 
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function addAction(Request $request){
 
         $session = $request->getSession();
@@ -244,7 +250,7 @@ class AdvertController extends Controller
 
                 $session->getFlashBag()->add('addSuccess','Annonce bien enregistrée, elle sera validée dans moins de 24h.');
 
-                return $this->redirectToRoute('se_platform_advert_validate');
+                return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
             }
         }
 
@@ -253,26 +259,96 @@ class AdvertController extends Controller
         ));
     }
 
-    public function editAction($id){
-      $content = $this->render('SEPlatformBundle:Advert:edit.html.twig',
-              array(
-              ));
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function editAction($id, Request $request){
 
-      return $content;
+      $em = $this->getDoctrineManager();
+      $session = $request->getSession();
+
+      $advert=$em->find('SEPlatformBundle:Advert', $id);
+
+         if (null===$advert){
+            throw new NotFoundHttpException("Oops, La demande  que vous cherchez n'existe pas.");
+        }
+
+        $form = $this->createForm(AdvertEditType::class, $advert);
+
+        if ($request->isMethod('POST')){
+
+            $form->handleRequest($request);
+
+            if ($form->isValid()){
+
+                $advert->setDateUpdate(new \DateTime());
+
+                $em->flush();
+
+                $session->getFlashBag()->add('editSuccess','Annonce modifiée avec succes');
+
+                return $this->redirectToRoute('se_platform_advert_edit',
+                            array('slug'=> $advert->getSlug(),
+                                  'id'=>$advert->getId()));
+            }
+        }
+
+        return $this->render('SEPlatformBundle:Advert:edit.html.twig', array(
+            'form' => $form->createView(),
+            'advert'=>$advert
+        ));
     }
 
-    public function deleteAction($id){
-      $content = $this->render('SEPlatformBundle:Advert:delete.html.twig',
-              array(
-              ));
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function deleteAction($slug, $id, Request $request){
+      $em = $this->getDoctrineManager();
+      $session = $request->getSession();
+      $advert = $em->getRepository('SEPlatformBundle:Advert')->find($id);
 
-      return $content;
+       if (null===$advert){
+            throw new NotFoundHttpException("Oops, La demande que vous cherchez n'existe pas.");
+        }
+
+        $form = $this->createFormBuilder()->getForm();
+
+        if ($form->handleRequest($request)->isValid()) {
+
+            $advert->setIsDeleted(true);
+            $advert->setIsPublished(false);
+            $advert->setIsEnabled(false);
+
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('deleteSuccess', "La demande a bien été supprimée.");
+
+            return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'supprimer'));
+        }
+
+          // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
+          return $this->render('SEPlatformBundle:Advert:delete.html.twig', array(
+              'advert' => $advert,
+              'form'   => $form->createView()
+          ));
     }
 
-    public function validateAction()
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function validateAction($action)
     {
+      switch ($action) {
+            case 'supprimer':
+                $title =  "Suppression de votre annonce";
+                break;
+            case 'ajouter':
+                $title = 'Creation de votre annonce';
+                break;
+          }
+
       $content = $this->render('SEPlatformBundle:Advert:validate.html.twig',
-              array(
+              array('title' => $title
               ));
 
       return $content;
