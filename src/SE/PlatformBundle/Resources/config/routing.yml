@@ -1,6 +1,6 @@
 #index Routes :
 se_platform_homepage:
-    path:     /
+    path:     /le-bon-service-au-bon-prix
     defaults:
         _controller: SEPlatformBundle:Default:index
 
@@ -99,7 +99,7 @@ se_platform_auction_add:
 
 # Message Routes :
 se_platform_message_add:
-    path:   /envoyer-message/{advertSlug}_{advertId}_{receiveId}
+    path:   /envoyer-message/{advertSlug}_{advertId}
     defaults:
         _controller: SEPlatformBundle:Message:add
     requirements:

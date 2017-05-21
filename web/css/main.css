@@ -22,8 +22,8 @@ html, body{
     z-index: 100;
     width: 100%;
     background: #fff;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 80px;
+    padding-right: 80px;
 }
 
 .se-header .logo{
@@ -141,9 +141,21 @@ html, body{
     margin-bottom: 0;
     border: 0;
     border-radius: 0;
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 80px;
+    padding-right: 80px;
     padding-bottom: 0;
+}
+
+.se-well{
+    background-color: #fff;
+    width: 100%;
+    margin-bottom: 0;
+    border: 0;
+    border-radius: 0;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-bottom: 10px;
+    min-height: 800px;
 }
 
 .modal-header{
@@ -164,12 +176,6 @@ html, body{
     vertical-align: middle;
 }
 
-.se-well{
-    background-color: #fff;
-    width: 100%;
-    border:0;
-}
-
 .seprate-white{
     height: 20px;
 }
@@ -186,12 +192,13 @@ li.hd-icon{
 
 /* HEADER 2 */
 .slogan{
-    font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
-    font-size: 48px !important;
-    line-height: 56px !important;
-    letter-spacing: -0.8px !important;
-    font-weight: 300 !important;
-    padding-bottom: 50px;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+  font-size: 35px !important;
+  line-height: 10px !important;
+  letter-spacing: 5px !important;
+  font-weight: 400 !important;
+  padding-bottom: 55px;
+  text-align: center;
 }
 
 .slogan >p{
@@ -260,6 +267,9 @@ h3.slogan-link:focus{
   margin-bottom: 5px;
 }
 
+p.cat-title{
+    font-size: 18px;
+}
 .cat-title>a{
     color: #E5DF16;
 }

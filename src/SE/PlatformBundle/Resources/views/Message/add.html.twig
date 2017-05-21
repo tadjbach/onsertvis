@@ -11,10 +11,21 @@
   </div>
 </div>
 {% endblock %}
+
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         Envoyer un message
+         {% if app.user.isAcountComplete == 0 %}
+               <div class="alert alert-danger" role="alert">
+                   Bonjour {{ app.user.username }}, Votre profil n'est pas complet, merci de le
+                   <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
+               </div>
+         {% else %}
+         <div class="col-md-6">
+             {{ include('SEPlatformBundle:Message:form.html.twig') }}
+         </div>
+         {% endif %}
+
        </div>
    </div>
 {% endblock %}

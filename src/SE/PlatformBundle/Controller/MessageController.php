@@ -5,6 +5,11 @@ namespace SE\PlatformBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use SE\PlatformBundle\Form\MessageType;
+use SE\PlatformBundle\Entity\Advert;
+use SE\PlatformBundle\Entity\User;
+use SE\PlatformBundle\Entity\Message;
 
 class MessageController extends Controller
 {
@@ -48,8 +53,42 @@ class MessageController extends Controller
     }
     /* PUBLIC FUNCTION */
 
-//Admin
-    public function addAction(Request $request){
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function addAction(Request $request, $advertSlug, $advertId){
+        $em = $this->getDoctrineManager();
+        $session = $request->getSession();
+
+        $advert = $em->find('SEPlatformBundle:Advert', $advertId);
+        $userSender = $this->getUser();
+        $userReceive = $em->find('SEPlatformBundle:User', $advert->getUser());
+
+        $message = new Message();
+
+        $message->setSender($userSender);
+        $message->setAdvert($advert);
+        $message->setReceiver($userReceive);
+
+        $form = $this->createForm(MessageType::class, $message);
+
+        if ($request->isMethod('POST')){
+            $form->handleRequest($request);
+
+            if ($form->isValid()){
+
+                $em->persist($message);
+                $em->flush();
+
+                $session->getFlashBag()->add('addSuccess','Message bien envoyé.');
+
+                return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+            }
+        }
+
+        return $this->render('SEPlatformBundle:Message:add.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
 //Admin
