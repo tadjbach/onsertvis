@@ -135,6 +135,12 @@ class User extends BaseUser
      */
     private $isNewsLetter=false;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isDetailVisible", type="boolean")
+     */
+    private $isDetailVisible=true;
 
     /**
      * @ORM\ManyToMany(targetEntity="SE\PlatformBundle\Entity\Category")
@@ -706,5 +712,29 @@ class User extends BaseUser
     public function getIpAddress()
     {
         return $this->ipAddress;
+    }
+
+    /**
+     * Set isDetailVisible
+     *
+     * @param boolean $isDetailVisible
+     *
+     * @return User
+     */
+    public function setIsDetailVisible($isDetailVisible)
+    {
+        $this->isDetailVisible = $isDetailVisible;
+
+        return $this;
+    }
+
+    /**
+     * Get isDetailVisible
+     *
+     * @return boolean
+     */
+    public function getIsDetailVisible()
+    {
+        return $this->isDetailVisible;
     }
 }

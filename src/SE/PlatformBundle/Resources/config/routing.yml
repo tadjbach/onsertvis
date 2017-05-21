@@ -1,6 +1,6 @@
 #index Routes :
 se_platform_homepage:
-    path:     /le-bon-service-au-bon-prix
+    path:     /
     defaults:
         _controller: SEPlatformBundle:Default:index
 

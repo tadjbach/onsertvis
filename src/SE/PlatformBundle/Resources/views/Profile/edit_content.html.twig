@@ -57,6 +57,11 @@
                 {{ form_label(form.detail) }}
                 {{ form_widget(form.detail)  }}
              </div>
+             <div class="form-group">
+               <label class="control-label">Afficher mes informations</label>
+                 {{ form_label(form.isDetailVisible) }}
+                 {{ form_widget(form.isDetailVisible)  }}
+              </div>
         </div>
     </div>
 
@@ -81,7 +86,7 @@
 
                   </div>
                 </div>
-  <div class="col-md-8">
+                <div class="col-md-8">
                   <div class="form-group opac">
                       {{ form_label(form.categories) }}
                       {{ form_widget(form.categories)  }}

@@ -92,10 +92,16 @@
         </div>
         <div class="col-md-6">
              <h4 class="cat-title">Demandeur</h4>
+             {% if advert.user.isDetailVisible %}
              <p><i class="glyphicon glyphicon-user"></i> {{ advert.user }}</p>
              <p><i class="glyphicon glyphicon-phone-alt"></i> {{ advert.user.phoneNumber }}</p>
              <p><i class="glyphicon glyphicon-map-marker"></i> {{ advert.user.address }} {{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }}
                 ({{ advert.user.PostalCode.city.departement.labelNormal }})</p>
+            {% else %}
+            <div class="alert alert-warning" role="alert">
+                Désolé, le demandeur ne souhaite pas afficher ses coordonnées.
+            </div>
+            {% endif %}
          </div>
     </div>
    </div>
