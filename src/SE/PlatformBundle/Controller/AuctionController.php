@@ -26,7 +26,7 @@ class AuctionController extends Controller
     private function priceFormat($price){
           return number_format($price, 0,' ',' ').' €';
       }
-      
+
     private function getListUserFilterAttributes(Request $request){
         $this->advert = $request->query->get('advert');
         $this->state = $request->query->get('state');
@@ -160,10 +160,23 @@ class AuctionController extends Controller
     }
 
     //Super ADMIN
-    public function listAction(Request $request)
+    public function listAction($advertId)
     {
+      $em = $this->getDoctrineManager();
+      $advert=$em->find('SEPlatformBundle:Advert', $advertId);
+
+      $listAuctions=$em->getRepository('SEPlatformBundle:Auction')
+            ->findBy(
+                array('advert'=>$advert),
+                array('dateCreation'=>'desc'),
+                $limit=null,
+                $offset=null);
+
       $content = $this->render('SEPlatformBundle:Auction:list.html.twig',
               array(
+                'advert'=>$advert,
+                'listAuctions'=>$listAuctions,
+                'countAuctions'=>count($listAuctions),
               ));
 
       return $content;

@@ -59,7 +59,11 @@
                       </div>
                       <div class="text-center pad-price">
                         <a class="cat-link"
-                              href="#">
+                            data-toggle="modal"
+                            role="button"
+                            data-toggle="modal"
+                            data-target="#modalAuctionShow"
+                            >
                               {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
                         </a>
                       </div>
@@ -105,4 +109,22 @@
          </div>
     </div>
    </div>
+
+<div class="modal fade"
+     id="modalAuctionShow"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="modalAuctionShowLabel">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Historique des enchères</h4>
+          </div>
+          <div class="modal-body">
+            {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}
+          </div>
+        </div>
+      </div>
+</div>
 {% endblock %}

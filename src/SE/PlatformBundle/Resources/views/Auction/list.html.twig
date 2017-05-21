@@ -1,20 +1,32 @@
-{% extends "SEPlatformBundle::layout.html.twig" %}
+{# Lister des Offres d'une Demande - Sans Action #}
 
-{% block title %}
-    Liste des enchères - {{ parent() }}
-{% endblock %}
-
-{% block layout_header2 %}
-<div class="row">
-  <div id="header" class="col-md-12">
-      <h3 class="cat-title">Liste des enchéres</h3>
-  </div>
-</div>
-{% endblock %}
-{% block layout_body %}
-  <div class="row">
-       <div id="content" class="col-md-12">
-         Liste des enchères
-       </div>
-   </div>
-{% endblock %}
+{% if countAuctions > 0 %}
+    <table class="table" id="tblGrid">
+        <thead id="tblHead">
+            <tr>
+                <th>Enchérisseur</th>
+                <th>Note</th>
+                <th class="text-center">Enchère</th>
+                <th class="text-center">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for auction in listAuctions %}
+            <tr>
+                <td class="text-left">
+                    <a href="{{ path('se_platform_user_view', {'id': auction.user.id}) }}" class="cat-link" >
+                        {{ auction.user }}
+                    </a>
+                </td>
+                <td class="text-left">
+                    {{ include('@SEPlatform/User/rate.html.twig', {'item': auction.user }) }}
+                </td>
+                <td class="text-right bold">{{ auction.value|number_format(0, ' ', ' ') }} €</td>
+                <td class="text-right">{{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:i:s') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div>Aucune enchère pour l'instant</div>
+{% endif %}

@@ -74,6 +74,13 @@ se_platform_advert_user_list:
         page: \d*
 
 # Auction Routes :
+se_platform_auction_list:
+    path:   /enchere-en-cours/{advertId}
+    defaults:
+        _controller: SEPlatformBundle:Auction:list
+    requirements:
+        id: \d+
+
 se_platform_auction_user_receive:
     path:   /encheres-recues/{page}
     defaults:
