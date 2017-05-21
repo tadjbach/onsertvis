@@ -5,6 +5,11 @@ namespace SE\PlatformBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use SE\PlatformBundle\Form\AuctionType;
+use SE\PlatformBundle\Entity\Advert;
+use SE\PlatformBundle\Entity\User;
+use SE\PlatformBundle\Entity\Auction;
 
 class AuctionController extends Controller
 {
@@ -18,6 +23,10 @@ class AuctionController extends Controller
       return $this->getDoctrine()->getManager();
     }
 
+    private function priceFormat($price){
+          return number_format($price, 0,' ',' ').' €';
+      }
+      
     private function getListUserFilterAttributes(Request $request){
         $this->advert = $request->query->get('advert');
         $this->state = $request->query->get('state');
@@ -65,12 +74,73 @@ class AuctionController extends Controller
         return $list;
     }
 
+    public function getNbAuctionAction($advertId){
+        $em = $this->getDoctrineManager();
+        $nbAuction = 'aucune enchère';
+        $lastAuction = $em
+            ->getRepository('SEPlatformBundle:Auction')
+            ->getLastAuction($advertId);
 
+      if (count($lastAuction) > 0) {
+           $nbAuction = count($lastAuction) <= 1 ? count($lastAuction).' enchère' : count($lastAuction).' enchères';
+        }
 
+        return new Response(
+            $nbAuction
+        );
+    }
+
+    public function getLastAuctionAction($advertId){
+        $em = $this->getDoctrineManager();
+        $price = '-- €';
+        $lastAuction = $em
+            ->getRepository('SEPlatformBundle:Auction')
+            ->getLastAuction($advertId);
+
+      if (count($lastAuction) > 0) {
+           $price = $this->priceFormat($lastAuction[0]->getValue());
+        }
+
+        return new Response(
+            $price
+        );
+    }
 
     /* PUBLIC FUNCTION */
-    //Admin
-    public function addAction(Request $request){
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function addAction(Request $request, $advertSlug, $advertId){
+        $em = $this->getDoctrineManager();
+        $session = $request->getSession();
+
+        $advert=$em->find('SEPlatformBundle:Advert', $advertId);
+        $advert->setAuctionState(1);
+
+        $auction = new Auction();
+
+        $auction->setUser($this->getUser());
+        $auction->setAdvert($advert);
+
+        $form = $this->createForm(AuctionType::class, $auction);
+
+        if ($request->isMethod('POST')){
+            $form->handleRequest($request);
+
+            if ($form->isValid()){
+
+                $em->persist($auction);
+                $em->flush();
+
+                $session->getFlashBag()->add('addSuccess','Enchère bien enregistrée.');
+
+                return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+            }
+        }
+
+        return $this->render('SEPlatformBundle:Auction:add.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
     //Admin
@@ -82,6 +152,7 @@ class AuctionController extends Controller
     public function deleteAction($id){
 
     }
+
 
     public function viewAction($slug, $id)
     {
@@ -98,7 +169,9 @@ class AuctionController extends Controller
       return $content;
     }
 
-    //Admin
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function userSendListAction(Request $request)
     {
       $content = $this->render('SEPlatformBundle:Auction:userSendList.html.twig',
@@ -112,7 +185,9 @@ class AuctionController extends Controller
       return $content;
     }
 
-//Admin
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function userReceiveListAction(Request $request)
     {
       return $this->render('SEPlatformBundle:Auction:userReceiveList.html.twig',

@@ -5,10 +5,12 @@
 {% endblock %}
 
 {% block layout_header2 %}
-  <div class="col-md-12">
+<div class="row">
+  <div id="header" class="col-md-12">
     <h3 class="cat-title">Enchères proposées</h3>
-      {{ include('@SEPlatform/Auction/listUserSendFilter.html.twig') }}
+        {{ include('@SEPlatform/Auction/listUserSendFilter.html.twig') }}
   </div>
+</div>
 {% endblock %}
 {% block layout_body %}
   <div class="row">

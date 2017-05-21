@@ -177,11 +177,28 @@ class AdvertController extends Controller
                     return new Response(null);
                 }
 
-
     /* Action */
-    public function listAction(Request $request)
+    public function listAction(Request $request, $page)
     {
         $this->getListFilterAttributes($request);
+        $em = $this->getDoctrineManager();
+
+        $listAdverts = $em
+                    ->getRepository('SEPlatformBundle:Advert')
+                    ->getAllAdverts($this->search,
+                                  $this->category,
+                                  $this->region,
+                                  $this->departement,
+                                  $this->city,
+                                  $this->postalCode,
+                                  $page,
+                                  $this->nbPerPage);
+
+        $titleResult = count($listAdverts) == 0 ?'Aucune annonce' :
+                (count($listAdverts) > 1 ? count($listAdverts).' annonces' :
+            count($listAdverts).' annonce');
+
+          $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
 
         return $this->render('SEPlatformBundle:Advert:list.html.twig',
                 array(
@@ -193,7 +210,11 @@ class AdvertController extends Controller
                     'postalCode'=> $this->postalCode,
                     'listCategory'=>$this->getCategory(),
                     'listRegions'=>$this->getRegion(),
-                    'listDepartement'=>$this->getDepartement($this->region)
+                    'listDepartement'=>$this->getDepartement($this->region),
+                    'titleResult'=>$titleResult,
+                    'nbPages'     => $nbPages,
+                    'page'        => $page,
+                    'listAdverts'=>$listAdverts
                 ));
     }
 
@@ -229,7 +250,7 @@ class AdvertController extends Controller
      * @Security("has_role('ROLE_AUTEUR')")
      */
     public function addAction(Request $request){
-
+        $em = $this->getDoctrineManager();
         $session = $request->getSession();
         // On crée un objet Advert
         $advert = new Advert();
@@ -243,8 +264,6 @@ class AdvertController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()){
-
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($advert);
                 $em->flush();
 

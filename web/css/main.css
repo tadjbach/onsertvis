@@ -207,6 +207,9 @@ li.hd-icon{
     color: #E5DF16;
     font-size: 26px;
 }
+.little{
+    font-size: 18px;
+}
 .pad-price{
   padding-top: 40px;
   padding-bottom: 40px;
@@ -514,7 +517,6 @@ textarea.form-control{
 
 .panel-default {
     border-color: #2A0540;
-    padding-top: 5px;
 }
 .detail-footer{
   height: 70px;

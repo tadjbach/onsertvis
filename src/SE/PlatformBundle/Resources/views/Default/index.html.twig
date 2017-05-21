@@ -22,7 +22,11 @@
           <h3 class="cat-title">Vous proposez vos services ?</h3>
           <h4>
               <span class="label label-default se-badge">1</span>
-              <a class="slogan-link" href="#">Inscrivez vous</a>
+              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+              <a class="slogan-link" href="{{ path('se_platform_user_edit') }}">Inscrivez vous</a>
+              {% else %}
+              <a class="slogan-link" href="{{ path('fos_user_registration_register') }}">Inscrivez vous</a>
+              {% endif %}
           </h4>
           <h4><span class="label label-default se-badge">2</span> Proposez des offres et gagnez</h4>
           <h4><span class="label label-default se-badge">3</span> Retrouver le demandeur</h4>

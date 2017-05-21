@@ -5,10 +5,12 @@
 {% endblock %}
 
 {% block layout_header2 %}
-  <div class="col-md-12">
+<div class="row">
+  <div id="header" class="col-md-12">
     <h3 class="cat-title">Mes annonces</h3>
       {{ include('@SEPlatform/Advert/listUserFilter.html.twig') }}
   </div>
+</div>
 {% endblock %}
 {% block layout_body %}
   <div class="row">
@@ -53,25 +55,20 @@
                             </h5>
                         </td>
                          <td class='text-center'>
-                                <h5>
-                                    <a href="{{ path('se_platform_advert_edit', {'slug': advert.slug,'id': advert.id}) }}"
+                            <h5>
+                                <a href="{{ path('se_platform_advert_edit', {'slug': advert.slug,'id': advert.id}) }}"
+                                type="button"
+                                class='{% if advert.isPublished == 0 and advert.auctionState != 0 %} btn btn-success not-active {% else %} btn btn-success  {% endif %}'
+                                title="Modifier la demande">
+                                <i class='glyphicon glyphicon-edit'></i>
+                                </a>
+                                <a href="{{ path('se_platform_advert_delete', {'slug': advert.slug,'id': advert.id}) }}"
                                     type="button"
-                                    class='{% if advert.isPublished == 0 and advert.auctionState != 0 %} btn btn-success not-active {% else %} btn btn-success  {% endif %}'
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-
-                                    title="Modifier la demande">
-                                    <i class='glyphicon glyphicon-edit'></i>
-                                    </a>
-                                    <a href="{{ path('se_platform_advert_delete', {'slug': advert.slug,'id': advert.id}) }}"
-                                        type="button"
-                                        data-toggle="tooltip"
-                                        class='{% if advert.isPublished == 0 and advert.auctionState != 0 %} btn btn-danger not-active {% else %} btn btn-danger  {% endif %}'
-                                        data-placement="bottom" title="Supprimer la demande">
-                                    <i class='glyphicon glyphicon-remove'></i>
-                                    </a>
-                                </h5>
-
+                                    class='{% if advert.isPublished == 0 and advert.auctionState != 0 %} btn btn-danger not-active {% else %} btn btn-danger  {% endif %}'
+                                    title="Supprimer la demande">
+                                <i class='glyphicon glyphicon-remove'></i>
+                                </a>
+                            </h5>
                         </td>
                     </tr>
                 {% endfor %}

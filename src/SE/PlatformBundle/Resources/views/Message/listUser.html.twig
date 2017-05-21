@@ -5,11 +5,14 @@
 {% endblock %}
 
 {% block layout_header2 %}
-  <div class="col-md-12">
-      <h3 class="cat-title">Mes messages</h3>
-      {{ include('@SEPlatform/Message/listUserFilter.html.twig') }}
+<div class="row">
+  <div id="header" class="col-md-12">
+    <h3 class="cat-title">Mes messages</h3>
+    {{ include('@SEPlatform/Message/listUserFilter.html.twig') }}
   </div>
+</div>
 {% endblock %}
+
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">

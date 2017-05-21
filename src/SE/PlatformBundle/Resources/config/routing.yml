@@ -91,7 +91,7 @@ se_platform_auction_user_send:
         page: \d*
 
 se_platform_auction_add:
-    path:     /enchere/propser-enchere/{adevrtSlug}_{advertId}
+    path:     /enchere/propser-enchere/{advertSlug}_{advertId}
     defaults:
         _controller: SEPlatformBundle:Auction:add
     requirements:
@@ -99,7 +99,7 @@ se_platform_auction_add:
 
 # Message Routes :
 se_platform_message_add:
-    path:   /envoyer-message/{adevrtSlug}_{advertId}_{receiveId}
+    path:   /envoyer-message/{advertSlug}_{advertId}_{receiveId}
     defaults:
         _controller: SEPlatformBundle:Message:add
     requirements:
@@ -108,7 +108,7 @@ se_platform_message_add:
 
 
 se_platform_message_view:
-    path:   /consulter-message/{adevrtSlug}_{advertId}
+    path:   /consulter-message/{advertSlug}_{advertId}
     defaults:
         _controller: SEPlatformBundle:Message:view
     requirements:

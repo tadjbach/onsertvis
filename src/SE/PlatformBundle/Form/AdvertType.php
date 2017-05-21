@@ -24,6 +24,7 @@ class AdvertType extends AbstractType
         $builder
                 ->add('category', EntityType::class, array(
                     'label'=>'Catégorie *',
+                    'placeholder' => 'Choisissez une catégorie',
                     'class'=>'SE\PlatformBundle\Entity\Category',
                     'choice_label'=>'labelNormal'
                 ))

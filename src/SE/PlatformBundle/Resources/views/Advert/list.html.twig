@@ -5,15 +5,84 @@
 {% endblock %}
 
 {% block layout_header2 %}
-  <div class="col-md-12">
+<div class="row">
+  <div id="header" class="col-md-12">
     <h3 class="cat-title">Annonces en cours</h3>
       {{ include('@SEPlatform/Advert/listFilter.html.twig') }}
   </div>
+</div>
 {% endblock %}
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         List
+         <h4 class="cat-title">{{ titleResult }}</h4>
+            <table class="table" id="tblGrid">
+                <tbody>
+                {% for advert in listAdverts %}
+                    <tr>
+                        <td class="text-center">
+                          <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">
+                              <img class="se-auction-img" src="{{ asset(advert.category.webPath) }}" alt="{{ asset(advert.category.webPath) }}">
+                          </a>
+                        </td>
+                        <td>
+                            <h5 class="truncate">
+                                <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
+                                <h5>
+                                  {{ advert.category.labelNormal }}
+                                </h5>
+                                <h5>
+                                  {{ advert.dateCreation|date('d/m/Y') }}
+                                  à
+                                  {{ advert.dateCreation|date('H:i:s') }}
+                                </h5>
+                            </h5>
+                        </td>
+                        <td class='text-left'>
+                            <h5>
+                              {{ advert.user.postalCode.value }}
+                              {{ advert.user.postalCode.city.labelNormal }}
+                            </h5>
+                            <h5>
+                              {{ advert.user.PostalCode.city.departement.labelNormal }}
+                            </h5>
+                            <h5>
+                              {{ advert.user.PostalCode.city.departement.region.labelNormal }}
+                            </h5>
+                        </td>
+                        <td>
+                          {% if advert.auctionState == 0 %}
+                              <span class="label label-warning">0 enchère</span>
+                          {% else %}
+                              <span class="label label-success">
+                                  {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                              </span>
+                          {% endif %}
+
+                        </td>
+                        <td class="text-right">
+                          <span class="label se-price-badge little">
+                            {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }}
+                          </span>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+       </div>
+   </div>
+
+   <div class="row">
+       <div class="col-md-12 text-center">
+           <ul class="pagination">
+               {% if nbPages > 1 %}
+                   {% for p in range(1, nbPages) %}
+                       <li{% if p == page %} class="active"{% endif %}>
+                           <a href="{{ path('se_platform_advert_list', {'page': p}) }}">{{ p }}</a>
+                       </li>
+                   {% endfor %}
+               {% endif %}
+           </ul>
        </div>
    </div>
 {% endblock %}
