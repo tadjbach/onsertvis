@@ -14,7 +14,7 @@
         {% for auction in listAuctions %}
             <tr>
                 <td class="text-left">
-                    <a href="{{ path('se_platform_user_view', {'id': auction.user.id}) }}" class="cat-link" >
+                    <a href="{{ path('se_platform_user_view', {'userId': auction.user.id}) }}" class="cat-link" >
                         {{ auction.user }}
                     </a>
                 </td>

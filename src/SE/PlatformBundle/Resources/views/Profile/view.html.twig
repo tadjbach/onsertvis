@@ -1,99 +1,33 @@
-{% extends "PlatformBundle::layout.html.twig" %}
+{% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Profil - {{ parent() }}
+    Profil de {{user}} - {{ parent() }}
 {% endblock %}
 
 {% block layout_header2 %}
 <div class="row">
   <div id="header" class="col-md-12">
-    <h3 class="cat-title">Profil de {{ user }}</h3>
+    <h3 class="cat-title">Profil de {{user}}</h3>
   </div>
 </div>
 {% endblock %}
 
 {% block layout_body %}
 
-    <div class="row">
-         <div id="content" class="col-md-12">
-            <div class="panel-footer se-panel-footer">
-                <h4 class="truncate">
-                  {{ user }}
-                </h4>
-                <br>
-                <div class="row">
-                      <div class="col-md-4">
+  <div class="row">
+      {% block fos_user_content %}
+          {% include "@FOSUser/Profile/view_content.html.twig" %}
+      {% endblock fos_user_content %}
+  </div>
+  <div class="row">
+    <div id="content" class="col-md-12">
+      <div class="col-md-6">
+           <h4 class="cat-title">Avis reçus</h4>
+       </div>
+       <div class="col-md-6">
+            <h4 class="cat-title">Avis envoyés</h4>
+       </div>
+   </div>
+  </div>
 
-                          <i class="glyphicon glyphicon-map-marker"></i>
-                          <span class="se-profile-title">Adresse : </span>
-                          <p class="se-profile-value"> {{ user.address }}
-                              <br>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
-                              <br>{{ user.PostalCode.city.departement.labelNormal }}</p>
-
-                          <br>
-                        <i class="glyphicon glyphicon-phone-alt"></i>
-                          <span class="se-profile-title">Téléphone : </span>
-                          <p class="se-profile-value"> {{ user.phoneNumber|join('|') }}</p>
-
-                          <br>
-                          <i class="glyphicon glyphicon-calendar"></i>
-                            <span class="se-profile-title">Disponibilité : </span>
-                            <div class="se-profile-value">
-                                <table>
-                                <thead id="tblHead">
-                                    <tr>
-                                        {% for day in user.calendar %}
-                                        <th>
-                                            {{ day.dayFr  }}
-                                        </th>
-                                        {%else%}
-                                            <th>
-                                            Nous contacter
-                                            </th>
-                                        {% endfor %}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for day in user.calendar %}
-                                        <td>
-
-                                        </td>
-                                        {% endfor %}
-                                </tbody>
-                                </table>
-
-                            </div>
-                      </div>
-                    <div class="col-md-4">
-                        <i class="glyphicon glyphicon-info-sign"></i>
-                        <span class="se-profile-title">A propos : </span>
-                        <p class="se-profile-value"> {{ user.detail|nl2br }}</p>
-                    </div>
-                    <div class="col-md-4">
-
-                    </div>
-                  </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-         <div id="content" class="col-md-12">
-             <div class="col-sm-6">
-                <div class="panel panel-default se-profile-panel">
-                    <div class="panel-body text-left se-item-link">
-
-                    </div>
-                </div>
-             </div>
-
-            <div class="col-sm-6">
-                <div class="panel panel-default se-profile-panel">
-                    <div class="panel-body text-left se-item-link">
-
-                    </div>
-                </div>
-             </div>
-         </div>
-    </div>
 {% endblock %}

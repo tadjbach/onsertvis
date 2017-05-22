@@ -179,9 +179,11 @@ se_platform_user_add:
         _controller: SEPlatformBundle:User:add
 
 se_platform_user_view:
-    path:   /profile
+    path:   /profile/{userId}
     defaults:
-        _controller: SEPlatformBundle:User:view
+        _controller: SEPlatformBundle:Profile:view
+    requirements:
+        id: \d+
 
 se_platform_user_edit:
     path:   /mon-compte/modifier

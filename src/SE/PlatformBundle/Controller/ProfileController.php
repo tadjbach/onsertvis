@@ -134,4 +134,24 @@ class ProfileController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+  public function viewAction($userId)
+   {
+     $em=$this->getDoctrine()
+            ->getManager();
+
+      $user=$em->find('SEPlatformBundle:User', $userId);
+
+      if ($user === null) {
+          throw new NotFoundHttpException("Cet utilisateur n'existe pas");
+      }
+
+      if (!is_object($user) || !$user instanceof UserInterface) {
+          throw new AccessDeniedException('This user does not have access to this section.');
+      }
+
+      return $this->render('@FOSUser/Profile/view.html.twig', array(
+          'user' => $user,
+      ));
+   }
 }
