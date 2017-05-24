@@ -171,7 +171,7 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
     /*
      * getStateAuctionUser
      */
-    public function getStateAuctionUser($userId, $isPublished,  $state){
+    public function getAuctionSendUser($advertId, $auctionState, $userId, $page, $nbPerPage){
 
         $qb=$this->createQueryBuilder('auction');
 
@@ -180,16 +180,42 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('auction.advert', 'advert')
             ->addSelect('advert');
 
-        $qb->where($qb->expr()->eq('user_auction.id', $userId))
-            ->andWhere($qb->expr()->eq('auction.state', $state));
-
-        if ($isPublished !== null) {
-                $qb->andWhere($qb->expr()->eq('advert.isPublished', $isPublished));
-            }
+        $qb->where($qb->expr()->eq('user_auction.id', $userId));
 
 
-        return $qb
-            ->getQuery()
-            ->getResult();
+        if($advertId !== NULL && $advertId !== '0')
+        {
+            $qb->andWhere($qb->expr()->eq('advert.id', $advertId));
+        }
+
+        if($auctionState !== NULL && $auctionState !== '0')
+        {
+            $qb->andWhere($qb->expr()->eq('auction.state', $auctionState));
+        }
+
+        $qb->orderBy('auction.dateCreation', 'DESC');
+        $qb->getQuery();
+
+        $qb->setFirstResult(($page-1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+
+        return new Paginator($qb, true);
+    }
+
+    public function getAdvertByUser($userId){
+      $qb=$this->createQueryBuilder('auction');
+
+      $qb->innerJoin('auction.user', 'user_auction')
+          ->addSelect('user_auction')
+          ->leftJoin('auction.advert', 'advert')
+          ->addSelect('advert');
+
+          $qb->where($qb->expr()->eq('user_auction.id', $userId));
+
+          $qb->add('groupBy', 'advert.id');
+
+          return $qb
+              ->getQuery()
+              ->getResult();
     }
 }

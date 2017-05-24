@@ -14,6 +14,7 @@ use SE\PlatformBundle\Entity\Auction;
 class AuctionController extends Controller
 {
   /* PRIVATE VAR */
+  private $nbPerPage = 30;
   private $em;
   private $advert;
   private $state;
@@ -46,18 +47,24 @@ class AuctionController extends Controller
       return $list;
     }
 
-    //TODO
-    private function getAdvertByAuction(){
+    private function getAuctionSendUser($advertId, $auctionState, $page){
       $em = $this->getDoctrineManager();
-      $user;
-      //return $em->getRepository('SEPlatformBundle:Advert')->findByUser($user);
+      $user = $this->getUser();
 
-      $list = array(
-        array('id'=>1, 'title'=>'Mon annonce 1', 'state'=>1),
-        array('id'=>2, 'title'=>'Mon annonce 2', 'state'=>1),
-        array('id'=>3, 'title'=>'Mon annonce 3', 'state'=>2)
-      );
-      return $list;
+      $result = $em->getRepository('SEPlatformBundle:Auction')
+           ->getAuctionSendUser($advertId, $auctionState, $user->getId(), $page, $this->nbPerPage);
+
+      return $result;
+    }
+
+    private function getAdvertByAuctionUser(){
+      $em = $this->getDoctrineManager();
+      $user = $this->getUser();
+
+      $result = $em->getRepository('SEPlatformBundle:Auction')
+           ->getAdvertByUser($user->getId());
+
+      return $result;
     }
 
     //TODO
@@ -185,13 +192,27 @@ class AuctionController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function userSendListAction(Request $request)
+    public function userSendListAction(Request $request, $page)
     {
+      $this->getListUserFilterAttributes($request);
+
+      $result = $this->getAuctionSendUser($this->advert, $this->state, $page);
+
+      $titleResult = count($result) == 0 ?'Aucune enchère' :
+              (count($result) > 1 ? count($result).' enchères' :
+          count($result).' enchère');
+
+          $nbPages = ceil(count($result)/$this->nbPerPage);
+
       $content = $this->render('SEPlatformBundle:Auction:userSendList.html.twig',
       array(
+        'titleResult'=>$titleResult,
+        'nbPages'     => $nbPages,
+        'page'        => $page,
         'advert'=> $this->advert,
         'state'=> $this->state,
-        'listAdvertAuction'=>$this->getAdvertByAuction(),
+        'listAdvertAuction'=>$this->getAdvertByAuctionUser(),
+        'listAuctionUser'=>$result,
         'listState'=>$this->getAuctionState()
       ));
 

@@ -15,7 +15,113 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         List
+         <h4 class="cat-title">{{ titleResult }}</h4>
+            <table class="table" id="tblGrid">
+              <thead id="tblHead">
+                  <tr>
+                      <th>Annonce / Demandeur</th>
+                      <th>Date de l'enchère</th>
+                      <th class="text-left">Etat</th>
+                      <th>Nombre d'enchère</th>
+                      <th class="text-right">Offre</th>
+                  </tr>
+              </thead>
+                <tbody>
+                {% for auction in listAuctionUser %}
+                <tr>
+                    <td>
+                        <h5>
+                            <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': auction.advert.slug,'id': auction.advert.id}) }}">{{ auction.advert.title }}</a>
+
+                            <h5>
+                              Par
+                              <a class='se-tbl-link' href="{{ path('se_platform_user_view', {'userId': auction.advert.user.id}) }}" class="cat-link" >
+                                  {{ auction.advert.user }}
+                              </a>
+
+                            </h5>
+                        </h5>
+                    </td>
+                    <td>
+                      <h5>
+                          le {{ auction.dateCreation|date('d/m/Y') }}
+                          à
+                          {{ auction.dateCreation|date('H:i:s') }}
+                        </h5>
+                    </td>
+                    <td>
+                        <h5>
+                        {% if auction.state == 1 %}
+                            <span class="label label-primary">Enchères encours</span>
+                        {% elseif auction.state == 2 %}
+                            <span class="label label-success">Enchères acceptée</span>
+                            <div class="label label-success"
+                                  data-toggle="tooltip"
+                                        data-placement="bottom" title="La demande n'est plus visible sur le site">
+                             <i class="glyphicon glyphicon-info-sign"> </i>
+                            </div>
+                        {% elseif auction.state == 3 %}
+                            <span class="label label-danger">Enchère déclinée</span>
+                            <div class="label label-danger"
+                                  data-toggle="tooltip"
+                                        data-placement="bottom" title="La demande n'est plus visible sur le site">
+                             <i class="glyphicon glyphicon-info-sign"> </i>
+                            </div>
+                        {% endif %}
+                        </h5>
+                    </td>
+                    <td>
+                        <h5>
+                          <a class="cat-link"
+                              data-toggle="modal"
+                              role="button"
+                              data-toggle="modal"
+                              data-target="#modalAuctionShow_{{auction.advert.id}}"
+                              >
+                                {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': auction.advert.id })) }}
+                        </h5>
+                    </td>
+                    <td class="text-right bold">
+                      <span class="label se-price-badge little">{{ auction.value|number_format(0, ' ', ' ') }} €<span>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
        </div>
    </div>
+
+   <div class="row">
+       <div class="col-md-12 text-center">
+           <ul class="pagination">
+               {% if nbPages > 1 %}
+                   {% for p in range(1, nbPages) %}
+                       <li{% if p == page %} class="active"{% endif %}>
+                           <a href="{{ path('se_platform_auction_user_send', {'page': p}) }}">{{ p }}</a>
+                       </li>
+                   {% endfor %}
+               {% endif %}
+           </ul>
+       </div>
+   </div>
+{% for auction in listAuctionUser %}
+   <div class="modal fade"
+        id="modalAuctionShow_{{auction.advert.id}}"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="modalAuctionShowLabel_{{auction.advert.id}}">
+           <div class="modal-dialog" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               <h4 class="modal-title" id="myModalLabel_{{auction.advert.id}}">Historique des enchères</h4>
+             </div>
+             <div class="modal-body">
+                  {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': auction.advert.id })) }}
+             </div>
+           </div>
+         </div>
+   </div>
+{% endfor %}
+
 {% endblock %}
