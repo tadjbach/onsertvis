@@ -33,18 +33,14 @@ class AuctionController extends Controller
         $this->state = $request->query->get('state');
     }
 
-    //TODO
     private function getAdvertByUser(){
       $em = $this->getDoctrineManager();
-      $user;
-      //return $em->getRepository('SEPlatformBundle:Advert')->findByUser($user);
+      $user = $this->getUser();
 
-      $list = array(
-        array('id'=>1, 'title'=>'Mon annonce 1', 'state'=>1),
-        array('id'=>2, 'title'=>'Mon annonce 2', 'state'=>1),
-        array('id'=>3, 'title'=>'Mon annonce 3', 'state'=>2)
-      );
-      return $list;
+      $listAdverstByUser=$em->getRepository('SEPlatformBundle:Advert')
+           ->getAdvertByUser(null, null, $user->getId(), 1, 100000);
+
+      return $listAdverstByUser;
     }
 
     private function getAuctionSendUser($advertId, $auctionState, $page){
@@ -53,6 +49,16 @@ class AuctionController extends Controller
 
       $result = $em->getRepository('SEPlatformBundle:Auction')
            ->getAuctionSendUser($advertId, $auctionState, $user->getId(), $page, $this->nbPerPage);
+
+      return $result;
+    }
+
+    private function getAuctionReceiveUser($advertId, $auctionState, $page){
+      $em = $this->getDoctrineManager();
+      $user = $this->getUser();
+
+      $result = $em->getRepository('SEPlatformBundle:Auction')
+           ->getAuctionReceiveUser($advertId, $auctionState, $user->getId(), $page, $this->nbPerPage);
 
       return $result;
     }
@@ -222,12 +228,27 @@ class AuctionController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function userReceiveListAction(Request $request)
+    public function userReceiveListAction(Request $request, $page)
     {
+      $this->getListUserFilterAttributes($request);
+
+      $result = $this->getAuctionReceiveUser($this->advert, $this->state, $page);
+
+      $titleResult = count($result) == 0 ?'Aucune enchère' :
+              (count($result) > 1 ? count($result).' enchères' :
+          count($result).' enchère');
+
+          $nbPages = ceil(count($result)/$this->nbPerPage);
+
+
       return $this->render('SEPlatformBundle:Auction:userReceiveList.html.twig',
           array(
+            'titleResult'=>$titleResult,
+            'nbPages'     => $nbPages,
+            'page'        => $page,
             'advert'=> $this->advert,
             'state'=> $this->state,
+            'listAdvertAuction'=>$result,
             'listAdvertUser'=>$this->getAdvertByUser(),
             'listState'=>$this->getAuctionState()
           ));

@@ -134,4 +134,6 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
 
         return new Paginator($qb, true);
     }
+
+  
 }

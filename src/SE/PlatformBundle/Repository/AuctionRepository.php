@@ -218,4 +218,36 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
               ->getQuery()
               ->getResult();
     }
+
+    public function getAuctionReceiveUser($advertId, $auctionState, $userId, $page, $nbPerPage){
+          $qb=$this->createQueryBuilder('auction');
+
+          $qb->innerJoin('auction.user', 'user_auction')
+              ->addSelect('user_auction')
+              ->leftJoin('auction.advert', 'advert')
+              ->addSelect('advert')
+              ->leftJoin('advert.user', 'user_receive')
+              ->addSelect('user_receive');
+
+          $qb->where($qb->expr()->eq('user_receive.id', $userId));
+
+
+          if($advertId !== NULL && $advertId !== '0')
+          {
+              $qb->andWhere($qb->expr()->eq('advert.id', $advertId));
+          }
+
+          if($auctionState !== NULL && $auctionState !== '0')
+          {
+              $qb->andWhere($qb->expr()->eq('auction.state', $auctionState));
+          }
+
+          $qb->orderBy('auction.dateCreation', 'DESC');
+          $qb->getQuery();
+
+          $qb->setFirstResult(($page-1) * $nbPerPage)
+              ->setMaxResults($nbPerPage);
+
+          return new Paginator($qb, true);
+    }
 }
