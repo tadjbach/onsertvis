@@ -104,6 +104,11 @@ se_platform_auction_add:
     requirements:
         advertId: \d+
 
+se_platform_auction_accept:
+    path:     /enchere/accepter-enchere/{auctionId}
+    defaults:
+        _controller: SEPlatformBundle:Auction:accept
+
 # Message Routes :
 se_platform_message_add:
     path:   /envoyer-message/{advertSlug}_{advertId}

@@ -336,6 +336,9 @@ class AdvertController extends Controller
             case 'ajouter':
                 $title = 'Creation de votre annonce';
                 break;
+            case 'accept':
+                $title = 'Acceptation d\'une enchère';
+                break;
           }
 
       $content = $this->render('SEPlatformBundle:Advert:validate.html.twig',

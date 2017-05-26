@@ -83,7 +83,7 @@
                   <td class="text-center bold">
                     <h5>
                       {% if auction.state == 1 %}
-                            <a class="se-tbl-link" href="#">Accepter</a>
+                            <a class="se-tbl-link" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id}) }}">Accepter</a>
                       {% elseif auction.state == 2 %}
                             <a class="se-tbl-link" href="#">Evaluer</a>
                           </div>

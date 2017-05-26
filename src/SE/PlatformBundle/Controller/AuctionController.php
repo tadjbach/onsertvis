@@ -215,4 +215,28 @@ class AuctionController extends Controller
             'listState'=>$this->getAuctionState()
           ));
     }
+
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function acceptAction(Request $request, $auctionId){
+      $em = $this->getDoctrineManager();
+      $session = $request->getSession();
+      $user = $this->getUser();
+      $auction=$em->find('SEPlatformBundle:Auction', $auctionId);
+      $advert = $auction->getAdvert();
+
+      if ($auction !== null && $user !== null){
+
+          $auction->setState(2);
+
+          $em->persist($auction);
+          $em->flush();
+
+          $session->getFlashBag()->add('addSuccess','Vous avez bien accepté la proposition à '.$auction->getValue());
+
+          return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'accept'));
+      }
+
+    }
 }
