@@ -25,12 +25,10 @@
                 </div>
               </div>
             <div class="row filter">
-
                 <div class="col-md-3 filter">
                         <select class="form-control"
                                 name="region"
-                                id="region_id"
-                                >
+                                id="region_id" >
                             <option value='0'>Toutes la France</option>
                             {% for region in listRegions %}
                                  <option {{ app.request.query.get('region')== region.id ? ' selected ' : ' ' }}
@@ -39,7 +37,6 @@
                             {% endfor %}
                         </select>
                 </div>
-
                 <div class="col-md-3 filter">
                     <select class="form-control"
                             name="departement"
@@ -52,14 +49,13 @@
                            {% endfor %}
                     </select>
                 </div>
-
                  <div class="col-md-3 filter">
                     <input name="city"
                            type="text"
                            class="form-control"
                            id="city_id"
                            value="{{ app.request.query.get('city') }}"
-                           placeholder="Ville">
+                           placeholder="Ville" >
                 </div>
                 <div class="col-md-3 filter">
                     <input name="postalCode"
@@ -67,7 +63,7 @@
                            class="form-control"
                            id="postalCode_id"
                            value="{{ app.request.query.get('postalCode') }}"
-                           placeholder="Code postal">
+                           placeholder="Code postal" >
                 </div>
             </div>
         </div>

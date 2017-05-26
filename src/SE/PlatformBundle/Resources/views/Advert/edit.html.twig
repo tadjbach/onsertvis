@@ -1,29 +1,29 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Modifier l'annonce {{advert.title}} - {{ parent() }}
+  Modifier l'annonce "{{advert.title}}" - {{ parent() }}
 {% endblock %}
 
 {% block layout_header2 %}
-<div class="row">
-  <div id="header" class="col-md-12">
-    <h3 class="cat-title">Modifier l'annonce {{advert.title}}</h3>
+  <div class="row">
+    <div id="header" class="col-md-12">
+      <h3 class="cat-title">Modifier l'annonce "{{advert.title}}"</h3>
+    </div>
   </div>
-</div>
 {% endblock %}
 {% block layout_body %}
   <div class="row">
       <div id="content" class="col-md-12">
-      {% for flash_message in app.session.flashBag.get('editSuccess') %}
-          <div class="alert alert-success text-center" role="alert">
-              {{ flash_message }}
-          </div>
-      {% endfor %}
-      <div id="content" class="col-md-3"></div>
-         <div id="content" class="col-md-6">
+        {% for flash_message in app.session.flashBag.get('editSuccess') %}
+            <div class="alert alert-success text-center" role="alert">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+        <div id="content" class="col-md-3"></div>
+        <div id="content" class="col-md-6">
            {{ include('SEPlatformBundle:Advert:form.html.twig') }}
-         </div>
-    <div id="content" class="col-md-3"></div>
+        </div>
+        <div id="content" class="col-md-3"></div>
      </div>
-    </div>
+  </div>
 {% endblock %}

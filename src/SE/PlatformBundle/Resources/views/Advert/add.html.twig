@@ -15,16 +15,15 @@
   <div class="row">
        <div id="content" class="col-md-12">
          {% if app.user.isAcountComplete == 0 %}
-               <div class="alert alert-danger" role="alert">
-                   Bonjour {{ app.user.username }}, Votre profil n'est pas complet, merci de le
-                   <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
-               </div>
+             <div class="alert alert-danger" role="alert">
+                 Bonjour {{ app.user.username }}, Votre profil n'est pas complet, merci de le
+                 <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
+             </div>
          {% else %}
-           <div class="col-md-6">
-                           {{ include('SEPlatformBundle:Advert:form.html.twig') }}
-           </div>
+             <div class="col-md-6">
+                   {{ include('SEPlatformBundle:Advert:form.html.twig') }}
+             </div>
          {% endif %}
-
        </div>
-   </div>
+ </div>
 {% endblock %}

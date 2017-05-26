@@ -49,26 +49,6 @@ class AdvertController extends Controller
         $this->state = $request->query->get('state');
     }
 
-    private function getAllAdvertByUser(){
-      $em = $this->getDoctrineManager();
-      $user = $this->getUser();
-
-      $listAdverstByUser=$em->getRepository('SEPlatformBundle:Advert')
-           ->getAdvertByUser(null, null, $user->getId(), 1, 100000);
-
-      return $listAdverstByUser;
-    }
-
-    private function getAdvertByUser($page){
-      $em = $this->getDoctrineManager();
-      $user = $this->getUser();
-
-      $listAdverstByUser=$em->getRepository('SEPlatformBundle:Advert')
-           ->getAdvertByUser($this->advert, $this->state, $user->getId(), $page, $this->nbPerPage);
-
-      return $listAdverstByUser;
-    }
-
     //TODO
     private function getAdvertState(){
         $em = $this->getDoctrineManager();
@@ -133,7 +113,7 @@ class AdvertController extends Controller
             return new Response(null);
         }
 
-        public function getPostalCodeByCityAndDepartementAction(Request $request){
+    public function getPostalCodeByCityAndDepartementAction(Request $request){
                 $em = $this->getDoctrineManager();
 
                 if($request->isXmlHttpRequest())
@@ -177,55 +157,64 @@ class AdvertController extends Controller
                     return new Response(null);
                 }
 
-    /* Action */
-    public function listAction(Request $request, $page)
-    {
+    /*
+    Get Adverts List for se_platform_advert_list route
+    */
+    public function listAction(Request $request, $page){
         $this->getListFilterAttributes($request);
+
         $em = $this->getDoctrineManager();
 
-        $listAdverts = $em
-                    ->getRepository('SEPlatformBundle:Advert')
-                    ->getAllAdverts($this->search,
-                                  $this->category,
-                                  $this->region,
-                                  $this->departement,
-                                  $this->city,
-                                  $this->postalCode,
-                                  $page,
-                                  $this->nbPerPage);
+        $listAdverts = $em->getRepository('SEPlatformBundle:Advert')
+                            ->getAdvertList($this->search,
+                                          $this->category,
+                                          $this->region,
+                                          $this->departement,
+                                          $this->city,
+                                          $this->postalCode,
+                                          $page,
+                                          $this->nbPerPage);
 
         $titleResult = count($listAdverts) == 0 ?'Aucune annonce' :
                 (count($listAdverts) > 1 ? count($listAdverts).' annonces' :
             count($listAdverts).' annonce');
 
-          $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
+        $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
 
         return $this->render('SEPlatformBundle:Advert:list.html.twig',
-                array(
-                    'search'=> $this->search,
-                    'category'=> $this->category,
-                    'region'=> $this->region,
-                    'departement'=> $this->departement,
-                    'city'=> $this->city,
-                    'postalCode'=> $this->postalCode,
-                    'listCategory'=>$this->getCategory(),
-                    'listRegions'=>$this->getRegion(),
-                    'listDepartement'=>$this->getDepartement($this->region),
-                    'titleResult'=>$titleResult,
-                    'nbPages'     => $nbPages,
-                    'page'        => $page,
-                    'listAdverts'=>$listAdverts
-                ));
+            array(
+                'search'=> $this->search,
+                'category'=> $this->category,
+                'region'=> $this->region,
+                'departement'=> $this->departement,
+                'city'=> $this->city,
+                'postalCode'=> $this->postalCode,
+
+                'listCategory'=>$this->getCategory(),
+                'listRegions'=>$this->getRegion(),
+                'listDepartement'=>$this->getDepartement($this->region),
+
+                'titleResult'=>$titleResult,
+                'nbPages'     => $nbPages,
+                'page'        => $page,
+                'advertList'=>$listAdverts
+            ));
     }
 
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function listUserAction(Request $request, $page)
-    {
+    public function listUserAction(Request $request, $page){
+      $em = $this->getDoctrineManager();
+      $user = $this->getUser();
+
       $this->getListUserFilterAttributes($request);
-      $listAdverstByUser = $this->getAdvertByUser($page);
-      $listAdverstByUserFilter = $this->getAllAdvertByUser();
+
+      $listAdverstByUser = $em->getRepository('SEPlatformBundle:Advert')
+           ->getAdvertListByUser($this->advert, $this->state, $user->getId(), $page, $this->nbPerPage);
+
+      $listAdverstByUserFilter = $em->getRepository('SEPlatformBundle:Advert')
+           ->getAdvertByUser($user->getId());
 
       $titleResult = count($listAdverstByUser) == 0 ?'Aucune annonce' :
               (count($listAdverstByUser) > 1 ? count($listAdverstByUser).' annonces' :
@@ -252,12 +241,8 @@ class AdvertController extends Controller
     public function addAction(Request $request){
         $em = $this->getDoctrineManager();
         $session = $request->getSession();
-        // On crée un objet Advert
         $advert = new Advert();
-
         $advert->setUser($this->getUser());
-
-        // On crée le FormBuilder grâce au service form factory
         $form = $this->createForm(AdvertType::class, $advert);
 
         if ($request->isMethod('POST')){
@@ -285,7 +270,6 @@ class AdvertController extends Controller
 
       $em = $this->getDoctrineManager();
       $session = $request->getSession();
-
       $advert=$em->find('SEPlatformBundle:Advert', $id);
 
          if (null===$advert){
@@ -297,11 +281,9 @@ class AdvertController extends Controller
         if ($request->isMethod('POST')){
 
             $form->handleRequest($request);
-
             if ($form->isValid()){
 
                 $advert->setDateUpdate(new \DateTime());
-
                 $em->flush();
 
                 $session->getFlashBag()->add('editSuccess','Annonce modifiée avec succes');
@@ -345,18 +327,16 @@ class AdvertController extends Controller
             return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'supprimer'));
         }
 
-          // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
-          return $this->render('SEPlatformBundle:Advert:delete.html.twig', array(
-              'advert' => $advert,
-              'form'   => $form->createView()
-          ));
+        return $this->render('SEPlatformBundle:Advert:delete.html.twig', array(
+            'advert' => $advert,
+            'form'   => $form->createView()
+        ));
     }
 
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function validateAction($action)
-    {
+    public function validateAction($action){
       switch ($action) {
             case 'supprimer':
                 $title =  "Suppression de votre annonce";
@@ -372,8 +352,8 @@ class AdvertController extends Controller
 
       return $content;
     }
-    public function viewAction($slug, $id)
-    {
+
+    public function viewAction($slug, $id){
       $em = $this->getDoctrineManager();
 
       $advert=$em->find('SEPlatformBundle:Advert', $id);

@@ -12,8 +12,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class AdvertRepository extends \Doctrine\ORM\EntityRepository{
 
-    static public function slugify($text)
-        {
+    static public function slugify($text){
           // replace non letter or digits by -
           $text = preg_replace('~[^\pL\d]+~u', '-', $text);
 
@@ -39,8 +38,10 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
           return $text;
         }
 
-    public function getAllAdverts($title, $category, $region, $departement, $city, $postalCode, $page, $nbPerPage)
-    {
+    /*
+    Get Adverts List for se_platform_advert_list route
+    */
+    public function getAdvertList($title, $category, $region, $departement, $city, $postalCode, $page, $nbPerPage){
         $qb = $this->createQueryBuilder('advert')
                 ->innerJoin('advert.user', 'user')
                 ->addSelect('user')
@@ -96,7 +97,10 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
         return new Paginator($qb, true);
     }
 
-    public function getAdvertByUser($advertId, $advertState, $userId, $page, $nbPerPage){
+    /*
+    Get Adverts List for se_platform_advert_list route
+    */
+    public function getAdvertListByUser($advertId, $advertState, $userId, $page, $nbPerPage){
 
      $qb=$this->createQueryBuilder('advert');
 
@@ -135,5 +139,23 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
         return new Paginator($qb, true);
     }
 
-  
+    /*
+    Get Adverts List for se_platform_advert_list route
+    */
+    public function getAdvertByUser($userId){
+
+     $qb=$this->createQueryBuilder('advert');
+
+        $qb->innerJoin('advert.user', 'user')
+            ->addSelect('user');
+
+        $qb->where($qb->expr()->eq('user.id', $userId))
+            ->andWhere($qb->expr()->eq('advert.isDeleted', 0));
+
+       $qb->OrderBy('advert.auctionState', 'DESC')->getQuery();
+
+       return $qb
+           ->getQuery()
+           ->getResult();
+    }
 }
