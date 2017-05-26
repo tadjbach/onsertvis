@@ -49,18 +49,10 @@ class AdvertController extends Controller
         $this->state = $request->query->get('state');
     }
 
-    //TODO
     private function getAdvertState(){
         $em = $this->getDoctrineManager();
-        //return $em->getRepository('SEPlatformBundle:AdvertState')->findAll();
 
-        $list = array(
-          array('id'=>1, 'labelNormal'=>'Validation en cours'),
-          array('id'=>2, 'labelNormal'=>'En ligne (Enchère en cours)'),
-          array('id'=>3, 'labelNormal'=>'Hors ligne (Enchère terminée)')
-        );
-
-        return $list;
+        return $em->getRepository('SEPlatformBundle:AdvertState')->findAll();
     }
 
     private function getCategory(){
@@ -114,48 +106,48 @@ class AdvertController extends Controller
         }
 
     public function getPostalCodeByCityAndDepartementAction(Request $request){
-                $em = $this->getDoctrineManager();
+        $em = $this->getDoctrineManager();
 
-                if($request->isXmlHttpRequest())
-                {
-                    $city = $request->request->get('city');
-                    $dptId = $request->request->get('departement');
+        if($request->isXmlHttpRequest())
+        {
+            $city = $request->request->get('city');
+            $dptId = $request->request->get('departement');
 
-                    $listPostalCode = $em->getRepository('SEPlatformBundle:PostalCode')
-                                ->getpostalCodeByCityAndDepartement($city, $dptId);
+            $listPostalCode = $em->getRepository('SEPlatformBundle:PostalCode')
+                        ->getpostalCodeByCityAndDepartement($city, $dptId);
 
-                    $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new JsonEncoder()));
+            $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new JsonEncoder()));
 
-                    $json = $serializer->serialize($listPostalCode, 'json');
+            $json = $serializer->serialize($listPostalCode, 'json');
 
-                    return new Response($json);
-                }
+            return new Response($json);
+        }
 
-                return new Response(null);
+        return new Response(null);
+    }
+
+    public function getPostalCodeByCityAction(Request $request){
+            $em = $this->getDoctrineManager();
+
+            if($request->isXmlHttpRequest())
+            {
+                $city = $request->request->get('city');
+                $dptId = $request->request->get('departement');
+
+                $listPostalCode = $em
+                            ->getRepository('SEPlatformBundle:PostalCode')
+                            ->getCpByRegionAndDpt($city, $dptId);
+
+                $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new
+    JsonEncoder()));
+
+                $json = $serializer->serialize($listPostalCode, 'json');
+
+                return new Response($json);
             }
 
-            public function getPostalCodeByCityAction(Request $request){
-                    $em = $this->getDoctrineManager();
-
-                    if($request->isXmlHttpRequest())
-                    {
-                        $city = $request->request->get('city');
-                        $dptId = $request->request->get('departement');
-
-                        $listPostalCode = $em
-                                    ->getRepository('SEPlatformBundle:PostalCode')
-                                    ->getCpByRegionAndDpt($city, $dptId);
-
-                        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new
-            JsonEncoder()));
-
-                        $json = $serializer->serialize($listPostalCode, 'json');
-
-                        return new Response($json);
-                    }
-
-                    return new Response(null);
-                }
+            return new Response(null);
+        }
 
     /*
     Get Adverts List for se_platform_advert_list route

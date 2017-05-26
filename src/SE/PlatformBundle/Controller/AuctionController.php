@@ -33,18 +33,9 @@ class AuctionController extends Controller
         $this->state = $request->query->get('state');
     }
 
-    //TODO
     private function getAuctionState(){
         $em = $this->getDoctrineManager();
-        //return $em->getRepository('SEPlatformBundle:AuctionReceiveState')->findAll();
-
-        $list = array(
-          array('id'=>1, 'labelNormal'=>'En cours'),
-          array('id'=>2, 'labelNormal'=>'Acceptée'),
-          array('id'=>3, 'labelNormal'=>'Déclinée')
-        );
-
-        return $list;
+        return $em->getRepository('SEPlatformBundle:AuctionState')->findAll();
     }
 
     public function getNbAuctionAction($advertId){
