@@ -105,7 +105,7 @@ se_platform_auction_add:
         advertId: \d+
 
 se_platform_auction_accept:
-    path:     /enchere/accepter-enchere/{auctionId}
+    path:     /enchere/accepter-enchere/{auctionId}{state}
     defaults:
         _controller: SEPlatformBundle:Auction:accept
 

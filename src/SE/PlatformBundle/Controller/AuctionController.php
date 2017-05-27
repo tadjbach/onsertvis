@@ -219,24 +219,32 @@ class AuctionController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function acceptAction(Request $request, $auctionId){
+    public function acceptAction(Request $request, $auctionId, $state){
+
+
       $em = $this->getDoctrineManager();
       $session = $request->getSession();
       $user = $this->getUser();
-      $auction=$em->find('SEPlatformBundle:Auction', $auctionId);
-      $advert = $auction->getAdvert();
+      $auctionAccept = $em->find('SEPlatformBundle:Auction', $auctionId);
+      $advert = $auctionAccept->getAdvert();
 
-      if ($auction !== null && $user !== null){
+      $auctionRefuse = $em->getRepository('SEPlatformBundle:Auction')->findBy(array('advert' => $advert));
 
-          $auction->setState(2);
+      if ($auctionAccept !== null && $user !== null){
 
-          $em->persist($auction);
+          foreach($auctionRefuse as $auct_refus) {
+            $statusRefus = $state == 2 ? 3 : 1;
+            $auct_refus->setState($statusRefus);
+          }
+
+          $auctionAccept->setState($state);
+
+          $em->persist($auctionAccept);
           $em->flush();
 
-          $session->getFlashBag()->add('addSuccess','Vous avez bien accepté la proposition à '.$auction->getValue());
+          $session->getFlashBag()->add('addSuccess','Vous avez bien accepté la proposition à '.$auctionAccept->getValue());
 
           return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'accept'));
       }
-
     }
 }

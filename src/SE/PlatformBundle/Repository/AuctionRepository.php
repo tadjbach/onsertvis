@@ -250,4 +250,18 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
 
           return new Paginator($qb, true);
     }
+
+    public function getAuctionByAdvert($advertId, $auctionId){
+      $qb=$this->createQueryBuilder('auction');
+
+      $qb->innerJoin('auction.advert', 'advert')
+          ->addSelect('advert');
+
+          $qb->where($qb->expr()->eq('advert.id', $advertId));
+          $qb->andWhere($qb->expr()->neq('auction.id', $auctionId));
+
+          return $qb
+              ->getQuery()
+              ->getResult();
+    }
 }
