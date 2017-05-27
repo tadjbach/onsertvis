@@ -12,21 +12,39 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class MessageRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getMessageByAdvert($advertId, $recieveId,  $page, $nbPerPage)
+    public function getMessageByAdvert($advertId, $userId, $state, $page, $nbPerPage)
     {
          $qb = $this->createQueryBuilder('message')
-            ->leftJoin('message.advert', 'advert')
-            ->addSelect('advert')
-            ->leftJoin('message.sender', 'sender')
-            ->addSelect('sender')
-            ->leftJoin('message.receiver', 'receiver')
-            ->addSelect('receiver')
-            ->add('groupBy', 'sender.id');
+                    ->leftJoin('message.advert', 'advert')
+                    ->addSelect('advert')
+                    ->leftJoin('message.sender', 'sender')
+                    ->addSelect('sender')
+                    ->leftJoin('advert.user', 'receiver')
+                    ->addSelect('receiver');
 
-        $qb->where($qb->expr()->eq('advert.id', $advertId))
-            ->andWhere($qb->expr()->neq('sender.id', $recieveId)) // not equals
-            ->andWhere($qb->expr()->eq('message.isPublished', 1))
-            ->andWhere($qb->expr()->eq('message.isDeleted', 0));
+        $qb->where($qb->expr()->eq('message.isPublished', 1))
+            ->andWhere($qb->expr()->eq('message.isDeleted', 0))
+            ->andWhere($qb->expr()->eq('sender.id', $userId))
+            ->orWhere($qb->expr()->eq('receiver.id', $userId))
+            ->add('groupBy', 'advert.id');
+
+        if($advertId !== NULL && $advertId !== '0')
+        {
+            $qb->andWhere($qb->expr()->eq('advert.id', $advertId));
+        }
+
+        if($state !== NULL && $state !== '0')
+        {
+          if ($state == 1) {
+              $qb->andWhere($qb->expr()->eq('sender.id', $userId))
+              ->andWhere($qb->expr()->neq('receiver.id', $userId));
+          }
+          else{
+            $qb->andWhere($qb->expr()->neq('sender.id', $userId))
+            ->andWhere($qb->expr()->eq('receiver.id', $userId));
+          }
+
+        }
 
         $qb->addOrderBy('message.dateCreation', 'DESC')->getQuery();
 

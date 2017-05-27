@@ -24,13 +24,6 @@ class Message
     protected $sender;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SE\PlatformBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_receiver", referencedColumnName="id", nullable=false)
-     * @Assert\Valid()
-     */
-    protected $receiver;
-
-    /**
      * @ORM\ManyToOne(targetEntity="SE\PlatformBundle\Entity\Advert")
      * @Assert\Valid()
      */
@@ -242,30 +235,6 @@ class Message
     public function getSender()
     {
         return $this->sender;
-    }
-
-    /**
-     * Set receiver
-     *
-     * @param \SE\PlatformBundle\Entity\User $receiver
-     *
-     * @return Message
-     */
-    public function setReceiver(\SE\PlatformBundle\Entity\User $receiver)
-    {
-        $this->receiver = $receiver;
-
-        return $this;
-    }
-
-    /**
-     * Get receiver
-     *
-     * @return \SE\PlatformBundle\Entity\User
-     */
-    public function getReceiver()
-    {
-        return $this->receiver;
     }
 
     /**

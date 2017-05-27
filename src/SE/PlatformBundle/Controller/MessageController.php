@@ -14,43 +14,21 @@ use SE\PlatformBundle\Entity\Message;
 class MessageController extends Controller
 {
     /* PRIVATE VAR */
+    private $nbPerPage = 30;
     private $em;
     private $advert;
+    private $state;
 
     /* PRIVATE FUNCTION */
     private function getDoctrineManager(){
       return $this->getDoctrine()->getManager();
     }
 
-    private function getListUserFilterAttributes(Request $request){
-        $this->advert = $request->query->get('advert');
+    private function getMessageState(){
+        $em = $this->getDoctrineManager();
+        return $em->getRepository('SEPlatformBundle:MessageState')->findAll();
     }
 
-    private function getAdvertByUser(){
-      $em = $this->getDoctrineManager();
-      $user;
-      //return $em->getRepository('SEPlatformBundle:Advert')->findByUser($user);
-
-      $list = array(
-        array('id'=>1, 'title'=>'Mon annonce 1', 'state'=>1),
-        array('id'=>2, 'title'=>'Mon annonce 2', 'state'=>1),
-        array('id'=>3, 'title'=>'Mon annonce 3', 'state'=>2)
-      );
-      return $list;
-    }
-
-    private function getAdvertByMessage(){
-      $em = $this->getDoctrineManager();
-      $user;
-      //return $em->getRepository('SEPlatformBundle:Advert')->findByUser($user);
-
-      $list = array(
-        array('id'=>1, 'title'=>'Mon annonce 1', 'state'=>1),
-        array('id'=>2, 'title'=>'Mon annonce 2', 'state'=>1),
-        array('id'=>3, 'title'=>'Mon annonce 3', 'state'=>2)
-      );
-      return $list;
-    }
     /* PUBLIC FUNCTION */
 
     /**
@@ -62,13 +40,11 @@ class MessageController extends Controller
 
         $advert = $em->find('SEPlatformBundle:Advert', $advertId);
         $userSender = $this->getUser();
-        $userReceive = $em->find('SEPlatformBundle:User', $advert->getUser());
 
         $message = new Message();
 
         $message->setSender($userSender);
         $message->setAdvert($advert);
-        $message->setReceiver($userReceive);
 
         $form = $this->createForm(MessageType::class, $message);
 
@@ -91,17 +67,23 @@ class MessageController extends Controller
         ));
     }
 
-//Admin
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function editAction($id){
 
     }
 
-//Admin
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function deleteAction($id){
 
     }
 
-//Admin
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function viewAction($slug, $id)
     {
 
@@ -113,14 +95,43 @@ class MessageController extends Controller
 
     }
 
-//Admin
-    public function listUserAction(Request $request)
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function listUserAction(Request $request, $page)
     {
+      $advertId = $request->query->get('advert');
+      $state = $request->query->get('state');
+
+      $em = $this->getDoctrineManager();
+      $user = $this->getUser();
+
+      $listAdverstByUserFilter = $em->getRepository('SEPlatformBundle:Advert')
+           ->getAdvertByUser($user->getId());
+
+      $listAdvertsByAuctionFilter = $em->getRepository('SEPlatformBundle:Auction')
+                  ->getAdvertByUser($user->getId());
+
+      $listMessageByAdvert = $em->getRepository('SEPlatformBundle:Message')
+           ->getMessageByAdvert($advertId, $user->getId(), $state, $page, $this->nbPerPage);
+
+     $countMessage = count($listMessageByAdvert) <= 1 ? count($listMessageByAdvert).' message' : count($listMessageByAdvert).' messages';
+     $nbPages = ceil(count($listMessageByAdvert)/$this->nbPerPage);
+
+       if ($page<1){
+           throw new NotFoundHttpException('page"'.$page.'" inexistante');
+       }
+
       return $this->render('SEPlatformBundle:Message:listUser.html.twig',
       array(
-        'advert'=> $this->advert,
-        'listAdvertUser'=>$this->getAdvertByUser(),
-        'listAdvertMessage'=>$this->getAdvertByMessage()
+        'listState'=>$this->getMessageState(),
+        'advert'=> $advertId,
+        'countMessage'=>$countMessage,
+        'nbPages'     => $nbPages,
+        'page'        => $page,
+        'listAdvertUser'=>$listAdverstByUserFilter,
+        'listAdvertAuction'=>$listAdvertsByAuctionFilter,
+        'listMessage'=>$listMessageByAdvert
       ));
     }
 }

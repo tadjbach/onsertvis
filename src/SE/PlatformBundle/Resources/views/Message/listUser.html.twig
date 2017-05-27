@@ -16,7 +16,58 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         Mes messages
+        <h4 class="cat-title">{{countMessage}}</h4>
+        <table class="table" id="tblGrid">
+                      <thead id="tblHead">
+                          <tr>
+                              <th>Demandeur</th>
+                              <th>Annonce</th>
+                              <th>Date</th>
+                              <th>Détail</th>
+                          </tr>
+                      </thead>
+                       <tbody>
+                           {% for msg in listMessage %}
+                               <tr>
+                                   <td class='text-left'>
+                                     <h5>
+                                       {% if app.user != msg.sender %}
+                                           <a href="{{ path('se_platform_user_view', {'userId': msg.sender.id}) }}" class="se-tbl-link" >
+                                               {{ msg.sender }}
+                                           </a>
+                                           <br>
+                                           {{ include('@SEPlatform/User/rate.html.twig', {'item': msg.sender }) }}
+                                       {% else  %}
+                                            <span class="se-tbl-link">{{ msg.sender }}</span>
+                                       {% endif %}
+
+                                     </h5>
+                                   </td>
+                                   <td>
+                                       <h5>
+                                           <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': msg.advert.slug,'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
+                                       </h5>
+                                   </td>
+                                   <td class='text-center'>
+                                     <h5>
+                                         {{ msg.dateCreation|date('d/m/Y') }} à
+                                         {{ msg.dateCreation|date('H:i:s') }}
+                                     </h5>
+                                   </td>
+                                   <td>
+                                        <p>
+                                        <a href="#" class="btn btn-success">
+                                        <i class="glyphicon glyphicon-comment"></i>
+                                            Voir
+                                        </a>
+                                        </p>
+                                    </td>
+                               </tr>
+                           {% else %}
+                               <div>Pas (encore !) de messages</div>
+                           {% endfor %}
+                    </tbody>
+                    </table>
        </div>
    </div>
 {% endblock %}

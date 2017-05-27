@@ -51,7 +51,6 @@ class AdvertController extends Controller
 
     private function getAdvertState(){
         $em = $this->getDoctrineManager();
-
         return $em->getRepository('SEPlatformBundle:AdvertState')->findAll();
     }
 
