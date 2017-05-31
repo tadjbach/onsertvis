@@ -97,17 +97,18 @@ class MessageController extends Controller
 
     }
 
-    public function listConversationAction($advertId, $senderId, $receiverId){
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function listSendConversationAction($advertId, $receiverId){
       $em = $this->getDoctrineManager();
       $advert=$em->find('SEPlatformBundle:Advert', $advertId);
-      $sender=$em->find('SEPlatformBundle:User', $senderId);
-      $receiver=$em->find('SEPlatformBundle:User', $receiverId);
-
+      $sender = $this->getUser();
 
        $listConversation = $this->getDoctrine()
            ->getManager()
            ->getRepository('SEPlatformBundle:Message')
-           ->getConversation($advertId, $senderId, $senderId);
+           ->getConversationSender($advertId, $sender->getId(), $receiverId);
 
        $countMessage = count($listConversation) <= 1 ? count($listConversation).' message'
                : count($listConversation).' messages';
@@ -117,7 +118,34 @@ class MessageController extends Controller
            'countMessage'=> $countMessage,
            'advert'=>$advert,
            'advertId'=>$advertId,
-           'senderId'=>$senderId,
+           'senderId'=>$sender->getId(),
+           'receiveId'=>$receiverId
+       ));
+    }
+
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function listReceiveConversationAction($advertId, $senderId){
+      $em = $this->getDoctrineManager();
+      $advert=$em->find('SEPlatformBundle:Advert', $advertId);
+      $receiver = $this->getUser();
+
+
+       $listConversation = $this->getDoctrine()
+           ->getManager()
+           ->getRepository('SEPlatformBundle:Message')
+           ->getConversationReceive($advertId, $senderId, $receiver->getId());
+
+       $countMessage = count($listConversation) <= 1 ? count($listConversation).' message'
+               : count($listConversation).' messages';
+
+       return $this->render('SEPlatformBundle:Message:conversation.html.twig', array(
+           'listConversation'     => $listConversation,
+           'countMessage'=> $countMessage,
+           'advert'=>$advert,
+           'advertId'=>$advertId,
+           'senderId'=>$receiver->getId(),
            'receiveId'=>$senderId
        ));
     }

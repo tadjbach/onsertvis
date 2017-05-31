@@ -18,14 +18,18 @@
         <h4 class="cat-title">{{countMessage}}</h4>
         <table class="table" id="tblGrid">
                         <tbody>
-                          <a href="{{ path('se_platform_message_add',
-                                    {'advertSlug': advert.slug,
-                                      'advertId': advertId,
-                                      'senderId': senderId,
-                                      'receiveId': receiveId
-                          }) }}" class="">
-                              Réponde
-                          </a>
+                          <div class='col-md-12'>
+                            <h5>
+                                <a href="{{ path('se_platform_message_add',
+                                          {'advertSlug': advert.slug,
+                                            'advertId': advertId,
+                                            'senderId': senderId,
+                                            'receiveId': receiveId
+                                }) }}" class="btn se-btn-action">
+                                    Réponde
+                                </a>
+                            </h5>
+                          </div>
                              {% for conversation in listConversation %}
                             <div class='col-md-12'>
                                 <div class='panel panel-default'>

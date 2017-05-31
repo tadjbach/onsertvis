@@ -127,8 +127,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($qb, true);
     }
 
-    public function getMessageSender($advertId, $advertState, $userId, $page, $nbPerPage)
-    {
+    public function getMessageSender($advertId, $advertState, $userId, $page, $nbPerPage){
       $qb = $this->createQueryBuilder('message')
       ->leftJoin('message.advert', 'advert')
       ->addSelect('advert')
@@ -177,8 +176,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
       return new Paginator($qb, true);
     }
 
-  public function getMessageReceive($advertId, $advertState, $userId, $page, $nbPerPage)
-    {
+  public function getMessageReceive($advertId, $advertState, $userId, $page, $nbPerPage){
         $qb = $this->createQueryBuilder('message')
         ->leftJoin('message.advert', 'advert')
         ->addSelect('advert')
@@ -227,8 +225,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($qb, true);
     }
 
-    public function getCountMessage($advertId)
-    {
+    public function getCountMessage($advertId){
         $qb = $this->createQueryBuilder('message');
 
          $qb->leftJoin('message.advert', 'advert')
@@ -245,61 +242,55 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getConversationRecive($advertId, $userSenderId, $userReceiverId)
-    {
-        $qb = $this->createQueryBuilder('message');
+    public function getConversationReceive($advertId, $userSenderId, $userReceiverId){
+      $qb = $this->createQueryBuilder('message');
 
-        $qb = $this->createQueryBuilder('message')
-           ->leftJoin('message.advert', 'advert')
-           ->addSelect('advert')
+      $qb = $this->createQueryBuilder('message')
+         ->leftJoin('message.advert', 'advert')
+         ->addSelect('advert')
 
-           ->leftJoin('message.sender', 'sender')
-           ->addSelect('sender')
-           ->leftJoin('message.receiver', 'receiver')
-           ->addSelect('receiver')
-           ->andWhere($qb->expr()->eq('message.isDeleted', 0));
+         ->leftJoin('message.sender', 'sender')
+         ->addSelect('sender')
+         ->leftJoin('message.receiver', 'receiver')
+         ->addSelect('receiver')
+         ->andWhere($qb->expr()->eq('message.isDeleted', 0));
 
+      $qb->andWhere("sender.id = ".$userSenderId." OR receiver.id = ".$userSenderId);
+      $qb->andWhere("sender.id = ".$userReceiverId." OR receiver.id = ".$userReceiverId);
 
-        $qb->andWhere($qb->expr()->eq('sender.id', $userSenderId));
-        $qb->orWhere($qb->expr()->eq('receiver.id', $userSenderId));
+       $qb->andWhere($qb->expr()->eq('advert.id', $advertId));
 
-        $qb->andWhere($qb->expr()->eq('receiver.id', $userReceiverId));
-        $qb->orWhere($qb->expr()->eq('sender.id', $userReceiverId));
+      $qb->orderBy('message.dateCreation', 'DESC')->getQuery();
+
+      return $qb
+          ->getQuery()
+          ->getResult();
+    }
+
+    public function getConversationSender($advertId, $userSenderId, $userReceiverId){
+      $qb = $this->createQueryBuilder('message');
+
+      $qb = $this->createQueryBuilder('message')
+         ->leftJoin('message.advert', 'advert')
+         ->addSelect('advert')
+
+         ->leftJoin('message.sender', 'sender')
+         ->addSelect('sender')
+         ->leftJoin('message.receiver', 'receiver')
+         ->addSelect('receiver')
+         ->andWhere($qb->expr()->eq('message.isDeleted', 0));
 
          $qb->andWhere($qb->expr()->eq('advert.id', $advertId));
+
+         $qb->andWhere("sender.id = ".$userSenderId." OR receiver.id = ".$userSenderId);
+         $qb->andWhere("sender.id = ".$userReceiverId." OR receiver.id = ".$userReceiverId);
+
+         $qb->andWhere($qb->expr()->neq('advert.user', $userSenderId));
 
         $qb->orderBy('message.dateCreation', 'DESC')->getQuery();
 
         return $qb
             ->getQuery()
             ->getResult();
-    }
-
-    public function getConversationSender($userSenderId, $page, $nbPerPage)
-    {
-        $qb = $this->createQueryBuilder('message');
-
-        $qb = $this->createQueryBuilder('message')
-
-           ->leftJoin('message.advert', 'advert')
-           ->addSelect('advert')
-
-           ->leftJoin('message.sender', 'sender')
-           ->addSelect('sender')
-            ->add('groupBy', 'sender.id')
-           ->andWhere($qb->expr()->eq('message.isDeleted', 0));
-
-
-        $qb->andWhere($qb->expr()->eq('sender.id', $userSenderId));
-        $qb->andWhere($qb->expr()->neq('advert.user', $userSenderId));
-
-        $qb->orderBy('message.dateCreation', 'DESC')->getQuery();
-
-        $qb->getQuery();
-
-            $qb->setFirstResult(($page-1) * $nbPerPage)
-            ->setMaxResults($nbPerPage);
-
-        return new Paginator($qb, true);
     }
 }

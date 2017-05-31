@@ -164,10 +164,15 @@ se_platform_message_user_send:
     requirements:
         page: \d*
 
-se_platform_message_advert_list:
-    path:     /message-recues/{advertId}_{senderId}_{receiverId}
+se_platform_message_advert_send:
+    path:     /message-envoyes/{advertId}_{receiverId}
     defaults:
-        _controller: SEPlatformBundle:Message:listConversation
+        _controller: SEPlatformBundle:Message:listSendConversation
+
+se_platform_message_advert_receive:
+    path:     /message-recues/{advertId}_{senderId}
+    defaults:
+        _controller: SEPlatformBundle:Message:listReceiveConversation
 
 # Comment Routes :
 se_platform_comment_add:
