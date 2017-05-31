@@ -81,7 +81,9 @@ html, body{
   color: #2A0540;
   text-decoration: underline;
 }
-
+.navbar-nav .dropdown-menu .caret {
+ transform: rotate(-90deg);
+   }
 .dropdown-menu>li>a:hover,
 .dropdown-menu>li>a:focus{
     background-color:#fff;

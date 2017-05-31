@@ -1,0 +1,51 @@
+{% extends "SEPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Conversations pour le demande {{advert.title}} - {{ parent() }}
+{% endblock %}
+
+{% block layout_header2 %}
+<div class="row">
+  <div id="header" class="col-md-12">
+    <h3 class="cat-title">Conversations pour le demande {{advert.title}}</h3>
+  </div>
+</div>
+{% endblock %}
+
+{% block layout_body %}
+  <div class="row">
+       <div id="content" class="col-md-12">
+        <h4 class="cat-title">{{countMessage}}</h4>
+        <table class="table" id="tblGrid">
+                        <tbody>
+                          <a href="{{ path('se_platform_message_add',
+                                    {'advertSlug': advert.slug,
+                                      'advertId': advertId,
+                                      'senderId': senderId,
+                                      'receiveId': receiveId
+                          }) }}" class="">
+                              Réponde
+                          </a>
+                             {% for conversation in listConversation %}
+                            <div class='col-md-12'>
+                                <div class='panel panel-default'>
+                                    <div class='panel-heading se-panel-heading'>
+                                        <h4 class='panel-title text-left'>{{ conversation.sender }}</h4>
+                                        <h4 class='panel-title text-right'><i>{{ conversation.dateCreation|date('d/m/Y') }} à {{ conversation.dateCreation|date('H:i:s') }}</i></h4>
+                                    </div>
+                                    <div class='panel-body'>
+                                        <div class="caption">
+                                            <p>{{ conversation.content |nl2br }}</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div>Pas (encore !) de messages</div>
+                        {% endfor %}
+                     </tbody>
+                     </table>
+       </div>
+   </div>
+{% endblock %}

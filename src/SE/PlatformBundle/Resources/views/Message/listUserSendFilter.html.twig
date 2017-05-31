@@ -7,28 +7,19 @@
                                 name="advert"
                                 id="advert_id" >
                             <option value='0' >Toutes les annonces</option>
-                            <optgroup label="Mes annonces">
-                              {% for advert in listAdvertUser %}
-                                  <option {{ app.request.query.get('advert')== advert.id ? ' selected ' : ' ' }}
-                                      value={{ advert.id }}>{{ advert.title }}
+
+                              {% for item in listAdvert %}
+                                  <option {{ app.request.query.get('advert')== item.advert.id ? ' selected ' : ' ' }}
+                                      value={{ item.advert.id }}>{{ item.advert.title }}
                                   </option>
                               {% endfor %}
-                          </optgroup>
-                            <optgroup label="Mes demandes d'information">
-                            {% for auction in listAdvertAuction %}
-                                <option {{ app.request.query.get('advert')== auction.advert.id ? ' selected ' : ' ' }}
-                                    value={{ auction.advert.id }}>{{ auction.advert.title }}
-                                </option>
-                            {% endfor %}
-                            </optgroup>
                         </select>
                 </div>
-
                 <div class="col-md-3 filter">
                         <select class="form-control"
                                 name="state"
                                 id="state_id" >
-                            <option value='0'>Tous les messages</option>
+                            <option value='0'>Tous les états</option>
                             {% for state in listState %}
                                  <option {{ app.request.query.get('state')== state.id ? ' selected ' : ' ' }}
                                     value={{ state.id }}>{{ state.labelNormal }}
@@ -36,12 +27,11 @@
                             {% endfor %}
                         </select>
                 </div>
-
                 <div class="col-md-3 filter">
                     <input class="btn btnIcon-search" type="submit" value="Afficher"  />
                 </div>
                 <div class="col-md-3 filter">
-                  <a href="{{ path('se_platform_message_user_list') }}"
+                  <a href="{{ path('se_platform_message_user_send') }}"
                             type="button" class="btn btnIcon-search" >
                              Réinitialiser
                   </a>

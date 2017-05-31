@@ -39,9 +39,20 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ path('se_platform_advert_user_list') }}">Mes annonces</a></li>
-                                <li><a href="{{ path('se_platform_auction_user_receive') }}">Enchères reçues</a></li>
-                                <li><a href="{{ path('se_platform_auction_user_send') }}">Enchères proposées</a></li>
-                                <li><a href="{{ path('se_platform_message_user_list') }}">Mes messages</a></li>
+                                <li>
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mes enchères<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                      <li><a href="{{ path('se_platform_auction_user_receive') }}">Enchères reçues</a></li>
+                                      <li><a href="{{ path('se_platform_auction_user_send') }}">Enchères proposées</a></li>
+                                    </ul>
+                                  </li>
+                                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Mes messages<b class="caret"></b></a>
+                                  <ul class="dropdown-menu">
+                                    <li><a href="{{ path('se_platform_message_user_receive') }}">Messages reçus</a></li>
+                                    <li><a href="{{ path('se_platform_message_user_send') }}">Messages envoyés</a></li>
+                                  </ul>
+                                </li>
+                                </li>
                                   <li><a href="{{ path('se_platform_comment_user_list') }}">Mes avis</a></li>
                                 <li><a href="{{ path('se_platform_user_edit') }}" >Mon compte</a></li>
                                 <li role="separator" class="divider"></li>

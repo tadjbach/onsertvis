@@ -111,7 +111,7 @@ se_platform_auction_accept:
 
 # Message Routes :
 se_platform_message_add:
-    path:   /envoyer-message/{advertSlug}_{advertId}
+    path:   /envoyer-message/{advertSlug}_{advertId}_{receiveId}
     defaults:
         _controller: SEPlatformBundle:Message:add
     requirements:
@@ -147,6 +147,27 @@ se_platform_message_user_list:
         page:   1
     requirements:
         page: \d*
+
+se_platform_message_user_receive:
+    path:   /mes-messages-recues/{page}
+    defaults:
+        _controller: SEPlatformBundle:Message:userReceiveList
+        page:   1
+    requirements:
+        page: \d*
+
+se_platform_message_user_send:
+    path:   /mes-messages-envoyes/{page}
+    defaults:
+        _controller: SEPlatformBundle:Message:userSendList
+        page:   1
+    requirements:
+        page: \d*
+
+se_platform_message_advert_list:
+    path:     /message-recues/{advertId}_{senderId}_{receiverId}
+    defaults:
+        _controller: SEPlatformBundle:Message:listConversation
 
 # Comment Routes :
 se_platform_comment_add:
