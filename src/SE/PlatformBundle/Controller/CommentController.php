@@ -5,12 +5,16 @@ namespace SE\PlatformBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use SE\PlatformBundle\Entity\Comment;
+use SE\PlatformBundle\Form\CommentType;
 
 class CommentController extends Controller
 {
     /* PRIVATE VAR */
+    private $nbPerPage = 30;
     private $em;
-    private $advert;
+    private $state;
 
     /* PRIVATE FUNCTION */
     private function getDoctrineManager(){
@@ -18,70 +22,165 @@ class CommentController extends Controller
     }
 
     private function getListUserFilterAttributes(Request $request){
-        $this->advert = $request->query->get('advert');
+        $this->state = $request->query->get('state');
     }
 
-    private function getAdvertByUser(){
+    private function getCommentState(){
       $em = $this->getDoctrineManager();
-      $user;
-      //return $em->getRepository('SEPlatformBundle:Advert')->findByUser($user);
-
-      $list = array(
-        array('id'=>1, 'title'=>'Mon annonce 1', 'state'=>1),
-        array('id'=>2, 'title'=>'Mon annonce 2', 'state'=>1),
-        array('id'=>3, 'title'=>'Mon annonce 3', 'state'=>2)
-      );
-      return $list;
-    }
-
-    private function getAdvertByComment(){
-      $em = $this->getDoctrineManager();
-      $user;
-      //return $em->getRepository('SEPlatformBundle:Advert')->findByUser($user);
-
-      $list = array(
-        array('id'=>1, 'title'=>'Mon annonce 1', 'state'=>1),
-        array('id'=>2, 'title'=>'Mon annonce 2', 'state'=>1),
-        array('id'=>3, 'title'=>'Mon annonce 3', 'state'=>2)
-      );
-      return $list;
+      return $em->getRepository('SEPlatformBundle:CommentState')->findAll();
     }
     /* PUBLIC FUNCTION */
 
-//Admin
-    public function addAction(Request $request){
-    }
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+     public function addAction(Request $request, $advertId, $auctionUserId){
 
-//Admin
-    public function editAction($id){
+         $em = $this->getDoctrineManager();
+         $session = $request->getSession();
 
-    }
+         $advert=$em->find('SEPlatformBundle:Advert', $advertId);
+         $userReceiver = $em->find('SEPlatformBundle:User', $auctionUserId);
 
-//Admin
+         $userSender = $this->getUser();
+
+         $comment = new Comment();
+
+         $form = $this->createForm(CommentType::class, $comment);
+
+         if ($request->isMethod('POST')){
+             $form->handleRequest($request);
+
+             if ($form->isValid()){
+
+                   $rate = $comment->getRate();
+
+                   $listComment = $em
+                               ->getRepository('SEPlatformBundle:Comment')
+                               ->getComment($userReceiver->getId(), false);
+                   $countComment = count($listComment) + 1;
+
+                   foreach ($listComment as $item) {
+                       $rate = $rate + $item->getRate();
+                   }
+
+                   $rate = $rate / $countComment;
+
+                   $userReceiver->setRate(round($rate));
+
+                   $comment->setSender($userSender);
+                   $comment->setAdvert($advert);
+                   $comment->setReceiver($userReceiver);
+
+                   $em->persist($comment);
+                   $em->flush();
+
+                   $session->getFlashBag()->add('addSuccess','Commentaire bien envoyé.');
+
+                   return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+                 }
+         }
+
+         return $this->render('SEPlatformBundle:Comment:add.html.twig', array(
+             'form' => $form->createView()
+         ));
+     }
+
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+     public function editAction($id, Request $request){
+
+       $em = $this->getDoctrineManager();
+       $session = $request->getSession();
+       $comment=$em->find('SEPlatformBundle:Comment', $id);
+       $userReceiver = $em->find('SEPlatformBundle:User', $comment->getReceiver()->getId());
+
+       if (null===$comment or null===$userReceiver){
+             throw new NotFoundHttpException("Oops, L avis  que vous cherchez n'existe pas.");
+         }
+
+         $form = $this->createForm(CommentType::class, $comment);
+
+         if ($request->isMethod('POST')){
+
+             $form->handleRequest($request);
+             if ($form->isValid()){
+
+               $rate = $comment->getRate();
+
+               $listComment = $em
+                           ->getRepository('SEPlatformBundle:Comment')
+                           ->getComment($userReceiver->getId(), false);
+               $countComment = count($listComment) + 1;
+
+               foreach ($listComment as $item) {
+                   $rate = $rate + $item->getRate();
+               }
+
+               $rate = $rate / $countComment;
+
+               $userReceiver->setRate(round($rate));
+
+                 $comment->setDateUpdate(new \DateTime());
+                 $em->flush();
+
+                 $session->getFlashBag()->add('editSuccess','Avis modifié avec succes');
+
+                 return $this->redirectToRoute('se_platform_comment_edit',
+                             array('id'=>$comment->getId()));
+             }
+         }
+
+         return $this->render('SEPlatformBundle:Comment:edit.html.twig', array(
+             'form' => $form->createView(),
+             'comment'=>$comment
+         ));
+     }
+
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function deleteAction($id){
 
     }
 
-//Admin
     public function viewAction($slug, $id)
     {
 
     }
 
-//Super ADMIN
     public function listAction(Request $request)
     {
 
     }
 
-//Admin
-    public function listUserAction(Request $request)
-    {
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function listUserAction(Request $request, $page){
+        $user = $this->getUser();
+        $this->getListUserFilterAttributes($request);
+
+        $listComment = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('SEPlatformBundle:Comment')
+            ->getCommentListUser($user->getId(), $this->state, $page, $this->nbPerPage);
+
+        $nbPages = ceil(count($listComment)/$this->nbPerPage);
+
+        if ($page<1){
+            throw new NotFoundHttpException('page"'.$page.'" inexistante');
+        }
+
       return $this->render('SEPlatformBundle:Comment:listUser.html.twig',
       array(
-        'advert'=> $this->advert,
-        'listAdvertUser'=>$this->getAdvertByUser(),
-        'listAdvertComment'=>$this->getAdvertByComment()
+        'nbPages'     => $nbPages,
+        'page'        => $page,
+        'listComment'=> $listComment,
+        'countComment'=> count($listComment),
+        'state'=> $this->state,
+        'listCommentState'=>$this->getCommentState()
       ));
     }
 }

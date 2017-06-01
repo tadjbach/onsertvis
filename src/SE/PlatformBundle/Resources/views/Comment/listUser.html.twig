@@ -16,7 +16,57 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         Mes commentaires
+         <h4 class="cat-title">{{countComment}} avis</h4>
+              {% for comment in listComment %}
+              <div class='col-md-8'>
+                  <div class='panel panel-default'>
+                      <div class='panel-heading se-panel-heading'>
+                          <h4 class='panel-title text-left'>{{ comment.sender }}
+                              {{ include('@SEPlatform/User/rate.html.twig', {'item': comment.sender }) }}
+                          </h4>
+                          <h4 class='panel-title text-right'><i>{{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:i:s') }}</i></h4>
+                      </div>
+                      <div class='panel-body'>
+                          <div class="caption">
+                              <p>{{ comment.content |nl2br }}</p>
+                          </div>
+
+                      </div>
+                  </div>
+              </div>
+               {% if app.user == comment.sender %}
+                    <div class='col-md-4'>
+                      <a href="{{ path('se_platform_comment_edit', {'id': comment.id}) }}"
+                      type="button"
+                      class='btn btn-success'
+                      title="Modifier">
+                      <i class='glyphicon glyphicon-edit'></i>
+                      </a>
+                      <a href="{{ path('se_platform_comment_delete', {'id': comment.id}) }}"
+                          type="button"
+                          class='btn btn-danger'
+                          title="Supprimer">
+                      <i class='glyphicon glyphicon-remove'></i>
+                      </a>
+                    </div>
+              {%endif%}
+              {% else %}
+                  <div>Pas d'avis</div>
+              {% endfor %}
+       </div>
+   </div>
+
+   <div class="row">
+       <div class="col-md-12 text-center">
+           <ul class="pagination">
+               {% if nbPages > 1 %}
+                   {% for p in range(1, nbPages) %}
+                       <li{% if p == page %} class="active"{% endif %}>
+                           <a href="{{ path('se_platform_comment_user_list', {'page': p}) }}">{{ p }}</a>
+                       </li>
+                   {% endfor %}
+               {% endif %}
+           </ul>
        </div>
    </div>
 {% endblock %}

@@ -176,24 +176,28 @@ se_platform_message_advert_receive:
 
 # Comment Routes :
 se_platform_comment_add:
-    path:   /ajouter-avis
+    path:   /ajouter-avis/{advertId}_{auctionUserId}
     defaults:
         _controller: SEPlatformBundle:Comment:add
 
 se_platform_comment_view:
-    path:   /consulter-avis
+    path:   /consulter-avis/
     defaults:
         _controller: SEPlatformBundle:Comment:view
 
 se_platform_comment_edit:
-    path:   /modifier-avis
+    path:   /modifier-avis/{id}
     defaults:
         _controller: SEPlatformBundle:Comment:edit
+    requirements:
+        id: \d+
 
 se_platform_comment_delete:
-    path:   /supprimer-avis
+    path:   /supprimer-avis/{id}
     defaults:
         _controller: SEPlatformBundle:Comment:supprimer
+    requirements:
+        id: \d+
 
 se_platform_comment_user_list:
     path:   /mes-avis/{page}

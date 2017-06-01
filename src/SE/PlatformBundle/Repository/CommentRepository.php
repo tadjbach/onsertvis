@@ -12,6 +12,39 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getCommentListUser($userId, $state,  $page, $nbPerPage){
+      $qb = $this->createQueryBuilder('comment')
+         ->leftJoin('comment.receiver', 'receiver')
+         ->addSelect('receiver')
+         ->leftJoin('comment.sender', 'sender')
+         ->addSelect('sender');
+
+         $qb->Where($qb->expr()->eq('comment.isPublished', 1))
+         ->andWhere($qb->expr()->eq('comment.isDeleted', 0))  ;
+
+         if($state !== NULL && $state !== '0')
+         {
+             if ($state === '2') {
+               $qb->andWhere($qb->expr()->eq('receiver.id', $userId));
+             }
+             else{
+               $qb->andWhere($qb->expr()->eq('sender.id', $userId));
+             }
+         }
+
+         else{
+            $qb->andWhere("sender.id = ".$userId." OR receiver.id = ".$userId);
+         }
+
+         $qb->orderBy('comment.dateCreation', 'DESC');
+
+        $qb->getQuery();
+        $qb->setFirstResult(($page-1) * $nbPerPage)
+              ->setMaxResults($nbPerPage);
+
+     return new Paginator($qb, true);
+    }
+
     public function getCommentConversation($userId, $page, $nbPerPage){
 
          $qb = $this->createQueryBuilder('comment')
