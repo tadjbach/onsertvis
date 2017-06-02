@@ -140,6 +140,11 @@ class ProfileController extends Controller
      $em=$this->getDoctrine()
             ->getManager();
 
+      $listComment = $this->getDoctrine()
+          ->getManager()
+          ->getRepository('SEPlatformBundle:Comment')
+          ->getCommentListUser($userId, '2', 1, 1000000);
+
       $user=$em->find('SEPlatformBundle:User', $userId);
 
       if ($user === null) {
@@ -152,6 +157,7 @@ class ProfileController extends Controller
 
       return $this->render('@FOSUser/Profile/view.html.twig', array(
           'user' => $user,
+          'listComment'=>$listComment
       ));
    }
 }
