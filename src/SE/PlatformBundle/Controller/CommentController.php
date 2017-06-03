@@ -141,8 +141,34 @@ class CommentController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function deleteAction($id){
+    public function deleteAction($id, Request $request){
+      $em = $this->getDoctrineManager();
+      $session = $request->getSession();
+      $comment = $em->getRepository('SEPlatformBundle:Comment')->find($id);
 
+       if (null===$comment){
+            throw new NotFoundHttpException("Oops, L avis que vous cherchez n'existe pas.");
+        }
+
+        $form = $this->createFormBuilder()->getForm();
+
+        if ($form->handleRequest($request)->isValid()) {
+
+            $comment->setIsDeleted(true);
+            $comment->setIsPublished(false);
+            $comment->setDateUpdate(new \DateTime());
+
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('deleteSuccess', "L avis a bien été supprimée.");
+
+            return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'supprimer'));
+        }
+
+        return $this->render('SEPlatformBundle:Comment:delete.html.twig', array(
+            'comment' => $comment,
+            'form'   => $form->createView()
+        ));
     }
 
     public function viewAction($slug, $id)

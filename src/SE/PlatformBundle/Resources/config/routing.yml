@@ -195,7 +195,7 @@ se_platform_comment_edit:
 se_platform_comment_delete:
     path:   /supprimer-avis/{id}
     defaults:
-        _controller: SEPlatformBundle:Comment:supprimer
+        _controller: SEPlatformBundle:Comment:delete
     requirements:
         id: \d+
 
