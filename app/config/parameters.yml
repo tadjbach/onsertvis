@@ -6,7 +6,8 @@ parameters:
     database_user: root
     database_password: root
     mailer_transport: smtp
-    mailer_host: smtp.sendgrid.net
-    mailer_user: apikey
-    mailer_password: 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
+    mailer_host: SSL0.OVH.NET
+    mailer_port: 465
+    mailer_user: postmaster@serviceenchere.fr
+    mailer_password: okae6Sich
     secret: 5bf5cc3dbd7654eed1b5e8b7ab28ddf809d91979
