@@ -37,6 +37,7 @@ class MessageController extends Controller
     public function addAction(Request $request, $advertSlug, $advertId, $receiveId){
         $em = $this->getDoctrineManager();
         $session = $request->getSession();
+        $mailer  = $this->get('se_platform.mailer');
 
         $advert = $em->find('SEPlatformBundle:Advert', $advertId);
         $userSender = $this->getUser();
@@ -58,6 +59,7 @@ class MessageController extends Controller
                 $em->persist($message);
                 $em->flush();
 
+                $mailer->sendEmail($advert, 'Vous avez reçu un message', $userReceive, 'Nouveau message');
                 $session->getFlashBag()->add('addSuccess','Message bien envoyé.');
 
                 return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
