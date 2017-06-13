@@ -90,25 +90,34 @@ class AuctionController extends Controller
 
         $form = $this->createForm(AuctionType::class, $auction);
 
-        if ($request->isMethod('POST')){
-            $form->handleRequest($request);
+        if ($userOwner !== $this->getUser()) {
+          if ($request->isMethod('POST')){
+              $form->handleRequest($request);
 
-            if ($form->isValid()){
+              if ($form->isValid()){
 
-                $em->persist($auction);
-                $em->flush();
+                  $em->persist($auction);
+                  $em->flush();
 
-                $mailer->sendEmail($advert, 'Nouvelle enchère sur votre annonce '.$advert->getTitle(), $userOwner, 'Enchère sur votre annonce');
-                $mailer->sendEmail($advert, 'Vous avez passée une enchère '.$advert->getTitle(), $this->getUser(), 'Vous avez passer une enchère');
+                  $mailer->sendEmail($advert, 'Nouvelle enchère', 'Nouvelle enchère sur votre annonce '.$advert->getTitle(), $userOwner, 'Enchère sur votre annonce');
+                  $mailer->sendEmail($advert, 'Nouvelle enchère', 'Vous avez passée une enchère '.$advert->getTitle(), $this->getUser(), 'Vous avez passer une enchère');
 
-                $session->getFlashBag()->add('addSuccess','Enchère bien enregistrée.');
+                  $session->getFlashBag()->add('addSuccess','Enchère bien enregistrée.');
 
-                return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
-            }
+                  return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+              }
+          }
+        }
+
+        else {
+          $session->getFlashBag()->add('error','Vous ne pouvez pas enchérir sur vos propres annonces.');
+
+          return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
         }
 
         return $this->render('SEPlatformBundle:Auction:add.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'advert'=> $advert
         ));
     }
 
@@ -244,7 +253,7 @@ class AuctionController extends Controller
             $auct_refus->setState($statusRefus);
 
             $userAuctionRefuse =$auct_refus->getUser();
-            $mailer->sendEmail($advert, 'Votre enchère a été refusée', $userAuctionRefuse, 'Enchère réfusée');
+            $mailer->sendEmail($advert, 'Enchère refusée', 'Votre enchère a été refusée', $userAuctionRefuse, 'Enchère réfusée');
           }
 
           $auctionAccept->setState($state);
@@ -252,7 +261,7 @@ class AuctionController extends Controller
           $em->persist($auctionAccept);
           $em->flush();
 
-          $mailer->sendEmail($advert, 'Votre enchère a été acceptée', $userAuction, 'Enchère acceptée');
+          $mailer->sendEmail($advert, 'Enchère acceptée', 'Votre enchère a été acceptée', $userAuction, 'Enchère acceptée');
 
           $session->getFlashBag()->add('addSuccess','Vous avez bien accepté la proposition à '.$auctionAccept->getValue());
 

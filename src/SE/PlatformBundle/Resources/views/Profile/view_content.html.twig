@@ -3,21 +3,31 @@
                     <div id="content" class="col-md-12">
                        <div class="">
                          <h4 class="cat-title">{{ user }}</h4>
-                          
+
                            <br>
                            <div class="row">
                                  <div class="col-md-4">
-
-                                     <i class="glyphicon glyphicon-map-marker"></i>
-                                     <span class="se-profile-title">Adresse : </span>
-                                     <p class="se-profile-value"> {{ user.address }}
-                                         <br>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
-                                         <br>{{ user.PostalCode.city.departement.labelNormal }}</p>
-                                     <br>
-                                   <i class="glyphicon glyphicon-phone-alt"></i>
-                                     <span class="se-profile-title">Téléphone : </span>
-                                     <p class="se-profile-value"> {{ user.phoneNumber|join('|') }}</p>
-
+                                    {% if user.isDetailVisible %}
+                                         <i class="glyphicon glyphicon-map-marker"></i>
+                                         <span class="se-profile-title">Adresse : </span>
+                                         <p class="se-profile-value"> {{ user.address }}
+                                             <br>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
+                                             <br>{{ user.PostalCode.city.departement.labelNormal }}</p>
+                                         <br>
+                                         <i class="glyphicon glyphicon-phone-alt"></i>
+                                         <span class="se-profile-title">Téléphone : </span>
+                                         <p class="se-profile-value"> {{ user.phoneNumber|join('|') }}</p>
+                                     {% else %}
+                                         <i class="glyphicon glyphicon-map-marker"></i>
+                                         <span class="se-profile-title">Adresse : </span>
+                                         <p class="se-profile-value"> xxxxxx
+                                             <br>xxxxx xxxxxxxxxx
+                                             <br>xxxxxxxxxxxxxxx</p>
+                                         <br>
+                                         <i class="glyphicon glyphicon-phone-alt"></i>
+                                         <span class="se-profile-title">Téléphone : </span>
+                                         <p class="se-profile-value"> 0x xx xx xx xx</p>
+                                     {% endif %}
                                      <br>
                                      <i class="glyphicon glyphicon-calendar"></i>
                                        <span class="se-profile-title">Disponibilité : </span>

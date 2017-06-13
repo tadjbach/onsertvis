@@ -67,20 +67,39 @@
                               {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
                         </a>
                       </div>
-
-                      <div class="col-md-12">
-                          <div class="col-md-6">
-                               <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="form-control btn se-btn-action">
-                                   Enchérir
-                               </a>
-                          </div>
-                          <div class="col-md-6">
-                            <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id}) }}" class="form-control btn se-btn-action">
-                                Contacter
-                            </a>
-                          </div>
-                      </div>
-
+                      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                          {% if advert.user !=  app.user %}
+                              <div class="col-md-12">
+                                  <div class="col-md-6">
+                                       <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="form-control btn se-btn-action">
+                                           Enchérir
+                                       </a>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id}) }}" class="form-control btn se-btn-action">
+                                        Contacter
+                                    </a>
+                                  </div>
+                              </div>
+                            {% else %}
+                            <div class="col-md-12 alert alert-warning" role="alert">
+                                Vous êtes proprétaire de l'annonce
+                            </div>
+                            {% endif %}
+                        {% else %}
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                 <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="form-control btn se-btn-action">
+                                     Enchérir
+                                 </a>
+                            </div>
+                            <div class="col-md-6">
+                              <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id}) }}" class="form-control btn se-btn-action">
+                                  Contacter
+                              </a>
+                            </div>
+                        </div>
+                      {% endif %}
                   </div>
                 </div>
             </div>

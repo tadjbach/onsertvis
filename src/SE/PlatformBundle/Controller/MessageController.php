@@ -51,23 +51,31 @@ class MessageController extends Controller
 
         $form = $this->createForm(MessageType::class, $message);
 
-        if ($request->isMethod('POST')){
-            $form->handleRequest($request);
+        if ($userReceive !== $this->getUser()) {
+          if ($request->isMethod('POST')){
+              $form->handleRequest($request);
 
-            if ($form->isValid()){
+              if ($form->isValid()){
 
-                $em->persist($message);
-                $em->flush();
+                  $em->persist($message);
+                  $em->flush();
 
-                $mailer->sendEmail($advert, 'Vous avez reçu un message', $userReceive, 'Nouveau message');
-                $session->getFlashBag()->add('addSuccess','Message bien envoyé.');
+                  $mailer->sendEmail($advert,'Nouveau message', 'Vous avez reçu un message', $userReceive, 'Nouveau message');
+                  $session->getFlashBag()->add('addSuccess','Message bien envoyé.');
 
-                return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
-            }
+                  return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+              }
+          }
+        }
+        else {
+          $session->getFlashBag()->add('error','Vous ne pouvez pas envoyer des messages à vous même.');
+
+          return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
         }
 
         return $this->render('SEPlatformBundle:Message:add.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'advert'=> $advert
         ));
     }
 

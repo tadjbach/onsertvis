@@ -24,6 +24,11 @@
                  {{ flash_message }}
              </div>
          {% endfor %}
+         {% for flash_message in app.session.flashBag.get('error') %}
+             <div class="alert alert-danger text-center" role="alert">
+                 {{ flash_message }}
+             </div>
+         {% endfor %}
           <div class="col-md-2"></div>
            <div class="col-md-4">
              <a href="{{ path('se_platform_homepage') }}" class="form-control btn se-btn-action">

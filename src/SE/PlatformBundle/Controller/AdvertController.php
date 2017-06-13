@@ -246,7 +246,7 @@ class AdvertController extends Controller
                 $em->persist($advert);
                 $em->flush();
 
-                $mailer->sendEmail($advert, 'Création de votre annonce '.$advert->getTitle(), $this->getUser(), 'Création de votre annonce');
+                $mailer->sendEmail($advert, 'Nouvelle annonce', 'Création de votre annonce '.$advert->getTitle(), $this->getUser(), 'Création de votre annonce');
 
                 $session->getFlashBag()->add('addSuccess','Annonce bien enregistrée, elle sera validée dans moins de 24h.');
 
@@ -320,7 +320,7 @@ class AdvertController extends Controller
 
             $em->flush();
 
-            $mailer->sendEmail($advert, 'Suppression de votre annonce '.$advert->getTitle(), $this->getUser(), 'Suppression de votre annonce');
+            $mailer->sendEmail($advert, 'Suppression d annonce',  'Suppression de votre annonce '.$advert->getTitle(), $this->getUser(), 'Suppression de votre annonce');
 
             $request->getSession()->getFlashBag()->add('deleteSuccess', "La demande a bien été supprimée.");
 

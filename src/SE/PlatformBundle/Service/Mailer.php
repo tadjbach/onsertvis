@@ -11,14 +11,16 @@ class Mailer{
       $this->mailer  = $mailer;
   }
 
-  public function sendEmail($advert, $subject, $user, $body)
+  public function sendEmail($advert, $senderName, $subject, $user, $body)
   {
 
     $message = \Swift_Message::newInstance()
          ->setSubject($subject)
-         ->setFrom('noreplay@serviceenchere.fr')
+         ->setFrom(array('noreplay@serviceenchere.fr' => 'Service Enchère - '.$senderName))
          ->setTo($user->getEmail())
          ->setBody($body);
+
+
 
        $this->mailer->send($message);
   }
