@@ -33,7 +33,11 @@
                  {% else %}
                      <p>Sans catégorie</p>
                  {% endif %}
-                     <img class="se-img" src="{{ asset(advert.category.webPath) }}" alt="{{ asset(advert.category.webPath) }}">
+                 {% if advert.image == null %}
+                 <img class="se-img" src="{{ asset(advert.webPathNoImage) }}" alt="{{ asset(advert.webPathNoImage) }}">
+                 {% else %}
+                     <img class="se-img" src="{{ asset(advert.image.webPath) }}" alt="{{ asset(advert.image.webPath) }}">
+                 {% endif %}
                 </div>
                 <div class="panel-footer se-panel-footer">
                    <h4 class="truncate">

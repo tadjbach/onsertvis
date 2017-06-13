@@ -691,7 +691,12 @@ a.se-tbl-link{
 .med{
     width: 50%;
 }
-
+a.thumbnail{
+  margin-bottom: 0;
+}
+a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
+    border-color: #26003E;
+}
 #se_auctionbundle_message div>textarea.form-control{
     height: 100px;
 }

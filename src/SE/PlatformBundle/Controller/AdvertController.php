@@ -243,6 +243,8 @@ class AdvertController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()){
+               //$advert->getImage()->upload();
+
                 $em->persist($advert);
                 $em->flush();
 
