@@ -138,7 +138,7 @@ class ProfileController extends Controller
 
   public function viewAction($userId)
    {
-     $em=$this->getDoctrine()
+     $em = $this->getDoctrine()
             ->getManager();
 
       $listComment = $this->getDoctrine()
@@ -146,10 +146,10 @@ class ProfileController extends Controller
           ->getRepository('SEPlatformBundle:Comment')
           ->getCommentListUser($userId, '2', 1, 1000000);
 
-      $user=$em->find('SEPlatformBundle:User', $userId);
+      $user = $em->find('SEPlatformBundle:User', $userId);
 
-      if ($user === null) {
-          throw new NotFoundHttpException("Cet utilisateur n'existe pas");
+      if (!$user){
+          throw new NotFoundHttpException("Cet utilisateur n'existe pas".$userId );
       }
 
       if (!is_object($user) || !$user instanceof UserInterface) {

@@ -441,7 +441,7 @@ textarea.form-control{
 }
 
 .se-img{
-    width: 200px; height: 150px;
+    width: 350px; height: 250px;
 }
 .se-auction-img{
     width: 100px; height: 75px;
@@ -537,7 +537,7 @@ textarea.form-control{
       padding-top: 18px;
 }
 .detail-body{
-   height: 280px;
+   height: 350px;
 }
 .ad-date{
   margin-left: 10px;

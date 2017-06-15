@@ -12,6 +12,10 @@
           Accueil
         </a>
           >
+      <a href="{{ path('se_platform_advert_list') }}" >
+        Toutes les annonces
+      </a>
+        >
         <a href="{{ path('se_platform_advert_list' , {'category' : advert.category.id }) }}" >
         {{advert.category.labelNormal}}
         </a>
@@ -26,24 +30,27 @@
        <div id="content" class="col-md-12">
          <div class="col-md-6">
            <div class="panel panel-default">
-             <i class="ad-date">Mise en ligne le {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</i>
-                <div class="panel-body text-center se-item-link">
+             <i class="ad-date">Mise en ligne le <b>{{ advert.dateCreation|date('d/m/Y') }}</b> à <b>{{ advert.dateCreation|date('H:m') }}</b>
+                 dans<b>
                  {% if advert.category.labelNormal != 'Autres' %}
-                     <p>{{ advert.category.labelNormal }}</p>
+                     {{ advert.category.labelNormal }}
                  {% else %}
-                     <p>Sans catégorie</p>
+                     Sans catégorie
                  {% endif %}
-
-                 {% if advert.image == null %}
-                 <img class="se-img" src="{{ asset(advert.webPathNoImage) }}" alt="{{ asset(advert.webPathNoImage) }}">
-                 {% else %}
-                     <img class="se-img" src="{{ asset(advert.image.webPath) }}" alt="{{ asset(advert.image.webPath) }}">
-                 {% endif %}
+               </b>
+             </i>
+                <div class="panel-body text-center se-item-link">
+                   {% if advert.image == null %}
+                   <img class="se-img" src="{{ asset(advert.webPathNoImage) }}" alt="{{ asset(advert.webPathNoImage) }}">
+                   {% else %}
+                       <img class="se-img" src="{{ asset(advert.image.webPath) }}" alt="{{ asset(advert.image.webPath) }}">
+                   {% endif %}
                 </div>
                 <div class="panel-footer se-panel-footer">
                    <h4 class="truncate">
                      {{ advert.title }}
                    </h4>
+
                    <p>{{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }}
                      ({{ advert.user.PostalCode.city.departement.labelNormal }} -
                      {{ advert.user.PostalCode.city.departement.region.labelNormal }})
@@ -53,12 +60,13 @@
          </div>
 
          <div class="col-md-6">
-           <div class="panel panel-default">
-             <i class="ad-date"><span class="label label-success">Enchère en cours</span></i>
-                <div class="panel-body text-center se-item-link detail-body">
+           
+
+                <div class="text-center se-item-link detail-body">
                   <div class="col-md-12 text-center">
                       <div class="text-center pad-price">
                         <span class="label se-price-badge">
+
                             {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }}
                         </span>
                       </div>
@@ -107,7 +115,7 @@
                       {% endif %}
                   </div>
                 </div>
-            </div>
+
          </div>
 
        </div>

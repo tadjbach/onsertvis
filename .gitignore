@@ -24,3 +24,5 @@ vendor/friendsofsymfony/*
 
 
 *.bat
+
+web/uploads/img/*

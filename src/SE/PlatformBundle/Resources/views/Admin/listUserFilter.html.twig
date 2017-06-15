@@ -1,0 +1,42 @@
+
+    <form id="form_recherche" action="" method="get">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4 filter">
+                  <input name="userNameOrEmail" type="text"
+                        value="{{ app.request.query.get('userNameOrEmail') }}"
+                        class="form-control"
+                        placeholder="Nom ou Email">
+                </div>
+                <div class="col-md-2 filter">
+                      <select class="form-control" name="userState">
+                          <option value='0' >Tous les états</option>
+                            {% for state in userState %}
+                                <option {{ app.request.query.get('userState')== state.id ? ' selected ' : ' ' }}
+                                    value={{ state.id }}>{{ state.labelNormal }}
+                                </option>
+                            {% endfor %}
+                      </select>
+                </div>
+                <div class="col-md-2 filter">
+                      <select class="form-control" name="userRoles">
+                          <option value='0' >Tous les roles</option>
+                            {% for role in userRoles %}
+                                <option {{ app.request.query.get('userRoles')== role.id ? ' selected ' : ' ' }}
+                                    value={{ role.id }}>{{ role.labelNormal }}
+                                </option>
+                            {% endfor %}
+                      </select>
+                </div>
+                <div class="col-md-2 filter">
+                    <input class="btn btnIcon-search" type="submit" value="Afficher"  />
+                </div>
+                <div class="col-md-2 filter">
+                  <a href="{{ path('se_platform_admin_list_users') }}"
+                            type="button" class="btn btnIcon-search" >
+                             Réinitialiser
+                  </a>
+                </div>
+              </div>
+        </div>
+    </form>
