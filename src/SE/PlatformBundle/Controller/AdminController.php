@@ -18,9 +18,15 @@ class AdminController extends Controller
   private $em;
 
       /* Search filter */
-      private $userNameOrEmail;
-      private $userRoles;
-      private $userState;
+        /* User */
+          private $userNameOrEmail;
+          private $userRoles;
+          private $userState;
+
+        /* Advert */
+          private $advertTitle;
+          private $advertcategory;
+          private $advertState;
 
       private function getDoctrineManager(){
         return $this->getDoctrine()->getManager();
@@ -32,6 +38,11 @@ class AdminController extends Controller
           $this->userState = $request->query->get('userState');
       }
 
+      private function getListAdvertFilterAttributes(Request $request){
+          $this->advertTitle = $request->query->get('title');
+          $this->advertcategory = $request->query->get('category');
+      }
+
       private function getUserState(){
 
         $list = array(
@@ -39,6 +50,16 @@ class AdminController extends Controller
              array('id'=>2, 'labelNormal'=>'Désactivé', 'state'=>0)
            );
            return $list;
+      }
+
+      private function getAdvertState(){
+          $em = $this->getDoctrineManager();
+          return $em->getRepository('SEPlatformBundle:AdvertState')->findAll();
+      }
+
+      private function getCategory(){
+        $em = $this->getDoctrineManager();
+        return $em->getRepository('SEPlatformBundle:Category')->findAll();
       }
 
       private function getUserRoles(){
@@ -59,7 +80,7 @@ class AdminController extends Controller
           $this->getListUserFilterAttributes($request);
 
           $listUsers = $em->getRepository('SEPlatformBundle:User')
-               ->getUserList(
+               ->getUserListAdmin(
                  $this->userNameOrEmail,
                  $this->userRoles,
                  $this->userState,
@@ -90,8 +111,36 @@ class AdminController extends Controller
         /**
          * @Security("has_role('ROLE_SUPER_ADMIN')")
          */
-        public function listAdvertsAction(){
+        public function listAdvertsAction(Request $request, $page){
+          $em = $this->getDoctrineManager();
 
+          $this->getListAdvertFilterAttributes($request);
+
+          $listAdverts = $em->getRepository('SEPlatformBundle:Advert')
+                              ->getAdvertListAdmin(
+                                      $this->advertTitle,
+                                      $this->advertcategory,
+                                      $page,
+                                      $this->nbPerPage);
+
+          $titleResult = count($listAdverts) == 0 ?'Aucune annonce' :
+                  (count($listAdverts) > 1 ? count($listAdverts).' annonces' :
+              count($listAdverts).' annonce');
+
+          $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
+
+          return $this->render('SEPlatformBundle:Admin:listAdverts.html.twig',
+              array(
+                  'title'=> $this->advertTitle,
+                  'category'=> $this->advertcategory,
+
+                  'titleResult'=>$titleResult,
+                  'nbPages'     => $nbPages,
+                  'page'        => $page,
+                  'listAdverts'=>$listAdverts,
+                  'advertCategory'=>$this->getCategory(),
+                  'advertState'=>$this->getAdvertState()
+              ));
         }
 
         /**

@@ -14,7 +14,7 @@ namespace SE\PlatformBundle\Repository;
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
 
-  public function getUserList($nameOremail, $role, $state, $page, $nbPerPage){
+  public function getUserListAdmin($nameOremail, $role, $state, $page, $nbPerPage){
       $qb = $this->createQueryBuilder('user');
 
       if($nameOremail !== NULL && $nameOremail !== '')

@@ -14,9 +14,12 @@ se_platform_admin_list_users:
         page: \d*
 
 se_platform_admin_list_adverts:
-    path:     /se/manage/admin/adverts
+    path:     /se/manage/adverts/{page}
     defaults:
         _controller: SEPlatformBundle:Admin:listAdverts
+        page:   1
+    requirements:
+        page: \d*
 
 se_platform_admin_list_auctions:
     path:     /se/manage/admin/auctions

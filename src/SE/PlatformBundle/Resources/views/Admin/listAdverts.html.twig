@@ -1,0 +1,87 @@
+{% extends "SEPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Liste des utilisateurs - {{ parent() }}
+{% endblock %}
+
+{% block layout_header2 %}
+  <div class="row">
+    <div id="header" class="col-md-12">
+      <h3 class="cat-title">Liste des annonces</h3>
+        {{ include('@SEPlatform/Admin/listAdvertFilter.html.twig') }}
+    </div>
+  </div>
+{% endblock %}
+{% block layout_body %}
+  <div class="row">
+       <div id="content" class="col-md-12">
+         <h4 class="cat-title">{{ titleResult }}</h4>
+            <table class="table" id="tblGrid">
+              <thead id="tblHead">
+                  <tr>
+                      <th>Identifiant</th>
+                      <th>Titre</th>
+                      <th>Date de création</th>
+                      <th>Activée</th>
+                      <th>Publiée</th>
+                      <th>Supprimée</th>
+
+                  </tr>
+              </thead>
+                <tbody>
+                {% for advert in listAdverts %}
+                    <tr>
+                      <td>
+                         {{advert.id}}
+                     </td>
+                     <td>
+                        {{advert.title}}
+                     </td>
+                        <td>
+                          {{ advert.dateCreation|date('d/m/Y') }}
+                          à
+                          {{ advert.dateCreation|date('H:i:s') }}
+                       </td>
+                       <td>
+                          {% if advert.isEnabled %}
+                            <span class="label label-success">Oui</span>
+                          {% else %}
+                            <span class="label label-danger">Non</span>
+                          {% endif %}
+                      </td>
+                      <td>
+                         {% if advert.isPublished %}
+                           <span class="label label-success">Oui</span>
+                         {% else %}
+                           <span class="label label-danger">Non</span>
+                         {% endif %}
+                     </td>
+                     <td>
+                        {% if advert.isDeleted %}
+                          <span class="label label-success">Oui</span>
+                        {% else %}
+                          <span class="label label-danger">Non</span>
+                        {% endif %}
+                    </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+       </div>
+   </div>
+
+   <div class="row">
+       <div class="col-md-12 text-center">
+           <ul class="pagination">
+               {% if nbPages > 1 %}
+                   {% for p in range(1, nbPages) %}
+                       <li{% if p == page %} class="active"{% endif %}>
+                           <a href="{{ path('se_platform_admin_list_users', {'page': p}) }}">{{ p }}</a>
+                       </li>
+                   {% endfor %}
+               {% endif %}
+           </ul>
+       </div>
+   </div>
+
+{% endblock %}
