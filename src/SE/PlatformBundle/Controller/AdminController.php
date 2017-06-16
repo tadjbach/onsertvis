@@ -45,8 +45,7 @@ class AdminController extends Controller
 
         $list = array(
             array('id'=>1, 'labelNormal'=>'SUPER_ADMIN'),
-            array('id'=>2, 'labelNormal'=>'ROLE_AUTEUR'),
-            array('id'=>3, 'labelNormal'=>'ROLE_USER')
+            array('id'=>2, 'labelNormal'=>'ROLE_AUTEUR')
            );
            return $list;
       }

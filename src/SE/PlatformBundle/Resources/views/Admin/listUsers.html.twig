@@ -42,10 +42,7 @@
                            {{user.email}}
                        </td>
                        <td>
-                         {% for role in user.roles %}
-                              {{ role }}
-                              {% if not loop.last %}|{% endif %}
-                          {% endfor %}
+                              {{ user.roles[0] }}
 
                       </td>
                         <td>

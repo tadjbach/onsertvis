@@ -26,8 +26,8 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
       {
           $page = 1;
 
-          $role = $role === '1' ? 'ROLE_SUPER_ADMIN' : $role === '2' ? 'ROLE_AUTEUR' : $role === '3' ? 'ROLE_USER' : '';
-        //  $qb->andWhere("user.roles LIKE '%$role%'");
+          $role = $role === '1' ? 'ROLE_SUPER_ADMIN' : 'ROLE_AUTEUR';
+          $qb->andWhere("user.roles LIKE '%$role%'");
       }
       if($state !== NULL && $state !== '0')
       {
