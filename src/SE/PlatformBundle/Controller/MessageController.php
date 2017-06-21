@@ -60,7 +60,14 @@ class MessageController extends Controller
                   $em->persist($message);
                   $em->flush();
 
-                  $mailer->sendEmail($advert,'Nouveau message', 'Vous avez reçu un message', $userReceive, 'Nouveau message');
+                $body = $this->renderView(
+                       // app/Resources/views/Message/addMail.html.twig
+                       'SEPlatformBundle:Message:addMail.html.twig',
+                       array('user' => $userReceive,
+                            'advert'=> $advert->getTitle())
+                   );
+
+                  $mailer->sendEmail($advert,'Nouveau message', 'Vous avez un message', $userReceive, $body);
                   $session->getFlashBag()->add('addSuccess','Message bien envoyé.');
 
                   return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));

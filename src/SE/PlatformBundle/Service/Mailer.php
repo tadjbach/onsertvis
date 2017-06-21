@@ -18,7 +18,7 @@ class Mailer{
          ->setSubject($subject)
          ->setFrom(array('noreplay@serviceenchere.fr' => 'Service Enchère - '.$senderName))
          ->setTo($user->getEmail())
-         ->setBody($body);
+         ->setBody($body,'text/html');
 
 
 
