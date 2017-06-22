@@ -63,7 +63,8 @@ class MessageController extends Controller
                 $body = $this->renderView(
                        // app/Resources/views/Message/addMail.html.twig
                        'SEPlatformBundle:Message:addMail.html.twig',
-                       array('user' => $userReceive,
+                       array('receiver' => $userReceive,
+                            'sender'  => $userSender,
                             'advert'=> $advert->getTitle())
                    );
 

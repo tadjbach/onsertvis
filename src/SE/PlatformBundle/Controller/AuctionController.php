@@ -99,8 +99,16 @@ class AuctionController extends Controller
                   $em->persist($auction);
                   $em->flush();
 
-                  $mailer->sendEmail($advert, 'Nouvelle enchère', 'Nouvelle enchère sur votre annonce '.$advert->getTitle(), $userOwner, 'Enchère sur votre annonce');
-                  $mailer->sendEmail($advert, 'Nouvelle enchère', 'Vous avez passée une enchère '.$advert->getTitle(), $this->getUser(), 'Vous avez passer une enchère');
+                  $body = $this->renderView(
+                         'SEPlatformBundle:Auction:addMail.html.twig',
+                         array( 'receiver' => $userOwner,
+                                'sender'=> $this->getUser(),
+                                'value'=> $auction->getValue(),
+                                'advert'=> $advert->getTitle())
+                     );
+
+                  $mailer->sendEmail($advert, 'Nouvelle enchère', 'Nouvelle enchère sur votre annonce '.$advert->getTitle(), $userOwner, $body);
+
 
                   $session->getFlashBag()->add('addSuccess','Enchère bien enregistrée.');
 
@@ -253,7 +261,17 @@ class AuctionController extends Controller
             $auct_refus->setState($statusRefus);
 
             $userAuctionRefuse =$auct_refus->getUser();
-            $mailer->sendEmail($advert, 'Enchère refusée', 'Votre enchère a été refusée', $userAuctionRefuse, 'Enchère réfusée');
+
+            $body = $this->renderView(
+                   'SEPlatformBundle:Auction:refuseMail.html.twig',
+                   array( 'receiver' => $userAuctionRefuse,
+                          'value'=> $auctionAccept->getValue(),
+                          'advert'=> $advert->getTitle())
+               );
+
+
+
+            $mailer->sendEmail($advert, 'Enchère refusée', 'Votre enchère a été refusée', $userAuctionRefuse, $body);
           }
 
           $auctionAccept->setState($state);
@@ -261,7 +279,14 @@ class AuctionController extends Controller
           $em->persist($auctionAccept);
           $em->flush();
 
-          $mailer->sendEmail($advert, 'Enchère acceptée', 'Votre enchère a été acceptée', $userAuction, 'Enchère acceptée');
+          $body = $this->renderView(
+                 'SEPlatformBundle:Auction:acceptMail.html.twig',
+                 array( 'receiver' => $userAuction,
+                        'value'=> $auctionAccept->getValue(),
+                        'advert'=> $advert->getTitle())
+             );
+
+          $mailer->sendEmail($advert, 'Enchère acceptée', 'Votre enchère a été acceptée', $userAuction, $body);
 
           $session->getFlashBag()->add('addSuccess','Vous avez bien accepté la proposition à '.$auctionAccept->getValue());
 

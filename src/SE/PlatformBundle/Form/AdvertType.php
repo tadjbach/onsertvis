@@ -41,7 +41,7 @@ class AdvertType extends AbstractType
                     ))
 
                 ->add('image', ImageType::class, array(
-                        'label'=>' '
+                        'label'=>' ',  'required' => false
                     ))
 
                 ->add('save', SubmitType::class,
