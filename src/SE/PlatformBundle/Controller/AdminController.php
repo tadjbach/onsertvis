@@ -111,6 +111,18 @@ class AdminController extends Controller
         /**
          * @Security("has_role('ROLE_SUPER_ADMIN')")
          */
+         public function viewUserAction(Request $request, $id){
+           $em = $this->getDoctrineManager();
+
+           $user=$em->find('SEPlatformBundle:User', $id);
+
+           return $this->render('SEPlatformBundle:Admin:viewUser.html.twig',
+                       array(
+                         'user'=> $user));
+         }
+        /**
+         * @Security("has_role('ROLE_SUPER_ADMIN')")
+         */
         public function listAdvertsAction(Request $request, $page){
           $em = $this->getDoctrineManager();
 

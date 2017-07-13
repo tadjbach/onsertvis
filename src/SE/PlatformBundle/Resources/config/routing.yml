@@ -13,6 +13,13 @@ se_platform_admin_list_users:
     requirements:
         page: \d*
 
+se_platform_admin_view_user:
+    path:   /se/manage/user-{id}
+    defaults:
+        _controller: SEPlatformBundle:Admin:viewUser
+    requirements:
+        id: \d+
+
 se_platform_admin_list_adverts:
     path:     /se/manage/adverts/{page}
     defaults:
@@ -143,13 +150,20 @@ se_platform_auction_accept:
 
 # Message Routes :
 se_platform_message_add:
-    path:   /envoyer-message/{advertSlug}_{advertId}_{receiveId}
+    path:   /envoyer-message/{advertSlug}_{advertId}_{receiveId}_{isAnswer}
     defaults:
         _controller: SEPlatformBundle:Message:add
     requirements:
         advertId: \d+
         receiveId: \d+
 
+se_platform_message_answer:
+    path:   /envoyer-reponse/{advertSlug}_{advertId}_{receiveId}_{isAnswer}
+    defaults:
+        _controller: SEPlatformBundle:Message:add
+    requirements:
+        advertId: \d+
+        receiveId: \d+
 
 se_platform_message_view:
     path:   /consulter-message/{advertSlug}_{advertId}

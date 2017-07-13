@@ -36,7 +36,9 @@
                          {{user.id}}
                      </td>
                          <td>
-                            {{user}}
+                            <a href="{{ path('se_platform_admin_view_user' , {'id' : user.id }) }}" >
+                              {{user}}
+                            </a>
                         </td>
                         <td>
                            {{user.email}}

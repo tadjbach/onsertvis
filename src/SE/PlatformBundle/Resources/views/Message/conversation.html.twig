@@ -20,13 +20,14 @@
                         <tbody>
                           <div class='col-md-12'>
                             <h5>
-                                <a href="{{ path('se_platform_message_add',
+                                <a href="{{ path('se_platform_message_answer',
                                           {'advertSlug': advert.slug,
                                             'advertId': advertId,
                                             'senderId': senderId,
-                                            'receiveId': receiveId
+                                            'receiveId': receiveId,
+                                            'isAnswer':1
                                 }) }}" class="btn se-btn-action">
-                                    Réponde
+                                    Nouveau message
                                 </a>
                             </h5>
                           </div>

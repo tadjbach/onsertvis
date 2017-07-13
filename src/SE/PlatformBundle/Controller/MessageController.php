@@ -34,7 +34,7 @@ class MessageController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function addAction(Request $request, $advertSlug, $advertId, $receiveId){
+    public function addAction(Request $request, $advertSlug, $advertId, $receiveId, $isAnswer){
         $em = $this->getDoctrineManager();
         $session = $request->getSession();
         $mailer  = $this->get('se_platform.mailer');
@@ -81,10 +81,20 @@ class MessageController extends Controller
           return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
         }
 
-        return $this->render('SEPlatformBundle:Message:add.html.twig', array(
-            'form' => $form->createView(),
-            'advert'=> $advert
-        ));
+        if ($isAnswer == 1) {
+          return $this->render('SEPlatformBundle:Message:answer.html.twig', array(
+              'form' => $form->createView(),
+              'advert'=> $advert
+          ));
+        }
+        else{
+          return $this->render('SEPlatformBundle:Message:add.html.twig', array(
+              'form' => $form->createView(),
+              'advert'=> $advert
+          ));
+        }
+
+
     }
 
     /**
