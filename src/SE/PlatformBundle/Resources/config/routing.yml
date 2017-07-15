@@ -20,6 +20,34 @@ se_platform_admin_view_user:
     requirements:
         id: \d+
 
+se_platform_admin_view_advert:
+    path:   /se/manage/annonce-{id}
+    defaults:
+        _controller: SEPlatformBundle:Admin:viewAdvert
+    requirements:
+        id: \d+
+
+se_platform_admin_enabled_advert:
+    path:   /se/manage/activer/annonce-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:enableAdvert
+    requirements:
+        id: \d+
+
+se_platform_admin_publish_advert:
+    path:   /se/manage/publier/annonce-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:publishAdvert
+    requirements:
+        id: \d+
+
+se_platform_admin_delete_advert:
+    path:   /se/manage/supprimer/annonce-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:deleteAdvert
+    requirements:
+        id: \d+
+
 se_platform_admin_list_adverts:
     path:     /se/manage/adverts/{page}
     defaults:

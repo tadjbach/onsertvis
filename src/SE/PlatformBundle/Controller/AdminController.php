@@ -120,6 +120,7 @@ class AdminController extends Controller
                        array(
                          'user'=> $user));
          }
+
         /**
          * @Security("has_role('ROLE_SUPER_ADMIN')")
          */
@@ -154,6 +155,64 @@ class AdminController extends Controller
                   'advertState'=>$this->getAdvertState()
               ));
         }
+
+        /**
+         * @Security("has_role('ROLE_SUPER_ADMIN')")
+         */
+         public function viewAdvertAction(Request $request, $id){
+           $em = $this->getDoctrineManager();
+
+           $advert = $em->find('SEPlatformBundle:Advert', $id);
+
+           return $this->render('SEPlatformBundle:Admin:viewAdvert.html.twig',
+                       array(
+                         'advert'=> $advert));
+         }
+
+         /**
+          * @Security("has_role('ROLE_SUPER_ADMIN')")
+          */
+          public function enableAdvertAction(Request $request, $id, $action){
+            $em = $this->getDoctrineManager();
+
+            $advert = $em->find('SEPlatformBundle:Advert', $id);
+            $advert->setIsEnabled($action);
+
+            $em->persist($advert);
+            $em->flush();
+
+            return $this->redirectToRoute('se_platform_admin_view_advert', array('id'=>$id));
+          }
+
+          /**
+           * @Security("has_role('ROLE_SUPER_ADMIN')")
+           */
+           public function publishAdvertAction(Request $request, $id, $action){
+             $em = $this->getDoctrineManager();
+
+             $advert = $em->find('SEPlatformBundle:Advert', $id);
+             $advert->setIsPublished($action);
+
+             $em->persist($advert);
+             $em->flush();
+
+             return $this->redirectToRoute('se_platform_admin_view_advert', array('id'=>$id));
+           }
+
+           /**
+            * @Security("has_role('ROLE_SUPER_ADMIN')")
+            */
+            public function deleteAdvertAction(Request $request, $id, $action){
+              $em = $this->getDoctrineManager();
+
+              $advert = $em->find('SEPlatformBundle:Advert', $id);
+              $advert->setIsDeleted($action);
+
+              $em->persist($advert);
+              $em->flush();
+
+              return $this->redirectToRoute('se_platform_admin_view_advert', array('id'=>$id));
+            }
 
         /**
          * @Security("has_role('ROLE_SUPER_ADMIN')")

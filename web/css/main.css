@@ -257,7 +257,13 @@ h3.slogan-link:focus{
 }
 
 .cat-title{
-    border-bottom: 2px solid #E5DF16;
+  border-bottom: 2px solid #E5DF16;
+}
+.cat-title-admin{
+  border-bottom: 2px solid #B20942;
+}
+.cat-title, .cat-title-admin{
+
     padding-bottom: 5px;
     margin-bottom: 20px;
 }
@@ -269,14 +275,14 @@ h3.slogan-link:focus{
   margin-bottom: 5px;
 }
 
-p.cat-title{
+p.cat-title, .cat-title-admin{
     font-size: 18px;
 }
-.cat-title>a{
+.cat-title>a, .cat-title-admin>a{
     color: #E5DF16;
 }
 
-h4.cat-title{
+h4.cat-title, h4.cat-title-admin{
     border-bottom: 2px solid #2A0540;
     color: #2A0540;
 }
