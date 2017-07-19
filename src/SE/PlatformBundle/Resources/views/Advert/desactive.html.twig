@@ -1,0 +1,25 @@
+{% extends "SEPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Annonce désactivée - {{ parent() }}
+{% endblock %}
+
+{% block layout_header2 %}
+<div class="row">
+  <div class="col-md-12">
+      <h3 class="cat-title">
+        Annonce désactivée
+    </h3>
+  </div>
+</div>
+{% endblock %}
+{% block layout_body %}
+  <div class="row">
+       <div id="content" class="col-md-12">
+         <div class="text-center">
+           <div class="alert alert-danger" role="alert">L'annonce que vous cherchez est désactivée</div>
+
+         </div>
+       </div>
+   </div>
+{% endblock %}

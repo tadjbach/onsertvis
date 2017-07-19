@@ -274,8 +274,10 @@ class AuctionController extends Controller
             $mailer->sendEmail($advert, 'Enchère refusée', 'Votre enchère a été refusée', $userAuctionRefuse, $body);
           }
 
+          $advert->setIsPublished(false);
           $auctionAccept->setState($state);
 
+          $em->persist($advert);
           $em->persist($auctionAccept);
           $em->flush();
 

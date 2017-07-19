@@ -102,6 +102,13 @@ class Advert
      */
     private $auctionState;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="commentState", type="integer")
+     */
+    private $commentState;
+
    /**
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
@@ -445,5 +452,29 @@ class Advert
     public function getWebPathNoImage()
     {
         return $this->getUploadDir().'/se-no-image.jpeg';
+    }
+
+    /**
+     * Set commentState
+     *
+     * @param integer $commentState
+     *
+     * @return Advert
+     */
+    public function setCommentState($commentState)
+    {
+        $this->commentState = $commentState;
+
+        return $this;
+    }
+
+    /**
+     * Get commentState
+     *
+     * @return integer
+     */
+    public function getCommentState()
+    {
+        return $this->commentState;
     }
 }

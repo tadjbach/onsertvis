@@ -68,10 +68,13 @@ class CommentController extends Controller
 
                    $userReceiver->setRate(round($rate));
 
+                   $advert->setCommentState(1);
+
                    $comment->setSender($userSender);
                    $comment->setAdvert($advert);
                    $comment->setReceiver($userReceiver);
 
+                   $em->persist($advert);
                    $em->persist($comment);
                    $em->flush();
 

@@ -50,22 +50,8 @@
          <div class="col-md-6">
                 <div class="text-center se-item-link detail-body">
                   <div class="col-md-12 text-center">
-                      <div class="text-center pad-price">
-                        <span class="label se-price-badge">
 
-                            {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }}
-                        </span>
-                      </div>
-                      <div class="text-center pad-price">
-                        <a class="cat-link"
-                            data-toggle="modal"
-                            role="button"
-                            data-toggle="modal"
-                            data-target="#modalAuctionShow"
-                            >
-                              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-                        </a>
-                      </div>
+                      {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}
                   </div>
                 </div>
          </div>
@@ -171,6 +157,21 @@
                   </td>
                   <td class="text-center">
                     <a href="{{ path('se_platform_admin_delete_advert', {'action': 1,'id': advert.id}) }}" class="btn se-btn-action">Supprimer</a>
+                  </td>
+                  {% endif %}
+                </tr>
+
+                <tr>
+                  <td>
+                      Etat de l'enchère
+                  </td>
+                  {% if advert.isPublished == 0 and advert.auctionState != 0 %}
+                  <td>
+                      <span class="label label-danger">Enchère terminée</span>
+                  </td>
+                  {% elseif advert.isPublished == 1 and advert.auctionState == 0 %}
+                  <td>
+                      <span class="label label-warning">Enchère en cours</span>
                   </td>
                   {% endif %}
                 </tr>

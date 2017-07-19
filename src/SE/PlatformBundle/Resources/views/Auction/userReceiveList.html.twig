@@ -83,13 +83,14 @@
                   <td class="text-center bold">
                     <h5>
                       {% if auction.state == 1 %}
+
                             <a class="btn btn-success" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id, 'state' : 2}) }}">Accepter</a>
 
-                      {% elseif auction.state == 2 %}
+                      {% elseif auction.state == 2 and auction.advert.commentState == 0 %}
+
                             <a class="btn btn-primary" href="{{ path('se_platform_comment_add', {'advertId': auction.advert.id, 'auctionUserId': auction.user.id}) }}">Evaluer</a>
-                            <a class="btn btn-danger" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id, 'state' : 1}) }}">Annuler</a>
-                      {% elseif auction.state == 3 %}
-                          </div>
+                            <a class="btn btn-danger hide" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id, 'state' : 1}) }}">Annuler</a>
+
                       {% endif %}
                     </h5>
                   </td>

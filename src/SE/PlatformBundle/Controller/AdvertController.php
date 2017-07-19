@@ -387,8 +387,14 @@ class AdvertController extends Controller
         *
         */
 
-        return $this->render('SEPlatformBundle:Advert:view.html.twig',
-                    array(
-                      'advert'=> $advert));
+        if ($advert->getIsPublished() == 0) {
+          return $this->render('SEPlatformBundle:Advert:desactive.html.twig');
+        }
+        else {
+          return $this->render('SEPlatformBundle:Advert:view.html.twig',
+                      array(
+                        'advert'=> $advert));
+        }
+
     }
 }
