@@ -24,3 +24,6 @@ vendor/friendsofsymfony/*
 
 
 *.bat
+app/config/parameters.yml
+vendor/composer/installed.json
+app/config/parameters.yml
