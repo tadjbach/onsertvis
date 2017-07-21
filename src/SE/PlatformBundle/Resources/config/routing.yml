@@ -4,6 +4,73 @@ se_platform_homepage:
     defaults:
         _controller: SEPlatformBundle:Default:index
 
+# Admin Routes :
+se_platform_admin_list_users:
+    path:     /se/manage/users/{page}
+    defaults:
+        _controller: SEPlatformBundle:Admin:listUsers
+        page:   1
+    requirements:
+        page: \d*
+
+se_platform_admin_view_user:
+    path:   /se/manage/user-{id}
+    defaults:
+        _controller: SEPlatformBundle:Admin:viewUser
+    requirements:
+        id: \d+
+
+se_platform_admin_view_advert:
+    path:   /se/manage/annonce-{id}
+    defaults:
+        _controller: SEPlatformBundle:Admin:viewAdvert
+    requirements:
+        id: \d+
+
+se_platform_admin_enabled_advert:
+    path:   /se/manage/activer/annonce-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:enableAdvert
+    requirements:
+        id: \d+
+
+se_platform_admin_publish_advert:
+    path:   /se/manage/publier/annonce-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:publishAdvert
+    requirements:
+        id: \d+
+
+se_platform_admin_delete_advert:
+    path:   /se/manage/supprimer/annonce-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:deleteAdvert
+    requirements:
+        id: \d+
+
+se_platform_admin_list_adverts:
+    path:     /se/manage/adverts/{page}
+    defaults:
+        _controller: SEPlatformBundle:Admin:listAdverts
+        page:   1
+    requirements:
+        page: \d*
+
+se_platform_admin_list_auctions:
+    path:     /se/manage/admin/auctions
+    defaults:
+        _controller: SEPlatformBundle:Admin:listAuctions
+
+se_platform_admin_list_messages:
+    path:     /se/manage/admin/messages
+    defaults:
+        _controller: SEPlatformBundle:Admin:listMessages
+
+se_platform_admin_list_comments:
+    path:     /se/manage/admin/comments
+    defaults:
+        _controller: SEPlatformBundle:Admin:listComments
+
 # Filter Routes :
 se_platform_departement_by_region:
     path: /annonces-en-cours/getDepartementByRegion
@@ -79,7 +146,7 @@ se_platform_auction_list:
     defaults:
         _controller: SEPlatformBundle:Auction:list
     requirements:
-        id: \d+
+        advertId: \d+
 
 se_platform_auction_user_receive:
     path:   /encheres-recues/{page}
@@ -111,13 +178,20 @@ se_platform_auction_accept:
 
 # Message Routes :
 se_platform_message_add:
-    path:   /envoyer-message/{advertSlug}_{advertId}_{receiveId}
+    path:   /envoyer-message/{advertSlug}_{advertId}_{receiveId}_{isAnswer}
     defaults:
         _controller: SEPlatformBundle:Message:add
     requirements:
         advertId: \d+
         receiveId: \d+
 
+se_platform_message_answer:
+    path:   /envoyer-reponse/{advertSlug}_{advertId}_{receiveId}_{isAnswer}
+    defaults:
+        _controller: SEPlatformBundle:Message:add
+    requirements:
+        advertId: \d+
+        receiveId: \d+
 
 se_platform_message_view:
     path:   /consulter-message/{advertSlug}_{advertId}
@@ -176,24 +250,28 @@ se_platform_message_advert_receive:
 
 # Comment Routes :
 se_platform_comment_add:
-    path:   /ajouter-avis
+    path:   /ajouter-avis/{advertId}_{auctionUserId}
     defaults:
         _controller: SEPlatformBundle:Comment:add
 
 se_platform_comment_view:
-    path:   /consulter-avis
+    path:   /consulter-avis/
     defaults:
         _controller: SEPlatformBundle:Comment:view
 
 se_platform_comment_edit:
-    path:   /modifier-avis
+    path:   /modifier-avis/{id}
     defaults:
         _controller: SEPlatformBundle:Comment:edit
+    requirements:
+        id: \d+
 
 se_platform_comment_delete:
-    path:   /supprimer-avis
+    path:   /supprimer-avis/{id}
     defaults:
-        _controller: SEPlatformBundle:Comment:supprimer
+        _controller: SEPlatformBundle:Comment:delete
+    requirements:
+        id: \d+
 
 se_platform_comment_user_list:
     path:   /mes-avis/{page}
@@ -214,7 +292,7 @@ se_platform_user_view:
     defaults:
         _controller: SEPlatformBundle:Profile:view
     requirements:
-        id: \d+
+        userId: \d+
 
 se_platform_user_edit:
     path:   /mon-compte/modifier

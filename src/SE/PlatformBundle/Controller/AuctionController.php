@@ -77,8 +77,10 @@ class AuctionController extends Controller
     public function addAction(Request $request, $advertSlug, $advertId){
         $em = $this->getDoctrineManager();
         $session = $request->getSession();
+        $mailer  = $this->get('se_platform.mailer');
 
         $advert=$em->find('SEPlatformBundle:Advert', $advertId);
+        $userOwner = $advert->getUser();
         $advert->setAuctionState(1);
 
         $auction = new Auction();
@@ -88,22 +90,42 @@ class AuctionController extends Controller
 
         $form = $this->createForm(AuctionType::class, $auction);
 
-        if ($request->isMethod('POST')){
-            $form->handleRequest($request);
+        if ($userOwner !== $this->getUser()) {
+          if ($request->isMethod('POST')){
+              $form->handleRequest($request);
 
-            if ($form->isValid()){
+              if ($form->isValid()){
 
-                $em->persist($auction);
-                $em->flush();
+                  $em->persist($auction);
+                  $em->flush();
 
-                $session->getFlashBag()->add('addSuccess','Enchère bien enregistrée.');
+                  $body = $this->renderView(
+                         'SEPlatformBundle:Auction:addMail.html.twig',
+                         array( 'receiver' => $userOwner,
+                                'sender'=> $this->getUser(),
+                                'value'=> $auction->getValue(),
+                                'advert'=> $advert->getTitle())
+                     );
 
-                return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
-            }
+                  $mailer->sendEmail($advert, 'Nouvelle enchère', 'Nouvelle enchère sur votre annonce '.$advert->getTitle(), $userOwner, $body);
+
+
+                  $session->getFlashBag()->add('addSuccess','Enchère bien enregistrée.');
+
+                  return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+              }
+          }
+        }
+
+        else {
+          $session->getFlashBag()->add('error','Vous ne pouvez pas enchérir sur vos propres annonces.');
+
+          return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
         }
 
         return $this->render('SEPlatformBundle:Auction:add.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'advert'=> $advert
         ));
     }
 
@@ -220,12 +242,14 @@ class AuctionController extends Controller
      * @Security("has_role('ROLE_AUTEUR')")
      */
     public function acceptAction(Request $request, $auctionId, $state){
-
-
       $em = $this->getDoctrineManager();
       $session = $request->getSession();
+      $mailer  = $this->get('se_platform.mailer');
+
       $user = $this->getUser();
       $auctionAccept = $em->find('SEPlatformBundle:Auction', $auctionId);
+      $userAuction = $auctionAccept->getUser();
+
       $advert = $auctionAccept->getAdvert();
 
       $auctionRefuse = $em->getRepository('SEPlatformBundle:Auction')->findBy(array('advert' => $advert));
@@ -235,12 +259,36 @@ class AuctionController extends Controller
           foreach($auctionRefuse as $auct_refus) {
             $statusRefus = $state == 2 ? 3 : 1;
             $auct_refus->setState($statusRefus);
+
+            $userAuctionRefuse =$auct_refus->getUser();
+
+            $body = $this->renderView(
+                   'SEPlatformBundle:Auction:refuseMail.html.twig',
+                   array( 'receiver' => $userAuctionRefuse,
+                          'value'=> $auctionAccept->getValue(),
+                          'advert'=> $advert->getTitle())
+               );
+
+
+
+            $mailer->sendEmail($advert, 'Enchère refusée', 'Votre enchère a été refusée', $userAuctionRefuse, $body);
           }
 
+          $advert->setIsPublished(false);
           $auctionAccept->setState($state);
 
+          $em->persist($advert);
           $em->persist($auctionAccept);
           $em->flush();
+
+          $body = $this->renderView(
+                 'SEPlatformBundle:Auction:acceptMail.html.twig',
+                 array( 'receiver' => $userAuction,
+                        'value'=> $auctionAccept->getValue(),
+                        'advert'=> $advert->getTitle())
+             );
+
+          $mailer->sendEmail($advert, 'Enchère acceptée', 'Votre enchère a été acceptée', $userAuction, $body);
 
           $session->getFlashBag()->add('addSuccess','Vous avez bien accepté la proposition à '.$auctionAccept->getValue());
 

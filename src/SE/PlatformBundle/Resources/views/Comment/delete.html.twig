@@ -12,9 +12,22 @@
 </div>
 {% endblock %}
 {% block layout_body %}
-  <div class="row">
-       <div id="content" class="col-md-12">
-         supprimer un avis
-       </div>
-   </div>
+<div class="row">
+     <div id="content" class="col-md-12">
+       <div class="col-md-6">
+            <p class="pad-msg">Etes-vous certain de vouloir supprimer l'avis ?</p>
+            <div class="col-md-6">
+              <a href="{{ path('se_platform_comment_user_list') }}" class="form-control btn se-btn-action">
+                  Retour à mes avis
+              </a>
+            </div>
+            <div class="col-md-6">
+                <form action="{{ path('se_platform_comment_delete', {'id': comment.id}) }}" method="post">
+                    <input type="submit" value="Supprimer" class="btn btn-danger" />
+                    {{ form_rest(form) }}
+                </form>
+            </div>
+        </div>
+     </div>
+ </div>
 {% endblock %}

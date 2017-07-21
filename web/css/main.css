@@ -257,7 +257,13 @@ h3.slogan-link:focus{
 }
 
 .cat-title{
-    border-bottom: 2px solid #E5DF16;
+  border-bottom: 2px solid #E5DF16;
+}
+.cat-title-admin{
+  border-bottom: 2px solid #B20942;
+}
+.cat-title, .cat-title-admin{
+
     padding-bottom: 5px;
     margin-bottom: 20px;
 }
@@ -269,14 +275,14 @@ h3.slogan-link:focus{
   margin-bottom: 5px;
 }
 
-p.cat-title{
+p.cat-title, .cat-title-admin{
     font-size: 18px;
 }
-.cat-title>a{
+.cat-title>a, .cat-title-admin>a{
     color: #E5DF16;
 }
 
-h4.cat-title{
+h4.cat-title, h4.cat-title-admin{
     border-bottom: 2px solid #2A0540;
     color: #2A0540;
 }
@@ -390,7 +396,7 @@ height: 180px;
 }
 
 textarea.form-control{
-    height: 250px;
+    height: 100px;
 }
 
 .truncate {
@@ -441,7 +447,7 @@ textarea.form-control{
 }
 
 .se-img{
-    width: 200px; height: 150px;
+    width: 350px; height: 250px;
 }
 .se-auction-img{
     width: 100px; height: 75px;
@@ -537,7 +543,7 @@ textarea.form-control{
       padding-top: 18px;
 }
 .detail-body{
-   height: 280px;
+   height: 350px;
 }
 .ad-date{
   margin-left: 10px;
@@ -691,7 +697,12 @@ a.se-tbl-link{
 .med{
     width: 50%;
 }
-
+a.thumbnail{
+  margin-bottom: 0;
+}
+a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
+    border-color: #26003E;
+}
 #se_auctionbundle_message div>textarea.form-control{
     height: 100px;
 }

@@ -31,6 +31,12 @@ class Advert
     private $category;
 
     /**
+     * @ORM\OneToOne(targetEntity="SE\PlatformBundle\Entity\Image", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $image;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -95,6 +101,13 @@ class Advert
      * @ORM\Column(name="auctionState", type="integer")
      */
     private $auctionState;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="commentState", type="integer")
+     */
+    private $commentState;
 
    /**
      * @Gedmo\Slug(fields={"title"})
@@ -404,5 +417,64 @@ class Advert
     public function getAuctionState()
     {
         return $this->auctionState;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \SE\PlatformBundle\Entity\Image $image
+     *
+     * @return Advert
+     */
+    public function setImage(\SE\PlatformBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \SE\PlatformBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function getUploadDir()
+    {
+        // On retourne le chemin relatif vers l'image pour un navigateur
+        return 'uploads/img';
+    }
+
+    public function getWebPathNoImage()
+    {
+        return $this->getUploadDir().'/se-no-image.jpeg';
+    }
+
+    /**
+     * Set commentState
+     *
+     * @param integer $commentState
+     *
+     * @return Advert
+     */
+    public function setCommentState($commentState)
+    {
+        $this->commentState = $commentState;
+
+        return $this;
+    }
+
+    /**
+     * Get commentState
+     *
+     * @return integer
+     */
+    public function getCommentState()
+    {
+        return $this->commentState;
     }
 }

@@ -158,4 +158,37 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
            ->getQuery()
            ->getResult();
     }
+
+    public function getAdvertListAdmin($title, $category, $page, $nbPerPage){
+        $qb = $this->createQueryBuilder('advert')
+                ->innerJoin('advert.user', 'user')
+                ->addSelect('user')
+                ->innerJoin('user.postalCode', 'postalCode')
+                ->addSelect('postalCode')
+                ->innerJoin('postalCode.city', 'city')
+                ->addSelect('city')
+                ->innerJoin('city.departement', 'departement')
+                ->addSelect('departement')
+                ->innerJoin('departement.region', 'region')
+                ->addSelect('region')
+                ->leftJoin('advert.category', 'category')
+                ->addSelect('category');
+
+        if($title !== NULL && $title !== '')
+        {
+            $page = 1;
+            $qb->andWhere("advert.title LIKE '%$title%'")->orWhere("advert.detail LIKE '%$title%'");
+        }
+        if($category !== NULL && $category !== '0')
+        {
+            $page = 1;
+            $qb->andWhere($qb->expr()->eq('category.id', $category));
+        }
+
+        $qb->orderBy('advert.dateCreation', 'DESC')->getQuery();
+        $qb->setFirstResult(($page-1) * $nbPerPage)->setMaxResults($nbPerPage);
+
+        return new Paginator($qb, true);
+    }
+
 }

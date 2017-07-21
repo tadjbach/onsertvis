@@ -8,3 +8,7 @@ services:
         class: SE\PlatformBundle\Form\Type\ProfileFormType
         tags:
             - { name: form.type, alias: se_platform_user_profile }
+    se_platform.mailer:
+        class: SE\PlatformBundle\Service\Mailer
+        arguments :
+            - "@mailer"

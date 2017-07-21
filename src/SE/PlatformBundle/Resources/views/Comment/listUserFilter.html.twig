@@ -4,23 +4,14 @@
             <div class="row">
                 <div class="col-md-4 filter">
                         <select class="form-control"
-                                name="advert"
-                                id="advert_id" >
+                                name="state"
+                                id="state_id" >
                             <option value='0' >Tous les avis</option>
-                            <optgroup label="Avis reçus">
-                              {% for advert in listAdvertUser %}
-                                  <option {{ app.request.query.get('advert')== advert.id ? ' selected ' : ' ' }}
-                                      value={{ advert.id }}>{{ advert.title }}
+                              {% for state in listCommentState %}
+                                  <option {{ app.request.query.get('state')== state.id ? ' selected ' : ' ' }}
+                                      value={{ state.id }}>{{ state.labelNormal }}
                                   </option>
                               {% endfor %}
-                          </optgroup>
-                            <optgroup label="Avis envoyés">
-                            {% for advert in listAdvertComment %}
-                                <option {{ app.request.query.get('advert')== advert.id ? ' selected ' : ' ' }}
-                                    value={{ advert.id }}>{{ advert.title }}
-                                </option>
-                            {% endfor %}
-                            </optgroup>
                         </select>
                 </div>
 

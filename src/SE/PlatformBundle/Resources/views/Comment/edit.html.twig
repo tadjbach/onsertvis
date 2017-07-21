@@ -14,7 +14,16 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         Modifier un avis
+         {% for flash_message in app.session.flashBag.get('editSuccess') %}
+             <div class="alert alert-success text-center" role="alert">
+                 {{ flash_message }}
+             </div>
+         {% endfor %}
+         <div id="content" class="col-md-3"></div>
+         <div id="content" class="col-md-6">
+            {{ include('SEPlatformBundle:Comment:form.html.twig') }}
+         </div>
+         <div id="content" class="col-md-3"></div>
        </div>
    </div>
 {% endblock %}

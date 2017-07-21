@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Controller managing the user profile.
@@ -137,13 +138,18 @@ class ProfileController extends Controller
 
   public function viewAction($userId)
    {
-     $em=$this->getDoctrine()
+     $em = $this->getDoctrine()
             ->getManager();
 
-      $user=$em->find('SEPlatformBundle:User', $userId);
+      $listComment = $this->getDoctrine()
+          ->getManager()
+          ->getRepository('SEPlatformBundle:Comment')
+          ->getCommentListUser($userId, '2', 1, 1000000);
 
-      if ($user === null) {
-          throw new NotFoundHttpException("Cet utilisateur n'existe pas");
+      $user = $em->find('SEPlatformBundle:User', $userId);
+
+      if (!$user){
+          throw new NotFoundHttpException("Cet utilisateur n'existe pas".$userId );
       }
 
       if (!is_object($user) || !$user instanceof UserInterface) {
@@ -152,6 +158,7 @@ class ProfileController extends Controller
 
       return $this->render('@FOSUser/Profile/view.html.twig', array(
           'user' => $user,
+          'listComment'=>$listComment
       ));
    }
 }

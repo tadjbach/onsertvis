@@ -40,6 +40,10 @@ class AdvertType extends AbstractType
                         'placeholder' => 'Le détail ne doit pas dépasser 4000 caratères maximum')
                     ))
 
+                ->add('image', ImageType::class, array(
+                        'label'=>' ',  'required' => false
+                    ))
+
                 ->add('save', SubmitType::class,
                                 array('label'=> 'Enregistrer',
                                     'attr'   =>  array(

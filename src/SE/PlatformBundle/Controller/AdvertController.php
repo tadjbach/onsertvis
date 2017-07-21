@@ -12,6 +12,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use SE\PlatformBundle\Form\AdvertEditType;
 use SE\PlatformBundle\Form\AdvertType;
 use SE\PlatformBundle\Entity\Advert;
+use SE\PlatformBundle\Service\Mailer;
 
 class AdvertController extends Controller
 {
@@ -232,6 +233,8 @@ class AdvertController extends Controller
     public function addAction(Request $request){
         $em = $this->getDoctrineManager();
         $session = $request->getSession();
+        $mailer  = $this->get('se_platform.mailer');
+
         $advert = new Advert();
         $advert->setUser($this->getUser());
         $form = $this->createForm(AdvertType::class, $advert);
@@ -240,8 +243,18 @@ class AdvertController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()){
+               //$advert->getImage()->upload();
+
                 $em->persist($advert);
                 $em->flush();
+
+                $body = $this->renderView(
+                       'SEPlatformBundle:Advert:addMail.html.twig',
+                       array('receiver' => $this->getUser(),
+                            'advert'=> $advert->getTitle())
+                   );
+
+                $mailer->sendEmail($advert, 'Nouvelle annonce', 'Création de votre annonce '.$advert->getTitle(), $this->getUser(), $body);
 
                 $session->getFlashBag()->add('addSuccess','Annonce bien enregistrée, elle sera validée dans moins de 24h.');
 
@@ -297,6 +310,8 @@ class AdvertController extends Controller
     public function deleteAction($slug, $id, Request $request){
       $em = $this->getDoctrineManager();
       $session = $request->getSession();
+      $mailer  = $this->get('se_platform.mailer');
+
       $advert = $em->getRepository('SEPlatformBundle:Advert')->find($id);
 
        if (null===$advert){
@@ -312,6 +327,14 @@ class AdvertController extends Controller
             $advert->setIsEnabled(false);
 
             $em->flush();
+
+            $body = $this->renderView(
+                   'SEPlatformBundle:Advert:deleteMail.html.twig',
+                   array('receiver' => $this->getUser(),
+                        'advert'=> $advert->getTitle())
+               );
+
+            $mailer->sendEmail($advert, 'Suppression de votre annonce',  'Suppression de votre annonce '.$advert->getTitle(), $this->getUser(), $body);
 
             $request->getSession()->getFlashBag()->add('deleteSuccess', "La demande a bien été supprimée.");
 
@@ -364,8 +387,14 @@ class AdvertController extends Controller
         *
         */
 
-        return $this->render('SEPlatformBundle:Advert:view.html.twig',
-                    array(
-                      'advert'=> $advert));
+        if ($advert->getIsPublished() == 0) {
+          return $this->render('SEPlatformBundle:Advert:desactive.html.twig');
+        }
+        else {
+          return $this->render('SEPlatformBundle:Advert:view.html.twig',
+                      array(
+                        'advert'=> $advert));
+        }
+
     }
 }

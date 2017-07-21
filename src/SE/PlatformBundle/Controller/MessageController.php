@@ -34,9 +34,10 @@ class MessageController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function addAction(Request $request, $advertSlug, $advertId, $receiveId){
+    public function addAction(Request $request, $advertSlug, $advertId, $receiveId, $isAnswer){
         $em = $this->getDoctrineManager();
         $session = $request->getSession();
+        $mailer  = $this->get('se_platform.mailer');
 
         $advert = $em->find('SEPlatformBundle:Advert', $advertId);
         $userSender = $this->getUser();
@@ -50,23 +51,50 @@ class MessageController extends Controller
 
         $form = $this->createForm(MessageType::class, $message);
 
-        if ($request->isMethod('POST')){
-            $form->handleRequest($request);
+        if ($userReceive !== $this->getUser()) {
+          if ($request->isMethod('POST')){
+              $form->handleRequest($request);
 
-            if ($form->isValid()){
+              if ($form->isValid()){
 
-                $em->persist($message);
-                $em->flush();
+                  $em->persist($message);
+                  $em->flush();
 
-                $session->getFlashBag()->add('addSuccess','Message bien envoyé.');
+                $body = $this->renderView(
+                       // app/Resources/views/Message/addMail.html.twig
+                       'SEPlatformBundle:Message:addMail.html.twig',
+                       array('receiver' => $userReceive,
+                            'sender'  => $userSender,
+                            'advert'=> $advert->getTitle())
+                   );
 
-                return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
-            }
+                  $mailer->sendEmail($advert,'Nouveau message', 'Vous avez un message', $userReceive, $body);
+                  $session->getFlashBag()->add('addSuccess','Message bien envoyé.');
+
+                  return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+              }
+          }
+        }
+        else {
+          $session->getFlashBag()->add('error','Vous ne pouvez pas envoyer des messages à vous même.');
+
+          return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
         }
 
-        return $this->render('SEPlatformBundle:Message:add.html.twig', array(
-            'form' => $form->createView()
-        ));
+        if ($isAnswer == 1) {
+          return $this->render('SEPlatformBundle:Message:answer.html.twig', array(
+              'form' => $form->createView(),
+              'advert'=> $advert
+          ));
+        }
+        else{
+          return $this->render('SEPlatformBundle:Message:add.html.twig', array(
+              'form' => $form->createView(),
+              'advert'=> $advert
+          ));
+        }
+
+
     }
 
     /**

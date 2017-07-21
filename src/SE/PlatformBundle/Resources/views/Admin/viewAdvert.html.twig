@@ -1,0 +1,184 @@
+{% extends "SEPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Détail de l'annonce - {{ parent() }}
+{% endblock %}
+
+{% block layout_header2 %}
+<div class="row">
+  <div id="header" class="col-md-12">
+    <h3 class="cat-title-admin">Annonce N° {{ advert.id }} - {{ advert.title }}</h3>
+  </div>
+</div>
+{% endblock %}
+
+{% block layout_body %}
+
+  <div class="row">
+    <div id="content" class="col-md-12">
+         <div class="col-md-6">
+           <div class="panel panel-default">
+             <i class="ad-date">Mise en ligne le <b>{{ advert.dateCreation|date('d/m/Y') }}</b> à <b>{{ advert.dateCreation|date('H:m') }}</b>
+                 dans<b>
+                 {% if advert.category.labelNormal != 'Autres' %}
+                     {{ advert.category.labelNormal }}
+                 {% else %}
+                     Sans catégorie
+                 {% endif %}
+               </b>
+             </i>
+                <div class="panel-body text-center se-item-link">
+                   {% if advert.image == null %}
+                   <img class="se-img" src="{{ asset(advert.webPathNoImage) }}" alt="{{ asset(advert.webPathNoImage) }}">
+                   {% else %}
+                       <img class="se-img" src="{{ asset(advert.image.webPath) }}" alt="{{ asset(advert.image.webPath) }}">
+                   {% endif %}
+                </div>
+                <div class="panel-footer se-panel-footer">
+                   <h4 class="truncate">
+                     {{ advert.title }}
+                   </h4>
+
+                   <p>{{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }}
+                     ({{ advert.user.PostalCode.city.departement.labelNormal }} -
+                     {{ advert.user.PostalCode.city.departement.region.labelNormal }})
+                   </p>
+                </div>
+            </div>
+         </div>
+
+         <div class="col-md-6">
+                <div class="text-center se-item-link detail-body">
+                  <div class="col-md-12 text-center">
+
+                      {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}
+                  </div>
+                </div>
+         </div>
+       </div>
+   </div>
+   <div class="row">
+     <div id="content" class="col-md-12">
+       <div class="col-md-6">
+            <h4 class="cat-title">Description</h4>
+            <p>{{ advert.detail |nl2br }}</p>
+        </div>
+        <div class="col-md-6">
+             <h4 class="cat-title">Demandeur</h4>
+             <p>Visible :
+                    {% if advert.user.isDetailVisible %}
+                          <span class="label label-success">Oui</span>
+                    {% else %}
+                          <span class="label label-danger">Non</span>
+                    {% endif %}
+            </p>
+             <p>Actif :
+                    {% if advert.user.enabled %}
+                          <span class="label label-success">Oui</span>
+                    {% else %}
+                          <span class="label label-danger">Non</span>
+                    {% endif %}
+            </p>
+             <p>Mail : {{ advert.user.email }}</p>
+             <p>Pseudo : <a href="{{ path('se_platform_admin_view_user' , {'id' : advert.user.id }) }}" >
+                         {{advert.user}}
+                       </a>
+              </p>
+             <p>Tél :  {{ advert.user.phoneNumber }}</p>
+             <p>Adresse : {{ advert.user.address }} {{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }}
+                ({{ advert.user.PostalCode.city.departement.labelNormal }})</p>
+            <p>Adresse IP : {{advert.user.ipAddress}}</p>
+        </div>
+    </div>
+   </div>
+
+   <div class="row">
+     <div class="col-md-12">
+       <div class="col-md-6">
+            <h4 class="cat-title">Action </h4>
+            <table class="table" id="tblGrid">
+              <tbody>
+                <tr>
+                  <td>
+                      Activée
+                  </td>
+                  {% if advert.isEnabled %}
+                  <td>
+                      <span class="label label-success">Oui</span>
+                  </td>
+                  <td class="text-center">
+                    <a href="{{ path('se_platform_admin_enabled_advert', {'action': 0,'id': advert.id}) }}" class="btn se-btn-action">Désactiver</a>
+                  </td>
+                  {% else %}
+                  <td>
+                      <span class="label label-danger">Non</span>
+                  </td>
+                  <td class="text-center">
+                    <a href="{{ path('se_platform_admin_enabled_advert', {'action': 1,'id': advert.id}) }}" class="btn se-btn-action">Activer</a>
+                  </td>
+                  {% endif %}
+                </tr>
+
+                <tr>
+                  <td>
+                      Publiée
+                  </td>
+                  {% if advert.isPublished %}
+                  <td>
+                      <span class="label label-success">Oui</span>
+                  </td>
+                  <td class="text-center">
+                    <a href="{{ path('se_platform_admin_publish_advert', {'action': 0,'id': advert.id}) }}" class="btn se-btn-action">Masquer</a>
+                  </td>
+                  {% else %}
+                  <td>
+                      <span class="label label-danger">Non</span>
+                  </td>
+                  <td class="text-center">
+                    <a href="{{ path('se_platform_admin_publish_advert', {'action': 1,'id': advert.id}) }}" class="btn se-btn-action">Publier</a>
+                  </td>
+                  {% endif %}
+                </tr>
+
+                <tr>
+                  <td>
+                      Supprimée
+                  </td>
+                  {% if advert.isDeleted %}
+                  <td>
+                      <span class="label label-success">Oui</span>
+                  </td>
+                  <td class="text-center">
+                    <a href="{{ path('se_platform_admin_delete_advert', {'action': 0,'id': advert.id}) }}" class="btn se-btn-action">Remttre</a>
+                  </td>
+                  {% else %}
+                  <td>
+                      <span class="label label-danger">Non</span>
+                  </td>
+                  <td class="text-center">
+                    <a href="{{ path('se_platform_admin_delete_advert', {'action': 1,'id': advert.id}) }}" class="btn se-btn-action">Supprimer</a>
+                  </td>
+                  {% endif %}
+                </tr>
+
+                <tr>
+                  <td>
+                      Etat de l'enchère
+                  </td>
+                  {% if advert.isPublished == 0 and advert.auctionState != 0 %}
+                  <td>
+                      <span class="label label-danger">Enchère terminée</span>
+                  </td>
+                  {% elseif advert.isPublished == 1 and advert.auctionState == 0 %}
+                  <td>
+                      <span class="label label-warning">Enchère en cours</span>
+                  </td>
+                  {% endif %}
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+     </div>
+   </div>
+{% endblock %}

@@ -13,8 +13,10 @@
 {% endblock %}
 {% block layout_body %}
   <div class="row">
-       <div id="content" class="col-md-12">
-         Ajouter un avis
+      <div id="content" class="col-md-3"></div>
+       <div id="content" class="col-md-6">
+         {{ include('SEPlatformBundle:Comment:form.html.twig') }}
        </div>
+      <div id="content" class="col-md-3"></div>
    </div>
 {% endblock %}

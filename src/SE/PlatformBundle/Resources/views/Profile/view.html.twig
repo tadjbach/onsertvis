@@ -15,19 +15,35 @@
 {% block layout_body %}
 
   <div class="row">
-      {% block fos_user_content %}
-          {% include "@FOSUser/Profile/view_content.html.twig" %}
-      {% endblock fos_user_content %}
+
   </div>
   <div class="row">
     <div id="content" class="col-md-12">
-      <div class="col-md-6">
+        <div class="col-md-6">
+          {% block fos_user_content %}
+              {% include "@FOSUser/Profile/view_content.html.twig" %}
+          {% endblock fos_user_content %}
+        </div>
+        <div class="col-md-6">
            <h4 class="cat-title">Avis reçus</h4>
-       </div>
-       <div class="col-md-6">
-            <h4 class="cat-title">Avis envoyés</h4>
-       </div>
-   </div>
+          {% for comment in listComment %}
+                <div class='panel panel-default'>
+                    <div class='panel-heading se-panel-heading'>
+                        <h4 class='panel-title text-left'>
+                          <a class='' href="{{ path('se_platform_user_view', {'userId': comment.sender.id}) }}" class="cat-link" >
+                              {{ comment.sender }}
+                          </a></h4>
+                        <h4 class='panel-title text-right'><i>{{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:i:s') }}</i></h4>
+                    </div>
+                    <div class='panel-body'>
+                      <div class="caption">
+                          <p>{{ comment.content |nl2br }}</p>
+                      </div>
+                    </div>
+                </div>
+            {%endfor%}
+     </div>
+     </div>
   </div>
 
 {% endblock %}
