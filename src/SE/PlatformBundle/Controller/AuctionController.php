@@ -107,7 +107,7 @@ class AuctionController extends Controller
                                 'advert'=> $advert->getTitle())
                      );
 
-                  $mailer->sendEmail($advert, 'Nouvelle enchère', 'Nouvelle enchère sur votre annonce '.$advert->getTitle(), $userOwner, $body);
+                  $mailer->sendEmail($advert, 'Nouvelle enchère', 'Nouvelle enchère sur votre annonce '.$advert->getTitle(), $userOwner->getEmail(), $body);
 
 
                   $session->getFlashBag()->add('addSuccess','Enchère bien enregistrée.');
@@ -270,7 +270,7 @@ class AuctionController extends Controller
                             'value'=> $auctionAccept->getValue(),
                             'advert'=> $advert->getTitle())
                  );
-              $mailer->sendEmail($advert, 'Enchère refusée', 'Votre enchère a été refusée', $userAuctionRefuse, $body);
+              $mailer->sendEmail($advert, 'Enchère refusée', 'Votre enchère a été refusée', $userAuctionRefuse->getEmail(), $body);
             }
           }
 
@@ -288,7 +288,7 @@ class AuctionController extends Controller
                         'advert'=> $advert->getTitle())
              );
 
-          $mailer->sendEmail($advert, 'Enchère acceptée', 'Votre enchère a été acceptée', $userAuction, $body);
+          $mailer->sendEmail($advert, 'Enchère acceptée', 'Votre enchère a été acceptée', $userAuction->getEmail(), $body);
 
           $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'enchère à ".$auctionAccept->getValue()." €, il vous reste à contacter la personne pour convenir d'un rendez-vous");
 

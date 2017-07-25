@@ -50,6 +50,7 @@ class RegistrationController extends Controller
 
         $user = $userManager->createUser();
         $user->setEnabled(true);
+        $mailer  = $this->get('se_platform.mailer');
 
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
@@ -69,12 +70,15 @@ class RegistrationController extends Controller
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
                 /*SE PlatformBundle Begin*/
+
                 $ip = $request->getClientIp();
                 if($ip == 'unknown'){
                     $ip = $_SERVER['REMOTE_ADDR'];
                 }
 
                 $user->setIpAddress($ip);
+
+                $mailer->sendEmail(null, 'Nouveau compte', 'Nouveau compte', 'support@serviceenchere.fr', "Un nouveau client ".$user->getEmail()." vient de s'inscrire");
                 //SE PlatformBundle End */
 
                 $userManager->updateUser($user);

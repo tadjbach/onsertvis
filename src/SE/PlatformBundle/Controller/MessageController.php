@@ -68,7 +68,7 @@ class MessageController extends Controller
                             'advert'=> $advert->getTitle())
                    );
 
-                  $mailer->sendEmail($advert,'Nouveau message', 'Vous avez un message', $userReceive, $body);
+                  $mailer->sendEmail($advert,'Nouveau message', 'Vous avez un message', $userReceive->getEmail(), $body);
                   $session->getFlashBag()->add('addSuccess','Message bien envoyé.');
 
                   return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));

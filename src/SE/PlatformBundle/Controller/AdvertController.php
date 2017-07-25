@@ -238,7 +238,7 @@ class AdvertController extends Controller
         $advert = new Advert();
         $advert->setUser($this->getUser());
 		$advert->setCommentState(0);
-		
+
         $form = $this->createForm(AdvertType::class, $advert);
 
         if ($request->isMethod('POST')){
@@ -256,7 +256,7 @@ class AdvertController extends Controller
                             'advert'=> $advert->getTitle())
                    );
 
-                $mailer->sendEmail($advert, 'Nouvelle annonce', 'Création de votre annonce '.$advert->getTitle(), $this->getUser(), $body);
+                $mailer->sendEmail($advert, 'Nouvelle annonce', 'Création de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
 
                 $session->getFlashBag()->add('addSuccess','Annonce bien enregistrée, elle sera validée dans moins de 24h.');
 
@@ -336,7 +336,7 @@ class AdvertController extends Controller
                         'advert'=> $advert->getTitle())
                );
 
-            $mailer->sendEmail($advert, 'Suppression de votre annonce',  'Suppression de votre annonce '.$advert->getTitle(), $this->getUser(), $body);
+            $mailer->sendEmail($advert, 'Suppression de votre annonce',  'Suppression de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
 
             $request->getSession()->getFlashBag()->add('deleteSuccess', "La demande a bien été supprimée.");
 
