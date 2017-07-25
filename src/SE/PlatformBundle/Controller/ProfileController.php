@@ -124,7 +124,7 @@ class ProfileController extends Controller
 
             return $response;
         }
-        else {
+        else if($form->isSubmitted() && !$form->isValid()) {
           $this->addFlash(
                            'updateError',
                            "Une erreur s'est produite pendant la mise à jour, vérifiez vos identifiants"

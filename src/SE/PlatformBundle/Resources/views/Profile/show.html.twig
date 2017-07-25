@@ -19,7 +19,7 @@
       {% block fos_user_content %}
         {% if app.user.isAcountComplete == 0 %}
               <div class="alert alert-danger" role="alert">
-                  Bonjour {{ app.user.username }}, Votre profil n'est pas complet, merci de le
+                  Bonjour {{ app.user.warning }}, Votre profil n'est pas complet, merci de le
                   <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
               </div>
         {% else %}

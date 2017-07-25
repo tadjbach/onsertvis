@@ -80,6 +80,91 @@
                       </div>
                   </div>
 
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="col-md-6">
+                           <h4 class="cat-title">Action </h4>
+                           <table class="table" id="tblGrid">
+                             <tbody>
+                               <tr>
+                                 <td>
+                                     Activée
+                                 </td>
+                                 {% if user.isEnabled %}
+                                 <td>
+                                     <span class="label label-success">Oui</span>
+                                 </td>
+                                 <td class="text-center">
+                                   <a href="{{ path('se_platform_admin_enabled_user', {'action': 0,'id': user.id}) }}" class="btn se-btn-action">Désactiver</a>
+                                 </td>
+                                 {% else %}
+                                 <td>
+                                     <span class="label label-danger">Non</span>
+                                 </td>
+                                 <td class="text-center">
+                                   <a href="{{ path('se_platform_admin_enabled_user', {'action': 1,'id': user.id}) }}" class="btn se-btn-action">Activer</a>
+                                 </td>
+                                 {% endif %}
+                               </tr>
+
+                               <tr>
+                                 <td>
+                                     Newletter
+                                 </td>
+                                 {% if user.isNewsLetter %}
+                                 <td>
+                                     <span class="label label-success">Oui</span>
+                                 </td>
+                                 <td class="text-center">
+                                   <a href="{{ path('se_platform_admin_newsletter_user', {'action': 0,'id': user.id}) }}" class="btn se-btn-action">Désactiver</a>
+                                 </td>
+                                 {% else %}
+                                 <td>
+                                     <span class="label label-danger">Non</span>
+                                 </td>
+                                 <td class="text-center">
+                                   <a href="{{ path('se_platform_admin_newsletter_user', {'action': 1,'id': user.id}) }}" class="btn se-btn-action">Activer</a>
+                                 </td>
+                                 {% endif %}
+                               </tr>
+
+                               <tr>
+                                 <td>
+                                     Visible
+                                 </td>
+                                 {% if user.isDetailVisible %}
+                                 <td>
+                                     <span class="label label-success">Oui</span>
+                                 </td>
+                                 <td class="text-center">
+                                   <a href="{{ path('se_platform_admin_visible_user', {'action': 0,'id': user.id}) }}" class="btn se-btn-action">Désactiver</a>
+                                 </td>
+                                 {% else %}
+                                 <td>
+                                     <span class="label label-danger">Non</span>
+                                 </td>
+                                 <td class="text-center">
+                                   <a href="{{ path('se_platform_admin_visible_user', {'action': 1,'id': user.id}) }}" class="btn se-btn-action">Activer</a>
+                                 </td>
+                                 {% endif %}
+                               </tr>
+
+                               <tr>
+                                 <td>
+                                    Note
+                                 </td>
+                                 <td>
+                                     {{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}
+                                 </td>
+                               </tr>
+                             </tbody>
+                           </table>
+                       </div>
+
+                    </div>
+                  </div>
+
               </div>
           </div>
 

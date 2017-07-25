@@ -20,6 +20,28 @@ se_platform_admin_view_user:
     requirements:
         id: \d+
 
+
+se_platform_admin_enabled_user:
+    path:   /se/manage/activer/user-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:enableUser
+    requirements:
+        id: \d+
+
+se_platform_admin_newsletter_user:
+    path:   /se/manage/newsletter/user-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:newsletterUser
+    requirements:
+        id: \d+
+
+se_platform_admin_visible_user:
+    path:   /se/manage/visible/user-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:visibleUser
+    requirements:
+        id: \d+
+
 se_platform_admin_view_advert:
     path:   /se/manage/annonce-{id}
     defaults:

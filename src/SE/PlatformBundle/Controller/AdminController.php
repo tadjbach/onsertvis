@@ -214,6 +214,51 @@ class AdminController extends Controller
               return $this->redirectToRoute('se_platform_admin_view_advert', array('id'=>$id));
             }
 
+            /**
+             * @Security("has_role('ROLE_SUPER_ADMIN')")
+             */
+             public function enableUserAction(Request $request, $id, $action){
+               $em = $this->getDoctrineManager();
+
+               $user = $em->find('SEPlatformBundle:User', $id);
+               $user->setEnabled($action);
+
+               $em->persist($user);
+               $em->flush();
+
+               return $this->redirectToRoute('se_platform_admin_view_user', array('id'=>$id));
+             }
+
+             /**
+              * @Security("has_role('ROLE_SUPER_ADMIN')")
+              */
+              public function newsletterUserAction(Request $request, $id, $action){
+                $em = $this->getDoctrineManager();
+
+                $user = $em->find('SEPlatformBundle:User', $id);
+                $user->setIsNewsLetter($action);
+
+                $em->persist($user);
+                $em->flush();
+
+                return $this->redirectToRoute('se_platform_admin_view_user', array('id'=>$id));
+              }
+
+              /**
+               * @Security("has_role('ROLE_SUPER_ADMIN')")
+               */
+               public function visibleUserAction(Request $request, $id, $action){
+                 $em = $this->getDoctrineManager();
+
+                 $user = $em->find('SEPlatformBundle:User', $id);
+                 $user->setIsDetailVisible($action);
+
+                 $em->persist($user);
+                 $em->flush();
+
+                 return $this->redirectToRoute('se_platform_admin_view_user', array('id'=>$id));
+               }
+
         /**
          * @Security("has_role('ROLE_SUPER_ADMIN')")
          */

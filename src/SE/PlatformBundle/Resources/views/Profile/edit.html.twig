@@ -14,23 +14,28 @@
 
 {% block layout_body %}
 
+<div class="col-md-12 text-center">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
           {% for flash_message in app.session.flashBag.get('updateSuccess') %}
               <div class="alert alert-success text-center" role="alert">
                   {{ flash_message }}
               </div>
           {% endfor %}
-
           {% for flash_message in app.session.flashBag.get('updateError') %}
               <div class="alert alert-danger text-center" role="alert">
                   {{ flash_message }}
               </div>
           {% endfor %}
+        </div>
+        <div class="col-md-3"></div>
+</div>
 
     <div class="row">
          <div id="content" class="col-md-12">
             {% block fos_user_content %}
             {% if app.user.isAcountComplete == 0 %}
-                  <div class="alert alert-danger" role="alert">
+                  <div class="alert alert-warning" role="alert">
                       Bonjour {{ app.user.username }}, Votre profil n'est pas complet, merci de le
                       compléter
                   </div>

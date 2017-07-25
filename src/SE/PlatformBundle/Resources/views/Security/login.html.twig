@@ -16,30 +16,41 @@
 
     <div class="row">
          <div class="col-md-12">
-           <div class="col-md-1" ></div>
-           <div class="col-md-4">
-                <h4 class="cat-title">Se connecter</h4>
-                    {# On définit ce block, dans lequel vont venir s'insérer les autres vues du bundle #}
-                        {% block fos_user_content %}
-                            {{ include('@FOSUser/Security/login_content.html.twig') }}
-                        {% endblock fos_user_content %}
-                </div>
-                <div class="col-md-2" ></div>
-                <div class="col-md-4">
-                    <h4 class="cat-title">Vous n'avez pas de compte ?</h4>
-                    <div class="form-group">
-                        <a href="{{ path('fos_user_registration_register') }}" class="form-control btn se-btn-action">
-                            Créer un compte
-                        </a>
-                    </div>
-                    <h4 class="cat-title">Mot de passe oublié ?</h4>
-                    <div class="form-group">
-                        <a href="{{ path('fos_user_resetting_request') }}" class="form-control btn se-btn-action">
-                            Réinitialiser le mot de passe
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-1" ></div>
+             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+             <div class="col-md-3"></div>
+             <div class="col-md-6">
+                   <div class="alert alert-info text-center" role="alert">
+                   </p>Vous êtes déjà connecté !!</p>
+                   <p>Si vous n'êtes pas {{app.user}}, <a href="{{path('fos_user_security_logout')}}">déconnectez vous.</a></p>
+                   </div>
+               </div>
+               <div class="col-md-3"></div>
+            {% else %}
+
+               <div class="col-md-1" ></div>
+               <div class="col-md-4">
+                  <h4 class="cat-title">Se connecter</h4>
+                    {% block fos_user_content %}
+                        {{ include('@FOSUser/Security/login_content.html.twig') }}
+                    {% endblock fos_user_content %}
+              </div>
+              <div class="col-md-2" ></div>
+              <div class="col-md-4">
+                  <h4 class="cat-title">Vous n'avez pas de compte ?</h4>
+                  <div class="form-group">
+                      <a href="{{ path('fos_user_registration_register') }}" class="form-control btn se-btn-action">
+                          Créer un compte
+                      </a>
+                  </div>
+                  <h4 class="cat-title">Mot de passe oublié ?</h4>
+                  <div class="form-group">
+                      <a href="{{ path('fos_user_resetting_request') }}" class="form-control btn se-btn-action">
+                          Réinitialiser le mot de passe
+                      </a>
+                  </div>
+              </div>
+              <div class="col-md-1" ></div>
+            {% endif %}
          </div>
      </div>
 {% endblock %}
