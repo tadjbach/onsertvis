@@ -211,6 +211,20 @@ li.hd-icon{
     background-color: #E5DF16;
     color: #2A0540;
 }
+
+.auction-nb>tr>th>h4{
+      margin-bottom: 30px;
+}
+
+.user-about{
+      height: 228px;
+          overflow: auto;
+}
+
+.se-badge-auction{
+    font-size: 20px;
+}
+
 .se-price-badge{
     background-color: #2A0540;
     color: #E5DF16;
@@ -256,13 +270,19 @@ h3.slogan-link:focus{
     cursor: pointer;
 }
 
-.cat-title{
+.wk-text-center{
+  text-align: -webkit-center;
+}
+.profile-title{
+    width: 15%;
+}
+.cat-title, .profile-title{
   border-bottom: 2px solid #E5DF16;
 }
 .cat-title-admin{
   border-bottom: 2px solid #B20942;
 }
-.cat-title, .cat-title-admin{
+.cat-title, .cat-title-admin, .profile-title{
 
     padding-bottom: 5px;
     margin-bottom: 20px;
@@ -275,14 +295,14 @@ h3.slogan-link:focus{
   margin-bottom: 5px;
 }
 
-p.cat-title, .cat-title-admin{
+p.cat-title, p.cat-title-admin, p.profile-title{
     font-size: 18px;
 }
-.cat-title>a, .cat-title-admin>a{
+.cat-title>a, .cat-title-admin>a, .profile-title>a{
     color: #E5DF16;
 }
 
-h4.cat-title, h4.cat-title-admin{
+h4.cat-title, h4.cat-title-admin, h4.profile-title{
     border-bottom: 2px solid #2A0540;
     color: #2A0540;
 }
@@ -659,8 +679,7 @@ a.ui-corner-all .ui-state-active {
 
   .se-profile-value table th{
 
-    padding-right: 10px;
-    color: #F0AD4E;
+    padding-right: 30px;
 
   }
   .se-flash-msg{

@@ -1,70 +1,156 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-                    <div id="content" class="col-md-12">
-                       <div class="">
-                         <h4 class="cat-title">{{ user }}</h4>
+<div id="content" class="col-md-12">
 
-                           <br>
-                           <div class="row">
-                                 <div class="col-md-4">
-                                    {% if user.isDetailVisible %}
-                                         <i class="glyphicon glyphicon-map-marker"></i>
-                                         <span class="se-profile-title">Adresse : </span>
-                                         <p class="se-profile-value"> {{ user.address }}
-                                             <br>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
-                                             <br>{{ user.PostalCode.city.departement.labelNormal }}</p>
-                                         <br>
-                                         <i class="glyphicon glyphicon-phone-alt"></i>
-                                         <span class="se-profile-title">Téléphone : </span>
-                                         <p class="se-profile-value"> {{ user.phoneNumber|join('|') }}</p>
-                                     {% else %}
-                                         <i class="glyphicon glyphicon-map-marker"></i>
-                                         <span class="se-profile-title">Adresse : </span>
-                                         <p class="se-profile-value"> xxxxxx
-                                             <br>xxxxx xxxxxxxxxx
-                                             <br>xxxxxxxxxxxxxxx</p>
-                                         <br>
-                                         <i class="glyphicon glyphicon-phone-alt"></i>
-                                         <span class="se-profile-title">Téléphone : </span>
-                                         <p class="se-profile-value"> 0x xx xx xx xx</p>
-                                     {% endif %}
-                                     <br>
-                                     <i class="glyphicon glyphicon-calendar"></i>
-                                       <span class="se-profile-title">Disponibilité : </span>
-                                       <div class="se-profile-value">
-                                           <table>
-                                           <thead id="tblHead">
-                                               <tr>
-                                                   {% for day in user.calendar %}
-                                                   <th>
-                                                       {{ day.dayFr  }}
-                                                   </th>
-                                                   {%else%}
-                                                       <th>
-                                                       Nous contacter
-                                                       </th>
-                                                   {% endfor %}
-                                               </tr>
-                                           </thead>
-                                           <tbody>
-                                               {% for day in user.calendar %}
-                                                   <td>
+      <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading se-panel-heading">
+              <h3 class="panel-title">Détail</h3>
+            </div>
+            <div class="panel-body">
+                  <h4>{{ user }}</h4>
+                  <div class="se-profile-value">{% if user.isDetailVisible %}
+                        <h5>{{ user.address }}
+                            <br>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
+                            <br>{{ user.PostalCode.city.departement.labelNormal }}
+                        </h5>
+                        <h5>
+                          {{ user.phoneNumber|join('|') }}
+                        </h5>
+                   {% else %}
+                        <h5>xxxxxxxxxxxxxxxxxxxxxxx
+                            <br>xxxx xxxxxxxxxxx
+                            <br>xxxxxxxx
+                        </h5>
+                        <h5>
+                         0x xx xx xx xx
+                        </h5>
+                   {% endif %}
+                 </div>
+                 <br>
+                    <h4>Note : </h4>
+                    <h5>
+                      <div class="se-profile-value">
+                          {{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}
+                        </div>
+                    </h5>
 
-                                                   </td>
-                                                   {% endfor %}
-                                           </tbody>
-                                           </table>
+                   <br>
+                    <h4>Disponibilité :</h4>
+                    <div class="se-profile-value">
+                    <table>
+                    <thead id="tblHead">
+                        <tr>
+                            {% for day in user.calendar %}
+                            <th>
+                                <h5>{{ day.dayFr  }}</h5>
+                            </th>
+                            {% else %}
+                                <th>
+                                  <h5>Nous contacter</h5>
+                                </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    </table>
+                    </div>
 
-                                       </div>
-                                 </div>
-                               <div class="col-md-4">
-                                   <i class="glyphicon glyphicon-info-sign"></i>
-                                   <span class="se-profile-title">A propos : </span>
-                                   <p class="se-profile-value"> {{ user.detail|nl2br }}</p>
-                               </div>
-                               <div class="col-md-4">
+                   <br>
+                    <h4>Mode de paimenent accepté :</h4>
+                    <div class="se-profile-value">
+                      <table>
+                        <thead id="tblHead">
+                            <tr>
+                                {% for pay in user.payment %}
+                                <th>
+                                    <h5>{{ pay.labelNormal  }}</h5>
+                                </th>
+                                {% else %}
+                                    <th>
+                                      <h5>Nous contacter</h5>
+                                    </th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                      </table>
+                    </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-6">
 
-                               </div>
-                             </div>
-                       </div>
-                   </div>
+          <div class="panel panel-default">
+            <div class="panel-heading se-panel-heading">
+              <h3 class="panel-title">Nombres d'enchères</h3>
+            </div>
+            <div class="panel-body">
+              <div class="se-profile-value text-center wk-text-center" >
+                <table>
+                  <thead id="tblHead" class="auction-nb">
+                      <tr >
+                          <th class="text-center">
+                              <h4>Enchères passées</h4>
+                          </th>
+                          <th class="text-center">
+                              <h4>Enchères gagnées</h4>
+                          </th>
+                        <th class="text-center">
+                              <h4>Enchères perdues</h4>
+                          </th>
+                      </tr>
+                      <tr >
+                          <th class="text-center">
+                              <span class="label label-info se-badge-auction">0</span>
+                          </th>
+                          <th class="text-center">
+                              <span class="label label-success se-badge-auction">0</span>
+                          </th>
+                          <th class="text-center">
+                              <span class="label label-danger se-badge-auction">0</span>
+                          </th>
+                      </tr>
+                  </thead>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading se-panel-heading">
+              <h3 class="panel-title">A propos</h3>
+            </div>
+            <div class="panel-body">
+              <div class="user-about">
+                <p>  {{ user.detail|nl2br }}</p>
+              </div>
+              </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading se-panel-heading">
+                  <h3 class="panel-title">Avis</h3>
+                </div>
+                <div class="panel-body">
+                  {% for comment in listComment %}
+                        <div class='panel panel-default'>
+                            <div class='panel-heading se-panel-heading'>
+                                <h4 class='panel-title text-left'>
+                                  <a class='' href="{{ path('se_platform_user_view', {'userId': comment.sender.id}) }}" class="cat-link" >
+                                      {{ comment.sender }}
+                                  </a></h4>
+                                <h4 class='panel-title text-right'><i>{{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:i:s') }}</i></h4>
+                            </div>
+                            <div class='panel-body'>
+                              <div class="caption">
+                                  <p>{{ comment.content |nl2br }}</p>
+                              </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+</div>
