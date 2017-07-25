@@ -1,10 +1,10 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: 127.0.0.1
-    database_port: 3306
-    database_name: se_dev
-    database_user: root
-    database_password: null
+    database_host: serviceegmprod.mysql.db
+    database_port:
+    database_name: serviceegmprod
+    database_user: serviceegmprod
+    database_password: EquMg8Lr6HBM
     mailer_transport: mail
     mailer_host: SSL0.OVH.NET
     mailer_port: 587
