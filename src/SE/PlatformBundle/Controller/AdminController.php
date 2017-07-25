@@ -114,11 +114,38 @@ class AdminController extends Controller
          public function viewUserAction(Request $request, $id){
            $em = $this->getDoctrineManager();
 
+           $listComment = $this->getDoctrine()
+               ->getManager()
+               ->getRepository('SEPlatformBundle:Comment')
+               ->getCommentListUser($id, '2', 1, 1000000);
+
+               $listReceivedAuctions = $em
+                  ->getRepository('SEPlatformBundle:Auction')
+                  ->getStateReceiveAuctionUser($id);
+
+               $listProposedAuctions = $em
+                  ->getRepository('SEPlatformBundle:Auction')
+                  ->getStateAuctionUser($id, 1);
+
+              $listAcceptedAuctions = $em
+                  ->getRepository('SEPlatformBundle:Auction')
+                  ->getStateAuctionUser($id, 2);
+
+              $listLoseAuctions = $em
+                  ->getRepository('SEPlatformBundle:Auction')
+                  ->getStateAuctionUser($id, 3);
+
            $user=$em->find('SEPlatformBundle:User', $id);
 
            return $this->render('SEPlatformBundle:Admin:viewUser.html.twig',
                        array(
-                         'user'=> $user));
+                         'user'=> $user,
+                       'listComment'=>$listComment,
+                       'countReceivedAuction'=>count($listReceivedAuctions),
+                       'countProposedAuction'=>count($listProposedAuctions),
+                       'countAcceptedAuction'=>count($listAcceptedAuctions),
+                       'countLosedAuction'=>count($listLoseAuctions)
+                     ));
          }
 
         /**

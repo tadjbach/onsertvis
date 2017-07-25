@@ -13,11 +13,15 @@
 {% endblock %}
 {% block layout_body %}
   <div class="row">
-       <div id="content" class="col-md-12">
+       <div class="col-md-12">
+         <div class="col-md-3"></div>
+         <div class="col-md-6">
          {% for flash_message in app.session.flashBag.get('deleteSuccess') %}
-             <div class="alert alert-success text-center" role="alert">
-                 {{ flash_message }}
-             </div>
+
+               <div class="alert alert-success text-center" role="alert">
+                   {{ flash_message }}
+               </div>
+
          {% endfor %}
          {% for flash_message in app.session.flashBag.get('addSuccess') %}
              <div class="alert alert-success text-center" role="alert">
@@ -29,18 +33,8 @@
                  {{ flash_message }}
              </div>
          {% endfor %}
-          <div class="col-md-2"></div>
-           <div class="col-md-4">
-             <a href="{{ path('se_platform_homepage') }}" class="form-control btn se-btn-action">
-                 Retour à la page d'accueil
-             </a>
-           </div>
-          <div class="col-md-4">
-            <a href="{{ path('se_platform_advert_list') }}" class="form-control btn se-btn-action">
-                Liste des toutes les demandes
-            </a>
-          </div>
-            <div class="col-md-2"></div>
+       </div>
+     <div class="col-md-3"></div>
         </div>
 
        </div>

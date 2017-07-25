@@ -27,3 +27,5 @@ vendor/friendsofsymfony/*
 app/config/parameters.yml
 vendor/composer/installed.json
 app/config/parameters.yml
+
+*.jpeg

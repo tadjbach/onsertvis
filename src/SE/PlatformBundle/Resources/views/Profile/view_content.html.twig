@@ -1,15 +1,16 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div id="content" class="col-md-12">
+<div class="col-md-12">
 
       <div class="col-md-6">
           <div class="panel panel-default">
             <div class="panel-heading se-panel-heading">
               <h3 class="panel-title">Détail</h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body profile">
                   <h4>{{ user }}</h4>
-                  <div class="se-profile-value">{% if user.isDetailVisible %}
+                  <div class="se-profile-value">
+                    {% if user.isDetailVisible or is_granted('ROLE_SUPER_ADMIN')%}
                         <h5>{{ user.address }}
                             <br>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
                             <br>{{ user.PostalCode.city.departement.labelNormal }}
@@ -88,25 +89,31 @@
                 <table>
                   <thead id="tblHead" class="auction-nb">
                       <tr >
+                        <th class="text-center">
+                            <h5>Reçues</h5>
+                        </th>
                           <th class="text-center">
-                              <h4>Enchères passées</h4>
+                              <h5>Passées</h5>
                           </th>
                           <th class="text-center">
-                              <h4>Enchères gagnées</h4>
+                              <h5>Gagnées</h5>
                           </th>
                         <th class="text-center">
-                              <h4>Enchères perdues</h4>
+                              <h5>Perdues</h5>
                           </th>
                       </tr>
                       <tr >
+                        <th class="text-center">
+                            <span class="label label-info se-badge-auction">{{countReceivedAuction}}</span>
+                        </th>
                           <th class="text-center">
-                              <span class="label label-info se-badge-auction">0</span>
+                              <span class="label label-warning se-badge-auction">{{ countProposedAuction }}</span>
                           </th>
                           <th class="text-center">
-                              <span class="label label-success se-badge-auction">0</span>
+                              <span class="label label-success se-badge-auction">{{countAcceptedAuction}}</span>
                           </th>
                           <th class="text-center">
-                              <span class="label label-danger se-badge-auction">0</span>
+                              <span class="label label-danger se-badge-auction">{{countLosedAuction}}</span>
                           </th>
                       </tr>
                   </thead>

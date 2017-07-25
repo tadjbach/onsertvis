@@ -212,13 +212,17 @@ li.hd-icon{
     color: #2A0540;
 }
 
-.auction-nb>tr>th>h4{
-      margin-bottom: 30px;
+.auction-nb>tr>th>h5{
+      margin-bottom: 32px;
 }
 
 .user-about{
-      height: 228px;
-          overflow: auto;
+      height: 150px;
+      overflow: auto;
+}
+
+.profile>h4{
+  color: #2A0540;
 }
 
 .se-badge-auction{
@@ -679,7 +683,7 @@ a.ui-corner-all .ui-state-active {
 
   .se-profile-value table th{
 
-    padding-right: 30px;
+    padding-right: 10px;
 
   }
   .se-flash-msg{

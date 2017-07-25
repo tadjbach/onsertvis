@@ -146,6 +146,22 @@ class ProfileController extends Controller
           ->getRepository('SEPlatformBundle:Comment')
           ->getCommentListUser($userId, '2', 1, 1000000);
 
+          $listReceivedAuctions = $em
+             ->getRepository('SEPlatformBundle:Auction')
+             ->getStateReceiveAuctionUser($userId);
+
+          $listProposedAuctions = $em
+             ->getRepository('SEPlatformBundle:Auction')
+             ->getStateAuctionUser($userId, 1);
+
+         $listAcceptedAuctions = $em
+             ->getRepository('SEPlatformBundle:Auction')
+             ->getStateAuctionUser($userId, 2);
+
+         $listLoseAuctions = $em
+             ->getRepository('SEPlatformBundle:Auction')
+             ->getStateAuctionUser($userId, 3);
+
       $user = $em->find('SEPlatformBundle:User', $userId);
 
       if (!$user){
@@ -157,8 +173,12 @@ class ProfileController extends Controller
       }
 
       return $this->render('@FOSUser/Profile/view.html.twig', array(
-          'user' => $user,
-          'listComment'=>$listComment
+            'user' => $user,
+            'listComment'=>$listComment,
+            'countReceivedAuction'=>count($listReceivedAuctions),
+            'countProposedAuction'=>count($listProposedAuctions),
+            'countAcceptedAuction'=>count($listAcceptedAuctions),
+            'countLosedAuction'=>count($listLoseAuctions)
       ));
    }
 }

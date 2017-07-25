@@ -242,6 +242,7 @@ class AuctionController extends Controller
      * @Security("has_role('ROLE_AUTEUR')")
      */
     public function acceptAction(Request $request, $auctionId, $state){
+
       $em = $this->getDoctrineManager();
       $session = $request->getSession();
       $mailer  = $this->get('se_platform.mailer');
@@ -260,18 +261,17 @@ class AuctionController extends Controller
             $statusRefus = $state == 2 ? 3 : 1;
             $auct_refus->setState($statusRefus);
 
-            $userAuctionRefuse =$auct_refus->getUser();
+            $userAuctionRefuse = $auct_refus->getUser();
 
-            $body = $this->renderView(
-                   'SEPlatformBundle:Auction:refuseMail.html.twig',
-                   array( 'receiver' => $userAuctionRefuse,
-                          'value'=> $auctionAccept->getValue(),
-                          'advert'=> $advert->getTitle())
-               );
-
-
-
-            $mailer->sendEmail($advert, 'Enchère refusée', 'Votre enchère a été refusée', $userAuctionRefuse, $body);
+            if ($userAuctionRefuse !== $userAuction) {
+              $body = $this->renderView(
+                     'SEPlatformBundle:Auction:refuseMail.html.twig',
+                     array( 'receiver' => $userAuctionRefuse,
+                            'value'=> $auctionAccept->getValue(),
+                            'advert'=> $advert->getTitle())
+                 );
+              $mailer->sendEmail($advert, 'Enchère refusée', 'Votre enchère a été refusée', $userAuctionRefuse, $body);
+            }
           }
 
           $advert->setIsPublished(false);
@@ -290,7 +290,7 @@ class AuctionController extends Controller
 
           $mailer->sendEmail($advert, 'Enchère acceptée', 'Votre enchère a été acceptée', $userAuction, $body);
 
-          $session->getFlashBag()->add('addSuccess','Vous avez bien accepté la proposition à '.$auctionAccept->getValue());
+          $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'enchère à ".$auctionAccept->getValue()." €, il vous reste à contacter la personne pour convenir d'un rendez-vous");
 
           return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'accept'));
       }
