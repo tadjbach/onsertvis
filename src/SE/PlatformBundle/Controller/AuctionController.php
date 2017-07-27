@@ -88,6 +88,8 @@ class AuctionController extends Controller
         $auction->setUser($this->getUser());
         $auction->setAdvert($advert);
 
+        $otherAuction = $em->getRepository('SEPlatformBundle:Auction')->findBy(array('advert' => $advert));
+
         $form = $this->createForm(AuctionType::class, $auction);
 
         if ($userOwner !== $this->getUser()) {
@@ -99,7 +101,26 @@ class AuctionController extends Controller
                   $em->persist($auction);
                   $em->flush();
 
-                  $body = $this->renderView(
+                  if ($otherAuction !== null && $userOwner !== null){
+
+                      foreach($otherAuction as $other_auct) {
+
+                        $userAuctionOther = $other_auct->getUser();
+
+                        if ($userAuctionOther !== $userOwner) {
+                          $body = $this->renderView(
+                                 'SEPlatformBundle:Auction:otherAuctionMail.html.twig',
+                                 array( 'receiver' => $userAuctionOther,
+                                        'value'=> $auction->getValue(),
+                                        'advert'=> $advert->getTitle())
+                             );
+                          $mailer->sendEmail($advert, 'Nouvelle Enchère', "Nouvelle enchère sur l'annonce ".' '.$advert->getTitle(), $userAuctionOther->getEmail(), $body);
+                        }
+                      }
+                    }
+
+
+                  $body_owner = $this->renderView(
                          'SEPlatformBundle:Auction:addMail.html.twig',
                          array( 'receiver' => $userOwner,
                                 'sender'=> $this->getUser(),
@@ -107,7 +128,7 @@ class AuctionController extends Controller
                                 'advert'=> $advert->getTitle())
                      );
 
-                  $mailer->sendEmail($advert, 'Nouvelle enchère', 'Nouvelle enchère sur votre annonce '.$advert->getTitle(), $userOwner->getEmail(), $body);
+                  $mailer->sendEmail($advert, 'Nouvelle enchère', 'Nouvelle enchère sur votre annonce '.$advert->getTitle(), $userOwner->getEmail(), $body_owner);
 
 
                   $session->getFlashBag()->add('addSuccess','Enchère bien enregistrée.');
