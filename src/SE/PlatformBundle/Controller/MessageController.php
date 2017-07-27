@@ -71,14 +71,14 @@ class MessageController extends Controller
                   $mailer->sendEmail($advert,'Nouveau message', 'Vous avez un message', $userReceive->getEmail(), $body);
                   $session->getFlashBag()->add('addSuccess','Message bien envoyé.');
 
-                  return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+                  return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajoutermessage'));
               }
           }
         }
         else {
           $session->getFlashBag()->add('error','Vous ne pouvez pas envoyer des messages à vous même.');
 
-          return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+          return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'refusermessage'));
         }
 
         if ($isAnswer == 1) {

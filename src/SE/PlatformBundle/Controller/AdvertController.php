@@ -363,6 +363,18 @@ class AdvertController extends Controller
             case 'accept':
                 $title = 'Acceptation d\'une enchère';
                 break;
+            case 'refuserauction':
+                $title = "Vous n'avez pas ce droit";
+                break;
+            case 'ajouterauction':
+                $title = "Validation de votre enchère";
+                break;
+            case 'refusermessage':
+                $title = "Vous n'avez pas ce droit";
+                break;
+            case 'ajoutermessage':
+                $title = "Envoi de votre message";
+                break;
           }
 
       $content = $this->render('SEPlatformBundle:Advert:validate.html.twig',

@@ -112,7 +112,7 @@ class AuctionController extends Controller
 
                   $session->getFlashBag()->add('addSuccess','Enchère bien enregistrée.');
 
-                  return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+                  return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouterauction'));
               }
           }
         }
@@ -120,7 +120,7 @@ class AuctionController extends Controller
         else {
           $session->getFlashBag()->add('error','Vous ne pouvez pas enchérir sur vos propres annonces.');
 
-          return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+          return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'refuserauction'));
         }
 
         return $this->render('SEPlatformBundle:Auction:add.html.twig', array(

@@ -113,6 +113,9 @@
                 Désolé, le demandeur ne souhaite pas afficher ses coordonnées.
             </div>
             {% endif %}
+            <a href="{{ path('se_platform_user_view', {'userId': advert.user.id}) }}"  class="btn se-btn-action">
+                Plus de détail
+            </a>
          </div>
     </div>
    </div>
