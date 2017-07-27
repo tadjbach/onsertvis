@@ -237,7 +237,7 @@ class AdvertController extends Controller
 
         $advert = new Advert();
         $advert->setUser($this->getUser());
-		$advert->setCommentState(0);
+		    $advert->setCommentState(0);
 
         $form = $this->createForm(AdvertType::class, $advert);
 

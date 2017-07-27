@@ -201,12 +201,24 @@ class AdminController extends Controller
           */
           public function enableAdvertAction(Request $request, $id, $action){
             $em = $this->getDoctrineManager();
-
+            $mailer  = $this->get('se_platform.mailer');
             $advert = $em->find('SEPlatformBundle:Advert', $id);
             $advert->setIsEnabled($action);
+            $advert->setIsPublished($action);
 
             $em->persist($advert);
             $em->flush();
+            
+            if ($action == 0) {
+
+                $body = $this->renderView(
+                     'SEPlatformBundle:Advert:deactiveMail.html.twig',
+                     array('receiver' => $advert->getUser(),
+                          'advert'=> $advert->getTitle())
+                 );
+
+                $mailer->sendEmail($advert, "Validation de votre annonce", "Votre annonce ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
+            }
 
             return $this->redirectToRoute('se_platform_admin_view_advert', array('id'=>$id));
           }
@@ -219,9 +231,21 @@ class AdminController extends Controller
 
              $advert = $em->find('SEPlatformBundle:Advert', $id);
              $advert->setIsPublished($action);
+             $advert->setIsEnabled($action);
+
+             $mailer  = $this->get('se_platform.mailer');
 
              $em->persist($advert);
              $em->flush();
+
+             if ($action == 1) {
+               $body = $this->renderView(
+                      'SEPlatformBundle:Advert:activeMail.html.twig',
+                      array('receiver' => $advert->getUser(),
+                           'advert'=> $advert->getTitle())
+                  );
+                  $mailer->sendEmail($advert, "Validation de votre annonce", "Votre annonce ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
+             }
 
              return $this->redirectToRoute('se_platform_admin_view_advert', array('id'=>$id));
            }
