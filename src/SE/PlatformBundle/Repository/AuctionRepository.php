@@ -285,6 +285,22 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
            ->getResult();
    }
 
+   public function getStateProposedAuctionUser($userId){
+
+       $qb=$this->createQueryBuilder('auction');
+
+       $qb->innerJoin('auction.user', 'user_auction')
+           ->addSelect('user_auction')
+           ->leftJoin('auction.advert', 'advert')
+           ->addSelect('advert');
+
+       $qb->where($qb->expr()->eq('user_auction.id', $userId));
+
+       return $qb
+           ->getQuery()
+           ->getResult();
+   }
+
    public function getStateReceiveAuctionUser($userId){
 
        $qb=$this->createQueryBuilder('auction');

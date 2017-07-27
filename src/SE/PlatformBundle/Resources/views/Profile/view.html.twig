@@ -19,13 +19,21 @@
   </div>
   <div class="row">
     <div id="content" class="col-md-12">
-        <div class="col-md-12">
-          {% block fos_user_content %}
-              {% include "@FOSUser/Profile/view_content.html.twig" %}
-          {% endblock fos_user_content %}
+      {% if user.isAcountComplete == 0 %}
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <div class="alert alert-danger" role="alert">
+                  Le profil de {{user}} n'est pas complet.
+              </div>
+            </div>
+            <div class="col-md-3"></div>
+      {% else %}
+      {% block fos_user_content %}
+          {% include "@FOSUser/Profile/view_content.html.twig" %}
+      {% endblock fos_user_content %}
+      {% endif %}
+
         </div>
-    
-     </div>
   </div>
 
 {% endblock %}

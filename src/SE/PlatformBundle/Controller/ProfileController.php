@@ -152,7 +152,7 @@ class ProfileController extends Controller
 
           $listProposedAuctions = $em
              ->getRepository('SEPlatformBundle:Auction')
-             ->getStateAuctionUser($userId, 1);
+             ->getStateProposedAuctionUser($userId);
 
          $listAcceptedAuctions = $em
              ->getRepository('SEPlatformBundle:Auction')
