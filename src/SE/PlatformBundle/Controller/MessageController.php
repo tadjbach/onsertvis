@@ -10,6 +10,7 @@ use SE\PlatformBundle\Form\MessageType;
 use SE\PlatformBundle\Entity\Advert;
 use SE\PlatformBundle\Entity\User;
 use SE\PlatformBundle\Entity\Message;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MessageController extends Controller
 {

@@ -10,6 +10,7 @@ use SE\PlatformBundle\Form\AuctionType;
 use SE\PlatformBundle\Entity\Advert;
 use SE\PlatformBundle\Entity\User;
 use SE\PlatformBundle\Entity\Auction;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AuctionController extends Controller
 {

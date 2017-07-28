@@ -39,6 +39,7 @@ class CommentController extends Controller
 
          $em = $this->getDoctrineManager();
          $session = $request->getSession();
+         $mailer  = $this->get('se_platform.mailer');
 
          $advert=$em->find('SEPlatformBundle:Advert', $advertId);
          $userReceiver = $em->find('SEPlatformBundle:User', $auctionUserId);
@@ -80,7 +81,15 @@ class CommentController extends Controller
                        $em->persist($comment);
                        $em->flush();
 
-                       $session->getFlashBag()->add('addSuccess','Commentaire bien envoyé.');
+                       $body = $this->renderView(
+                              'SEPlatformBundle:Comment:addMail.html.twig',
+                              array( 'receiver' => $userReceiver,
+                                     'advert'=> $advert->getTitle())
+                          );
+
+                       $mailer->sendEmail($advert, 'Avis reçu', 'Vous avez reçu un avis', $userReceiver->getEmail(), $body);
+
+                       $session->getFlashBag()->add('addSuccess','Avis bien envoyé.');
 
                        return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
                      }
