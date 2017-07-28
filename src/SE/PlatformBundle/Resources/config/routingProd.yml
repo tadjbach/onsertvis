@@ -1,0 +1,407 @@
+#index Routes :
+se_platform_homepage:
+    path:     /
+    defaults:
+        _controller: SEPlatformBundle:Default:index
+    schemes:  [https]
+
+# Admin Routes :
+se_platform_admin_list_users:
+    path:     /se/manage/users/{page}
+    defaults:
+        _controller: SEPlatformBundle:Admin:listUsers
+        page:   1
+    requirements:
+        page: \d*
+    schemes:  [https]
+
+se_platform_admin_view_user:
+    path:   /se/manage/user-{id}
+    defaults:
+        _controller: SEPlatformBundle:Admin:viewUser
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+
+se_platform_admin_enabled_user:
+    path:   /se/manage/activer/user-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:enableUser
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_admin_newsletter_user:
+    path:   /se/manage/newsletter/user-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:newsletterUser
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_admin_visible_user:
+    path:   /se/manage/visible/user-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:visibleUser
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_admin_view_advert:
+    path:   /se/manage/annonce-{id}
+    defaults:
+        _controller: SEPlatformBundle:Admin:viewAdvert
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_admin_enabled_advert:
+    path:   /se/manage/activer/annonce-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:enableAdvert
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_admin_publish_advert:
+    path:   /se/manage/publier/annonce-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:publishAdvert
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_admin_delete_advert:
+    path:   /se/manage/supprimer/annonce-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:deleteAdvert
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_admin_list_adverts:
+    path:     /se/manage/adverts/{page}
+    defaults:
+        _controller: SEPlatformBundle:Admin:listAdverts
+        page:   1
+    requirements:
+        page: \d*
+    schemes:  [https]
+
+se_platform_admin_list_auctions:
+    path:     /se/manage/admin/auctions
+    defaults:
+        _controller: SEPlatformBundle:Admin:listAuctions
+    schemes:  [https]
+
+se_platform_admin_list_messages:
+    path:     /se/manage/admin/messages
+    defaults:
+        _controller: SEPlatformBundle:Admin:listMessages
+    schemes:  [https]
+
+se_platform_admin_list_comments:
+    path:     /se/manage/admin/comments
+    defaults:
+        _controller: SEPlatformBundle:Admin:listComments
+    schemes:  [https]
+
+# Filter Routes :
+se_platform_departement_by_region:
+    path: /annonces-en-cours/getDepartementByRegion
+    defaults:
+        _controller: SEPlatformBundle:Advert:getDepartementByRegion
+    schemes:  [https]
+
+se_platform_city_by_departement:
+    path: /annonces-en-cours/getCityByDepartement
+    defaults:
+        _controller: SEPlatformBundle:Advert:getCityByDepartement
+    schemes:  [https]
+
+se_platform_postalCode_by_city_and_departement:
+    path: /annonces-en-cours/getPostalCodeByCityAndDepartement
+    defaults:
+        _controller: SEPlatformBundle:Advert:getPostalCodeByCityAndDepartement
+    schemes:  [https]
+
+se_platform_postalCode:
+    path: /getpostalcode
+    defaults:
+        _controller: SEPlatformBundle:Default:getPostalCode
+    schemes:  [https]
+
+# Advert Routes :
+se_platform_advert_add:
+    path:   /annonce/ajouter
+    defaults:
+        _controller: SEPlatformBundle:Advert:add
+    schemes:  [https]
+
+se_platform_advert_view:
+    path:   /annonce/{slug}_{id}
+    defaults:
+        _controller: SEPlatformBundle:Advert:view
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_advert_validate:
+    path:   /annonce/validee/{action}
+    defaults:
+        _controller: SEPlatformBundle:Advert:validate
+    schemes:  [https]
+
+se_platform_advert_edit:
+    path:   /annonce/modifier/{slug}_{id}
+    defaults:
+        _controller: SEPlatformBundle:Advert:edit
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_advert_delete:
+    path:   /annonce/supprimer/{slug}_{id}
+    defaults:
+        _controller: SEPlatformBundle:Advert:delete
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_advert_list:
+    path:   /annonces-en-cours/{page}
+    defaults:
+        _controller: SEPlatformBundle:Advert:list
+        page:   1
+    requirements:
+        page: \d*
+    schemes:  [https]
+
+se_platform_advert_user_list:
+    path:   /mes-annonces/{page}
+    defaults:
+        _controller: SEPlatformBundle:Advert:listUser
+        page:   1
+    requirements:
+        page: \d*
+    schemes:  [https]
+
+# Auction Routes :
+se_platform_auction_list:
+    path:   /enchere-en-cours/{advertId}
+    defaults:
+        _controller: SEPlatformBundle:Auction:list
+    requirements:
+        advertId: \d+
+    schemes:  [https]
+
+se_platform_auction_user_receive:
+    path:   /encheres-recues/{page}
+    defaults:
+        _controller: SEPlatformBundle:Auction:userReceiveList
+        page:   1
+    requirements:
+        page: \d*
+    schemes:  [https]
+
+se_platform_auction_user_send:
+    path:   /encheres-proposees/{page}
+    defaults:
+        _controller: SEPlatformBundle:Auction:userSendList
+        page:   1
+    requirements:
+        page: \d*
+    schemes:  [https]
+
+se_platform_auction_add:
+    path:     /enchere/propser-enchere/{advertSlug}_{advertId}
+    defaults:
+        _controller: SEPlatformBundle:Auction:add
+    requirements:
+        advertId: \d+
+    schemes:  [https]
+
+se_platform_auction_accept:
+    path:     /enchere/accepter-enchere/{auctionId}{state}
+    defaults:
+        _controller: SEPlatformBundle:Auction:accept
+    schemes:  [https]
+
+# Message Routes :
+se_platform_message_add:
+    path:   /envoyer-message/{advertSlug}_{advertId}_{receiveId}_{isAnswer}
+    defaults:
+        _controller: SEPlatformBundle:Message:add
+    requirements:
+        advertId: \d+
+        receiveId: \d+
+    schemes:  [https]
+
+se_platform_message_answer:
+    path:   /envoyer-reponse/{advertSlug}_{advertId}_{receiveId}_{isAnswer}
+    defaults:
+        _controller: SEPlatformBundle:Message:add
+    requirements:
+        advertId: \d+
+        receiveId: \d+
+    schemes:  [https]
+
+se_platform_message_view:
+    path:   /consulter-message/{advertSlug}_{advertId}
+    defaults:
+        _controller: SEPlatformBundle:Message:view
+    requirements:
+        advertId: \d+
+    schemes:  [https]
+
+se_platform_message_edit:
+    path:   /modifier-message/{id}
+    defaults:
+        _controller: SEPlatformBundle:Message:edit
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_message_delete:
+    path:   /supprimer-message/{id}
+    defaults:
+        _controller: SEPlatformBundle:Message:supprimer
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_message_user_list:
+    path:   /mes-messages/{page}
+    defaults:
+        _controller: SEPlatformBundle:Message:listUser
+        page:   1
+    requirements:
+        page: \d*
+    schemes:  [https]
+
+se_platform_message_user_receive:
+    path:   /mes-messages-recues/{page}
+    defaults:
+        _controller: SEPlatformBundle:Message:userReceiveList
+        page:   1
+    requirements:
+        page: \d*
+    schemes:  [https]
+
+se_platform_message_user_send:
+    path:   /mes-messages-envoyes/{page}
+    defaults:
+        _controller: SEPlatformBundle:Message:userSendList
+        page:   1
+    requirements:
+        page: \d*
+    schemes:  [https]
+
+se_platform_message_advert_send:
+    path:     /message-envoyes/{advertId}_{receiverId}
+    defaults:
+        _controller: SEPlatformBundle:Message:listSendConversation
+    schemes:  [https]
+
+se_platform_message_advert_receive:
+    path:     /message-recues/{advertId}_{senderId}
+    defaults:
+        _controller: SEPlatformBundle:Message:listReceiveConversation
+    schemes:  [https]
+
+# Comment Routes :
+se_platform_comment_add:
+    path:   /ajouter-avis/{advertId}_{auctionUserId}
+    defaults:
+        _controller: SEPlatformBundle:Comment:add
+    schemes:  [https]
+
+se_platform_comment_view:
+    path:   /consulter-avis/
+    defaults:
+        _controller: SEPlatformBundle:Comment:view
+    schemes:  [https]
+
+se_platform_comment_edit:
+    path:   /modifier-avis/{id}
+    defaults:
+        _controller: SEPlatformBundle:Comment:edit
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_comment_delete:
+    path:   /supprimer-avis/{id}
+    defaults:
+        _controller: SEPlatformBundle:Comment:delete
+    requirements:
+        id: \d+
+    schemes:  [https]
+
+se_platform_comment_user_list:
+    path:   /mes-avis/{page}
+    defaults:
+        _controller: SEPlatformBundle:Comment:listUser
+        page:   1
+    requirements:
+        page: \d*
+    schemes:  [https]
+
+#Account Routes :
+se_platform_user_add:
+    path:   /register
+    defaults:
+        _controller: SEPlatformBundle:User:add
+    schemes:  [https]
+
+se_platform_user_view:
+    path:   /profile/{userId}
+    defaults:
+        _controller: SEPlatformBundle:Profile:view
+    requirements:
+        userId: \d+
+    schemes:  [https]
+
+se_platform_user_edit:
+    path:   /mon-compte/modifier
+    defaults:
+        _controller: SEPlatformBundle:User:edit
+    schemes:  [https]
+
+se_platform_user_delete:
+    path:   /mon-compte/supprimer
+    defaults:
+        _controller: SEPlatformBundle:User:supprimer
+    schemes:  [https]
+
+se_platform_user_login:
+    path:   /se-connecter
+    defaults:
+        _controller: SEPlatformBundle:User:login
+    schemes:  [https]
+
+se_platform_user_logout:
+    path:   /se-déconnecter
+    defaults:
+        _controller: SEPlatformBundle:User:logout
+    schemes:  [https]
+
+#Default Pages
+se_platform_resum:
+    path: /qui-sommes-nous
+    defaults:
+        _controller: SEPlatformBundle:Default:resum
+    schemes:  [https]
+
+se_platform_cgu:
+    path:     /conditions-generales-d-utilisations
+    defaults:
+        _controller: SEPlatformBundle:Default:cgu
+    schemes:  [https]
+
+se_platform_help:
+    path: /aide
+    defaults:
+        _controller: SEPlatformBundle:Default:help
+    schemes:  [https]
