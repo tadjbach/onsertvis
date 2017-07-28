@@ -16,7 +16,7 @@
                             <br>{{ user.PostalCode.city.departement.labelNormal }}
                         </h5>
                         <h5>
-                          {{ user.phoneNumber|join('|') }}
+                          {{ user.phoneNumber|split('', 2)|join(' ') }}
                         </h5>
                    {% else %}
                         <h5>xxxxxxxxxxxxxxxxxxxxxxx

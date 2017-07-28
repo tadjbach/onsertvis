@@ -84,7 +84,7 @@
                          {{advert.user}}
                        </a>
               </p>
-             <p>Tél :  {{ advert.user.phoneNumber }}</p>
+             <p>Tél :  {{ advert.user.phoneNumber|split('', 2)|join(' ') }}</p>
              <p>Adresse : {{ advert.user.address }} {{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }}
                 ({{ advert.user.PostalCode.city.departement.labelNormal }})</p>
             <p>Adresse IP : {{advert.user.ipAddress}}</p>
