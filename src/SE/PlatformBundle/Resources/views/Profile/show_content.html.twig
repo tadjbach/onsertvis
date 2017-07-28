@@ -20,11 +20,11 @@
                                    <i class="glyphicon glyphicon-phone-alt"></i>
                                      <span class="se-profile-title">Téléphone : </span>
                                      <p class="se-profile-value"> {{ user.phoneNumber|split('', 2)|join(' ') }}</p>
-
                                      <br>
                                      <i class="glyphicon glyphicon-calendar"></i>
                                        <span class="se-profile-title">Disponibilité : </span>
                                        <div class="se-profile-value">
+                                         {{ user.calendar|split('', 2)|join(' ') }}
                                            <table>
                                            <thead id="tblHead">
                                                <tr>

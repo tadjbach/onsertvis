@@ -21,8 +21,13 @@
     </head>
     <body>
         <!-- HADER - MENU -->
-        {{ include('@SEPlatform/Default/header.html.twig') }}
-
+        <div class="row">
+          <div class="col-md-1"></div>
+              <div class="col-md-10">
+                    {{ include('@SEPlatform/Default/header.html.twig') }}
+            </div>
+            <div class="col-md-1"></div>
+        </div>
         <!-- CONTAINER -->
         {% block body %}{% endblock %}
 
@@ -30,6 +35,7 @@
          </div>
 
         <!-- PAGE - FOOTER - SERVICE -->
+
         {{ include('@SEPlatform/Default/footer.html.twig') }}
 
         <!-- PAGE - JS -->

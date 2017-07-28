@@ -5,20 +5,11 @@
 {% endblock %}
 
 {% block layout_header2 %}
-<div class="row">
-  <div id="header" class="col-md-12">
     <h3 class="cat-title">Profil de {{user}}</h3>
-  </div>
-</div>
 {% endblock %}
 
 {% block layout_body %}
 
-  <div class="row">
-
-  </div>
-  <div class="row">
-    <div id="content" class="col-md-12">
       {% if user.isAcountComplete == 0 %}
             <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -32,8 +23,5 @@
           {% include "@FOSUser/Profile/view_content.html.twig" %}
       {% endblock fos_user_content %}
       {% endif %}
-
-        </div>
-  </div>
 
 {% endblock %}

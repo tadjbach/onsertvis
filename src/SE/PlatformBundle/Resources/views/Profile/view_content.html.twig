@@ -1,6 +1,5 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="col-md-12">
 
       <div class="col-md-6">
           <div class="panel panel-default">
@@ -44,7 +43,7 @@
                         <tr>
                             {% for day in user.calendar %}
                             <th>
-                                <h5>{{ day.dayFr  }}</h5>
+                                <h5 class="array-item">{{ day.dayFr  }}</h5>
                             </th>
                             {% else %}
                                 <th>
@@ -64,7 +63,7 @@
                             <tr>
                                 {% for pay in user.payment %}
                                 <th>
-                                    <h5>{{ pay.labelNormal  }}</h5>
+                                    <h5 class="array-item">{{ pay.labelNormal  }}</h5>
                                 </th>
                                 {% else %}
                                     <th>
@@ -155,4 +154,3 @@
                 </div>
             </div>
         </div>
-</div>

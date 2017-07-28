@@ -38,7 +38,13 @@ html, body{
   background-image: url(img/BT-01.jpg);
 }
 
-
+.label{
+  font-size: 85%;
+}
+.array-item, .underline{
+  border-bottom: 2px solid #5BC0DE;
+  padding-bottom: 2px;
+}
 .navbar{
     margin-bottom:0;
     border:0;
@@ -237,6 +243,12 @@ li.hd-icon{
 .little{
     font-size: 18px;
 }
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open>.dropdown-toggle.btn-default {
+    color: #333;
+    background-color: #E5DF16;
+    border-color: #b2ae33;
+}
+
 .pad-price{
   padding-top: 40px;
   padding-bottom: 40px;
@@ -593,7 +605,7 @@ textarea.form-control{
 }
 
 .se-profile-value{
-    padding-left: 20px;
+    padding-left: 0px;
 }
 
 .mar-lef{
@@ -683,7 +695,7 @@ a.ui-corner-all .ui-state-active {
 
   .se-profile-value table th{
 
-    padding-right: 10px;
+    padding-right: 5px;
 
   }
   .se-flash-msg{
