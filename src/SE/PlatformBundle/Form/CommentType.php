@@ -18,8 +18,9 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                 ->add('content', TextareaType::class, array('label'=> 'Contenu'))
-                ->add('rate', ChoiceType::class, array('label'=> 'Note',
+
+                ->add('rate', ChoiceType::class, array('label'=> 'Note / 5',
+                      'placeholder' => "Note de l'avis",
                             'choices' => array(
                                 '0' => '0',
                                 '1' => '1',
@@ -30,7 +31,7 @@ class CommentType extends AbstractType
                             ),
                             'required'    => false
                         ))
-
+                        ->add('content', TextareaType::class, array('label'=> 'Avis *'))
 
 
                  ->add('save', SubmitType::class,
