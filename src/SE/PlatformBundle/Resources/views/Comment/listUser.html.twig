@@ -22,10 +22,10 @@
                   <div class='panel panel-default'>
                       <div class='panel-heading se-panel-heading'>
                           <h4 class='panel-title text-left'>
-                             {% if app.user == comment.receiver %}Avis reçu ({{ comment.sender }})
-                            {% else %}
-                              Avis laissé ({{ comment.receiver }})
-                            {% endif %}
+                              {% if app.user == comment.receiver %}Avis reçu ({{ comment.sender }})
+                              {% else %}
+                                Avis laissé ({{ comment.receiver }})
+                              {% endif %}
                           </h4>
                           <h4 class='panel-title text-right'><i>{{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:i:s') }}</i></h4>
                       </div>

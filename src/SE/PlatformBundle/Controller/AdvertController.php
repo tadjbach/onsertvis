@@ -13,6 +13,7 @@ use SE\PlatformBundle\Form\AdvertEditType;
 use SE\PlatformBundle\Form\AdvertType;
 use SE\PlatformBundle\Entity\Advert;
 use SE\PlatformBundle\Service\Mailer;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AdvertController extends Controller
 {
@@ -282,6 +283,8 @@ class AdvertController extends Controller
             throw new NotFoundHttpException("Oops, La demande  que vous cherchez n'existe pas.");
         }
 
+  if ($this->getUser() === $advert->getUser() ) {
+    
         $form = $this->createForm(AdvertEditType::class, $advert);
 
         if ($request->isMethod('POST')){
@@ -299,7 +302,10 @@ class AdvertController extends Controller
                                   'id'=>$advert->getId()));
             }
         }
-
+        }
+        else {
+            throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
+        }
         return $this->render('SEPlatformBundle:Advert:edit.html.twig', array(
             'form' => $form->createView(),
             'advert'=>$advert
@@ -320,7 +326,29 @@ class AdvertController extends Controller
             throw new NotFoundHttpException("Oops, La demande que vous cherchez n'existe pas.");
         }
 
-        $form = $this->createFormBuilder()->getForm();
+        if ($this->getUser() === $advert->getUser() ) {
+
+          $advert->setIsDeleted(true);
+          $advert->setIsPublished(false);
+          $advert->setIsEnabled(false);
+
+          $em->flush();
+
+          $body = $this->renderView(
+                 'SEPlatformBundle:Advert:deleteMail.html.twig',
+                 array('receiver' => $this->getUser(),
+                      'advert'=> $advert->getTitle())
+             );
+
+          $mailer->sendEmail($advert, 'Suppression de votre annonce',  'Suppression de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+        }
+        else {
+            throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
+        }
+
+        return $this->redirectToRoute('se_platform_advert_user_list');
+
+        /*$form = $this->createFormBuilder()->getForm();
 
         if ($form->handleRequest($request)->isValid()) {
 
@@ -346,7 +374,7 @@ class AdvertController extends Controller
         return $this->render('SEPlatformBundle:Advert:delete.html.twig', array(
             'advert' => $advert,
             'form'   => $form->createView()
-        ));
+        ));*/
     }
 
     /**

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SE\PlatformBundle\Entity\Comment;
 use SE\PlatformBundle\Form\CommentType;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommentController extends Controller
 {
@@ -44,48 +45,54 @@ class CommentController extends Controller
 
          $userSender = $this->getUser();
 
-         $comment = new Comment();
+         if ($userSender == $advert->getUser()) {
+             $comment = new Comment();
 
-         $form = $this->createForm(CommentType::class, $comment);
+             $form = $this->createForm(CommentType::class, $comment);
 
-         if ($request->isMethod('POST')){
-             $form->handleRequest($request);
+             if ($request->isMethod('POST')){
+                 $form->handleRequest($request);
 
-             if ($form->isValid()){
+                 if ($form->isValid()){
 
-                   $rate = $comment->getRate();
+                       $rate = $comment->getRate();
 
-                   $listComment = $em
-                               ->getRepository('SEPlatformBundle:Comment')
-                               ->getComment($userReceiver->getId(), false);
-                   $countComment = count($listComment) + 1;
+                       $listComment = $em
+                                   ->getRepository('SEPlatformBundle:Comment')
+                                   ->getComment($userReceiver->getId(), false);
+                       $countComment = count($listComment) + 1;
 
-                   foreach ($listComment as $item) {
-                       $rate = $rate + $item->getRate();
-                   }
+                       foreach ($listComment as $item) {
+                           $rate = $rate + $item->getRate();
+                       }
 
-                   $rate = $rate / $countComment;
+                       $rate = $rate / $countComment;
 
-                   $userReceiver->setRate(round($rate));
+                       $userReceiver->setRate(round($rate));
 
-                   $advert->setCommentState(1);
+                       $advert->setCommentState(1);
 
-                   $comment->setSender($userSender);
-                   $comment->setAdvert($advert);
-                   $comment->setReceiver($userReceiver);
+                       $comment->setSender($userSender);
+                       $comment->setAdvert($advert);
+                       $comment->setReceiver($userReceiver);
 
-                   $em->persist($advert);
-                   $em->persist($comment);
-                   $em->flush();
+                       $em->persist($advert);
+                       $em->persist($comment);
+                       $em->flush();
 
-                   $session->getFlashBag()->add('addSuccess','Commentaire bien envoyé.');
+                       $session->getFlashBag()->add('addSuccess','Commentaire bien envoyé.');
 
-                   return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
-                 }
+                       return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+                     }
+             }
+         }
+         else {
+             throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
          }
 
          return $this->render('SEPlatformBundle:Comment:add.html.twig', array(
-             'form' => $form->createView()
+             'form' => $form->createView(),
+             'advert'=>$advert
          ));
      }
 
@@ -98,43 +105,50 @@ class CommentController extends Controller
        $session = $request->getSession();
        $comment=$em->find('SEPlatformBundle:Comment', $id);
        $userReceiver = $em->find('SEPlatformBundle:User', $comment->getReceiver()->getId());
+       $userSender = $em->find('SEPlatformBundle:User', $comment->getSender()->getId());
 
        if (null===$comment or null===$userReceiver){
              throw new NotFoundHttpException("Oops, L avis  que vous cherchez n'existe pas.");
          }
 
-         $form = $this->createForm(CommentType::class, $comment);
+         if ($this->getUser() === $userSender) {
 
-         if ($request->isMethod('POST')){
+             $form = $this->createForm(CommentType::class, $comment);
 
-             $form->handleRequest($request);
-             if ($form->isValid()){
+             if ($request->isMethod('POST')){
 
-               $rate = $comment->getRate();
+                 $form->handleRequest($request);
+                 if ($form->isValid()){
 
-               $listComment = $em
-                           ->getRepository('SEPlatformBundle:Comment')
-                           ->getComment($userReceiver->getId(), false);
-               $countComment = count($listComment) + 1;
+                   $rate = $comment->getRate();
 
-               foreach ($listComment as $item) {
-                   $rate = $rate + $item->getRate();
+                   $listComment = $em
+                               ->getRepository('SEPlatformBundle:Comment')
+                               ->getComment($userReceiver->getId(), false);
+
+                   $countComment = count($listComment) + 1;
+
+                   foreach ($listComment as $item) {
+                       $rate = $rate + $item->getRate();
+                   }
+
+                   $rate = $rate / $countComment;
+
+                   $userReceiver->setRate(round($rate));
+
+                     $comment->setDateUpdate(new \DateTime());
+                     $em->flush();
+
+                     $session->getFlashBag()->add('editSuccess','Avis modifié avec succes');
+
+                     return $this->redirectToRoute('se_platform_comment_edit',
+                                 array('id'=>$comment->getId()));
+                 }
                }
-
-               $rate = $rate / $countComment;
-
-               $userReceiver->setRate(round($rate));
-
-                 $comment->setDateUpdate(new \DateTime());
-                 $em->flush();
-
-                 $session->getFlashBag()->add('editSuccess','Avis modifié avec succes');
-
-                 return $this->redirectToRoute('se_platform_comment_edit',
-                             array('id'=>$comment->getId()));
-             }
-         }
-
+           }
+           else {
+               throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
+           }
          return $this->render('SEPlatformBundle:Comment:edit.html.twig', array(
              'form' => $form->createView(),
              'comment'=>$comment
@@ -148,10 +162,13 @@ class CommentController extends Controller
       $em = $this->getDoctrineManager();
       $session = $request->getSession();
       $comment = $em->getRepository('SEPlatformBundle:Comment')->find($id);
+      $userSender = $em->find('SEPlatformBundle:User', $comment->getSender()->getId());
 
        if (null===$comment){
-            throw new NotFoundHttpException("Oops, L avis que vous cherchez n'existe pas.");
+            throw new NotFoundHttpException("Oops, L'avis que vous cherchez n'existe pas.");
         }
+
+  if ($this->getUser() === $userSender) {
 
         $form = $this->createFormBuilder()->getForm();
 
@@ -167,6 +184,11 @@ class CommentController extends Controller
 
             return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'supprimer'));
         }
+
+      }
+      else {
+          throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
+      }
 
         return $this->render('SEPlatformBundle:Comment:delete.html.twig', array(
             'comment' => $comment,
@@ -203,13 +225,13 @@ class CommentController extends Controller
         }
 
       return $this->render('SEPlatformBundle:Comment:listUser.html.twig',
-      array(
-        'nbPages'     => $nbPages,
-        'page'        => $page,
-        'listComment'=> $listComment,
-        'countComment'=> count($listComment),
-        'state'=> $this->state,
-        'listCommentState'=>$this->getCommentState()
-      ));
+          array(
+            'nbPages'     => $nbPages,
+            'page'        => $page,
+            'listComment'=> $listComment,
+            'countComment'=> count($listComment),
+            'state'=> $this->state,
+            'listCommentState'=>$this->getCommentState()
+          ));
     }
 }

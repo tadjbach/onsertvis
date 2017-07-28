@@ -83,14 +83,17 @@
                   <td class="text-center bold">
                     <h5>
                       {% if auction.state == 1 %}
-
-                            <a class="btn btn-success" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id, 'state' : 2}) }}">Accepter</a>
-
+                            <a class="btn btn-success"
+                                data-toggle="modal"
+                                role="button"
+                                data-toggle="modal"
+                                data-target="#modalAuctionAdd_{{auction.id}}"
+                                >Accepter</a>
                       {% elseif auction.state == 2 and auction.advert.commentState == 0 %}
-
                             <a class="btn btn-primary" href="{{ path('se_platform_comment_add', {'advertId': auction.advert.id, 'auctionUserId': auction.user.id}) }}">Evaluer</a>
                             <a class="btn btn-danger hide" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id, 'state' : 1}) }}">Annuler</a>
-
+                      {% elseif auction.state == 2 and auction.advert.commentState == 1 %}
+                      <a class="btn btn-success" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
                       {% endif %}
                     </h5>
                   </td>
@@ -114,8 +117,28 @@
          </ul>
      </div>
  </div>
-{% for auction in listAdvertAuction %}
 
+
+{% for auction in listAdvertAuction %}
+ <div class="modal fade"
+      id="modalAuctionAdd_{{auction.id}}"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modalAuctionAddLabel_{{auction.id}}">
+         <div class="modal-dialog" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <h4 class="modal-title" id="myModalLabel">Accepter cette enchère</h4>
+           </div>
+           <div class="modal-body text-center">
+            <p class="pad-msg">Etes-vous certain de vouloir accepter l'enchère de <strong>{{ auction.value }} €</strong> ?</p>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Non</button>
+            <a class="btn btn-success" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id, 'state' : 2}) }}">Oui</a>
+           </div>
+         </div>
+       </div>
+ </div>
 {% endfor %}
 
 {% endblock %}
