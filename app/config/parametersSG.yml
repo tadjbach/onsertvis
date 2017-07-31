@@ -1,0 +1,14 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: 8889
+    database_name: se_dev
+    database_user: root
+    database_password: root
+    mailer_transport: smtp
+    mailer_port: 465
+    mailer_host: smtp.sendgrid.net
+    mailer_user: apiKeySG
+    mailer_password: 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
+    mailer_auth_mode: login
+    secret: 5bf5cc3dbd7654eed1b5e8b7ab28ddf809d91979

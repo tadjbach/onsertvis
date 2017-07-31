@@ -306,16 +306,29 @@ class AuctionController extends Controller
               $em->persist($auctionAccept);
               $em->flush();
 
-              $body = $this->renderView(
-                     'SEPlatformBundle:Auction:acceptMail.html.twig',
+              $body_auction = $this->renderView(
+                     'SEPlatformBundle:Auction:acceptAuctionMail.html.twig',
                      array( 'receiver' => $userAuction,
                             'value'=> $auctionAccept->getValue(),
-                            'advert'=> $advert->getTitle())
+                            'advert'=> $advert,
+                            'user_advert'=> $user
+                            )
                  );
 
-              $mailer->sendEmail($advert, 'Enchère acceptée', 'Votre enchère a été acceptée', $userAuction->getEmail(), $body);
+              $body_advert = $this->renderView(
+                        'SEPlatformBundle:Auction:acceptAdvertMail.html.twig',
+                        array( 'receiver' => $user,
+                               'value'=> $auctionAccept->getValue(),
+                               'advert'=> $advert,
+                               'user_auction'=> $userAuction
+                               )
+                  );
 
-              $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'enchère à ".$auctionAccept->getValue()." €, il vous reste à contacter la personne pour convenir d'un rendez-vous");
+              $mailer->sendEmail($advert, 'Enchère acceptée', 'Votre enchère a été acceptée', $userAuction->getEmail(), $body_auction);
+
+              $mailer->sendEmail($advert, 'Enchère acceptée', 'Votre avez accepté une enchère', $user->getEmail(), $body_advert);
+
+              $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'enchère à ".$auctionAccept->getValue()." €, il vous reste à contacter l'enchérisseur pour convenir d'un rendez-vous");
 
               return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'accept'));
           }

@@ -12,8 +12,17 @@
 
     <div>
       <p>Bonjour <b>{{ receiver }}</b></p>
-      <p>Vous avez reçu une nouvelle enchère d'une valeur de <b>{{value}} €</b>,  de la part de <b>{{sender}}</b> pour l'annonce <b>{{advert}}</b></p>
-      <p>La liste des enchères est disponible dans votre espace client : <a href="{{ path('se_platform_auction_user_receive') }}" >Se connecter</a></p>
+      <p>Votre enchère de <b>{{value}} €</b> pour l'annonce <b>{{advert.title}}</b> a été <b style="color:green">acceptée</b> par le proprétaire de l'annonce.</p>
+
+      <p>Contactez le proprétaire pour convenir d'un rendez vous : </p>
+      <p>Nom : {{ user_advert }}</p>
+      <p>Téléphone : {{ user_advert.phoneNumber|split('', 2)|join(' ') }}</p>
+      <p>Mail : <a chref="mailto:{{ user_advert.email }}">{{ user_advert.email }}</a></p>
+      <span class="se-profile-title">Adresse : </span>
+      <p class="se-profile-value"> {{ user_advert.address }}
+          <br>{{ user_advert.PostalCode.value }} {{ user_advert.PostalCode.city.labelNormal }}
+          <br>{{ user_advert.PostalCode.city.departement.labelNormal }}
+      </p>
       <p>
         Cordialement
       </p>

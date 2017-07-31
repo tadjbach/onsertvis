@@ -12,8 +12,18 @@
 
     <div>
       <p>Bonjour <b>{{ receiver }}</b></p>
-      <p>Votre enchère pour l'annonce <b>{{advert}}</b> a été <b style="color:green">acceptée</b> par le proprétaire de l'annonce.</p>
-      <p>L'enchère a été acceptée pour <b>{{value}} €</b>.</p>
+      <p>Votre avez accepté l'enchère de <b>{{value}} €</b> pour l'annonce <b>{{advert.title}}</b></p>
+      <p>Contactez l'enchérisseur pour convenir d'un rendez vous : </p>
+
+      <p>Nom : {{ user_auction }}</p>
+      <p>Téléphone : {{ user_auction.phoneNumber|split('', 2)|join(' ') }}</p>
+      <p>Mail : <a chref="mailto:{{ user_auction.email }}">{{ user_auction.email }}</a></p>
+      <p >Adresse : </p>
+      <p> {{ user_auction.address }}
+          <br>{{ user_auction.PostalCode.value }} {{ user_auction.PostalCode.city.labelNormal }}
+          <br>{{ user_auction.PostalCode.city.departement.labelNormal }}
+      </p>
+
       <p>
         Cordialement
       </p>
