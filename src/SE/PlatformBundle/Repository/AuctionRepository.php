@@ -55,6 +55,28 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    public function getOneLastAuction($advertId){
+         $qb = $this->createQueryBuilder('auction');
+
+         $qb->leftJoin('auction.advert', 'advert')
+            ->addSelect('advert');
+
+        $qb->where($qb->expr()->eq('advert.id', $advertId))
+            //->andWhere($qb->expr()->eq('advert.isPublished', 1))
+            ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
+            ->andWhere($qb->expr()->eq('advert.isEnabled', 1));
+
+        $qb->orderBy('auction.dateCreation', 'DESC');
+
+        $qb->setMaxResults(1);
+
+        $qb->getQuery();
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getAcceptAuction($advertId){
          $qb = $this->createQueryBuilder('auction');
 

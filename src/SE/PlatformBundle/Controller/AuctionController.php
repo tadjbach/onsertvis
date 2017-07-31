@@ -91,6 +91,9 @@ class AuctionController extends Controller
             $auction->setAdvert($advert);
 
             $otherAuction = $em->getRepository('SEPlatformBundle:Auction')->findBy(array('advert' => $advert));
+            $lastAuction = $em
+                ->getRepository('SEPlatformBundle:Auction')
+                ->getOneLastAuction($advertId);
 
             $form = $this->createForm(AuctionType::class, $auction);
 
@@ -103,23 +106,19 @@ class AuctionController extends Controller
                       $em->persist($auction);
                       $em->flush();
 
-                      if ($otherAuction !== null && $userOwner !== null){
 
-                          foreach($otherAuction as $other_auct) {
+                      if ($lastAuction !== null && $userOwner !== null){
 
-                            $userAuctionOther = $other_auct->getUser();
-
-                            if ($userAuctionOther !== $this->getUser()) {
+                            if ($lastAuction[0]->getUser() !== $this->getUser()) {
                               $body = $this->renderView(
                                      'SEPlatformBundle:Auction:otherAuctionMail.html.twig',
-                                     array( 'receiver' => $userAuctionOther,
+                                     array( 'receiver' => $lastAuction[0]->getUser(),
                                             'value'=> $auction->getValue(),
-                                            'oldValue'=>$other_auct->getValue(),
+                                            'oldValue'=>$lastAuction[0]->getValue(),
                                             'advert'=> $advert->getTitle())
                                  );
-                              $mailer->sendEmail($advert, 'Nouvelle Enchère', "Nouvelle enchère sur l'annonce ".' '.$advert->getTitle(), $userAuctionOther->getEmail(), $body);
-                            }
-                          }
+                              $mailer->sendEmail($advert, 'Nouvelle Enchère', "Nouvelle enchère sur l'annonce ".' '.$advert->getTitle(), $lastAuction[0]->getUser()->getEmail(), $body);
+                        }
                         }
 
 
