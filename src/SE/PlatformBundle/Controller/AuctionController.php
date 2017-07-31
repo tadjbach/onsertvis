@@ -109,11 +109,12 @@ class AuctionController extends Controller
 
                             $userAuctionOther = $other_auct->getUser();
 
-                            if ($userAuctionOther !== $userOwner) {
+                            if ($userAuctionOther !== $this->getUser()) {
                               $body = $this->renderView(
                                      'SEPlatformBundle:Auction:otherAuctionMail.html.twig',
                                      array( 'receiver' => $userAuctionOther,
                                             'value'=> $auction->getValue(),
+                                            'oldValue'=>$other_auct->getValue(),
                                             'advert'=> $advert->getTitle())
                                  );
                               $mailer->sendEmail($advert, 'Nouvelle Enchère', "Nouvelle enchère sur l'annonce ".' '.$advert->getTitle(), $userAuctionOther->getEmail(), $body);
