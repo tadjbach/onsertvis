@@ -17,17 +17,17 @@
         {% endblock %}
 
         <link rel="stylesheet" href="../../css/main.css" type="text/css" />
+        <link rel="stylesheet" href="../../css/smartphone.css" type="text/css" />
+        <link rel="stylesheet" href="../../css/tablet.css" type="text/css" />
 
     </head>
     <body>
         <!-- HADER - MENU -->
         <div class="row">
-         <div class="col-md-1"></div>
-             <div class="col-md-10">
-                  {{ include('@SEPlatform/Default/header.html.twig') }}
-                </div>
-                <div class="col-md-1"></div>
+            <div class="col-md-12">
+              {{ include('@SEPlatform/Default/header.html.twig') }}
             </div>
+          </div>
         <!-- CONTAINER -->
             {% block body %}{% endblock %}
 

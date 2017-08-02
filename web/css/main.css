@@ -110,11 +110,11 @@ html, body{
     border: 0;
     border-radius: 0;
     padding-left: 100px;
-    padding-right: 100px
+    padding-right: 100px;
+    padding-top: 20px;
 }
 
 .well-footer .row{
-    padding-left: 100px;
     color: #fff;
 }
 
@@ -785,7 +785,10 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
   }
 }
 */
-/* Smartphones (portrait and landscape) ----------- */
+
+/*Responsive Styles*/
+
+/* Smartphones (portrait and landscape) -----------
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 480px) {
@@ -794,9 +797,21 @@ and (max-device-width : 480px) {
     height: 230px;
   }
 }
+*/
 
-/* Smartphones (landscape) ----------- */
+
+
+
+
+
+/* Smartphones (landscape) -----------
 @media only screen and (min-width : 321px) {
+  .logo_img{
+    width: 43px;
+    height: 40px;
+    background-size: 170px 40px;
+    margin-top: 5px;
+  }
   svg{
     width: 430px;
     height: 430px;
@@ -817,17 +832,23 @@ and (max-device-width : 480px) {
     padding-bottom: 25px;
   }
 }
-
-/* Smartphones (portrait) ----------- */
+*/
+/* Smartphones (portrait) -----------
 @media only screen
 and (max-width : 320px) {
   svg{
     width: 230px;
     height: 230px;
   }
+  .logo_img{
+    width: 43px;
+    height: 40px;
+    background-size: 170px 40px;
+    margin-top: 5px;
+  }
 }
-
-/* iPads (portrait and landscape) ----------- */
+*/
+/* iPads (portrait and landscape) -----------
 @media only screen
 and (min-device-width : 768px)
 and (max-device-width : 1024px) {
@@ -835,13 +856,25 @@ and (max-device-width : 1024px) {
     width: 230px;
     height: 230px;
   }
+  .logo_img{
+    width: 220px;
+    height: 60px;
+    background-size: 220px 60px;
+    margin-top: 0px;
+  }
 }
-
-/* iPads (landscape) ----------- */
+*/
+/* iPads (landscape) -----------
 @media only screen
 and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : landscape) {
+  .logo_img{
+    width: 220px;
+    height: 60px;
+    background-size: 220px 60px;
+    margin-top: 0px;
+  }
   svg{
     width: 430px;
     height: 430px;
@@ -862,12 +895,18 @@ and (orientation : landscape) {
   padding-bottom: 25px;
 }
 }
-
-/* iPads (portrait) ----------- */
+*/
+/* iPads (portrait) -----------
 @media only screen
 and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : portrait) {
+  .logo_img{
+    width: 220px;
+    height: 60px;
+    background-size: 220px 60px;
+    margin-top: 0px;
+  }
   svg{
     width: 430px;
     height: 430px;
@@ -888,10 +927,16 @@ and (orientation : portrait) {
   padding-bottom: 25px;
 }
 }
-
-/* Desktops and laptops ----------- */
+*/
+/* Desktops and laptops -----------
 @media only screen
 and (min-width : 1224px) {
+  .logo_img{
+    width: 220px;
+    height: 60px;
+    background-size: 220px 60px;
+    margin-top: 0px;
+  }
   svg{
     width: 430px;
     height: 430px;
@@ -909,20 +954,26 @@ and (min-width : 1224px) {
   line-height: 2px;
   letter-spacing: 0px;
   font-weight: 300;
-  padding-bottom: 25px;
+  padding-bottom: 55px;
 }
 }
-
-/* Large screens ----------- */
+*/
+/* Large screens -----------
 @media only screen
 and (min-width : 1824px) {
+  .logo_img{
+    width: 220px;
+    height: 60px;
+    background-size: 220px 60px;
+    margin-top: 0px;
+  }
   svg{
     width: 430px;
     height: 430px;
   }
 }
-
-/* iPhone 5 (portrait &amp; landscape)----------- */
+*/
+/* iPhone 5 (portrait &amp; landscape)-----------
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 568px) {
@@ -931,8 +982,8 @@ and (max-device-width : 568px) {
     height: 230px;
   }
 }
-
-/* iPhone 5 (landscape)----------- */
+*/
+/* iPhone 5 (landscape)-----------
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 568px)
@@ -942,8 +993,8 @@ and (orientation : landscape) {
     height: 230px;
   }
 }
-
-/* iPhone 5 (portrait)----------- */
+*/
+/* iPhone 5 (portrait)-----------
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 568px)
@@ -953,3 +1004,4 @@ and (orientation : portrait) {
     height: 230px;
   }
 }
+*/

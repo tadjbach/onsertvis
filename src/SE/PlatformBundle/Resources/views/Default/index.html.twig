@@ -3,40 +3,41 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    {{ parent() }} - Le bon service au bon prix
+    {{ parent() }} - Service aux enchères inversées
 {% endblock %}
 
 {% block layout_header2 %}
       <div class="slogan"><p>Le bon service au bon prix !</p></div>
-
-      <div class="col-md-6">
-          <p class="cat-title">Vous cherchez une aide ?</p>
-          <h5>
-              <span class="label label-default se-badge">1</span>
-              <a class="slogan-link" href="{{ path('se_platform_advert_add') }}">Postez votre demande</a>
-          </h5>
-          <h5><span class="label label-default se-badge">2</span> Recevez des offres</h5>
-          <h5><span class="label label-default se-badge">3</span> Choisissez la meilleure offre</h5>
-      </div>
-      <div class="col-md-6">
-          <p class="cat-title">Vous proposez vos services ?</p>
-          <h5>
-              <span class="label label-default se-badge">1</span>
-              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-              <a class="slogan-link" href="{{ path('se_platform_user_edit') }}">Inscrivez vous</a>
-              {% else %}
-              <a class="slogan-link" href="{{ path('fos_user_registration_register') }}">Inscrivez vous</a>
-              {% endif %}
-          </h5>
-          <h5><span class="label label-default se-badge">2</span> Proposez des offres et gagnez</h5>
-          <h5><span class="label label-default se-badge">3</span> Retrouver le demandeur</h5>
+      <div id="help_slogan" >
+          <div class="col-md-6">
+              <p class="cat-title">Vous cherchez une aide ?</p>
+              <h5>
+                  <span class="label label-default se-badge">1</span>
+                  <a class="slogan-link" href="{{ path('se_platform_advert_add') }}">Postez votre demande</a>
+              </h5>
+              <h5><span class="label label-default se-badge">2</span> Recevez des offres</h5>
+              <h5><span class="label label-default se-badge">3</span> Choisissez la meilleure offre</h5>
+          </div>
+          <div class="col-md-6">
+              <p class="cat-title">Vous proposez vos services ?</p>
+              <h5>
+                  <span class="label label-default se-badge">1</span>
+                  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                  <a class="slogan-link" href="{{ path('se_platform_user_edit') }}">Inscrivez vous</a>
+                  {% else %}
+                  <a class="slogan-link" href="{{ path('fos_user_registration_register') }}">Inscrivez vous</a>
+                  {% endif %}
+              </h5>
+              <h5><span class="label label-default se-badge">2</span> Proposez des offres et gagnez</h5>
+              <h5><span class="label label-default se-badge">3</span> Retrouver le demandeur</h5>
+          </div>
       </div>
 {% endblock %}
 
 {% block layout_body %}
 <div class="row">
   <!-- CATGEORY - CARTE DE FRANCE -->
-  <div class="col-md-4">
+  <div id="index_category_dpt" class="col-md-4">
       <h4 class="cat-title">Par Catégories</h4>
       <ul class="ul-cat">
         {% for category in listCategory %}
@@ -59,7 +60,7 @@
         {% endfor %}
       </ul>
   </div>
-  <div class="col-md-8 text-center">
+  <div id="index_carte" class="col-md-8 text-center">
       <div id="tip" style='display:none'></div>
       <div id="cmap"></div>
   </div>
