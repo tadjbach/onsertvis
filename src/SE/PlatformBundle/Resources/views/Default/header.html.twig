@@ -1,84 +1,90 @@
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="{{ path('se_platform_homepage') }}">Service Enchère</a>
-    </div>
+<!-- NEW -->
+<nav class="navbar navbar-default se-header">
+    <div class="container-fluid">
+        <!-- LEFT - LOGO -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+              <a class="navbar-brand se-color-1 logo" href="{{ path('se_platform_homepage') }}">
+                    <div class="logo_img" >  </div>
+              </a>
+        </div>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a href="{{ path('se_platform_advert_list')  }}">
-                Demandes en cours
-            </a>
-        </li>
-        <li>
-             <a href="{{ path('se_platform_advert_add') }}">
-                 Déposer une demande
-             </a>
-         </li>
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <li class="dropdown">
-          <a  href="#" class="dropdown-toggle" data-toggle="dropdown"
-              role="button" aria-expanded="false">
-                <i  class="glyphicon glyphicon-user"  data-toggle="tooltip"
-                    data-placement="bottom" title="Mon compte"></i> <span class="caret"></span></a>
-
-
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ path('se_platform_advert_user_list') }}">Mes annonces</a></li>
-            <li>
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mes enchères<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="{{ path('se_platform_auction_user_receive') }}">Enchères reçues</a></li>
-                  <li><a href="{{ path('se_platform_auction_user_send') }}">Enchères proposées</a></li>
-                </ul>
-             </li>
-             <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Mes messages<b class="caret"></b></a>
-               <ul class="dropdown-menu">
-                 <li><a href="{{ path('se_platform_message_user_receive') }}">Messages reçus</a></li>
-                 <li><a href="{{ path('se_platform_message_user_send') }}">Messages envoyés</a></li>
-               </ul>
-             </li>
-            <li><a href="{{ path('se_platform_comment_user_list') }}">Mes avis</a></li>
-            <li><a href="{{ path('se_platform_user_edit') }}" >Mon compte</a></li>
-            <li role="separator" class="divider"></li>
-
-
-            {% if is_granted('ROLE_SUPER_ADMIN') %}
-              <li role="presentation" >
-               <a href="{{ path('se_platform_admin_list_users') }}">Liste des utilisateurs</a>
-              </li>
-               <li role="presentation" >
-                  <a href="{{ path('se_platform_admin_list_adverts') }}">Liste des annonces</a>
+        <!-- RIGTH - MENU -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{{ path('se_platform_advert_list')  }}">
+                        Toutes les demandes
+                    </a>
                 </li>
-                <li role="presentation" >
-                   <a href="{{ path('se_platform_admin_list_auctions') }}">Liste des enchères</a>
-                 </li>
-                 <li role="presentation" >
-                    <a href="{{ path('se_platform_admin_list_messages') }}">Liste des messages</a>
-                  </li>
-                  <li role="presentation" >
-                     <a href="{{ path('se_platform_admin_list_comments') }}">Liste des avis</a>
-                   </li>
-            <li role="separator" class="divider"></li>
-            {% endif %}
-            <li><a href="{{path('fos_user_security_logout')}}">Se déconnecter</a></li>
-          </ul>
-        </li>
-        {% else %}
-             <li class="active">
-                 <a href="{{path('fos_user_security_login')}}">
-                     Se connecter
-                 </a>
-             </li>
-         {% endif %}
-      </ul>
+                <li>
+                    <a href="{{ path('se_platform_advert_add') }}">
+                        Déposer une demande
+                    </a>
+                </li>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"
+                               role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="glyphicon glyphicon-user"  data-toggle="tooltip"
+                                   data-placement="bottom" title="Mon compte">
+                                </i>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('se_platform_advert_user_list') }}">Mes annonces</a></li>
+                                <li>
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mes enchères<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                      <li><a href="{{ path('se_platform_auction_user_receive') }}">Enchères reçues</a></li>
+                                      <li><a href="{{ path('se_platform_auction_user_send') }}">Enchères proposées</a></li>
+                                    </ul>
+                                  </li>
+                                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Mes messages<b class="caret"></b></a>
+                                  <ul class="dropdown-menu">
+                                    <li><a href="{{ path('se_platform_message_user_receive') }}">Messages reçus</a></li>
+                                    <li><a href="{{ path('se_platform_message_user_send') }}">Messages envoyés</a></li>
+                                  </ul>
+                                </li>
+                                </li>
+                                  <li><a href="{{ path('se_platform_comment_user_list') }}">Mes avis</a></li>
+                                <li><a href="{{ path('se_platform_user_edit') }}" >Mon compte</a></li>
+                                <li role="separator" class="divider"></li>
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li role="presentation" >
+                                   <a href="{{ path('se_platform_admin_list_users') }}">Liste des utilisateurs</a>
+                                 </li>
+                                 <li role="presentation" >
+                                    <a href="{{ path('se_platform_admin_list_adverts') }}">Liste des annonces</a>
+                                  </li>
+                                  <li role="presentation" >
+                                     <a href="{{ path('se_platform_admin_list_auctions') }}">Liste des enchères</a>
+                                   </li>
+                                   <li role="presentation" >
+                                      <a href="{{ path('se_platform_admin_list_messages') }}">Liste des messages</a>
+                                    </li>
+                                    <li role="presentation" >
+                                       <a href="{{ path('se_platform_admin_list_comments') }}">Liste des avis</a>
+                                     </li>
+                                <li role="separator" class="divider"></li>
+                                {% endif %}
+                                <li><a href="{{path('fos_user_security_logout')}}">Se déconnecter</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{path('fos_user_security_login')}}">
+                                Se connecter
+                            </a>
+                        </li>
+                    {% endif %}
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>

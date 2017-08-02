@@ -1,22 +1,28 @@
-<nav class="navbar navbar-inverse navbar-static-bottom">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-12 text-center">
-          <div class="col-sm-4">
-            <a class="btn btn-link" href="{{ path('se_platform_resum') }}"><h5>Qui sommes-nous ?</h5></a>
-          </div>
-          <div class="col-sm-4">
-            <a class="btn btn-link" href="{{ path('se_platform_cgu') }}"><h5>Conditions Générales d'Utilisation</h5></a>
-          </div>
-          <div class="col-sm-4">
-            <a class="btn btn-link" href="{{ path('se_platform_help') }}"><h5>Aide</h5></a>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 text-center">
-                <span class="label label-primary"><h5>Tous droits réservés. COPYRIGHT © {{ 'now'|date('Y') }} Service Enchère.</h5></span>
-              </div>
-          </div>
+<div class="well well-sm well-footer">
+    <div class="row">
+        <div class="col-md-4">
+            <h5>À propos</h5>
+            <ul class="ul-footer">
+                <li><a href="{{ path('se_platform_resum') }}">Qui sommes-nous ?</a></li>
+            </ul>
         </div>
-      </div>
+        <div class="col-md-4 col-footer">
+            <h5>Informations légales</h5>
+            <ul class="ul-footer">
+                <li><a href="{{ path('se_platform_cgu') }}">Conditions Générales d'Utilisation</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-footer">
+            <h5>Des questions ?</h5>
+            <ul class="ul-footer">
+                <li><a href="{{ path('se_platform_help') }}">Aide</a></li>
+            </ul>
+        </div>
     </div>
-</nav>
+    <!-- PAGE - FOOTER - COPY -->
+    <div id="footer" class="copyr">
+        <footer>
+            <p>Tous droits réservés. COPYRIGHT © {{ 'now'|date('Y') }} Service Enchère.</p>
+        </footer>
+    </div>
+</div>
