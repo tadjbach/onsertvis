@@ -199,10 +199,10 @@ li.hd-icon{
 /* HEADER 2 */
 .slogan{
   font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
-  font-size: 35px !important;
-  line-height: 10px !important;
-  letter-spacing: 5px !important;
-  font-weight: 400 !important;
+  font-size: 35px;
+  line-height: 10px;
+  letter-spacing: 5px;
+  font-weight: 400;
   padding-bottom: 55px;
   text-align: center;
 }
@@ -740,12 +740,8 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
     height: 100px;
 }
 
-/* Iphone 6 */
+/* Iphone 6
 @media only screen and (min-width : 375px) and (max-width : 667px) {
-  svg{
-    width: 230px;
-    height: 230px;
-  }
 
   .navbar{
       min-height: 55px;
@@ -786,5 +782,174 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
   }
   h3 {
     font-size: 18px;
+  }
+}
+*/
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  svg{
+    width: 230px;
+    height: 230px;
+  }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width : 321px) {
+  svg{
+    width: 430px;
+    height: 430px;
+  }
+  .slogan-well div.col-md-6, .se-well .index-container .col-md-4{
+    display: none;
+  }
+  .slogan-well .slogan{
+    display: block;
+  }
+  .se-well {
+    min-height: 540px;
+}
+  .slogan{
+    line-height: 2px;
+    letter-spacing: 0px;
+    font-weight: 300;
+    padding-bottom: 25px;
+  }
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen
+and (max-width : 320px) {
+  svg{
+    width: 230px;
+    height: 230px;
+  }
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+  svg{
+    width: 230px;
+    height: 230px;
+  }
+}
+
+/* iPads (landscape) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+  svg{
+    width: 430px;
+    height: 430px;
+  }
+  .slogan-well div.col-md-6, .se-well .index-container .col-md-4{
+    display: none;
+  }
+  .slogan-well .slogan{
+    display: block;
+  }
+  .se-well {
+      min-height: 800px;
+}
+.slogan{
+  line-height: 2px;
+  letter-spacing: 0px;
+  font-weight: 300;
+  padding-bottom: 25px;
+}
+}
+
+/* iPads (portrait) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+  svg{
+    width: 430px;
+    height: 430px;
+  }
+  .slogan-well div.col-md-6, .se-well .index-container .col-md-4{
+    display: none;
+  }
+  .slogan-well .slogan{
+    display: block;
+  }
+  .se-well {
+      min-height: 800px;
+}
+.slogan{
+  line-height: 2px;
+  letter-spacing: 0px;
+  font-weight: 300;
+  padding-bottom: 25px;
+}
+}
+
+/* Desktops and laptops ----------- */
+@media only screen
+and (min-width : 1224px) {
+  svg{
+    width: 430px;
+    height: 430px;
+  }
+  .slogan-well div.col-md-6, .se-well .index-container .col-md-4{
+    display: block;
+  }
+  .slogan-well .slogan{
+    display: block;
+  }
+  .se-well {
+    min-height: 800px;
+}
+.slogan{
+  line-height: 2px;
+  letter-spacing: 0px;
+  font-weight: 300;
+  padding-bottom: 25px;
+}
+}
+
+/* Large screens ----------- */
+@media only screen
+and (min-width : 1824px) {
+  svg{
+    width: 430px;
+    height: 430px;
+  }
+}
+
+/* iPhone 5 (portrait &amp; landscape)----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px) {
+  svg{
+    width: 230px;
+    height: 230px;
+  }
+}
+
+/* iPhone 5 (landscape)----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : landscape) {
+  svg{
+    width: 230px;
+    height: 230px;
+  }
+}
+
+/* iPhone 5 (portrait)----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : portrait) {
+  svg{
+    width: 230px;
+    height: 230px;
   }
 }
