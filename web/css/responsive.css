@@ -1,4 +1,4 @@
-/*.navbar-inverse {
+.navbar-inverse {
     background-color: #2A0540;
     border-color: #2A0540;
 }
@@ -38,56 +38,16 @@
     background-color: #2A0540;
 }
 
-.navbar{
-  margin-bottom: 0px;
+.list-group-item{
+  padding: 3px 20px;
+  border: 0px;
 }
-*/
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: #f5f5f5;
-}
-
-
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
-
-.footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
-code {
-  font-size: 80%;
-}
-
-
-a.list-group-item:hover, button.list-group-item:hover,
-a.list-group-item:focus, button.list-group-item:focus {
-    text-decoration: underline;
-    color: #555555;
-    background-color: #fff;
-}
-
 .seprate-white{
     height: 20px;
 }
-
+.navbar{
+  margin-bottom: 0px;
+}
 .seprate-color{
   border: 2px solid #2A0540;
   background-color: #2A0540;
@@ -97,39 +57,4 @@ blockquote{
 }
 .blockquote-reverse{
   border-right: 5px solid #fff;
-}
-
-.list-group-item{
-  padding: 3px 20px;
-  border: 0px;
-}
-
-@media only screen and (max-width : 480px) {
-  .blockquote, .blockquote-reverse{
-    display: none;
-  }
-  h2{
-    font-size: 22px;
-  }
-  svg{
-    width: 260px;
-    height: 260px;
-  }
-}
-
-@media only screen and (min-width : 480px) and (max-width : 768px) {
-  .blockquote, .blockquote-reverse{
-    display: none;
-  }
-
-  .footer {
-    height: 250px;
-  }
-}
-
-
-@media only screen and (min-width : 768px) {
-  .footer {
-    height: 60px;
-  }
 }
