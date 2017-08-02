@@ -7,6 +7,10 @@
 /* #2A0540 -> violet */
 /* #E5DF16 -> jaune fluo */
 
+
+
+
+/*
 html, body{
     font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 14px;
@@ -15,7 +19,7 @@ html, body{
     background-color: #fff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
+}*/
 
 /* HEADER 1 */
 .se-header{
