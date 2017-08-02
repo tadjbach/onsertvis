@@ -16,19 +16,21 @@
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         {% endblock %}
 
-        <!--<link rel="stylesheet" href="../../css/main.css" type="text/css" />-->
-        <link rel="stylesheet" href="../../css/bootstrap/cosmo.css" type="text/css" />
-        <link rel="stylesheet" href="../../css/responsive.css" type="text/css" />
+        <link rel="stylesheet" href="../../css/main.css" type="text/css" />
 
     </head>
     <body>
         <!-- HADER - MENU -->
-            {{ include('@SEPlatform/Default/header.html.twig') }}
-
+        <div class="row">
+         <div class="col-md-1"></div>
+             <div class="col-md-10">
+                  {{ include('@SEPlatform/Default/header.html.twig') }}
+                </div>
+                <div class="col-md-1"></div>
+            </div>
         <!-- CONTAINER -->
-        <div class="container">
             {% block body %}{% endblock %}
-          </div>
+
         <div id="pathCpCity" data-path="{{ path('se_platform_postalCode' )}}"></div>
 
         <!-- PAGE - FOOTER - SERVICE -->
