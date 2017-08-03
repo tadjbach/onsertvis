@@ -51,7 +51,7 @@
                         </td>
                         <td>
                           {% if advert.auctionState == 0 %}
-                              <span class="label label-warning">0 enchère</span>
+                              <span class="label label-warning">0 offre</span>
                           {% else %}
                               <span class="label label-success">
                                   {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
@@ -60,7 +60,7 @@
                         </td>
                         <td class="text-right">
                           <span class="label se-price-badge little">
-                            {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }}
+                            {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }} / <span class="text-lowercase">{{advert.BudgetType.slug}}</span>
                           </span>
                         </td>
                     </tr>

@@ -45,11 +45,11 @@
                         <td class='text-left td_center'>
                             <h5>
                             {% if advert.isPublished == 1 %}
-                                <span class="label label-primary">En ligne (Enchères encours)</span>
+                                <span class="label label-primary">En ligne</span>
                             {% elseif advert.isPublished == 0 and advert.auctionState == 0 %}
                                 <span class="label label-warning">Validation en cours</span>
                             {% elseif advert.isPublished == 0 and advert.auctionState == 1 %}
-                                <span class="label label-danger">Hors ligne (Enchère terminée)</span>
+                                <span class="label label-danger">Hors ligne</span>
                                 <div class="label label-danger"
                                       data-toggle="tooltip"
                                             data-placement="bottom" title="La demande n'est plus visible sur le site">
@@ -142,7 +142,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel_{{advert.id}}">Historique des enchères</h4>
+                <h4 class="modal-title" id="myModalLabel_{{advert.id}}">Historique des offres</h4>
               </div>
               <div class="modal-body">
                    {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}

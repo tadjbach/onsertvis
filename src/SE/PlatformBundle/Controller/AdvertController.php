@@ -284,7 +284,7 @@ class AdvertController extends Controller
         }
 
   if ($this->getUser() === $advert->getUser() ) {
-    
+
         $form = $this->createForm(AdvertEditType::class, $advert);
 
         if ($request->isMethod('POST')){
@@ -389,13 +389,13 @@ class AdvertController extends Controller
                 $title = 'Creation de votre annonce';
                 break;
             case 'accept':
-                $title = 'Acceptation d\'une enchère';
+                $title = 'Acceptation d\'une offre';
                 break;
             case 'refuserauction':
                 $title = "Vous n'avez pas ce droit";
                 break;
             case 'ajouterauction':
-                $title = "Validation de votre enchère";
+                $title = "Validation de votre offre";
                 break;
             case 'refusermessage':
                 $title = "Vous n'avez pas ce droit";

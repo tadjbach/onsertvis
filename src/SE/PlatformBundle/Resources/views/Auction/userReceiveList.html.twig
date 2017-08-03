@@ -1,13 +1,13 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Enchères reçues - {{ parent() }}
+    Offres reçues - {{ parent() }}
 {% endblock %}
 
 {% block layout_header2 %}
 <div class="row">
   <div id="header" class="col-md-12">
-    <h3 class="cat-title">Enchères reçues</h3>
+    <h3 class="cat-title">Offres reçues</h3>
       {{ include('@SEPlatform/Auction/listUserReceiveFilter.html.twig') }}
   </div>
 </div>
@@ -21,7 +21,7 @@
                 <tr>
                     <th>Annonce</th>
                     <th>Enchérisseur</th>
-                    <th>Date de l'enchère</th>
+                    <th>Date de l'offre</th>
                     <th class="text-left">Etat</th>
                     <th class="text-right">Offre</th>
                     <th class="text-center">Action</th>
@@ -53,16 +53,16 @@
                   <td>
                       <h5>
                       {% if auction.state == 1 %}
-                          <span class="label label-primary">Enchères encours</span>
+                          <span class="label label-primary">En cours</span>
                       {% elseif auction.state == 2 %}
-                          <span class="label label-success">Enchères acceptée</span>
+                          <span class="label label-success">Offre acceptée</span>
                           <div class="label label-success"
                                 data-toggle="tooltip"
                                       data-placement="bottom" title="La demande n'est plus visible sur le site">
                            <i class="glyphicon glyphicon-info-sign"> </i>
                           </div>
                       {% elseif auction.state == 3 %}
-                          <span class="label label-danger">Enchère déclinée</span>
+                          <span class="label label-danger">Offre déclinée</span>
                           <div class="label label-danger"
                                 data-toggle="tooltip"
                                       data-placement="bottom" title="La demande n'est plus visible sur le site">
@@ -73,7 +73,7 @@
                   </td>
 
                   <td class="text-right bold">
-                    <span class="label se-price-badge little">{{ auction.value|number_format(0, ' ', ' ') }} €<span>
+                    <span class="label se-price-badge little text-lowercase">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
                   </td>
                   <td class="text-center bold">
                     <h5>
@@ -124,10 +124,10 @@
          <div class="modal-content">
            <div class="modal-header">
              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-             <h4 class="modal-title" id="myModalLabel">Accepter cette enchère</h4>
+             <h4 class="modal-title" id="myModalLabel">Accepter cette offre</h4>
            </div>
            <div class="modal-body text-center">
-            <p class="pad-msg">Etes-vous certain de vouloir accepter l'enchère de <strong>{{ auction.value }} €</strong> ?</p>
+            <p class="pad-msg">Etes-vous certain de vouloir accepter l'offre de <strong>{{ auction.value }} €</strong> ?</p>
             <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Non</button>
             <a class="btn btn-success" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id, 'state' : 2}) }}">Oui</a>
            </div>

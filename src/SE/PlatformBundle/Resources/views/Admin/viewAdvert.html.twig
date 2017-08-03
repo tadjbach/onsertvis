@@ -163,15 +163,15 @@
 
                 <tr>
                   <td>
-                      Etat de l'enchère
+                      Etat
                   </td>
                   {% if advert.isPublished == 0 and advert.auctionState != 0 %}
                   <td>
-                      <span class="label label-danger">Enchère terminée</span>
+                      <span class="label label-danger">Offre terminée</span>
                   </td>
                   {% elseif advert.isPublished == 1 and advert.auctionState == 0 %}
                   <td>
-                      <span class="label label-warning">Enchère en cours</span>
+                      <span class="label label-warning">Offre en cours</span>
                   </td>
                   {% endif %}
                 </tr>

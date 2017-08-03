@@ -31,6 +31,13 @@ class Advert
     private $category;
 
     /**
+     * @ORM\ManyToOne(targetEntity="SE\PlatformBundle\Entity\BudgetType")
+     * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid()
+     */
+    private $budgetType;
+
+    /**
      * @ORM\OneToOne(targetEntity="SE\PlatformBundle\Entity\Image", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
@@ -476,5 +483,29 @@ class Advert
     public function getCommentState()
     {
         return $this->commentState;
+    }
+
+    /**
+     * Set budgetType
+     *
+     * @param \SE\PlatformBundle\Entity\BudgetType $budgetType
+     *
+     * @return Advert
+     */
+    public function setBudgetType(\SE\PlatformBundle\Entity\BudgetType $budgetType)
+    {
+        $this->budgetType = $budgetType;
+
+        return $this;
+    }
+
+    /**
+     * Get budgetType
+     *
+     * @return \SE\PlatformBundle\Entity\BudgetType
+     */
+    public function getBudgetType()
+    {
+        return $this->budgetType;
     }
 }

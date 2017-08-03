@@ -88,7 +88,7 @@
                   </div>
                 </div>
                 <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="btn se-btn-action">
-                    Enchérir
+                    Faire une offre
                 </a>
          </div>
          {% endif %}
@@ -129,7 +129,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Historique des enchères</h4>
+            <h4 class="modal-title" id="myModalLabel">Historique des offres</h4>
           </div>
           <div class="modal-body">
             {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}

@@ -18,7 +18,7 @@
                         <select class="form-control"
                                 name="state"
                                 id="state_id" >
-                            <option value='0'>Toutes les enchères</option>
+                            <option value='0'>Toutes les offres</option>
                             {% for state in listState %}
                                  <option {{ app.request.query.get('state')== state.id ? ' selected ' : ' ' }}
                                     value={{ state.id }}>{{ state.labelNormal }}

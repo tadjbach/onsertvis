@@ -29,6 +29,14 @@ class AdvertType extends AbstractType
                     'choice_label'=>'labelNormal'
                 ))
 
+                ->add('budgetType', EntityType::class, array(
+                    'label'=>'Je préfère les devis pour *',
+                    'placeholder' => 'Choisissez un type',
+                    'class'=>'SE\PlatformBundle\Entity\BudgetType',
+                    'choice_label'=>'labelNormal',
+                     'required' => true
+                ))
+
                 ->add('title', TextType::class, array('label'=> 'Titre *',
                     'attr' => array('maxlength' => 50,
                     'placeholder' => 'Le titre ne doit pas dépasser 50 caratères maximum')

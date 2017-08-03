@@ -1,7 +1,7 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Enchérir - {{ parent() }}
+  Faire une offre - {{ parent() }}
 {% endblock %}
 
 {% block layout_header2 %}
@@ -81,11 +81,14 @@
                          {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
                    </a>
                  </div>
-                  <div class="col-md-3"></div>
-                  <div class="col-md-6">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-8">
+                    <div class="alert alert-danger" role="alert">
+                          <strong>Attention!</strong> Je propose mon offre pour "<b>{{advert.BudgetType.labelNormal}}</b>"
+                    </div>
                       {{ include('SEPlatformBundle:Auction:form.html.twig') }}
                   </div>
-                  <div class="col-md-3"></div>
+                  <div class="col-md-2"></div>
              </div>
            </div>
            <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0}) }}" class="btn se-btn-action">
@@ -131,7 +134,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Historique des enchères</h4>
+            <h4 class="modal-title" id="myModalLabel">Historique des offres</h4>
           </div>
           <div class="modal-body">
             {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}

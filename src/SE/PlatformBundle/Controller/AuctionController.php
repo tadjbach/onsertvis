@@ -41,13 +41,13 @@ class AuctionController extends Controller
 
     public function getNbAuctionAction($advertId){
         $em = $this->getDoctrineManager();
-        $nbAuction = 'aucune enchère';
+        $nbAuction = 'aucune offre';
         $lastAuction = $em
             ->getRepository('SEPlatformBundle:Auction')
             ->getLastAuction($advertId);
 
       if (count($lastAuction) > 0) {
-           $nbAuction = count($lastAuction) <= 1 ? count($lastAuction).' enchère' : count($lastAuction).' enchères';
+           $nbAuction = count($lastAuction) <= 1 ? count($lastAuction).' offre' : count($lastAuction).' offres';
         }
 
         return new Response(
@@ -107,7 +107,7 @@ class AuctionController extends Controller
                       $em->flush();
 
 
-                      if ($lastAuction !== null && $userOwner !== null){
+                      if ($lastAuction != null && $userOwner !== null){
 
                             if ($lastAuction[0]->getUser() !== $this->getUser()) {
                               $body = $this->renderView(
@@ -117,7 +117,7 @@ class AuctionController extends Controller
                                             'oldValue'=>$lastAuction[0]->getValue(),
                                             'advert'=> $advert->getTitle())
                                  );
-                              $mailer->sendEmail($advert, 'Nouvelle Enchère', "Nouvelle enchère sur l'annonce ".' '.$advert->getTitle(), $lastAuction[0]->getUser()->getEmail(), $body);
+                              $mailer->sendEmail($advert, 'Nouvelle offre', "Nouvelle offre sur l'annonce ".' '.$advert->getTitle(), $lastAuction[0]->getUser()->getEmail(), $body);
                         }
                         }
 
@@ -130,10 +130,10 @@ class AuctionController extends Controller
                                     'advert'=> $advert->getTitle())
                          );
 
-                      $mailer->sendEmail($advert, 'Nouvelle enchère', 'Nouvelle enchère sur votre annonce '.$advert->getTitle(), $userOwner->getEmail(), $body_owner);
+                      $mailer->sendEmail($advert, 'Nouvelle offre', 'Nouvelle offre sur votre annonce '.$advert->getTitle(), $userOwner->getEmail(), $body_owner);
 
 
-                      $session->getFlashBag()->add('addSuccess','Enchère bien enregistrée.');
+                      $session->getFlashBag()->add('addSuccess','Offre bien enregistrée.');
 
                       return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouterauction'));
                   }
@@ -141,7 +141,7 @@ class AuctionController extends Controller
             }
 
             else {
-              $session->getFlashBag()->add('error','Vous ne pouvez pas enchérir sur vos propres annonces.');
+              $session->getFlashBag()->add('error','Vous ne pouvez pas proposer une offre sur vos propres annonces.');
 
               return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'refuserauction'));
             }
@@ -205,9 +205,9 @@ class AuctionController extends Controller
       $listAdvertAuction = $em->getRepository('SEPlatformBundle:Auction')
              ->getAdvertByUser($user->getId());
 
-      $titleResult = count($listAuctionUser) == 0 ?'Aucune enchère' :
-              (count($listAuctionUser) > 1 ? count($listAuctionUser).' enchères' :
-          count($listAuctionUser).' enchère');
+      $titleResult = count($listAuctionUser) == 0 ?'Aucune offre' :
+              (count($listAuctionUser) > 1 ? count($listAuctionUser).' offres' :
+          count($listAuctionUser).' offre');
 
           $nbPages = ceil(count($listAuctionUser)/$this->nbPerPage);
 
@@ -241,9 +241,9 @@ class AuctionController extends Controller
       $listAdvertAuction = $em->getRepository('SEPlatformBundle:Auction')
            ->getAuctionReceiveUser($this->advert, $this->state, $user->getId(), $page, $this->nbPerPage);
 
-      $titleResult = count($listAdvertAuction) == 0 ?'Aucune enchère' :
-              (count($listAdvertAuction) > 1 ? count($listAdvertAuction).' enchères' :
-          count($listAdvertAuction).' enchère');
+      $titleResult = count($listAdvertAuction) == 0 ?'Aucune offre' :
+              (count($listAdvertAuction) > 1 ? count($listAdvertAuction).' offres' :
+          count($listAdvertAuction).' offre');
 
           $nbPages = ceil(count($listAdvertAuction)/$this->nbPerPage);
 
@@ -295,7 +295,7 @@ class AuctionController extends Controller
                                 'value'=> $auctionAccept->getValue(),
                                 'advert'=> $advert->getTitle())
                      );
-                  $mailer->sendEmail($advert, 'Enchère refusée', 'Votre enchère a été refusée', $userAuctionRefuse->getEmail(), $body);
+                  $mailer->sendEmail($advert, 'Offre refusée', 'Votre offre a été refusée', $userAuctionRefuse->getEmail(), $body);
                 }
               }
 
@@ -324,11 +324,11 @@ class AuctionController extends Controller
                                )
                   );
 
-              $mailer->sendEmail($advert, 'Enchère acceptée', 'Votre enchère a été acceptée', $userAuction->getEmail(), $body_auction);
+              $mailer->sendEmail($advert, 'Offre acceptée', 'Votre offre a été acceptée', $userAuction->getEmail(), $body_auction);
 
-              $mailer->sendEmail($advert, 'Enchère acceptée', 'Votre avez accepté une enchère', $user->getEmail(), $body_advert);
+              $mailer->sendEmail($advert, 'Offre acceptée', 'Votre avez accepté une offre', $user->getEmail(), $body_advert);
 
-              $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'enchère à ".$auctionAccept->getValue()." €, il vous reste à contacter l'enchérisseur pour convenir d'un rendez-vous");
+              $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'offre à ".$auctionAccept->getValue()." €, il vous reste à contacter l'enchérisseur pour convenir d'un rendez-vous");
 
               return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'accept'));
           }

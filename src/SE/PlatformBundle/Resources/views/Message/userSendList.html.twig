@@ -63,11 +63,11 @@
                                  <td class='text-left td_center'>
                                      <h5>
                                      {% if msg.advert.isPublished == 1 %}
-                                         <span class="label label-primary">En ligne (Enchères encours)</span>
+                                         <span class="label label-primary">En ligne</span>
                                      {% elseif msg.advert.isPublished == 0 and msg.advert.auctionState == 0 %}
                                          <span class="label label-warning">Validation en cours</span>
                                      {% elseif msg.advert.isPublished == 0 and msg.advert.auctionState == 1 %}
-                                         <span class="label label-danger">Hors ligne (Enchère terminée)</span>
+                                         <span class="label label-danger">Hors ligne</span>
                                          <div class="label label-danger"
                                                data-toggle="tooltip"
                                                      data-placement="bottom" title="La demande n'est plus visible sur le site">
