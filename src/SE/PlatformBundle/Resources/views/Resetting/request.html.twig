@@ -8,7 +8,7 @@
 {% block layout_header2 %}
 <div class="row">
   <div id="header" class="col-md-12">
-    <h3 class="cat-title">Réinitialiser le mot de passe</h3>
+    <h3 class="cat-title">Mot de passe oublié</h3>
   </div>
 </div>
 {% endblock %}
@@ -28,34 +28,13 @@
                <div class="col-md-3"></div>
           {% else %}
 
-           <div class="col-md-1" ></div>
+           <div class="col-md-4" ></div>
            <div class="col-md-4">
-                <h4 class="cat-title">Réinitialiser le mot de passe</h4>
+                <h4 class="cat-title">Mot de passe oublié</h4>
                 {% block fos_user_content %}
                     {% include "@FOSUser/Resetting/request_content.html.twig" %}
                 {% endblock fos_user_content %}
             </div>
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-4">
-
-                <h4 class="cat-title">Connexion</h4>
-                <div class="form-group">
-                    <a href="{{ path('fos_user_security_login') }}" class="form-control btn se-btn-action">
-                        <i class="glyphicon glyphicon-chevron-left"></i>
-                        Retour à la connexion
-                    </a>
-                </div>
-
-                <h4 class="cat-title">Vous n'avez pas de compte ?</h4>
-                <div class="form-group">
-                    <a href="{{ path('fos_user_registration_register') }}" class="form-control btn se-btn-action">
-                        Créer un compte
-                    </a>
-                </div>
-
-            </div>
-            <div class="col-md-1" ></div>
               {% endif %}
         </div>
     </div>

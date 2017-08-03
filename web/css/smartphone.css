@@ -8,7 +8,9 @@ and (max-device-width : 736px) {
       padding-left: 10px;
       padding-right: 10px;
   }
-
+#header{
+      margin-left: 5px;
+}
   .navbar {
       min-height: 50px;
   }
@@ -61,4 +63,29 @@ and (max-device-width : 736px) {
       font-size: 82%;
   }
 
+.cat-title{
+  width: 90%;
+  padding-left: 10px;
+  font-size: 125%;
+  padding-top: 10px;
+  }
+
+  #resum h2{
+    font-size: 180%;
+  }
+
+  #register{
+    margin-bottom: 10px;
+  }
+
+  #accept_cgu_label {
+    display: block;
+    padding-left: 20px;
+    margin-top: -18px;
+}
+#accept_cgu {
+  vertical-align: bottom;
+  position: relative;
+  top: -1px;
+}
 }

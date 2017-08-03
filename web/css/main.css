@@ -18,6 +18,10 @@ html, body{
 }
 
 /* HEADER 1 */
+#logout{
+  color: #2A0540;
+  text-decoration: underline;
+}
 .se-header{
     z-index: 100;
     width: 100%;
@@ -431,6 +435,17 @@ height: 180px;
 
 textarea.form-control{
     height: 100px;
+}
+
+input.se-password{
+  margin-bottom: 10px;
+
+}
+
+a.se-password{
+  text-decoration: underline;
+  color: #484848;
+  cursor: pointer;
 }
 
 .truncate {

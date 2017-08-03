@@ -2,6 +2,7 @@
 
 {{ form_start(form, { 'action': path('fos_user_profile_edit'),
                         'attr': { 'class': 'fos_user_profile_edit' } }) }}
+
 <div class="col-md-12">
   <div class="col-md-2"></div>
     <div class="col-md-8">
@@ -120,9 +121,9 @@
     </div>
   <div class="col-md-2"></div>
 </div>
-<div class="col-md-12"></div>
+<div class="col-md-12">
     <div class="text-center">
-      <a href="{{ path('se_platform_user_view', {'userId': app.user.id}) }}"  class="btn se-btn-action">
+      <a href="{{ path('se_platform_user_view', {'userId': app.user.id}) }}"  class="btn btn-default">
           Voir mon profil
       </a>
         <input  class="btn se-btn-action" type="submit" value="{{ 'profile.edit.submit'|trans }}" />

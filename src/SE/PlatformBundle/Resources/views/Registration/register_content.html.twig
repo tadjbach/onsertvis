@@ -4,9 +4,13 @@
     {{ form_widget(form) }}
     <div class="form-group">
         <input type="checkbox" id="accept_cgu" name="_accept_cgu"  value="on" required="required"/>
-        <label for="accept_cgu">J’accepte les <a href="{{ path('se_platform_cgu') }}">conditions générales d'utilisation</a></label>
+        <label id="accept_cgu_label" for="accept_cgu">J’accepte les <a href="{{ path('se_platform_cgu') }}" class="cat-link se-password">conditions générales d'utilisation</a></label>
     </div>
     <div class="text-center">
+      <a href="{{ path('fos_user_security_login') }}" class="btn btn-default">
+          <i class="glyphicon glyphicon-chevron-left"></i>
+          Connexion
+      </a>
         <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn se-btn-action" />
     </div>
 {{ form_end(form) }}

@@ -17,7 +17,10 @@
 
         <div class="form-group">
             <label for="password" class="control-label required">{{ 'security.login.password'|trans }}</label>
-            <input type="password" class="form-control" id="password" name="_password" required="required" />
+            <input type="password" class="form-control se-password" id="password" name="_password" required="required" />
+            <a href="{{ path('fos_user_resetting_request') }}" class="cat-link se-password" >
+                Mot de passe oublié
+            </a>
         </div>
 
         <div class="form-group">
@@ -25,11 +28,16 @@
             <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
         </div>
         <div class="text-center">
+          <a href="{{ path('fos_user_registration_register') }}"  class="btn btn-default">
+              Créer un compte
+          </a>
             <input type="submit"
                    class="btn se-btn-action"
                    id="_submit"
                    name="_submit"
                    value="{{ 'security.login.submit'|trans }}" />
+
+
         </div>
     </form>
 {% endblock fos_user_content %}
