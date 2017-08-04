@@ -18,8 +18,7 @@
             <table class="table table-hover" id="tblGrid">
                 <tbody>
                 {% for advert in advertList %}
-                  <a href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">
-                    <tr>
+                    <tr class="link" onclick="window.document.location='{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}';">
                         <td class="text-center" id="item_image">
                           <a class='se-tbl-link thumbnail' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">
 
@@ -56,17 +55,17 @@
                         </td>
                         <td  class="text-right">
                           <div id="item_price" >
-                          <span class="label se-price-badge little">
-                            {% if advert.auctionState == 0 %}
-                              -- €
-                            {% else %}
-                              {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }} / <span class="text-lowercase">{{advert.BudgetType.slug}}</span>
-                            {% endif %}
-                          </span>
-                        </div>
+                            <span class="label se-price-badge little">
+                              {% if advert.auctionState == 0 %}
+                                -- €
+                              {% else %}
+                                {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }} / <span class="text-lowercase">{{advert.BudgetType.slug}}</span>
+                              {% endif %}
+                            </span>
+                          </div>
                         </td>
                     </tr>
-                  </a>
+
                 {% endfor %}
                 </tbody>
             </table>

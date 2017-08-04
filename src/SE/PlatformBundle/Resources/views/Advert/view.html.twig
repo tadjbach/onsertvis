@@ -6,8 +6,8 @@
 
 {% block layout_header2 %}
 <div class="row">
-  <div class="col-md-12">
-      <h5 class="cat-title">
+  <div id="header" class="col-md-12">
+      <h5 class="cat-title" id="item_title">
         <a href="{{ path('se_platform_homepage') }}" >
           Accueil
         </a>
@@ -22,16 +22,26 @@
         >
         {{ advert.title }}
     </h5>
+    <h3 class="cat-title" id="item_title_resp">{{ advert.title }}</h3>
   </div>
 </div>
 {% endblock %}
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         <div class="col-md-6">
+         <div class="col-md-7">
            <div class="panel panel-default">
              <i class="ad-date">Mise en ligne le <b>{{ advert.dateCreation|date('d/m/Y') }}</b> à <b>{{ advert.dateCreation|date('H:m') }}</b>
                  dans<b>
+                 {% if advert.category.labelNormal != 'Autres' %}
+                     {{ advert.category.labelNormal }}
+                 {% else %}
+                     Sans catégorie
+                 {% endif %}
+               </b>
+             </i>
+             <i class="ad-date-reverse"><b>{{ advert.dateCreation|date('d/m/Y') }}</b> à <b>{{ advert.dateCreation|date('H:m') }}</b>
+                 - <b>
                  {% if advert.category.labelNormal != 'Autres' %}
                      {{ advert.category.labelNormal }}
                  {% else %}
@@ -57,7 +67,7 @@
             </div>
          </div>
 
-         <div class="col-md-6">
+         <div class="col-md-5">
                 <div class="text-center se-item-link detail-body">
                   <div class="col-md-12 text-center">
                       <div class="text-center pad-price">
@@ -124,11 +134,11 @@
    </div>
    <div class="row">
      <div id="content" class="col-md-12">
-       <div class="col-md-6">
+       <div class="col-md-7">
             <h4 class="cat-title">Description</h4>
             <p>{{ advert.detail |nl2br }}</p>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
              <h4 class="cat-title">Demandeur</h4>
              {% if advert.user.isDetailVisible %}
              <p><i class="glyphicon glyphicon-user"></i> {{ advert.user }}
@@ -145,7 +155,7 @@
          </div>
     </div>
    </div>
-
+<br>
 <div class="modal fade"
      id="modalAuctionShow"
      tabindex="-1"

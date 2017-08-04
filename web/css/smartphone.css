@@ -37,9 +37,6 @@ and (max-device-width : 736px) {
     font-weight: 400;
     padding-bottom: 15px;
 }
-  #help_slogan, #index_category_dpt{
-    display: none;
-  }
   .navbar {
       min-height: 50px;
   }
@@ -83,21 +80,35 @@ and (max-device-width : 736px) {
     padding-left: 20px;
     margin-top: -18px;
 }
-#accept_cgu {
-  vertical-align: bottom;
-  position: relative;
-  top: -1px;
-}
+  #accept_cgu {
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+  }
 
 
-  #filter_responsive{
+  #filter_responsive, #item_title_resp,
+  .ad-date-reverse{
     display: block;
   }
-  #filter_normal, #item_price, #item_date, #item_image{
+  #filter_normal, #item_price,
+  #item_date, #item_image,
+  #item_title, #index_category_dpt
+  #help_slogan,
+  .ad-date{
     display: none;
   }
 
   .truncate {
     width: 180px;
   }
+
+  .se-img {
+    width: 100%;
+    height: 50%;
+  }
+
+  .se-price-badge {
+    font-size: 20px;
+}
 }
