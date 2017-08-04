@@ -122,6 +122,26 @@ class Advert
      */
     private $slug;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cpCity", type="string", length=25, nullable=true)
+     */
+    private $cpCity;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=200, nullable=true)
+     */
+    private $address;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="SE\PlatformBundle\Entity\PostalCode")
+    * @Assert\Valid()
+    */
+    private $postalCode;
+
     public function __construct()
     {
         $this->dateCreation=new \DateTime();
@@ -507,5 +527,53 @@ class Advert
     public function getBudgetType()
     {
         return $this->budgetType;
+    }
+
+    /**
+     * Set postalCode
+     *
+     * @param \SE\PlatformBundle\Entity\PostalCode $postalCode
+     *
+     * @return Advert
+     */
+    public function setPostalCode(\SE\PlatformBundle\Entity\PostalCode $postalCode = null)
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get postalCode
+     *
+     * @return \SE\PlatformBundle\Entity\PostalCode
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * Set cpCity
+     *
+     * @param string $cpCity
+     *
+     * @return Advert
+     */
+    public function setCpCity($cpCity)
+    {
+        $this->cpCity = $cpCity;
+
+        return $this;
+    }
+
+    /**
+     * Get cpCity
+     *
+     * @return string
+     */
+    public function getCpCity()
+    {
+        return $this->cpCity;
     }
 }

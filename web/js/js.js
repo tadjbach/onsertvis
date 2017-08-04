@@ -1,6 +1,7 @@
 
     //getDepartementByRegion
     function getDepartementByRegion($regions, $departements, $city){
+
                 $departements.empty();
                 $departements.append('<option value="0">Tous les départements</option>');
                 $departements.prop('disabled', false);
@@ -112,7 +113,7 @@
             $cp_id.val('');
 
             getDepartementByRegion($regions, $departements, $city);
-
+            
         if ($regions.val() === '0') {
             $city.prop('disabled', true);
             $cp_id.prop('disabled', true);
@@ -144,6 +145,8 @@
 
         var $socityType = $('#fos_user_profile_form_accountType');
         var $postalCode = $('#fos_user_profile_form_cpCity');
+        var $postalCode_Advert_Edit = $('#advert_edit_cpCity');
+        var $postalCode_Advert_Add = $('#se_platformbundle_advert_cpCity');
         var $siret = $('#fos_user_profile_form_siret');
 
         if ($siret.length > 0) {
@@ -188,6 +191,46 @@
                 });
         });
 
+        $postalCode_Advert_Edit.on('blur', function() {
+
+            var dataPostalCode = {codepostal: $postalCode_Advert_Edit.val()};
+
+               $.ajax({
+                    url: pathPostalCode,
+                    type:'POST',
+                    data: dataPostalCode,
+                    dataType: 'json',
+                        success:function(json) {
+                             $.each(json, function(id) {
+                                postalCodeResult.push(json[id].value +' '+ json[id].city.labelNormal);
+                            });
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+            });
+
+            $postalCode_Advert_Add.on('blur', function() {
+
+                var dataPostalCode = {codepostal: $postalCode_Advert_Add.val()};
+
+                   $.ajax({
+                        url: pathPostalCode,
+                        type:'POST',
+                        data: dataPostalCode,
+                        dataType: 'json',
+                            success:function(json) {
+                                 $.each(json, function(id) {
+                                    postalCodeResult.push(json[id].value +' '+ json[id].city.labelNormal);
+                                });
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
+                });
+
     $postalCode.autocomplete({
 
         source : function (request, response) {
@@ -210,8 +253,67 @@
                 });
         },
         minLength: 2,
-        open: function() {},
-        close: function() {},
+        search:function() {$('#loader-container').show();},
+        open: function() {$('#loader-container').hide();},
+        close: function() {$('#loader-container').hide();},
+        focus: function(event,ui) {},
+        select: function(event, ui) {}
+    });
+
+    $postalCode_Advert_Edit.autocomplete({
+
+        source : function (request, response) {
+            var dataPostalCode = {codepostal: $postalCode_Advert_Edit.val()};
+            $.ajax({
+                url: pathPostalCode,
+                type:'POST',
+                data: dataPostalCode,
+                dataType: 'json',
+                    success:function(json) {
+                        postalCodeResult=[];
+                        $.each(json, function(id) {
+                            postalCodeResult.push(json[id].value + ' ' + json[id].city.labelNormal);
+                        });
+                         response(postalCodeResult);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+        },
+        minLength: 2,
+        search:function() {$('#loader-container').show();},
+        open: function() {$('#loader-container').hide();},
+        close: function() {$('#loader-container').hide();},
+        focus: function(event,ui) {},
+        select: function(event, ui) {}
+    });
+
+    $postalCode_Advert_Add.autocomplete({
+
+        source : function (request, response) {
+            var dataPostalCode = {codepostal: $postalCode_Advert_Add.val()};
+            $.ajax({
+                url: pathPostalCode,
+                type:'POST',
+                data: dataPostalCode,
+                dataType: 'json',
+                    success:function(json) {
+                        postalCodeResult=[];
+                        $.each(json, function(id) {
+                            postalCodeResult.push(json[id].value + ' ' + json[id].city.labelNormal);
+                        });
+                         response(postalCodeResult);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+        },
+        minLength: 2,
+        search:function() {$('#loader-container').show();},
+        open: function() {$('#loader-container').hide();},
+        close: function() {$('#loader-container').hide();},
         focus: function(event,ui) {},
         select: function(event, ui) {}
     });

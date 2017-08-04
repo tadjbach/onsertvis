@@ -64,7 +64,7 @@ and (max-device-width : 736px) {
   }
 
 .cat-title{
-  width: 90%;
+  width: 98%;
   padding-left: 10px;
   font-size: 125%;
   padding-top: 10px;
@@ -88,4 +88,16 @@ and (max-device-width : 736px) {
   position: relative;
   top: -1px;
 }
+
+
+  #filter_responsive{
+    display: block;
+  }
+  #filter_normal, #item_price, #item_date, #item_image{
+    display: none;
+  }
+
+  .truncate {
+    width: 180px;
+  }
 }

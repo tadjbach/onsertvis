@@ -30,7 +30,7 @@ class AdvertType extends AbstractType
                 ))
 
                 ->add('budgetType', EntityType::class, array(
-                    'label'=>'Je préfère les devis pour *',
+                    'label'=>'Je préfère recevoir les offres pour *',
                     'placeholder' => 'Choisissez un type',
                     'class'=>'SE\PlatformBundle\Entity\BudgetType',
                     'choice_label'=>'labelNormal',
@@ -47,6 +47,14 @@ class AdvertType extends AbstractType
                         'class' => 'form-control textarea',
                         'placeholder' => 'Le détail ne doit pas dépasser 4000 caratères maximum')
                     ))
+
+                ->add('address', TextType::class, array('label'=> 'Adresse *',
+                    'attr' => array('maxlength' => 100,
+                    'placeholder' => 'N° et nom de la rue (100 caractères maximum)')
+                    ))
+
+                ->add('cpCity', TextType::class,
+                       array('label'=>'Code postal *'))
 
                 ->add('image', ImageType::class, array(
                         'label'=>' ',  'required' => false

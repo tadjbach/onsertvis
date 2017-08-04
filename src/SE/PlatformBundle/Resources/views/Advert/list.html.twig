@@ -5,22 +5,28 @@
 {% endblock %}
 
 {% block layout_header2 %}
+<div class="row">
+  <div id="header" class="col-md-12">
       <h3 class="cat-title">Annonces en cours</h3>
         {{ include('@SEPlatform/Advert/listFilter.html.twig') }}
+      </div>
+    </div>
 {% endblock %}
 {% block layout_body %}
 
          <h4 class="cat-title">{{ titleResult }}</h4>
-            <table class="table" id="tblGrid">
+            <table class="table table-hover" id="tblGrid">
                 <tbody>
                 {% for advert in advertList %}
+                  <a href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">
                     <tr>
-                        <td class="text-center">
+                        <td class="text-center" id="item_image">
                           <a class='se-tbl-link thumbnail' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">
-                            {% if advert.image == null %}
-                            <img class="se-auction-img" src="{{ asset(advert.WebPathNoImage) }}" alt="{{ asset(advert.WebPathNoImage) }}">
-                            {% else %}
-                              <img class="se-auction-img" src="{{ asset(advert.image.webPath) }}" alt="{{ asset(advert.image.webPath) }}">
+
+                              {% if advert.image == null %}
+                                <img class="se-auction-img" src="{{ asset(advert.WebPathNoImage) }}" alt="{{ asset(advert.WebPathNoImage) }}">
+                              {% else %}
+                                <img class="se-auction-img" src="{{ asset(advert.image.webPath) }}" alt="{{ asset(advert.image.webPath) }}">
                             {% endif %}
                           </a>
                         </td>
@@ -28,37 +34,27 @@
                             <h5 class="truncate">
                                 <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
                                 <h5>
-                                  {{ advert.category.labelNormal }}
+                                  <i>{{ advert.category.labelNormal }} -  {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</i>
                                 </h5>
-                                <h5>
+                                <h5 id="">
                                   {{ advert.dateCreation|date('d/m/Y') }}
                                   à
                                   {{ advert.dateCreation|date('H:i:s') }}
                                 </h5>
                             </h5>
                         </td>
-                        <td class='text-left'>
-                            <h5>
-                              {{ advert.user.postalCode.value }}
-                              {{ advert.user.postalCode.city.labelNormal }}
-                            </h5>
-                            <h5>
-                              {{ advert.user.PostalCode.city.departement.labelNormal }}
-                            </h5>
-                            <h5>
-                              {{ advert.user.PostalCode.city.departement.region.labelNormal }}
-                            </h5>
-                        </td>
-                        <td>
+                        <td class="text-center">
                           {% if advert.auctionState == 0 %}
-                              <span class="label label-warning">0 offre</span>
+                              <h5><span class="label label-default">0 offre</span></h5>
                           {% else %}
-                              <span class="label label-success">
+                              <h5>
+                                <span class="label label-success">
                                   {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-                              </span>
+                                </span>
+                              </h5>
                           {% endif %}
                         </td>
-                        <td class="text-right">
+                        <td id="item_price" class="text-right">
                           <span class="label se-price-badge little">
                           {% if advert.auctionState == 0 %}
                               -- €
@@ -68,6 +64,7 @@
                           </span>
                         </td>
                     </tr>
+                  </a>
                 {% endfor %}
                 </tbody>
             </table>

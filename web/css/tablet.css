@@ -28,4 +28,14 @@ and (orientation : portrait){
     background-size: 185px 45px;
     margin-top: 0px;
   }
+    #filter_responsive{
+      display: block;
+    }
+    #filter_normal, #item_price, #item_date, #item_image{
+      display: none;
+    }
+
+    .truncate {
+      width: 180px;
+    }
 }

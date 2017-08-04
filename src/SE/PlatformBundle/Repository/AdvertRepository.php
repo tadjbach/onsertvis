@@ -43,9 +43,7 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
     */
     public function getAdvertList($title, $category, $region, $departement, $city, $postalCode, $page, $nbPerPage){
         $qb = $this->createQueryBuilder('advert')
-                ->innerJoin('advert.user', 'user')
-                ->addSelect('user')
-                ->innerJoin('user.postalCode', 'postalCode')
+                ->innerJoin('advert.postalCode', 'postalCode')
                 ->addSelect('postalCode')
                 ->innerJoin('postalCode.city', 'city')
                 ->addSelect('city')

@@ -247,8 +247,16 @@ class AdvertController extends Controller
 
             if ($form->isValid()){
                //$advert->getImage()->upload();
-
                 $em->persist($advert);
+                $em->flush();
+
+                $postalCode=$em->getRepository('SEPlatformBundle:PostalCode')
+                       ->getPostalCodeByValue($advert->getCpCity());
+
+                 foreach ($postalCode as $pc) {
+                   $advert->setPostalCode($pc);
+                 }
+
                 $em->flush();
 
                 $body = $this->renderView(
@@ -279,6 +287,9 @@ class AdvertController extends Controller
       $session = $request->getSession();
       $advert=$em->find('SEPlatformBundle:Advert', $id);
 
+      $postalCode=$em->getRepository('SEPlatformBundle:PostalCode')
+             ->getPostalCodeByValue($advert->getCpCity());
+
          if (null===$advert){
             throw new NotFoundHttpException("Oops, La demande  que vous cherchez n'existe pas.");
         }
@@ -293,6 +304,13 @@ class AdvertController extends Controller
             if ($form->isValid()){
 
                 $advert->setDateUpdate(new \DateTime());
+                $postalCode=$em->getRepository('SEPlatformBundle:PostalCode')
+                       ->getPostalCodeByValue($advert->getCpCity());
+
+                 foreach ($postalCode as $pc) {
+                   $advert->setPostalCode($pc);
+                 }
+
                 $em->flush();
 
                 $session->getFlashBag()->add('editSuccess','Annonce modifiée avec succes');

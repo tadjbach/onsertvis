@@ -1,70 +1,90 @@
 
-    <form id="form_recherche" action="" method="get">
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-6 filter">
-                    <input name="title" type="text"
-                    value="{{ app.request.query.get('search') }}"
-                    class="form-control"
-                    placeholder="Que cherchez-vous?">
-                </div>
-                <div class="col-md-3 filter">
-                        <select class="form-control" name="category">
-                            <option value='0' >Toutes les catégories</option>
-                            {% for category in listCategory %}
-                                <option {{ app.request.query.get('category')== category.id ? ' selected ' : ' ' }}
-                                    value={{ category.id }}>{{ category.labelNormal }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                </div>
-                <div class="col-md-3 filter">
-                    <input
-                        class="btn btnIcon-search"
-                        type="submit" value="Rechercher"  />
+        <form id="form_recherche" action="" method="get">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                          <div class="col-md-6 filter">
+                              <input name="title" type="text"
+                              value="{{ app.request.query.get('search') }}"
+                              class="form-control"
+                              placeholder="Que cherchez-vous?">
+                          </div>
+                          <div class="col-md-3 filter">
+                                  <select class="form-control" name="category">
+                                      <option value='0' >Toutes les catégories</option>
+                                      {% for category in listCategory %}
+                                          <option {{ app.request.query.get('category')== category.id ? ' selected ' : ' ' }}
+                                              value={{ category.id }}>{{ category.labelNormal }}
+                                          </option>
+                                      {% endfor %}
+                                  </select>
+                          </div>
+                          <div class="col-md-3 filter">
+                              <input id="filter_normal"
+                                  class="btn btnIcon-search"
+                                  type="submit" value="Rechercher"  />
+                          </div>
+                        </div>
                 </div>
               </div>
-            <div class="row filter">
-                <div class="col-md-3 filter">
+              <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                    <div class="col-md-3 filter">
+                            <select class="form-control"
+                                    name="region"
+                                    id="region_id" >
+                                <option value='0'>Toutes la France</option>
+                                {% for region in listRegions %}
+                                     <option {{ app.request.query.get('region')== region.id ? ' selected ' : ' ' }}
+                                        value={{ region.id }}>{{ region.labelNormal }}
+                                     </option>
+                                {% endfor %}
+                            </select>
+                    </div>
+                    <div class="col-md-3 filter">
                         <select class="form-control"
-                                name="region"
-                                id="region_id" >
-                            <option value='0'>Toutes la France</option>
-                            {% for region in listRegions %}
-                                 <option {{ app.request.query.get('region')== region.id ? ' selected ' : ' ' }}
-                                    value={{ region.id }}>{{ region.labelNormal }}
-                                 </option>
-                            {% endfor %}
+                                name="departement"
+                                id="departement_id" >
+                                <option value='0' >Tous les départements</option>
+                                {% for dpt in listDepartement %}
+                                   <option {{ app.request.query.get('departement')== dpt.id ? ' selected ' : ' ' }}
+                                       value={{ dpt.id }}>{{ dpt.code }} - {{ dpt.labelNormal }}
+                                    </option>
+                               {% endfor %}
                         </select>
+                    </div>
+                     <div class="col-md-3 filter">
+                        <input name="city"
+                               type="text"
+                               class="form-control"
+                               id="city_id"
+                               value="{{ app.request.query.get('city') }}"
+                               placeholder="Ville" >
+                    </div>
+                    <div class="col-md-3 filter">
+                        <input name="postalCode"
+                               type="text"
+                               class="form-control"
+                               id="postalCode_id"
+                               value="{{ app.request.query.get('postalCode') }}"
+                               placeholder="Code postal" >
+                    </div>
                 </div>
-                <div class="col-md-3 filter">
-                    <select class="form-control"
-                            name="departement"
-                            id="departement_id" >
-                            <option value='0' >Tous les départements</option>
-                            {% for dpt in listDepartement %}
-                               <option {{ app.request.query.get('departement')== dpt.id ? ' selected ' : ' ' }}
-                                   value={{ dpt.id }}>{{ dpt.code }} - {{ dpt.labelNormal }}
-                                </option>
-                           {% endfor %}
-                    </select>
-                </div>
-                 <div class="col-md-3 filter">
-                    <input name="city"
-                           type="text"
-                           class="form-control"
-                           id="city_id"
-                           value="{{ app.request.query.get('city') }}"
-                           placeholder="Ville" >
-                </div>
-                <div class="col-md-3 filter">
-                    <input name="postalCode"
-                           type="text"
-                           class="form-control"
-                           id="postalCode_id"
-                           value="{{ app.request.query.get('postalCode') }}"
-                           placeholder="Code postal" >
-                </div>
-            </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <div class="col-md-3 filter">
+                          <input id="filter_responsive"
+                              class="btn btnIcon-search"
+                              type="submit" value="Rechercher"  />
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
         </div>
-    </form>
+        </form>
