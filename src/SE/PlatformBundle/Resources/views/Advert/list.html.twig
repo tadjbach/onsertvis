@@ -54,14 +54,16 @@
                               </h5>
                           {% endif %}
                         </td>
-                        <td id="item_price" class="text-right">
+                        <td  class="text-right">
+                          <div id="item_price" >
                           <span class="label se-price-badge little">
-                          {% if advert.auctionState == 0 %}
+                            {% if advert.auctionState == 0 %}
                               -- €
                             {% else %}
                               {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }} / <span class="text-lowercase">{{advert.BudgetType.slug}}</span>
                             {% endif %}
                           </span>
+                        </div>
                         </td>
                     </tr>
                   </a>
