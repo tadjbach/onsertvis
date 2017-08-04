@@ -60,7 +60,11 @@
                         </td>
                         <td class="text-right">
                           <span class="label se-price-badge little">
-                            {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }} / <span class="text-lowercase">{{advert.BudgetType.slug}}</span>
+                          {% if advert.auctionState == 0 %}
+                              -- €
+                            {% else %}
+                              {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }} / <span class="text-lowercase">{{advert.BudgetType.slug}}</span>
+                            {% endif %}
                           </span>
                         </td>
                     </tr>

@@ -64,8 +64,11 @@
                   <div class="col-md-12 text-center">
                       <div class="text-center pad-price">
                         <span class="label se-price-badge">
-
-                            {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }}
+                          {% if advert.auctionState == 0 %}
+                              -- €
+                            {% else %}
+                              {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }} / <span class="text-lowercase">{{advert.BudgetType.slug}}</span>
+                            {% endif %}
                         </span>
                       </div>
                       <div class="text-center pad-price">
