@@ -100,7 +100,7 @@ and (max-device-width : 736px) {
   }
 
   .truncate {
-    width: 180px;
+    width: 200px;
   }
 
   .se-img {
@@ -110,5 +110,18 @@ and (max-device-width : 736px) {
 
   .se-price-badge {
     font-size: 20px;
+  }
+  .pad-price {
+      padding-top: 10px;
+      padding-bottom: 30px;
+  }
+  .detail-body {
+    height: 250px;
+  }
+  a.se-btn-action{
+    margin-bottom: 5px;
+  }
+  .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    padding: 10px 0px 7px 0px;
 }
 }

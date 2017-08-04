@@ -29,7 +29,7 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         <div class="col-md-7">
+         <div class="col-md-6">
            <div class="panel panel-default">
              <i class="ad-date">Mise en ligne le <b>{{ advert.dateCreation|date('d/m/Y') }}</b> à <b>{{ advert.dateCreation|date('H:m') }}</b>
                  dans<b>
@@ -67,7 +67,7 @@
             </div>
          </div>
 
-         <div class="col-md-5">
+         <div class="col-md-6">
                 <div class="text-center se-item-link detail-body">
                   <div class="col-md-12 text-center">
                       <div class="text-center pad-price">
@@ -93,7 +93,7 @@
                           {% if advert.user !=  app.user %}
                               <div class="col-md-12">
                                   <div class="col-md-6">
-                                       <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="form-control btn se-btn-action">
+                                       <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="btn se-btn-action">
                                            Faire une offre
                                        </a>
                                   </div>
@@ -103,7 +103,7 @@
                                     'advertId': advert.id,
                                     'receiveId': advert.user.id,
                                     'isAnswer':0
-                                    }) }}" class="form-control btn se-btn-action">
+                                    }) }}" class="btn se-btn-action">
                                         Contacter
                                     </a>
                                   </div>
@@ -134,11 +134,11 @@
    </div>
    <div class="row">
      <div id="content" class="col-md-12">
-       <div class="col-md-7">
+       <div class="col-md-6">
             <h4 class="cat-title">Description</h4>
             <p>{{ advert.detail |nl2br }}</p>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
              <h4 class="cat-title">Demandeur</h4>
              {% if advert.user.isDetailVisible %}
              <p><i class="glyphicon glyphicon-user"></i> {{ advert.user }}
