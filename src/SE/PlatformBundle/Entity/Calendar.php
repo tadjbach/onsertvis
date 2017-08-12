@@ -40,6 +40,13 @@ class Calendar
     private $dayFr;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="day_fr_abbr", type="string", length=50, nullable=true)
+     */
+    private $dayFrAbbr;
+
+    /**
      * Get id
      *
      * @return int
@@ -95,5 +102,29 @@ class Calendar
     public function getDayFr()
     {
         return $this->dayFr;
+    }
+
+    /**
+     * Set dayFrAbbr
+     *
+     * @param string $dayFrAbbr
+     *
+     * @return Calendar
+     */
+    public function setDayFrAbbr($dayFrAbbr)
+    {
+        $this->dayFrAbbr = $dayFrAbbr;
+
+        return $this;
+    }
+
+    /**
+     * Get dayFrAbbr
+     *
+     * @return string
+     */
+    public function getDayFrAbbr()
+    {
+        return $this->dayFrAbbr;
     }
 }

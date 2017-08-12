@@ -250,14 +250,29 @@ class AdvertController extends Controller
                 $em->persist($advert);
                 $em->flush();
 
-                $postalCode=$em->getRepository('SEPlatformBundle:PostalCode')
-                       ->getPostalCodeByValue($advert->getCpCity());
+                if ($advert->getCpCity() == null or $advert->getPostalCode() == null) {
+                  $postalCode=$em->getRepository('SEPlatformBundle:PostalCode')
+                         ->getPostalCodeByValue($this->getUser()->getCpCity());
 
-                 foreach ($postalCode as $pc) {
-                   $advert->setPostalCode($pc);
-                 }
+                   foreach ($postalCode as $pc) {
+                     $advert->setPostalCode($pc);
+                   }
 
-                $em->flush();
+                  $advert->setAddress($this->getUser()->getAddress());
+
+                  $em->flush();
+                }
+
+                else {
+                  $postalCode=$em->getRepository('SEPlatformBundle:PostalCode')
+                         ->getPostalCodeByValue($advert->getCpCity());
+
+                   foreach ($postalCode as $pc) {
+                     $advert->setPostalCode($pc);
+                   }
+
+                  $em->flush();
+                }
 
                 $body = $this->renderView(
                        'SEPlatformBundle:Advert:addMail.html.twig',
@@ -269,7 +284,7 @@ class AdvertController extends Controller
 
                 $session->getFlashBag()->add('addSuccess','Annonce bien enregistrée, elle sera validée dans moins de 24h.');
 
-                return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+                return $this->redirectToRoute('se_platform_advert_user_list');
             }
         }
 

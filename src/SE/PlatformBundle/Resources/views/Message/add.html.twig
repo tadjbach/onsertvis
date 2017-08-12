@@ -1,70 +1,6 @@
-{% extends "SEPlatformBundle::layout.html.twig" %}
+{% extends 'SEPlatformBundle::viewLayout.html.twig' %}
 
-{% block title %}
-  Envoyer un message - {{ parent() }}
-{% endblock %}
-
-{% block layout_header2 %}
-<div class="row">
-  <div class="col-md-12">
-      <h5 class="cat-title">
-        <a href="{{ path('se_platform_homepage') }}" >
-          Accueil
-        </a>
-          >
-      <a href="{{ path('se_platform_advert_list') }}" >
-        Toutes les annonces
-      </a>
-        >
-        <a href="{{ path('se_platform_advert_list' , {'category' : advert.category.id }) }}" >
-        {{advert.category.labelNormal}}
-        </a>
-        >
-        {{ advert.title }}
-    </h5>
-  </div>
-</div>
-{% endblock %}
-
-{% block layout_body %}
-  <div class="row">
-       <div id="content" class="col-md-12">
-         {% if app.user.isAcountComplete == 0 %}
-               <div class="alert alert-warning" role="alert">
-                   Bonjour {{ app.user.username }}, Votre profil n'est pas complet, merci de le
-                   <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
-               </div>
-         {% else %}
-         <div class="col-md-6">
-           <div class="panel panel-default">
-             <i class="ad-date">Mise en ligne le <b>{{ advert.dateCreation|date('d/m/Y') }}</b> à <b>{{ advert.dateCreation|date('H:m') }}</b>
-                 dans<b>
-                 {% if advert.category.labelNormal != 'Autres' %}
-                     {{ advert.category.labelNormal }}
-                 {% else %}
-                     Sans catégorie
-                 {% endif %}
-               </b>
-             </i>
-                <div class="panel-body text-center se-item-link">
-                   {% if advert.image == null %}
-                   <img class="se-img" src="{{ asset(advert.webPathNoImage) }}" alt="{{ asset(advert.webPathNoImage) }}">
-                   {% else %}
-                       <img class="se-img" src="{{ asset(advert.image.webPath) }}" alt="{{ asset(advert.image.webPath) }}">
-                   {% endif %}
-                </div>
-                <div class="panel-footer se-panel-footer">
-                   <h4 class="truncate">
-                     {{ advert.title }}
-                   </h4>
-
-                   <p>{{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }}
-                     ({{ advert.user.PostalCode.city.departement.labelNormal }} -
-                     {{ advert.user.PostalCode.city.departement.region.labelNormal }})
-                   </p>
-                </div>
-            </div>
-         </div>
+{% block view_advert_auction %}
          <div class="col-md-6">
                 <div class="text-center se-item-link detail-body">
                   <div class="col-md-12 text-center">
@@ -91,50 +27,5 @@
                     Faire une offre
                 </a>
          </div>
-         {% endif %}
-
-       </div>
-   </div>
-   <div class="row">
-     <div id="content" class="col-md-12">
-       <div class="col-md-6">
-            <h4 class="cat-title">Description</h4>
-            <p>{{ advert.detail |nl2br }}</p>
-        </div>
-        <div class="col-md-6">
-             <h4 class="cat-title">Demandeur</h4>
-             {% if advert.user.isDetailVisible %}
-             <p><i class="glyphicon glyphicon-user"></i> {{ advert.user }}</p>
-             <p><i class="glyphicon glyphicon-phone-alt"></i> {{ advert.user.phoneNumber|split('', 2)|join(' ') }}</p>
-             <p><i class="glyphicon glyphicon-map-marker"></i> {{ advert.user.address }} {{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }}
-                ({{ advert.user.PostalCode.city.departement.labelNormal }})</p>
-            {% else %}
-            <div class="alert alert-warning" role="alert">
-                Désolé, le demandeur ne souhaite pas afficher ses coordonnées.
-            </div>
-            {% endif %}
-            <a href="{{ path('se_platform_user_view', {'userId': advert.user.id}) }}"  class="btn btn-default">
-                Plus de détail
-            </a>
-         </div>
-    </div>
-   </div>
-
-<div class="modal fade"
-     id="modalAuctionShow"
-     tabindex="-1"
-     role="dialog"
-     aria-labelledby="modalAuctionShowLabel">
-        <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Historique des offres</h4>
-          </div>
-          <div class="modal-body">
-            {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}
-          </div>
-        </div>
-      </div>
-</div>
+        
 {% endblock %}

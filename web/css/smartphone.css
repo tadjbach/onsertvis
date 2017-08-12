@@ -88,13 +88,16 @@ and (max-device-width : 736px) {
 
 
   #filter_responsive, #item_title_resp,
-  .ad-date-reverse{
+  .ad-date-reverse,
+  .se-profile-value-reverse
+  {
     display: block;
   }
   #filter_normal, #item_price,
   #item_date, #item_image,
-  #item_title, #index_category_dpt
+  #item_title, #index_category_dpt,
   #help_slogan,
+  .respnse,
   .ad-date{
     display: none;
   }
@@ -124,4 +127,5 @@ and (max-device-width : 736px) {
   .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
     padding: 10px 0px 7px 0px;
 }
+
 }

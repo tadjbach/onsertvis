@@ -273,7 +273,7 @@ li.hd-icon{
 .se-price-badge{
     background-color: #2A0540;
     color: #E5DF16;
-    font-size: 26px;
+    font-size: 20px;
 }
 .little{
     font-size: 16px;
@@ -656,6 +656,7 @@ a.se-password{
 }
 
 .se-profile-value{
+  display: block;
     padding-left: 0px;
 }
 
@@ -744,9 +745,9 @@ a.ui-corner-all .ui-state-active {
         margin-left: 10px;
   }
 
-  .se-profile-value table th{
+  .se-profile-value table th, .se-profile-value-reverse table th{
 
-    padding-right: 5px;
+    padding-right: 8px;
 
   }
   .se-flash-msg{
@@ -780,7 +781,7 @@ a.se-tbl-link{
 }
 
 #filter_responsive, #item_title_resp,
-.ad-date-reverse{
+.se-profile-value-reverse{
   display: none;
 }
 #filter_normal, #item_price,

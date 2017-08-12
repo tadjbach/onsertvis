@@ -91,7 +91,7 @@ class CommentController extends Controller
 
                        $session->getFlashBag()->add('addSuccess','Avis bien envoyé.');
 
-                       return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouter'));
+                       return $this->redirectToRoute('se_platform_auction_user_receive');
                      }
              }
          }

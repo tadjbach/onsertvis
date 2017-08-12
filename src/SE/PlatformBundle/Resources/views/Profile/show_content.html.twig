@@ -23,14 +23,14 @@
                                      <br>
                                      <i class="glyphicon glyphicon-calendar"></i>
                                        <span class="se-profile-title">Disponibilité : </span>
-                                       <div class="se-profile-value">
+                                       <div class="se-profile-value-reverse">
                                          {{ user.calendar|split('', 2)|join(' ') }}
                                            <table>
                                            <thead id="tblHead">
                                                <tr>
                                                    {% for day in user.calendar %}
                                                    <th>
-                                                       {{ day.dayFr  }}
+                                                       {{ day.dayFrAbbr  }}
                                                    </th>
                                                    {% else %}
                                                        <th>
@@ -47,7 +47,31 @@
                                                    {% endfor %}
                                            </tbody>
                                            </table>
+                                       </div>
+                                       <div class="se-profile-value respnse">
+                                         {{ user.calendar|split('', 2)|join(' ') }}
+                                           <table>
+                                           <thead id="tblHead">
+                                               <tr>
+                                                   {% for day in user.calendar %}
+                                                   <th>
+                                                       {{ day.dayFrAbbr  }}
+                                                   </th>
+                                                   {% else %}
+                                                       <th>
+                                                       Nous contacter
+                                                       </th>
+                                                   {% endfor %}
+                                               </tr>
+                                           </thead>
+                                           <tbody>
+                                               {% for day in user.calendar %}
+                                                   <td>
 
+                                                   </td>
+                                                   {% endfor %}
+                                           </tbody>
+                                           </table>
                                        </div>
                                  </div>
                                <div class="col-md-4">

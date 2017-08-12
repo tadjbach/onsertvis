@@ -48,13 +48,14 @@ class AdvertType extends AbstractType
                         'placeholder' => 'Le détail ne doit pas dépasser 4000 caratères maximum')
                     ))
 
-                ->add('address', TextType::class, array('label'=> 'Adresse *',
+                ->add('address', TextType::class, array('label'=> 'Adresse (si différente de votre adresse)',
                     'attr' => array('maxlength' => 100,
-                    'placeholder' => 'N° et nom de la rue (100 caractères maximum)')
+                    'placeholder' => 'N° et nom de la rue (100 caractères maximum)'),
+                    'required' => false
                     ))
 
                 ->add('cpCity', TextType::class,
-                       array('label'=>'Code postal *'))
+                       array('label'=>'Code postal', 'required' => false))
 
                 ->add('image', ImageType::class, array(
                         'label'=>' ',  'required' => false

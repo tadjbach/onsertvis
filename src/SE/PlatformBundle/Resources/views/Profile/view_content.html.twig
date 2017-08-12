@@ -37,7 +37,31 @@
 
                    <br>
                     <h4>Disponibilité :</h4>
-                    <div class="se-profile-value">
+                    <div class="se-profile-value-reverse">
+                        <table>
+                        <thead id="tblHead">
+                            <tr>
+                                {% for day in user.calendar %}
+                                <th>
+                                    <h5 class="array-item">{{ day.dayFrAbbr  }}</h5>
+                                </th>
+                                {% else %}
+                                    <th>
+                                    Nous contacter
+                                    </th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for day in user.calendar %}
+                                <td>
+
+                                </td>
+                                {% endfor %}
+                        </tbody>
+                        </table>
+                    </div>
+                    <div class="se-profile-value respnse">
                     <table>
                     <thead id="tblHead">
                         <tr>

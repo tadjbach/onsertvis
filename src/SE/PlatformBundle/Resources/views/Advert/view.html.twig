@@ -1,176 +1,69 @@
-{% extends "SEPlatformBundle::layout.html.twig" %}
 
-{% block title %}
-  {{advert.title}} - {{ parent() }}
-{% endblock %}
+{% extends 'SEPlatformBundle::viewLayout.html.twig' %}
 
-{% block layout_header2 %}
-<div class="row">
-  <div id="header" class="col-md-12">
-      <h5 class="cat-title" id="item_title">
-        <a href="{{ path('se_platform_homepage') }}" >
-          Accueil
-        </a>
-          >
-      <a href="{{ path('se_platform_advert_list') }}" >
-        Toutes les annonces
-      </a>
-        >
-        <a href="{{ path('se_platform_advert_list' , {'category' : advert.category.id }) }}" >
-        {{advert.category.labelNormal}}
-        </a>
-        >
-        {{ advert.title }}
-    </h5>
-    <h3 class="cat-title" id="item_title_resp">{{ advert.title }}</h3>
-  </div>
-</div>
-{% endblock %}
-{% block layout_body %}
-  <div class="row">
-       <div id="content" class="col-md-12">
-         <div class="col-md-6">
-           <div class="panel panel-default">
-             <i class="ad-date">Mise en ligne le <b>{{ advert.dateCreation|date('d/m/Y') }}</b> à <b>{{ advert.dateCreation|date('H:m') }}</b>
-                 dans<b>
-                 {% if advert.category.labelNormal != 'Autres' %}
-                     {{ advert.category.labelNormal }}
-                 {% else %}
-                     Sans catégorie
-                 {% endif %}
-               </b>
-             </i>
-             <i class="ad-date-reverse"><b>{{ advert.dateCreation|date('d/m/Y') }}</b> à <b>{{ advert.dateCreation|date('H:m') }}</b>
-                 - <b>
-                 {% if advert.category.labelNormal != 'Autres' %}
-                     {{ advert.category.labelNormal }}
-                 {% else %}
-                     Sans catégorie
-                 {% endif %}
-               </b>
-             </i>
-                <div class="panel-body text-center se-item-link">
-                   {% if advert.image == null %}
-                   <img class="se-img" src="{{ asset(advert.webPathNoImage) }}" alt="{{ asset(advert.webPathNoImage) }}">
+{% block view_advert_auction %}
+<div class="col-md-6">
+       <div class="text-center se-item-link detail-body">
+         <div class="col-md-12 text-center">
+             <div class="text-center pad-price">
+               <span class="label se-price-badge">
+                 {% if advert.auctionState == 0 %}
+                     -- €
                    {% else %}
-                       <img class="se-img" src="{{ asset(advert.image.webPath) }}" alt="{{ asset(advert.image.webPath) }}">
+                     {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }} / <span class="text-lowercase">{{advert.BudgetType.slug}}</span>
                    {% endif %}
-                </div>
-                <div class="panel-footer se-panel-footer">
-                   <h4 class="truncate">
-                     {{ advert.title }}
-                   </h4>
-
-                   <p>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})
-                   </p>
-                </div>
-            </div>
-         </div>
-
-         <div class="col-md-6">
-                <div class="text-center se-item-link detail-body">
-                  <div class="col-md-12 text-center">
-                      <div class="text-center pad-price">
-                        <span class="label se-price-badge">
-                          {% if advert.auctionState == 0 %}
-                              -- €
-                            {% else %}
-                              {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }} / <span class="text-lowercase">{{advert.BudgetType.slug}}</span>
-                            {% endif %}
-                        </span>
-                      </div>
-                      <div class="text-center pad-price">
-                        <a class="btn btn-default"
-                            data-toggle="modal"
-                            role="button"
-                            data-toggle="modal"
-                            data-target="#modalAuctionShow"
-                            >
-                              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-                        </a>
-                      </div>
-                      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                          {% if advert.user !=  app.user %}
-                              <div class="col-md-12">
-                                  <div class="col-md-6">
-                                       <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="btn se-btn-action">
-                                           Faire une offre
-                                       </a>
-                                  </div>
-                                  <div class="col-md-6">
-                                    <a href="{{ path('se_platform_message_add',
-                                    {'advertSlug': advert.slug,
-                                    'advertId': advert.id,
-                                    'receiveId': advert.user.id,
-                                    'isAnswer':0
-                                    }) }}" class="btn se-btn-action">
-                                        Contacter
-                                    </a>
-                                  </div>
-                              </div>
-                            {% else %}
-                            <div class="col-md-12 alert alert-warning" role="alert">
-                                Vous êtes proprétaire de l'annonce
-                            </div>
-                            {% endif %}
-                        {% else %}
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                 <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="form-control btn se-btn-action">
-                                     Faire une offre
-                                 </a>
-                            </div>
-                            <div class="col-md-6">
-                              <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0}) }}" class="form-control btn se-btn-action">
-                                  Contacter
+               </span>
+             </div>
+             <div class="text-center pad-price">
+               <a class="btn btn-default"
+                   data-toggle="modal"
+                   role="button"
+                   data-toggle="modal"
+                   data-target="#modalAuctionShow"
+                   >
+                     {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+               </a>
+             </div>
+             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                 {% if advert.user !=  app.user %}
+                     <div class="col-md-12">
+                         <div class="col-md-6">
+                              <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="btn se-btn-action">
+                                  Faire une offre
                               </a>
-                            </div>
-                        </div>
-                      {% endif %}
-                  </div>
-                </div>
+                         </div>
+                         <div class="col-md-6">
+                           <a href="{{ path('se_platform_message_add',
+                           {'advertSlug': advert.slug,
+                           'advertId': advert.id,
+                           'receiveId': advert.user.id,
+                           'isAnswer':0
+                           }) }}" class="btn se-btn-action">
+                               Contacter
+                           </a>
+                         </div>
+                     </div>
+                   {% else %}
+                   <div class="col-md-12 alert alert-warning" role="alert">
+                       Vous êtes proprétaire de l'annonce
+                   </div>
+                   {% endif %}
+               {% else %}
+               <div class="col-md-12">
+                   <div class="col-md-6">
+                        <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="btn se-btn-action">
+                            Faire une offre
+                        </a>
+                   </div>
+                   <div class="col-md-6">
+                     <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0}) }}" class="btn se-btn-action">
+                         Contacter
+                     </a>
+                   </div>
+               </div>
+             {% endif %}
          </div>
        </div>
-   </div>
-   <div class="row">
-     <div id="content" class="col-md-12">
-       <div class="col-md-6">
-            <h4 class="cat-title">Description</h4>
-            <p>{{ advert.detail |nl2br }}</p>
-        </div>
-        <div class="col-md-6">
-             <h4 class="cat-title">Demandeur</h4>
-             {% if advert.user.isDetailVisible %}
-             <p><i class="glyphicon glyphicon-user"></i> {{ advert.user }}
-               </p>
-             <p><i class="glyphicon glyphicon-phone-alt"></i> {{ advert.user.phoneNumber|split('', 2)|join(' ') }}</p>
-            {% else %}
-            <div class="alert alert-warning" role="alert">
-                Désolé, le demandeur ne souhaite pas afficher ses coordonnées.
-            </div>
-            {% endif %}
-            <a href="{{ path('se_platform_user_view', {'userId': advert.user.id}) }}"  class="btn btn-default">
-                Plus de détail
-            </a>
-         </div>
-    </div>
-   </div>
-<br>
-<div class="modal fade"
-     id="modalAuctionShow"
-     tabindex="-1"
-     role="dialog"
-     aria-labelledby="modalAuctionShowLabel">
-        <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Historique des offres</h4>
-          </div>
-          <div class="modal-body">
-            {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}
-          </div>
-        </div>
-      </div>
 </div>
+
 {% endblock %}

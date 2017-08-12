@@ -27,29 +27,29 @@ class ProfileFormType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder
-          ->add('accountType', ChoiceType::class, array('label'=> 'Vous êtes',
+          ->add('accountType', ChoiceType::class, array('label'=> 'Vous êtes *',
               'choices'    => array(
                   'Particulier' => 'Particular',
                   'Société' => 'Society',
                   'Autre'=>'Other')))
 
-          ->add('username', null, array('label' => 'Nom d\'utilisateur ou de société',
+          ->add('username', null, array('label' => 'Nom d\'utilisateur ou de société *',
                             'attr' => array('maxlength' => 50,
                             'placeholder' => 'Le Nom d\'utilisateur ne doit pas dépasser 50 caractères')
 
                           ))
 
-          ->add('civility', ChoiceType::class, array('label'=> 'Civilité',
+          ->add('civility', ChoiceType::class, array('label'=> 'Civilité *',
               'choices'    => array(
                   'M' => 'm',
                   'Mme' => 'mme',
                   'Mlle' => 'mlle')))
 
-          ->add('name', TextType::class, array('label'=> 'Nom',
+          ->add('name', TextType::class, array('label'=> 'Nom *',
           'attr' => array('maxlength' => 50,
           'placeholder' => 'Le Nom ne doit pas dépasser 50 caractères')))
 
-          ->add('firstName', TextType::class, array('label'=> 'Prénom',
+          ->add('firstName', TextType::class, array('label'=> 'Prénom *',
           'attr' => array('maxlength' => 50,
           'placeholder' => 'Le Prénom ne doit pas dépasser 50 caractères')))
 
@@ -61,14 +61,14 @@ class ProfileFormType extends AbstractType
                     ))
 
 
-          ->add('address', TextType::class, array('label'=> 'Adresse',
+          ->add('address', TextType::class, array('label'=> 'Adresse *',
           'attr' => array('maxlength' => 100,
           'placeholder' => 'L\'adresse ne doit pas dépasser 100 caractères')))
 
           ->add('cpCity', TextType::class,
              array('label'=>'Code postal'))
 
-          ->add('phoneNumber', TextType::class, array('label'=> 'N° téléphone',
+          ->add('phoneNumber', TextType::class, array('label'=> 'N° téléphone *',
           'attr' => array('maxlength' => 10,
                           'minlength' => 10,
                           'placeholder' => '')))

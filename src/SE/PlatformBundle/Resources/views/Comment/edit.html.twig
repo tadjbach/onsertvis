@@ -17,13 +17,14 @@
 
          {% for flash_message in app.session.flashBag.get('editSuccess') %}
              <div class="alert alert-success text-center" role="alert">
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                  {{ flash_message }}
              </div>
          {% endfor %}
 
             {{ include('SEPlatformBundle:Comment:form.html.twig') }}
          </div>
-         
+
  <div  class="col-md-3"></div>
 
 {% endblock %}

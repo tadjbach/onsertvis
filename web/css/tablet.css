@@ -35,7 +35,8 @@ and (orientation : portrait){
       display: none;
     }
 
-    .truncate {
-      width: 180px;
+    
+    a.se-btn-action{
+      margin-bottom: 5px;
     }
 }

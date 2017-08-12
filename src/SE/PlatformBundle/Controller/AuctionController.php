@@ -135,7 +135,8 @@ class AuctionController extends Controller
 
                       $session->getFlashBag()->add('addSuccess','Offre bien enregistrée.');
 
-                      return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'ajouterauction'));
+                      return $this->redirectToRoute('se_platform_advert_view', array('slug'=> $advert->getSlug(),
+                                                                                    'id'=> $advert->getId()));
                   }
               }
             }
@@ -143,7 +144,8 @@ class AuctionController extends Controller
             else {
               $session->getFlashBag()->add('error','Vous ne pouvez pas proposer une offre sur vos propres annonces.');
 
-              return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'refuserauction'));
+              return $this->redirectToRoute('se_platform_advert_view', array('slug'=> $advert->getSlug(),
+                                                                            'id'=> $advert->getId()));
             }
 
             return $this->render('SEPlatformBundle:Auction:add.html.twig', array(
@@ -330,7 +332,7 @@ class AuctionController extends Controller
 
               $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'offre à ".$auctionAccept->getValue()." €, il vous reste à contacter l'enchérisseur pour convenir d'un rendez-vous");
 
-              return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'accept'));
+               return $this->redirectToRoute('se_platform_auction_user_receive');
           }
         }
         else {
