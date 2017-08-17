@@ -1,7 +1,7 @@
 {# Lister des Offres d'une Demande - Sans Action #}
 
 {% if countAuctions > 0 %}
-    <table class="table" id="tblGrid">
+    <table class="table" id="tblGrid-auction">
         <thead id="tblHead">
             <tr>
                 <th>Enchérisseur</th>
@@ -27,6 +27,28 @@
         {% endfor %}
         </tbody>
     </table>
+
+    <table class="table" id="tblGrid-auction-reverse">
+        <thead id="tblHead">
+            <tr>
+                <th>Enchérisseur</th>
+                <th class="text-center">Offre</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for auction in listAuctions %}
+            <tr>
+                <td class="text-left">
+                    <a href="{{ path('se_platform_user_view', {'userId': auction.user.id}) }}" class="cat-link" >
+                        {{ auction.user }}
+                    </a>
+                </td>
+                <td class="text-right price-auction">{{ auction.value|number_format(0, ' ', ' ') }} €</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
 {% else %}
     <div>Aucune offre pour l'instant</div>
 {% endif %}

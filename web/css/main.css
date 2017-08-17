@@ -110,7 +110,7 @@ html, body{
     color: #FFF;
 }
 
-.navbar-default .navbar-nav>li>a, a.contact
+.navbar-default .navbar-nav>li>a, a.contact, .price-auction
 {
     color: #2A0540;
     font-weight: bold;
@@ -572,7 +572,7 @@ a.se-password{
 }
 
 .modal-dialog{
-    width: 70%;
+    width: 95%;
 }
 
 .pagination>li>a,
@@ -780,14 +780,15 @@ a.se-tbl-link{
     width: 100%;
 }
 
-#filter_responsive, #item_title_resp,
-.se-profile-value-reverse{
+#filter_responsive, #item_title_resp,#tblGrid-auction-reverse,
+.se-profile-value-reverse, .ad-date-reverse{
   display: none;
 }
 #filter_normal, #item_price,
 #item_date, #item_image,
 #item_title, #index_category_dpt
 #help_slogan,
+#tblGrid-auction,
 .ad-date{
   display: block;
 }

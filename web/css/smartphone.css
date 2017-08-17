@@ -89,7 +89,8 @@ and (max-device-width : 736px) {
 
   #filter_responsive, #item_title_resp,
   .ad-date-reverse,
-  .se-profile-value-reverse
+  .se-profile-value-reverse,
+  #tblGrid-auction-reverse
   {
     display: block;
   }
@@ -97,6 +98,7 @@ and (max-device-width : 736px) {
   #item_date, #item_image,
   #item_title, #index_category_dpt,
   #help_slogan,
+  #tblGrid-auction,
   .respnse,
   .ad-date{
     display: none;
@@ -104,6 +106,10 @@ and (max-device-width : 736px) {
 
   .truncate {
     width: 200px;
+  }
+
+  .auction-nb>tr>th>h5, #tblHead>tr>th>h5{
+        font-size: 12px;
   }
 
   .se-img {
