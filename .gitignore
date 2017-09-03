@@ -29,3 +29,5 @@ vendor/composer/installed.json
 app/config/parameters.yml
 
 *.jpeg
+
+app/config/parametersProd.yml
