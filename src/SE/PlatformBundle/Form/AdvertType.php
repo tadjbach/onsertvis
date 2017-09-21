@@ -57,14 +57,14 @@ class AdvertType extends AbstractType
                 ->add('cpCity', TextType::class,
                        array('label'=>'Code postal', 'required' => false))
 
-                ->add('image', ImageType::class, array(
+              /*  ->add('image', ImageType::class, array(
                         'label'=>' ',  'required' => false
-                    ))
+                    ))*/
 
                 ->add('save', SubmitType::class,
                                 array('label'=> 'Enregistrer',
                                     'attr'   =>  array(
-                                                'class'   => 'btn se-btn-action btn')));
+                                                'class'   => 'btn btn-primary btn')));
     }
 
     /**

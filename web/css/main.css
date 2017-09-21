@@ -278,11 +278,12 @@ li.hd-icon{
 .little{
     font-size: 16px;
 }
+/*
 .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open>.dropdown-toggle.btn-default {
     color: #333;
     background-color: #E5DF16;
     border-color: #b2ae33;
-}
+}*/
 
 .pad-price{
   padding-top: 40px;
@@ -478,7 +479,7 @@ input.se-password{
 
 }
 
-a.se-password{
+a.se-password, a.se-link{
   text-decoration: underline;
   color: #484848;
   cursor: pointer;
@@ -489,7 +490,6 @@ a.se-password{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #E5DF16;
   margin-top: 0px;
   margin-bottom: 2px;
 }
@@ -502,11 +502,9 @@ a.se-password{
     width: 60px;
 }
 
-.btnIcon-search{
+#filter_normal, .btnIcon-search{
      width: 100%;
-     background-color: #E5DF16;
-     color: #2A0540;
-     border:1px solid #E5DF16;
+
 }
 
 .se-btn-action{
@@ -532,7 +530,7 @@ a.se-password{
 }
 
 .se-img {
-  width: 100%;
+  width: 70%;
   height: 50%;
 }
 .thumbnail>img.se-auction-img{
@@ -604,7 +602,7 @@ a.se-password{
     margin-bottom: 0;
 }
 
-
+/*
 .se-panel-footer,
 .panel-default>.se-panel-heading{
    color: #fff;
@@ -612,7 +610,7 @@ a.se-password{
 }
 .se-panel-heading> h3{
     font-weight: bold;
-}
+}*/
 .se-nb-auction{
     margin-bottom: -20px;
     width: 40%;
@@ -620,10 +618,10 @@ a.se-password{
     font-weight: bold;
     cursor: pointer;
 }
-
+/*
 .panel-default {
     border-color: #2A0540;
-}
+}*/
 .detail-footer{
   height: 70px;
 
@@ -788,7 +786,6 @@ a.se-tbl-link{
 #item_date, #item_image,
 #item_title, #index_category_dpt
 #help_slogan,
-#tblGrid-auction,
 .ad-date{
   display: block;
 }

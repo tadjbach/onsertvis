@@ -37,7 +37,7 @@ class CommentType extends AbstractType
                  ->add('save', SubmitType::class,
                                 array('label'=> 'Envoyer',
                                     'attr'   =>  array(
-                                                'class'   => 'btn se-btn-action')));
+                                                'class'   => 'btn btn-primary')));
     }
 
     /**

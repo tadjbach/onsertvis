@@ -19,9 +19,8 @@
                 <tbody>
                 {% for advert in advertList %}
                     <tr class="link" onclick="window.document.location='{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}';">
-                        <td class="text-center" id="item_image">
+                          <td class="text-center" id="item_image">
                           <a class='se-tbl-link thumbnail' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">
-
                               {% if advert.image == null %}
                                 <img class="se-auction-img" src="{{ asset(advert.WebPathNoImage) }}" alt="{{ asset(advert.WebPathNoImage) }}">
                               {% else %}
@@ -32,15 +31,22 @@
                         <td>
                             <h5 class="truncate">
                                 <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
-                                <h5>
-                                  <i>{{ advert.category.labelNormal }} -  {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</i>
-                                </h5>
                                 <h5 id="">
-                                  {{ advert.dateCreation|date('d/m/Y') }}
+                                  Postée le <b>{{ advert.dateCreation|date('d/m/Y') }}</b>
                                   à
-                                  {{ advert.dateCreation|date('H:i:s') }}
+                                  <b>{{ advert.dateCreation|date('H:i:s') }}</b>
                                 </h5>
                             </h5>
+                        </td>
+                        <td>
+                          <h5>
+                            <i>{{ advert.category.labelNormal }}</i>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5>
+                            <i>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</i>
+                          </h5>
                         </td>
                         <td class="text-center">
                           {% if advert.auctionState == 0 %}
@@ -53,6 +59,7 @@
                               </h5>
                           {% endif %}
                         </td>
+                        <!--
                         <td  class="text-right">
                           <div id="item_price" >
                             <span class="label se-price-badge little">
@@ -63,7 +70,7 @@
                               {% endif %}
                             </span>
                           </div>
-                        </td>
+                        </td>-->
                     </tr>
 
                 {% endfor %}

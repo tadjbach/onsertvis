@@ -42,7 +42,7 @@
                     <th>Date de l'offre</th>
                     <th class="text-left">Etat</th>
                     <th class="text-right">Offre</th>
-                    <th class="text-center">Action</th>
+                  <!--  <th class="text-center">Action</th>-->
                 </tr>
             </thead>
               <tbody>
@@ -93,7 +93,7 @@
                   <td class="text-right bold">
                     <span class="label se-price-badge little text-lowercase">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
                   </td>
-                  <td class="text-center bold">
+                  <!--<td class="text-center bold">
                     <h5>
                       {% if auction.state == 1 %}
                             <a class="btn btn-success"
@@ -109,7 +109,7 @@
                       <a class="btn btn-default" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
                       {% endif %}
                     </h5>
-                  </td>
+                  </td>-->
               </tr>
               {% endfor %}
               </tbody>

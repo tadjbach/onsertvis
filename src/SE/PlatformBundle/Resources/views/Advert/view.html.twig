@@ -2,68 +2,8 @@
 {% extends 'SEPlatformBundle::viewLayout.html.twig' %}
 
 {% block view_advert_auction %}
-<div class="col-md-6">
-       <div class="text-center se-item-link detail-body">
-         <div class="col-md-12 text-center">
-             <div class="text-center pad-price">
-               <span class="label se-price-badge">
-                 {% if advert.auctionState == 0 %}
-                     -- €
-                   {% else %}
-                     {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }} / <span class="text-lowercase">{{advert.BudgetType.slug}}</span>
-                   {% endif %}
-               </span>
-             </div>
-             <div class="text-center pad-price">
-               <a class="btn btn-default"
-                   data-toggle="modal"
-                   role="button"
-                   data-toggle="modal"
-                   data-target="#modalAuctionShow"
-                   >
-                     {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-               </a>
-             </div>
-             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                 {% if advert.user !=  app.user %}
-                     <div class="col-md-12">
-                         <div class="col-md-6">
-                              <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="btn se-btn-action">
-                                  Faire une offre
-                              </a>
-                         </div>
-                         <div class="col-md-6">
-                           <a href="{{ path('se_platform_message_add',
-                           {'advertSlug': advert.slug,
-                           'advertId': advert.id,
-                           'receiveId': advert.user.id,
-                           'isAnswer':0
-                           }) }}" class="btn se-btn-action">
-                               Contacter
-                           </a>
-                         </div>
-                     </div>
-                   {% else %}
-                   <div class="col-md-12 alert alert-warning" role="alert">
-                       Vous êtes proprétaire de l'annonce
-                   </div>
-                   {% endif %}
-               {% else %}
-               <div class="col-md-12">
-                   <div class="col-md-6">
-                        <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="btn se-btn-action">
-                            Faire une offre
-                        </a>
-                   </div>
-                   <div class="col-md-6">
-                     <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0}) }}" class="btn se-btn-action">
-                         Contacter
-                     </a>
-                   </div>
-               </div>
-             {% endif %}
-         </div>
+     <div class="col-md-12 ">
+        
        </div>
-</div>
 
 {% endblock %}
