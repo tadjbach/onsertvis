@@ -380,34 +380,76 @@ class AdvertController extends Controller
         }
 
         return $this->redirectToRoute('se_platform_advert_user_list');
+    }
 
-        /*$form = $this->createFormBuilder()->getForm();
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function unpublishAction($slug, $id, Request $request){
+      $em = $this->getDoctrineManager();
+      $session = $request->getSession();
+      $mailer  = $this->get('se_platform.mailer');
 
-        if ($form->handleRequest($request)->isValid()) {
+      $advert = $em->getRepository('SEPlatformBundle:Advert')->find($id);
 
-            $advert->setIsDeleted(true);
-            $advert->setIsPublished(false);
-            $advert->setIsEnabled(false);
-
-            $em->flush();
-
-            $body = $this->renderView(
-                   'SEPlatformBundle:Advert:deleteMail.html.twig',
-                   array('receiver' => $this->getUser(),
-                        'advert'=> $advert->getTitle())
-               );
-
-            $mailer->sendEmail($advert, 'Suppression de votre annonce',  'Suppression de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
-
-            $request->getSession()->getFlashBag()->add('deleteSuccess', "La demande a bien été supprimée.");
-
-            return $this->redirectToRoute('se_platform_advert_validate', array('action'=>'supprimer'));
+       if (null===$advert){
+            throw new NotFoundHttpException("Oops, La demande que vous cherchez n'existe pas.");
         }
 
-        return $this->render('SEPlatformBundle:Advert:delete.html.twig', array(
-            'advert' => $advert,
-            'form'   => $form->createView()
-        ));*/
+        if ($this->getUser() === $advert->getUser() ) {
+
+          $advert->setIsPublished(false);
+
+          $em->flush();
+
+          $body = $this->renderView(
+                 'SEPlatformBundle:Advert:unpublishMail.html.twig',
+                 array('receiver' => $this->getUser(),
+                      'advert'=> $advert->getTitle())
+             );
+
+          $mailer->sendEmail($advert, 'Désactivation de votre demande',  'Désactivation de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+        }
+        else {
+            throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
+        }
+
+        return $this->redirectToRoute('se_platform_advert_user_list');
+    }
+
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function publishAction($slug, $id, Request $request){
+      $em = $this->getDoctrineManager();
+      $session = $request->getSession();
+      $mailer  = $this->get('se_platform.mailer');
+
+      $advert = $em->getRepository('SEPlatformBundle:Advert')->find($id);
+
+       if (null===$advert){
+            throw new NotFoundHttpException("Oops, La demande que vous cherchez n'existe pas.");
+        }
+
+        if ($this->getUser() === $advert->getUser() ) {
+
+          $advert->setIsPublished(true);
+
+          $em->flush();
+
+          $body = $this->renderView(
+                 'SEPlatformBundle:Advert:publishMail.html.twig',
+                 array('receiver' => $this->getUser(),
+                      'advert'=> $advert->getTitle())
+             );
+
+          $mailer->sendEmail($advert, 'Activation de votre demande',  'Activation de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+        }
+        else {
+            throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
+        }
+
+        return $this->redirectToRoute('se_platform_advert_user_list');
     }
 
     /**

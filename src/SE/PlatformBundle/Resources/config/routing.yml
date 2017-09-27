@@ -146,6 +146,20 @@ se_platform_advert_delete:
     requirements:
         id: \d+
 
+se_platform_advert_unpublish:
+    path:   /annonce/desactiver/{slug}_{id}
+    defaults:
+        _controller: SEPlatformBundle:Advert:unpublish
+    requirements:
+        id: \d+
+
+se_platform_advert_publish:
+    path:   /annonce/activer/{slug}_{id}
+    defaults:
+        _controller: SEPlatformBundle:Advert:publish
+    requirements:
+        id: \d+
+
 se_platform_advert_list:
     path:   /annonces-en-cours/{page}
     defaults:

@@ -39,15 +39,6 @@
                 {% for advert in listAdvertUser %}
                     <tr>
                         <td>
-                          <a class='se-tbl-link thumbnail' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">
-                            {% if advert.image == null %}
-                              <img class="se-auction-img" src="{{ asset(advert.webPathNoImage) }}" alt="{{ asset(advert.webPathNoImage) }}">
-                            {% else %}
-                              <img class="se-auction-img" src="{{ asset(advert.image.webPath) }}" alt="{{ asset(advert.image.webPath) }}">
-                            {% endif %}
-                          </a>
-                        </td>
-                        <td>
                             <h5>
                                 <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
                                 <h5>
@@ -89,20 +80,21 @@
                         </td>
                          <td class='text-center'>
                             <h5>
-                                <a href="{{ path('se_platform_advert_edit', {'slug': advert.slug,'id': advert.id}) }}"
+                              <a href="{{ path('se_platform_advert_edit', {'slug': advert.slug,'id': advert.id}) }}"
                                 type="button"
                                 class='{% if advert.auctionState != 0 %} btn btn-success not-active {% else %} btn btn-success  {% endif %}'
                                 title="Modifier la demande">
                                 <i class='glyphicon glyphicon-edit'></i>
-                                </a>
+                              </a>
 
-                                <a
+                              <a
                                 class='{% if advert.auctionState != 0 %} btn btn-danger not-active {% else %} btn btn-danger  {% endif %}'
                                     data-toggle="modal"
                                     role="button"
                                     data-toggle="modal"
                                     data-target="#modalAdvertDelete_{{advert.id}}"
-                                    ><i class='glyphicon glyphicon-remove'></i></a>
+                                    ><i class='glyphicon glyphicon-remove'></i>
+                                </a>
 
                             </h5>
                         </td>

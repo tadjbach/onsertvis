@@ -1,163 +1,108 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+<div class="row">
+  <div class="col-md-8">
+        <blockquote>
+          <h5>{{user}}</h5>
+          <h5>{{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}</h5>
+          {% if user.isDetailVisible or is_granted('ROLE_SUPER_ADMIN')%}
+              <h5>
+                  {{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
+                  ({{ user.PostalCode.city.departement.labelNormal }})
+              </h5>
+              <h5>
+                <i class="glyphicon glyphicon-phone-alt"></i> {{ user.phoneNumber|split('', 2)|join(' ') }}
+              </h5>
+          {% endif %}
+          <h5>
+            <i>A propos</i>
+          </h5>
+          <h5>
+            {% if user.detail %}
+               {{ user.detail|nl2br }}
+                {% else %}
+                  {{user}} n'a pas rensigné cette partie.
+                {% endif %}
+          </h5>
+        </blockquote>
+        <blockquote>
+          <h5>
+            <i>Disponibilité : </i>
+                  {% if user.calendar|length > 6 %}
+                  <b>Tous les jours</b>
+                 {% else %}
+                     {% for day in user.calendar %}
+                         <span class="advert-calendar">{{ day.dayFrAbbr  }}</span>
+                     {% else %}
+                       <span>Me contacter</span>
+                       {% endfor %}
+                  {% endif %}
+          </h5>
+          <h5>
+            <i>Mode de paiement accepté : </i>
+               {% for pay in user.payment %}
+                   <span class="advert-calendar">{{ pay.labelNormal  }}</span>
+               {% else %}
+                 <span>Me contacter</span>
+                 {% endfor %}
+          </h5>
 
-      <div class="col-md-6">
-          <div class="panel panel-default">
-            <div class="panel-heading se-panel-heading">
-              <h3 class="panel-title">Détail</h3>
-            </div>
-            <div class="panel-body profile">
-                  <h4>{{ user }}</h4>
-                  <div class="se-profile-value">
-                    {% if user.isDetailVisible or is_granted('ROLE_SUPER_ADMIN')%}
-                        <h5>{{ user.address }}
-                            <br>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
-                            <br>{{ user.PostalCode.city.departement.labelNormal }}
-                        </h5>
-                        <h5>
-                          {{ user.phoneNumber|split('', 2)|join(' ') }}
-                        </h5>
-                   {% else %}
-                        <h5>xxxxxxxxxxxxxxxxxxxxxxx
-                            <br>xxxx xxxxxxxxxxx
-                            <br>xxxxxxxx
-                        </h5>
-                        <h5>
-                         0x xx xx xx xx
-                        </h5>
-                   {% endif %}
-                 </div>
-                 <br>
-                    <h4>Note : </h4>
-                    <h5>
-                      <div class="se-profile-value">
-                          {{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}
-                        </div>
-                    </h5>
+        </blockquote>
 
-                   <br>
-                    <h4>Disponibilité :</h4>
-                    <div class="se-profile-value-reverse">
-                        <table>
-                        <thead id="tblHead">
-                            <tr>
-                                {% for day in user.calendar %}
-                                <th>
-                                    <h5 class="array-item">{{ day.dayFrAbbr  }}</h5>
-                                </th>
-                                {% else %}
-                                    <th>
-                                    Nous contacter
-                                    </th>
-                                {% endfor %}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for day in user.calendar %}
-                                <td>
-
-                                </td>
-                                {% endfor %}
-                        </tbody>
-                        </table>
-                    </div>
-                    <div class="se-profile-value respnse">
-                    <table>
-                    <thead id="tblHead">
-                        <tr>
-                            {% for day in user.calendar %}
-                            <th>
-                                <h5 class="array-item">{{ day.dayFr  }}</h5>
-                            </th>
-                            {% else %}
-                                <th>
-                                  <h5>Nous contacter</h5>
-                                </th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    </table>
-                    </div>
-
-                   <br>
-                    <h4>Mode de paimenent accepté :</h4>
-                    <div class="se-profile-value">
-                      <table>
-                        <thead id="tblHead">
-                            <tr>
-                                {% for pay in user.payment %}
-                                <th>
-                                    <h5 class="array-item">{{ pay.labelNormal  }}</h5>
-                                </th>
-                                {% else %}
-                                    <th>
-                                      <h5>Nous contacter</h5>
-                                    </th>
-                                {% endfor %}
-                            </tr>
-                        </thead>
-                      </table>
-                    </div>
-            </div>
+  </div>
+  <div class="col-md-4">
+    <blockquote>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-8">
+            <h5>Offres reçues : </h5>
+            <h5>Offres proposées : </h5>
+            <h5>Offres gagnées : </h5>
+            <h5>Offres perdues : </h5>
           </div>
-      </div>
-      <div class="col-md-6">
-
-          <div class="panel panel-default">
-            <div class="panel-heading se-panel-heading">
-              <h3 class="panel-title">Nombres d'offres</h3>
-            </div>
-            <div class="panel-body">
-              <div class="se-profile-value text-center wk-text-center" >
-                <table>
-                  <thead id="tblHead" class="auction-nb">
-                      <tr >
-                        <th class="text-center">
-                            <h5>Reçues</h5>
-                        </th>
-                          <th class="text-center">
-                              <h5>Proposées</h5>
-                          </th>
-                          <th class="text-center">
-                              <h5>Gagnées</h5>
-                          </th>
-                        <th class="text-center">
-                              <h5>Perdues</h5>
-                          </th>
-                      </tr>
-                      <tr >
-                        <th class="text-center">
-                            <span class="label label-info se-badge-auction">{{countReceivedAuction}}</span>
-                        </th>
-                          <th class="text-center">
-                              <span class="label label-warning se-badge-auction">{{ countProposedAuction }}</span>
-                          </th>
-                          <th class="text-center">
-                              <span class="label label-success se-badge-auction">{{countAcceptedAuction}}</span>
-                          </th>
-                          <th class="text-center">
-                              <span class="label label-danger se-badge-auction">{{countLosedAuction}}</span>
-                          </th>
-                      </tr>
-                  </thead>
-                </table>
-              </div>
-            </div>
+          <div class="col-md-4">
+              <h5><span class="label label-info">{{countReceivedAuction}}</span></h5>
+              <h5><span class="label label-warning">{{ countProposedAuction }}</span></h5>
+              <h5><span class="label label-success">{{countAcceptedAuction}}</span></h5>
+              <h5><span class="label label-danger">{{countLosedAuction}}</span></h5>
           </div>
-
-          <div class="panel panel-default">
-            <div class="panel-heading se-panel-heading">
-              <h3 class="panel-title">A propos</h3>
-            </div>
-            <div class="panel-body">
-              <div class="user-about">
-                <p>  {{ user.detail|nl2br }}</p>
-              </div>
-              </div>
-          </div>
-
         </div>
+      </div>
 
+    </blockquote>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+      <blockquote>
+        <span class="label label-default se-badge">{{ listComment|length }}</span> avis reçues
+      </blockquote>
+      {% if listComment|length <= 0 %}
+      <b>Aucun avis</b>
+     {% else %}
+        {% for comment in listComment %}
+        <div  class="well" >
+          <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-4 text-center">
+                <h4>{{ comment.sender }}</h4>
+                <h5><i>le {{ comment.dateCreation|date('d/m/Y') }}</i></h5>
+                <h5>Note : <span class="label label-default se-badge">{{ comment.rate }} / 5</span></h5>
+              </div>
+              <div class="col-md-8">
+                <h4>{{ comment.advert.title }}</h4>
+                <h5>{{ comment.content |nl2br }}</h5>
+              </div>
+            </div>
+            </div>
+        </div>
+          {% endfor %}
+      {% endif %}
+  </div>
+</div>
+
+<!--
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading se-panel-heading">
@@ -177,4 +122,4 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
+        </div>-->

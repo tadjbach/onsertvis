@@ -82,6 +82,9 @@ html, body{
   border-bottom: 2px solid #5BC0DE;
   padding-bottom: 2px;
 }
+.advert-calendar{
+  padding-right: 5px;
+}
 .navbar{
     margin-bottom:0;
     border:0;
@@ -306,6 +309,11 @@ h3.slogan-link{
 h3{
   margin-top: -15px;
 }
+h3.title-advert{
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #2A0540;
+}
 h2{
     margin-bottom: 10px;
     color: #2A0540;
@@ -492,6 +500,7 @@ a.se-password, a.se-link{
   text-overflow: ellipsis;
   margin-top: 0px;
   margin-bottom: 2px;
+  color: #E5DF16;
 }
 
 .advert-title{
@@ -602,7 +611,7 @@ a.se-password, a.se-link{
     margin-bottom: 0;
 }
 
-/*
+
 .se-panel-footer,
 .panel-default>.se-panel-heading{
    color: #fff;
@@ -610,7 +619,7 @@ a.se-password, a.se-link{
 }
 .se-panel-heading> h3{
     font-weight: bold;
-}*/
+}
 .se-nb-auction{
     margin-bottom: -20px;
     width: 40%;
@@ -618,10 +627,10 @@ a.se-password, a.se-link{
     font-weight: bold;
     cursor: pointer;
 }
-/*
+
 .panel-default {
     border-color: #2A0540;
-}*/
+}
 .detail-footer{
   height: 70px;
 
@@ -815,6 +824,9 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
     background: #f2f2f2;
 }
 
+blockquote, .well blockquote{
+    border-left: 5px solid #E5DF16;
+}
 /* Iphone 6
 @media only screen and (min-width : 375px) and (max-width : 667px) {
 

@@ -19,58 +19,43 @@
                 <tbody>
                 {% for advert in advertList %}
                     <tr class="link" onclick="window.document.location='{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}';">
-                          <td class="text-center" id="item_image">
-                          <a class='se-tbl-link thumbnail' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">
-                              {% if advert.image == null %}
-                                <img class="se-auction-img" src="{{ asset(advert.WebPathNoImage) }}" alt="{{ asset(advert.WebPathNoImage) }}">
-                              {% else %}
-                                <img class="se-auction-img" src="{{ asset(advert.image.webPath) }}" alt="{{ asset(advert.image.webPath) }}">
-                            {% endif %}
-                          </a>
-                        </td>
                         <td>
                             <h5 class="truncate">
                                 <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
-                                <h5 id="">
+                                <h5 class="hidden-xs hidden-sm" >
                                   Postée le <b>{{ advert.dateCreation|date('d/m/Y') }}</b>
                                   à
                                   <b>{{ advert.dateCreation|date('H:i:s') }}</b>
                                 </h5>
+                                <h5 class="visible-xs visible-sm">
+                                  <i>{{ advert.category.labelNormal }}</i>
+                                </h5>
+                                <h5 class="visible-xs visible-sm">
+                                  <i>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</i>
+                                </h5>
                             </h5>
                         </td>
                         <td>
-                          <h5>
+                          <h5 class="hidden-xs hidden-sm" >
                             <i>{{ advert.category.labelNormal }}</i>
                           </h5>
                         </td>
                         <td>
-                          <h5>
+                          <h5 class="hidden-xs hidden-sm" >
                             <i>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</i>
                           </h5>
                         </td>
                         <td class="text-center">
+                          <h5 >
                           {% if advert.auctionState == 0 %}
-                              <h5><span class="label label-default">0 offre</span></h5>
+                              <span class="label label-default">0 offre</span>
                           {% else %}
-                              <h5>
-                                <span class="label label-success">
-                                  {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-                                </span>
-                              </h5>
+                              <span class="label label-success">
+                                {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                              </span>
                           {% endif %}
+                            </h5>
                         </td>
-                        <!--
-                        <td  class="text-right">
-                          <div id="item_price" >
-                            <span class="label se-price-badge little">
-                              {% if advert.auctionState == 0 %}
-                                -- €
-                              {% else %}
-                                {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }} / <span class="text-lowercase">{{advert.BudgetType.slug}}</span>
-                              {% endif %}
-                            </span>
-                          </div>
-                        </td>-->
                     </tr>
 
                 {% endfor %}

@@ -48,137 +48,70 @@
   <div class="row">
        <div id="content" class="col-md-12">
 
-         <div class="col-md-6">
-           <div class="panel panel-primary">
-             <div class="panel-heading">
-                <h4 class="truncate">
-                  {{ advert.title }}
-                </h4>
-             </div>
-              <div class="panel-body text-center">
-                 {% if advert.image == null %}
-                 <img class="se-img" src="{{ asset(advert.webPathNoImage) }}" alt="{{ asset(advert.webPathNoImage) }}">
-                 {% else %}
-                     <img class="se-img" src="{{ asset(advert.image.webPath) }}" alt="{{ asset(advert.image.webPath) }}">
-                 {% endif %}
-              </div>
-            </div>
-         </div>
-
-         <div class="col-md-6" >
-           <div class="col-md-4">
-             <div class="alert alert-light" role="alert" style="color: #484848">
-               <p><b>Date : </b></p>
-               <p><b>Catégorie : </b></p>
-               <p><b>Ville : </b></p>
-              </div>
+       {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and advert.user ==  app.user %}
+           <div class="col-md-12 alert alert-warning" role="alert">
+               Vous êtes proprétaire de l'annonce
            </div>
-           <div class="col-md-8">
-             <div class="alert alert-info" role="alert" style="color: #484848">
-                   <p>{{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
-                   <p>{% if advert.category.labelNormal != 'Autres' %}
-                       {{ advert.category.labelNormal }}
-                   {% else %}
-                       Sans catégorie
-                   {% endif %}</p>
-                    <p>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</p>
+           {% endif %}
 
-                    </p>
-              </div>
-           </div>
-           <div class="col-md-4">
-             <div class="alert alert-light" role="alert" style="color: #484848">
-             <p><b>Demandeur : </b></p>
-             <p><b>Contact : </b></p>
-               </div>
-           </div>
-           <div class="col-md-8">
-               <div class="alert alert-info" role="alert" style="color: #484848">
-                   <p><a href="{{ path('se_platform_user_view', {'userId': advert.user.id}) }}" class="se-link" >{{ advert.user }} </a></p>
-                   <p>{% if advert.user.isDetailVisible %}
-                   {{ advert.user.phoneNumber|split('', 2)|join(' ') }}
-                   {% else %}
-                      Désolé, le demandeur ne souhaite pas afficher ses coordonnées.
-                   {% endif %}
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="alert alert-light" role="alert" style="color: #484848">
-                <p><b>Nombre d'offre : </b></p>
-              </div>
-            </div>
-            <div class="col-md-8">
-                <div class="alert alert-info" role="alert" style="color: #484848">
-                    <p>{{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-                      {% if advert.auctionState == 0 %}
-                       {% else %}
-                       <a class="se-link"
-                           data-toggle="modal"
-                           role="button"
-                           data-toggle="modal"
-                           data-target="#modalAuctionShow"
-                           >(Historique des offres)</a>
-                        {% endif %}
-                    </p>
-               </div>
-             </div>
-
-             <div class="col-md-4">
-               <div class="alert alert-light" role="alert" style="color: #484848">
-                 <p><b>J'aimerais : </b></p>
-                </div>
-             </div>
-             <div class="col-md-8 text-center">
-               <div class="alert alert-warning" role="alert" style="color: #484848">
-                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                     {% if advert.user !=  app.user %}
-                           <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="btn btn-success">
-                               Faire une offre
-                           </a>
-                           <a href="{{ path('se_platform_message_add',
-                           {'advertSlug': advert.slug,
-                           'advertId': advert.id,
-                           'receiveId': advert.user.id,
-                           'isAnswer':0
-                           }) }}" class="btn btn-success">
-                               Contacter le demandeur
-                           </a>
-                     {% else %}
-                         Rien faire, je suis proprétaire de l'annonce
-                     {% endif %}
-                 {% else %}
-                   <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="btn btn-success">
-                       Faire une offre
-                   </a>
-                   <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0}) }}" class="btn btn-success">
-                       Contacter le demandeur
-                   </a>
+        <div class="col-md-8">
+          <h3 class="title-advert">{{ advert.title }}</h3>
+            <blockquote>
+              <h5>
+                <i>Mise en ligne le <b>{{ advert.dateCreation|date('d/m/Y') }}</b> à <b>{{ advert.dateCreation|date('H:m') }}</b></i>
+              </h5>
+              <h5>{% if advert.category.labelNormal != 'Autres' %}
+                      <i>Dans <b>{{ advert.category.labelNormal }}</b></i>
+                  {% else %}
+                      <b>Sans catégorie</b>
                   {% endif %}
-                </div>
-             </div>
+              </h5>
+              <h5>
+                <i>Ville de </i><b>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</b></i>
+              </h5>
+          </blockquote>
+          <blockquote>
+              <h5>
+                <i>Par <b>{{ advert.user }}</b>
+                </i>
+                <a
+                    href="{{ path('se_platform_user_view', {'userId': advert.user.id}) }}"
+                    >(Voir le profil)</a>
+              </h5>
+              {% if advert.user.isDetailVisible %}
+              <h5>
+                <i>Contact : <b>{{ advert.user.phoneNumber|split('', 2)|join(' ') }}</b>
+                </i>
+              </h5>
+               {% endif %}
+               <h5>
+                 <i>Disponibilité : </i>
+                       {% if advert.user.calendar|length > 6 %}
+                       <b>Tous les jours</b>
+                      {% else %}
+                          {% for day in advert.user.calendar %}
+                              <b class="advert-calendar">{{ day.dayFrAbbr  }}</b>
+                          {% else %}
+                            <b>Me contacter</b>
+                            {% endfor %}
+                       {% endif %}
+               </h5>
+          </blockquote>
+          <blockquote>
+            <h5>
+              <i>Description : </i>
+            </h5>
+            <p>{{ advert.detail |nl2br }}</p>
+          </blockquote>
 
-          </div>
+        </div>
+        <div class="col-md-4">
+            {% block view_advert_auction %}{% endblock %}
+        </div>
+
+
        </div>
    </div>
-   <div class="row">
-     <div id="content" class="col-md-12">
-
-        <div class="col-md-6">
-          <div class="col-md-12">
-              <p><b>Détail : </b></p>
-          </div>
-           <div class="col-md-12">
-              <div class="alert alert-light" role="alert" style="color: #484848">
-                <p>{{ advert.detail |nl2br }}</p>
-              </div>
-           </div>
-         </div>
-
-
-    </div>
-   </div>
-  <br>
   <div class="row">
     <div class="col-md-12">
       <div class="modal fade"
