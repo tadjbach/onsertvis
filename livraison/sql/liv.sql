@@ -1,0 +1,1 @@
+ALTER TABLE auction ADD isCanceled TINYINT(1) NOT NULL;

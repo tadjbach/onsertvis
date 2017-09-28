@@ -13,6 +13,24 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class AuctionRepository extends \Doctrine\ORM\EntityRepository
 {
+  public function getAuctionList($advertId){
+    $qb=$this->createQueryBuilder('auction');
+    $qb->innerJoin('auction.advert', 'advert')
+        ->addSelect('advert');
+
+
+        $qb->where($qb->expr()->eq('advert.id', $advertId))
+                ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
+                ->andWhere($qb->expr()->eq('advert.isEnabled', 1))
+                ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
+
+                $qb->orderBy('auction.dateCreation', 'DESC');
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+  }
+
     public function getAuctionAdvert($page, $nbPerPage){
 
         $qb = $this->createQueryBuilder('auction');
@@ -27,6 +45,7 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
                 ->where($qb->expr()->eq('ad.isDeleted', 0))
                 ->andWhere($qb->expr()->eq('ad.isPublished', 1))
                 ->andWhere($qb->expr()->eq('ad.isEnabled', 1))
+                ->andWhere($qb->expr()->eq('auction.isCanceled', 0))
                 ->getQuery();
 
         $qb->setFirstResult(($page-1) * $nbPerPage)->setMaxResults($nbPerPage);
@@ -44,7 +63,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
         $qb->where($qb->expr()->eq('advert.id', $advertId))
             //->andWhere($qb->expr()->eq('advert.isPublished', 1))
             ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
-            ->andWhere($qb->expr()->eq('advert.isEnabled', 1));
+            ->andWhere($qb->expr()->eq('advert.isEnabled', 1))
+            ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
         $qb->orderBy('auction.dateCreation', 'DESC');
 
@@ -64,7 +84,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
         $qb->where($qb->expr()->eq('advert.id', $advertId))
             //->andWhere($qb->expr()->eq('advert.isPublished', 1))
             ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
-            ->andWhere($qb->expr()->eq('advert.isEnabled', 1));
+            ->andWhere($qb->expr()->eq('advert.isEnabled', 1))
+            ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
         $qb->orderBy('auction.dateCreation', 'DESC');
 
@@ -87,7 +108,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere($qb->expr()->eq('advert.isPublished', 0))
             ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
             ->andWhere($qb->expr()->eq('advert.isEnabled', 1))
-            ->andWhere($qb->expr()->eq('auction.state', 2));
+            ->andWhere($qb->expr()->eq('auction.state', 2))
+            ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
         $qb->getQuery();
 
@@ -115,6 +137,7 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
             ->andWhere($qb->expr()->eq('advert.isEnabled', 1))
             ->andWhere($qb->expr()->eq('advert.id', $advertId))
+            ->andWhere($qb->expr()->eq('auction.isCanceled', 0))
                 ;
 
         $qb->getQuery();
@@ -137,7 +160,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
         $qb->where($qb->expr()->eq('user_auction.id', $userId))
 
             ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
-            ->andWhere($qb->expr()->eq('advert.isEnabled', 1));
+            ->andWhere($qb->expr()->eq('advert.isEnabled', 1))
+            ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
          $qb->orderBy('auction.dateCreation', 'DESC');
 
@@ -159,7 +183,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('advert');
 
         $qb->where($qb->expr()->eq('user_auction.id', $userId))
-            ->andWhere($qb->expr()->eq('auction.state', 2));
+            ->andWhere($qb->expr()->eq('auction.state', 2))
+            ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
         $qb->getQuery();
 
@@ -180,7 +205,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('advert.user', 'user_advert')
             ->addSelect('user_advert');
 
-        $qb->where($qb->expr()->eq('user_advert.id', $userId));
+        $qb->where($qb->expr()->eq('user_advert.id', $userId))
+        ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
         $qb->getQuery();
 
@@ -202,7 +228,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('auction.advert', 'advert')
             ->addSelect('advert');
 
-        $qb->where($qb->expr()->eq('user_auction.id', $userId));
+            $qb->where($qb->expr()->eq('user_auction.id', $userId));
+            $qb->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
 
         if($advertId !== NULL && $advertId !== '0')
@@ -232,7 +259,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
           ->leftJoin('auction.advert', 'advert')
           ->addSelect('advert');
 
-          $qb->where($qb->expr()->eq('user_auction.id', $userId));
+          $qb->where($qb->expr()->eq('user_auction.id', $userId))
+          ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
           $qb->add('groupBy', 'advert.id');
 
@@ -251,7 +279,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
               ->leftJoin('advert.user', 'user_receive')
               ->addSelect('user_receive');
 
-          $qb->where($qb->expr()->eq('user_receive.id', $userId));
+          $qb->where($qb->expr()->eq('user_receive.id', $userId))
+          ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
 
           if($advertId !== NULL && $advertId !== '0')
@@ -280,7 +309,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
           ->addSelect('advert');
 
           $qb->where($qb->expr()->eq('advert.id', $advertId));
-          $qb->andWhere($qb->expr()->neq('auction.id', $auctionId));
+          $qb->andWhere($qb->expr()->neq('auction.id', $auctionId))
+          ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
           return $qb
               ->getQuery()
@@ -300,7 +330,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
            ->addSelect('advert');
 
        $qb->where($qb->expr()->eq('user_auction.id', $userId))
-           ->andWhere($qb->expr()->eq('auction.state', $state));
+           ->andWhere($qb->expr()->eq('auction.state', $state))
+           ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
        return $qb
            ->getQuery()
@@ -316,7 +347,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
            ->leftJoin('auction.advert', 'advert')
            ->addSelect('advert');
 
-       $qb->where($qb->expr()->eq('user_auction.id', $userId));
+       $qb->where($qb->expr()->eq('user_auction.id', $userId))
+       ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
        return $qb
            ->getQuery()
@@ -332,7 +364,8 @@ class AuctionRepository extends \Doctrine\ORM\EntityRepository
            ->innerJoin('advert.user', 'user')
            ->addSelect('user');
 
-       $qb->where($qb->expr()->eq('user.id', $userId));
+       $qb->where($qb->expr()->eq('user.id', $userId))
+       ->andWhere($qb->expr()->eq('auction.isCanceled', 0));
 
        return $qb
            ->getQuery()

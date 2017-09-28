@@ -1,56 +1,50 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Conversations pour l'annonce {{advert.title}} - {{ parent() }}
+    Conversations pour la demande {{advert.title}} - {{ parent() }}
 {% endblock %}
 
 {% block layout_header2 %}
 <div class="row">
   <div id="header" class="col-md-12">
-    <h3 class="cat-title">Conversations pour l'annonce "{{advert.title}}"</h3>
+    <h3 class="cat-title">Conversations pour la demande "{{advert.title}}"</h3>
   </div>
 </div>
 {% endblock %}
 
 {% block layout_body %}
-  <div class="row">
-       <div id="content" class="col-md-12">
-        <h4 class="cat-title">{{countMessage}}</h4>
-        <table class="table" id="tblGrid">
-                        <tbody>
-                          <div class='col-md-12'>
-                            <h5>
-                                <a href="{{ path('se_platform_message_answer',
-                                          {'advertSlug': advert.slug,
-                                            'advertId': advertId,
-                                            'senderId': senderId,
-                                            'receiveId': receiveId,
-                                            'isAnswer':1
-                                }) }}" class="btn btn-primary">
-                                    Répondre
-                                </a>
-                            </h5>
-                          </div>
-                             {% for conversation in listConversation %}
-                            <div class='col-md-12'>
-                                <div class='panel panel-default'>
-                                    <div class='panel-heading se-panel-heading'>
-                                        <h4 class='panel-title text-left'>{{ conversation.sender }}</h4>
-                                        <h4 class='panel-title text-right'><i>{{ conversation.dateCreation|date('d/m/Y') }} à {{ conversation.dateCreation|date('H:i:s') }}</i></h4>
-                                    </div>
-                                    <div class='panel-body'>
-                                        <div class="caption">
-                                            <p>{{ conversation.content |nl2br }}</p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div>Pas (encore !) de messages</div>
-                        {% endfor %}
-                     </tbody>
-                     </table>
-       </div>
-   </div>
+<div class="row">
+  <div class="col-md-12">
+      <blockquote>
+        {{countMessage}}
+      </blockquote>
+      <h5>
+          <a href="{{ path('se_platform_message_answer',
+                    {'advertSlug': advert.slug,
+                      'advertId': advertId,
+                      'senderId': senderId,
+                      'receiveId': receiveId,
+                      'isAnswer':1
+          }) }}" class="btn btn-primary">
+              Répondre
+          </a>
+      </h5>
+        {% for conversation in listConversation %}
+        <div  class="well well-msg{% if app.user == conversation.sender %}-inverse {% else %}{% endif %}" >
+          <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-3 text-left">
+                <h4>
+                {% if app.user == conversation.receiver %}{{ conversation.sender }} {% else %}Vous{% endif %}</h4>
+                <h4><small>{{ conversation.dateCreation|date('d/m/Y') }} à {{ conversation.dateCreation|date('H:i:s') }}</small></h4>
+              </div>
+              <div class="col-md-9">
+                <h5>{{ conversation.content |nl2br }}</h5>
+              </div>
+            </div>
+            </div>
+        </div>
+          {% endfor %}
+  </div>
+</div>
 {% endblock %}

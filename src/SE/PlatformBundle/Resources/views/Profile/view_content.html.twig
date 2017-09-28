@@ -52,23 +52,10 @@
   </div>
   <div class="col-md-4">
     <blockquote>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="col-md-8">
-            <h5>Offres reçues : </h5>
-            <h5>Offres proposées : </h5>
-            <h5>Offres gagnées : </h5>
-            <h5>Offres perdues : </h5>
-          </div>
-          <div class="col-md-4">
-              <h5><span class="label label-info">{{countReceivedAuction}}</span></h5>
-              <h5><span class="label label-warning">{{ countProposedAuction }}</span></h5>
-              <h5><span class="label label-success">{{countAcceptedAuction}}</span></h5>
-              <h5><span class="label label-danger">{{countLosedAuction}}</span></h5>
-          </div>
-        </div>
-      </div>
-
+            <h5><span class="label label-info">{{countReceivedAuction}}</span> <span class="mar-lef-10">Offres reçues</span></h5>
+            <h5><span class="label label-warning">{{ countProposedAuction }}</span> <span class="mar-lef-10">Offres proposées</span></h5>
+            <h5><span class="label label-success">{{countAcceptedAuction}}</span> <span class="mar-lef-10">Offres gagnées</span></h5>
+            <h5><span class="label label-danger">{{countLosedAuction}}</span> <span class="mar-lef-10">Offres perdues</span></h5>
     </blockquote>
   </div>
 </div>
@@ -76,18 +63,20 @@
 <div class="row">
   <div class="col-md-12">
       <blockquote>
-        <span class="label label-default se-badge">{{ listComment|length }}</span> avis reçues
+        Avis reçues ({{ listComment|length }})
       </blockquote>
-      {% if listComment|length <= 0 %}
-      <b>Aucun avis</b>
-     {% else %}
         {% for comment in listComment %}
         <div  class="well" >
           <div class="row">
             <div class="col-md-12">
               <div class="col-md-4 text-center">
-                <h4>{{ comment.sender }}</h4>
-                <h5><i>le {{ comment.dateCreation|date('d/m/Y') }}</i></h5>
+                <h4>
+                  <a class='cat-link'
+                  href="{{ path('se_platform_user_view', {'userId': comment.sender.id}) }}" class="cat-link" >
+                                              {{ comment.sender }}
+                                          </a>
+                  </h4>
+                <h4><small>le {{ comment.dateCreation|date('d/m/Y') }}</small></h4>
                 <h5>Note : <span class="label label-default se-badge">{{ comment.rate }} / 5</span></h5>
               </div>
               <div class="col-md-8">
@@ -98,28 +87,5 @@
             </div>
         </div>
           {% endfor %}
-      {% endif %}
   </div>
 </div>
-
-<!--
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading se-panel-heading">
-                  <h3 class="panel-title">Avis reçus</h3>
-                </div>
-                <div class="panel-body profile">
-                   {% for comment in listComment %}
-                      <h4>
-                        <a class='se-tbl-link' href="{{ path('se_platform_user_view', {'userId': comment.sender.id}) }}" class="cat-link" >
-                            {{ comment.sender }}
-                        </a>
-                      </h4>
-                      <p><i>{{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:i:s') }}</i></p>
-                      <div class="caption">
-                          <p>{{ comment.content |nl2br }}</p>
-                      </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>-->

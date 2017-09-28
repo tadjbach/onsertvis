@@ -46,12 +46,21 @@ class Auction
      */
     private $state;
 
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isCanceled", type="boolean")
+     */
+    private $isCanceled=false;
+
     /**
      * @var float
      *
      * @ORM\Column(name="value", type="float")
      */
     private $value;
+
 
     /**
      * @var \DateTime
@@ -195,5 +204,29 @@ class Auction
     public function getAdvert()
     {
         return $this->advert;
+    }
+
+    /**
+     * Set isCanceled
+     *
+     * @param boolean $isCanceled
+     *
+     * @return Auction
+     */
+    public function setIsCanceled($isCanceled)
+    {
+        $this->isCanceled = $isCanceled;
+
+        return $this;
+    }
+
+    /**
+     * Get isCanceled
+     *
+     * @return boolean
+     */
+    public function getIsCanceled()
+    {
+        return $this->isCanceled;
     }
 }

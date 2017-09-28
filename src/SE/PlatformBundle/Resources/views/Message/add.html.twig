@@ -1,31 +1,22 @@
 {% extends 'SEPlatformBundle::viewLayout.html.twig' %}
 
 {% block view_advert_auction %}
-         <div class="col-md-6">
-                <div class="text-center se-item-link detail-body">
-                  <div class="col-md-12 text-center">
-                      <div class="text-center pad-price">
-                        <span class="label se-price-badge">
-                            {{ render(controller('SEPlatformBundle:Auction:getLastAuction', { 'advertId': advert.id })) }}
-                        </span>
-                      </div>
-                      <div class="text-center pad-price">
-                        <a class="btn btn-default"
-                            data-toggle="modal"
-                            role="button"
-                            data-toggle="modal"
-                            data-target="#modalAuctionShow" >
-                              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-                        </a>
-                      </div>
-                        <div class="col-md-12">
-                             {{ include('SEPlatformBundle:Message:form.html.twig') }}
-                        </div>
-                  </div>
-                </div>
-                <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}" class="btn btn-primary">
-                    Faire une offre
-                </a>
-         </div>
-        
+      <div class="col-md-12 text-center">
+                 {{ include('SEPlatformBundle:Message:form.html.twig') }}
+
+      <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}"
+      class="btn btn-default btn-md btn-block" >
+          Faire une offre
+      </a>
+    <button
+         type="button"
+         class="btn btn-default btn-md btn-block"
+         data-toggle="modal"
+         role="button"
+         data-toggle="modal"
+         data-target="#modalAuctionShow"
+         >
+       {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+    </button>
+    </div>
 {% endblock %}

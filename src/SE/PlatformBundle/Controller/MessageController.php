@@ -72,7 +72,7 @@ class MessageController extends Controller
                   $mailer->sendEmail($advert,'Nouveau message', 'Vous avez un message', $userReceive->getEmail(), $body);
                   $session->getFlashBag()->add('addSuccess','Message bien envoyé.');
 
-                  return $this->redirectToRoute('se_platform_advert_view', array('slug'=> $advert->getSlug(),
+                  return $this->redirectToRoute('se_platform_advert_user_list', array('slug'=> $advert->getSlug(),
                                                                                 'id'=> $advert->getId()));
               }
           }

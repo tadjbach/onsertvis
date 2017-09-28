@@ -154,21 +154,41 @@ class AuctionController extends Controller
             ));
     }
 
-    //Admin
-    public function editAction($id){
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function cancelAction($id, Request $request){
+      $em = $this->getDoctrineManager();
+      $session = $request->getSession();
+      $mailer  = $this->get('se_platform.mailer');
 
+      $auction = $em->getRepository('SEPlatformBundle:Auction')->find($id);
+
+       if (null===$auction){
+            throw new NotFoundHttpException("Oops, L'offre que vous cherchez n'existe pas.");
+        }
+
+        if ($this->getUser() === $auction->getUser() ) {
+
+          $auction->setIsCanceled(true);
+
+          $em->flush();
+
+          /*$body = $this->renderView(
+                 'SEPlatformBundle:Auction:cancelMail.html.twig',
+                 array('receiver' => $this->getUser(),
+                      'advert'=> $advert->getTitle())
+             );
+
+          $mailer->sendEmail($advert, 'Suppression de votre annonce',  'Suppression de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);*/
+        }
+        else {
+            throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
+        }
+
+        return $this->redirectToRoute('se_platform_auction_user_send');
     }
 
-    //Admin
-    public function deleteAction($id){
-
-    }
-
-
-    public function viewAction($slug, $id)
-    {
-
-    }
 
     //Super ADMIN
     public function listAction($advertId){
@@ -176,11 +196,7 @@ class AuctionController extends Controller
       $advert=$em->find('SEPlatformBundle:Advert', $advertId);
 
       $listAuctions=$em->getRepository('SEPlatformBundle:Auction')
-            ->findBy(
-                array('advert'=>$advert),
-                array('dateCreation'=>'desc'),
-                $limit=null,
-                $offset=null);
+            ->getAuctionList($advertId);
 
       $content = $this->render('SEPlatformBundle:Auction:list.html.twig',
               array(

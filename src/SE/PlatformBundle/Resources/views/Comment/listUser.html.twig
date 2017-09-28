@@ -14,53 +14,59 @@
 
 {% endblock %}
 {% block layout_body %}
-  <div class="row">
-       <div id="content" class="col-md-12">
-         <h4 class="cat-title">{{countComment}} avis</h4>
-              {% for comment in listComment %}
-              <div class='col-md-12'>
-                  <div class='panel panel-default'>
-                      <div class='panel-heading se-panel-heading'>
-                          <h4 class='panel-title text-left'>
-                              {% if app.user == comment.receiver %}Avis reçu ({{ comment.sender }})
-                              {% else %}
-                                Avis laissé ({{ comment.receiver }})
-                              {% endif %}
-                          </h4>
-                          <h4 class='panel-title text-right'><i>{{ comment.dateCreation|date('d/m/Y') }} à {{ comment.dateCreation|date('H:i:s') }}</i></h4>
-                      </div>
-                      <div class='panel-body'>
-                          <div class="caption">
-                            <p>  {{ include('@SEPlatform/User/rate.html.twig', {'item': comment }) }}</p>
-                              <p>{{ comment.content |nl2br }}</p>
-                                {% if app.user == comment.sender %}
-                                     <div class='text-right'>
-                                       <a href="{{ path('se_platform_comment_edit', {'id': comment.id}) }}"
-                                       type="button"
-                                       class='btn btn-success'
-                                       title="Modifier">
-                                       <i class='glyphicon glyphicon-edit'></i> Modifier
-                                       </a>
-                                       <a href="{{ path('se_platform_comment_delete', {'id': comment.id}) }}"
-                                           type="button"
-                                           class='btn btn-danger hide'
-                                           title="Supprimer">
-                                       <i class='glyphicon glyphicon-remove'></i> Supprimer
-                                       </a>
-                                     </div>
-                               {% endif %}
 
-                          </div>
-
-                      </div>
-                  </div>
+<div class="row">
+  <div class="col-md-12">
+      <blockquote>
+        {{countComment}} avis
+      </blockquote>
+        {% for comment in listComment %}
+        <div  class="well" >
+          <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-3 text-left">
+                <h5>
+                {% if app.user == comment.receiver %}<span class="label label-success">Avis reçu</span>
+                {% else %}
+                  <span class="label label-primary">Avis laissé</span>
+                {% endif %}</h5>
+                <h4>
+                  {% if app.user == comment.receiver %}{{ comment.sender }}
+                  {% else %}
+                    {{ comment.receiver }}
+                  {% endif %}
+                  </h4>
+                <h4><small>le {{ comment.dateCreation|date('d/m/Y') }}</small></h4>
+                <h5>Note : <span class="label label-default se-badge">{{ comment.rate }} / 5</span></h5>
               </div>
+              <div class="col-md-9">
+                <h4>{{ comment.advert.title }}</h4>
+                <h5>{{ comment.content |nl2br }}</h5>
+                {% if app.user == comment.sender %}
+                     <div class='text-right'>
+                       <a href="{{ path('se_platform_comment_edit', {'id': comment.id}) }}"
+                       type="button"
+                       class='btn btn-success'
+                       title="Modifier">
+                       <i class='glyphicon glyphicon-edit'></i> Modifier
+                       </a>
+                       <a href="{{ path('se_platform_comment_delete', {'id': comment.id}) }}"
+                           type="button"
+                           class='btn btn-danger hide'
+                           title="Supprimer">
+                       <i class='glyphicon glyphicon-remove'></i> Supprimer
+                       </a>
+                     </div>
+               {% endif %}
+              </div>
+            </div>
+            </div>
+        </div>
+          {% endfor %}
+  </div>
+</div>
 
-              {% else %}
-                  <div>Pas d'avis</div>
-              {% endfor %}
-       </div>
-   </div>
+
 
    <div class="row">
        <div class="col-md-12 text-center">

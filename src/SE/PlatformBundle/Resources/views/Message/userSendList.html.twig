@@ -1,13 +1,13 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Mes messages - {{ parent() }}
+    Mes questions - {{ parent() }}
 {% endblock %}
 
 {% block layout_header2 %}
 <div class="row">
   <div id="header" class="col-md-12">
-    <h3 class="cat-title">Mes messages envoyés - En tant qu'enchérisseur</h3>
+    <h3 class="cat-title">Mes questions envoyés - En tant qu'enchérisseur</h3>
     {{ include('@SEPlatform/Message/listUserSendFilter.html.twig') }}
   </div>
 </div>

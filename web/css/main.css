@@ -191,6 +191,12 @@ html, body{
     padding-right: 80px;
     padding-bottom: 0;
 }
+.well-msg-inverse{
+  background-color: #fff;
+}
+.well-msg{
+      background-color: rgba(42, 5, 64, 0.22);
+}
 
 .se-well{
     background-color: #fff;
@@ -667,6 +673,9 @@ a.se-password, a.se-link{
     padding-left: 0px;
 }
 
+.mar-lef-10{
+    padding-left: 10px;
+}
 .mar-lef{
     padding-left: 30px;
 }
@@ -787,7 +796,7 @@ a.se-tbl-link{
     width: 100%;
 }
 
-#filter_responsive, #item_title_resp,#tblGrid-auction-reverse,
+#filter_responsive, #item_title_resp,
 .se-profile-value-reverse, .ad-date-reverse{
   display: none;
 }

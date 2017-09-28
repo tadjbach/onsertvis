@@ -7,7 +7,6 @@
                                 name="advert"
                                 id="advert_id" >
                             <option value='0' >Toutes les annonces</option>
-
                               {% for item in listAdvert %}
                                   <option {{ app.request.query.get('advert')== item.advert.id ? ' selected ' : ' ' }}
                                       value={{ item.advert.id }}>{{ item.advert.title }}

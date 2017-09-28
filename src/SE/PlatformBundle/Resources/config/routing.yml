@@ -146,6 +146,13 @@ se_platform_advert_delete:
     requirements:
         id: \d+
 
+se_platform_auction_cancel:
+    path:   /offre/annuler/{id}
+    defaults:
+        _controller: SEPlatformBundle:Auction:cancel
+    requirements:
+        id: \d+
+
 se_platform_advert_unpublish:
     path:   /annonce/desactiver/{slug}_{id}
     defaults:
