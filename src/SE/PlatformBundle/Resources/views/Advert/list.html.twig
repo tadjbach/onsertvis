@@ -23,9 +23,9 @@
                             <h5 class="truncate">
                                 <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
                                 <h5 class="hidden-xs hidden-sm" >
-                                  Postée le <b>{{ advert.dateCreation|date('d/m/Y') }}</b>
+                                  {{ advert.dateCreation|date('d/m/Y') }}
                                   à
-                                  <b>{{ advert.dateCreation|date('H:i:s') }}</b>
+                                  {{ advert.dateCreation|date('H:i:s') }}
                                 </h5>
                                 <h5 class="visible-xs visible-sm">
                                   <i>{{ advert.category.labelNormal }}</i>

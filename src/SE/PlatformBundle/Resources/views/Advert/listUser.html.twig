@@ -41,24 +41,24 @@
                         <td>
                             <h5>
                                 <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
-                                <h5>
+                                <h5 class="hidden-xs hidden-sm">
                                   {{ advert.category.labelNormal }}
                                 </h5>
-                                <h5>
+                                <h5 class="hidden-xs hidden-sm">
                                   {{ advert.dateCreation|date('d/m/Y') }}
                                   à
                                   {{ advert.dateCreation|date('H:i:s') }}
                                 </h5>
                             </h5>
                         </td>
-                        <td class='text-left td_center'>
+                        <td class='text-center td_center'>
                             <h5>
                             {% if advert.isPublished == 1 %}
-                                <span class="label label-primary">En ligne</span>
+                                <span class="label label-primary">En cours</span>
                             {% elseif advert.isPublished == 0 and advert.auctionState == 0 %}
                                 <span class="label label-warning">Validation en cours</span>
                             {% elseif advert.isPublished == 0 and advert.auctionState == 1 %}
-                                <span class="label label-danger">Hors ligne</span>
+                                <span class="label label-danger">Terminée</span>
                                 <div class="label label-danger"
                                       data-toggle="tooltip"
                                             data-placement="bottom" title="La demande n'est plus visible sur le site">
@@ -66,10 +66,19 @@
                                 </div>
                             {% endif %}
                             </h5>
+                            <h5>
+                              <a class="cat-link visible-xs visible-sm"
+                                  data-toggle="modal"
+                                  role="button"
+                                  data-toggle="modal"
+                                  data-target="#modalAuctionShow_{{advert.id}}"
+                                  >
+                                    {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                            </h5>
                         </td>
                         <td class='text-center'>
                           <h5>
-                            <a class="cat-link"
+                            <a class="cat-link hidden-xs hidden-sm"
                                 data-toggle="modal"
                                 role="button"
                                 data-toggle="modal"

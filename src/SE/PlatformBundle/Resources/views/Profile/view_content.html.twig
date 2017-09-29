@@ -4,18 +4,21 @@
   <div class="col-md-8">
         <blockquote>
           <h5>{{user}}</h5>
-          <h5>{{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}</h5>
+          <h5>
+              {{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
+              ({{ user.PostalCode.city.departement.labelNormal }})
+          </h5>
           {% if user.isDetailVisible or is_granted('ROLE_SUPER_ADMIN')%}
-              <h5>
-                  {{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
-                  ({{ user.PostalCode.city.departement.labelNormal }})
-              </h5>
               <h5>
                 <i class="glyphicon glyphicon-phone-alt"></i> {{ user.phoneNumber|split('', 2)|join(' ') }}
               </h5>
           {% endif %}
+            </blockquote>
+          <blockquote>
+          <h5><i>Note : </i>{{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}</h5>
+          <h5><i>Membre depuis </i>: {{ user.dateCreation|date('d/m/Y') }}</h5>
           <h5>
-            <i>A propos</i>
+            <i>A propos :</i>
           </h5>
           <h5>
             {% if user.detail %}
@@ -26,6 +29,7 @@
           </h5>
         </blockquote>
         <blockquote>
+
           <h5>
             <i>Disponibilité : </i>
                   {% if user.calendar|length > 6 %}

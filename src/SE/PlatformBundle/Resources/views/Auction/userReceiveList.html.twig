@@ -22,6 +22,12 @@
               {{ flash_message }}
           </div>
       {% endfor %}
+      {% for flash_message in app.session.flashBag.get('warning') %}
+          <div class="alert alert-warning text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{ flash_message }}
+          </div>
+      {% endfor %}
       {% for flash_message in app.session.flashBag.get('error') %}
           <div class="alert alert-danger text-center" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -35,16 +41,7 @@
      <div id="content" class="col-md-12">
        <h4 class="cat-title">{{ titleResult }}</h4>
           <table class="table" id="tblGrid">
-            <thead id="tblHead">
-                <tr>
-                    <th>Annonce</th>
-                    <th>Enchérisseur</th>
-                    <th>Date de l'offre</th>
-                    <th class="text-left">Etat</th>
-                    <th class="text-right">Offre</th>
-                    <th class="text-center">Action</th>
-                </tr>
-            </thead>
+
               <tbody>
               {% for auction in listAdvertAuction %}
               <tr>
@@ -58,55 +55,97 @@
                           <a class='se-tbl-link' href="{{ path('se_platform_user_view', {'userId': auction.user.id}) }}" class="cat-link" >
                               {{ auction.user }}
                           </a>
-                          <h5>{{ include('@SEPlatform/User/rate.html.twig', {'item': auction.user }) }}  </h5>
+                          <h5 class="hidden-xs hidden-sm">{{ include('@SEPlatform/User/rate.html.twig', {'item': auction.user }) }}  </h5>
                       </h5>
                   </td>
                   <td>
-                    <h5>
+                    <h5 class="hidden-xs hidden-sm">
                         le {{ auction.dateCreation|date('d/m/Y') }}
                         à
                         {{ auction.dateCreation|date('H:i:s') }}
                     </h5>
                   </td>
                   <td>
-                      <h5>
+                      <h5 class="visible-xs visible-sm">
+                        {% if auction.state == 1 %}
+                            <span class="label label-warning">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
+                        {% elseif auction.state == 2 %}
+                            <span class="label label-success">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
+                        {% elseif auction.state == 3 %}
+                            <span class="label label-default">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
+                        {% endif %}
+
+                      </h5>
+                      <h5 >
                       {% if auction.state == 1 %}
-                          <span class="label label-primary">En cours</span>
+                          <span class="label label-warning">En cours</span>
                       {% elseif auction.state == 2 %}
-                          <span class="label label-success">Offre acceptée</span>
+                          <span class="label label-success">Acceptée</span>
                           <div class="label label-success"
                                 data-toggle="tooltip"
                                       data-placement="bottom" title="La demande n'est plus visible sur le site">
                            <i class="glyphicon glyphicon-info-sign"> </i>
                           </div>
                       {% elseif auction.state == 3 %}
-                          <span class="label label-danger">Offre déclinée</span>
-                          <div class="label label-danger"
+                          <span class="label label-default">Déclinée</span>
+                          <div class="label label-default"
                                 data-toggle="tooltip"
                                       data-placement="bottom" title="La demande n'est plus visible sur le site">
                            <i class="glyphicon glyphicon-info-sign"> </i>
                           </div>
                       {% endif %}
                       </h5>
+                      <h5 class="visible-xs visible-sm">
+                        {% if auction.state == 1 %}
+                              <a class="btn btn-primary"
+                                  data-toggle="modal"
+                                  role="button"
+                                  data-toggle="modal"
+                                  data-target="#modalAuctionAdd_{{auction.id}}"
+                                  >Accepter</a>
+                        {% elseif auction.state == 2 and auction.advert.commentState == 0 %}
+                              <a class="btn btn-primary" href="{{ path('se_platform_comment_add', {'advertId': auction.advert.id, 'auctionUserId': auction.user.id}) }}">Evaluer</a>
+                              <a class="btn btn-danger"
+                                    data-toggle="modal"
+                                    role="button"
+                                    data-toggle="modal"
+                                    data-target="#modalAuctionCancel_{{auction.id}}"
+                                    >Annuler</a>
+                        {% elseif auction.state == 2 and auction.advert.commentState == 1 %}
+                        <a class="btn btn-primary" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
+                        {% endif %}
+                      </h5>
                   </td>
 
-                  <td class="text-right bold">
-                    <span class="label se-price-badge little text-lowercase">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
+                  <td class="text-right bold hidden-xs hidden-sm">
+                    {% if auction.state == 1 %}
+                        <span class="label label-warning">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
+                    {% elseif auction.state == 2 %}
+                        <span class="label label-success">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
+                    {% elseif auction.state == 3 %}
+                        <span class="label label-default">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
+                    {% endif %}
+
                   </td>
-                  <td class="text-center bold">
+                  <td class="text-center bold hidden-xs hidden-sm">
                     <h5>
                       {% if auction.state == 1 %}
-                            <a class="btn btn-success"
+                            <a class="btn btn-primary"
                                 data-toggle="modal"
                                 role="button"
                                 data-toggle="modal"
                                 data-target="#modalAuctionAdd_{{auction.id}}"
                                 >Accepter</a>
                       {% elseif auction.state == 2 and auction.advert.commentState == 0 %}
-                            <a class="btn btn-default" href="{{ path('se_platform_comment_add', {'advertId': auction.advert.id, 'auctionUserId': auction.user.id}) }}">Evaluer</a>
-                            <a class="btn btn-danger hide" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id, 'state' : 1}) }}">Annuler</a>
+                            <a class="btn btn-primary" href="{{ path('se_platform_comment_add', {'advertId': auction.advert.id, 'auctionUserId': auction.user.id}) }}">Evaluer</a>
+                            <a class="btn btn-danger"
+                                  data-toggle="modal"
+                                  role="button"
+                                  data-toggle="modal"
+                                  data-target="#modalAuctionCancel_{{auction.id}}"
+                                  >Annuler</a>
                       {% elseif auction.state == 2 and auction.advert.commentState == 1 %}
-                      <a class="btn btn-default" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
+                      <a class="btn btn-primary" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
                       {% endif %}
                     </h5>
                   </td>
@@ -148,6 +187,27 @@
             <p class="pad-msg">Etes-vous certain de vouloir accepter l'offre de <strong>{{ auction.value }} €</strong> ?</p>
             <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Non</button>
             <a class="btn btn-success" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id, 'state' : 2}) }}">Oui</a>
+           </div>
+         </div>
+       </div>
+ </div>
+
+ <div class="modal fade"
+      id="modalAuctionCancel_{{auction.id}}"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modalAuctionCancelLabel_{{auction.id}}">
+         <div class="modal-dialog" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <h4 class="modal-title" id="myModalLabel">Annuler cette offre</h4>
+           </div>
+           <div class="modal-body text-center">
+            <p class="pad-msg">Etes-vous certain de vouloir annuler l'offre de <strong>{{ auction.value }} €</strong> ?</p>
+            <p><b>Attention</b> la demande sera à nouveau en ligne.</p>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Non</button>
+            <a class="btn btn-success" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id, 'state' : 1}) }}">Oui</a>
            </div>
          </div>
        </div>

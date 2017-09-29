@@ -317,7 +317,13 @@ class AuctionController extends Controller
                 }
               }
 
-              $advert->setIsPublished(false);
+              if ($state == 2) {
+                  $advert->setIsPublished(false);
+              }
+              else {
+                    $advert->setIsPublished(true);
+              }
+
               $auctionAccept->setState($state);
 
               $em->persist($advert);
@@ -344,9 +350,15 @@ class AuctionController extends Controller
 
               $mailer->sendEmail($advert, 'Offre acceptée', 'Votre offre a été acceptée', $userAuction->getEmail(), $body_auction);
 
-              $mailer->sendEmail($advert, 'Offre acceptée', 'Votre avez accepté une offre', $user->getEmail(), $body_advert);
+              $mailer->sendEmail($advert, 'Offre acceptée', 'Vous avez accepté une offre', $user->getEmail(), $body_advert);
 
-              $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'offre à ".$auctionAccept->getValue()." €, il vous reste à contacter l'enchérisseur pour convenir d'un rendez-vous");
+              if ($state == 2) {
+                $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'offre à ".$auctionAccept->getValue()." €, il vous reste à contacter l'enchérisseur pour convenir d'un rendez-vous");
+              }
+              else {
+                  $session->getFlashBag()->add('warning',"Vous avez annulé l'offre de ".$auctionAccept->getValue()." €, la demande est à nouveau en ligne.");
+              }
+
 
                return $this->redirectToRoute('se_platform_auction_user_receive');
           }
