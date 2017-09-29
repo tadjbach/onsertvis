@@ -7,12 +7,12 @@
           </div>
             {{ include('SEPlatformBundle:Auction:form.html.twig') }}
             <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0}) }}"
-            class="btn btn-default btn-md btn-block">
+            class="btn btn-primary btn-md btn-block">
                 Contacter
             </a>
             <button
                  type="button"
-                 class="btn btn-default btn-md btn-block"
+                 class="btn btn-warning btn-md btn-block"
                  data-toggle="modal"
                  role="button"
                  data-toggle="modal"

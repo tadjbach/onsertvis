@@ -50,7 +50,7 @@
                           {% if advert.auctionState == 0 %}
                               <span class="label label-default">0 offre</span>
                           {% else %}
-                              <span class="label label-success">
+                              <span class="label label-warning">
                                 {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
                               </span>
                           {% endif %}

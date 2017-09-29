@@ -21,19 +21,23 @@
         {{countComment}} avis
       </blockquote>
         {% for comment in listComment %}
-        <div  class="well" >
+        <div  class="well well-msg{% if app.user == comment.sender %}-inverse {% else %}{% endif %}" >
           <div class="row">
             <div class="col-md-12">
               <div class="col-md-3 text-left">
                 <h5>
-                {% if app.user == comment.receiver %}<span class="label label-success">Avis reçu</span>
+                {% if app.user == comment.receiver %}<span class="label label-success">Avis reçu de</span>
                 {% else %}
-                  <span class="label label-primary">Avis laissé</span>
+                  <span class="label label-primary">Avis laissé pour</span>
                 {% endif %}</h5>
                 <h4>
                   {% if app.user == comment.receiver %}{{ comment.sender }}
                   {% else %}
-                    {{ comment.receiver }}
+
+                  <a class="cat-link"
+                      href="{{ path('se_platform_user_view', {'userId': comment.receiver.id}) }}"
+                      >{{ comment.receiver }}</a>
+
                   {% endif %}
                   </h4>
                 <h4><small>le {{ comment.dateCreation|date('d/m/Y') }}</small></h4>

@@ -117,7 +117,7 @@ class AuctionController extends Controller
                                             'oldValue'=>$lastAuction[0]->getValue(),
                                             'advert'=> $advert->getTitle())
                                  );
-                              $mailer->sendEmail($advert, 'Nouvelle offre', "Nouvelle offre sur l'annonce ".' '.$advert->getTitle(), $lastAuction[0]->getUser()->getEmail(), $body);
+                              $mailer->sendEmail($advert, 'Nouvelle offre', "Nouvelle offre sur la demande ".' '.$advert->getTitle(), $lastAuction[0]->getUser()->getEmail(), $body);
                         }
                         }
 
@@ -183,7 +183,7 @@ class AuctionController extends Controller
           $mailer->sendEmail($advert, 'Suppression de votre annonce',  'Suppression de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);*/
         }
         else {
-            throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
+            throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
         }
 
         return $this->redirectToRoute('se_platform_auction_user_send');
@@ -364,7 +364,7 @@ class AuctionController extends Controller
           }
         }
         else {
-          throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
+          throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
         }
     }
 }

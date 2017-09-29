@@ -96,7 +96,7 @@ class CommentController extends Controller
              }
          }
          else {
-             throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
+             throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
          }
 
          return $this->render('SEPlatformBundle:Comment:add.html.twig', array(
@@ -156,7 +156,7 @@ class CommentController extends Controller
                }
            }
            else {
-               throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
+               throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
            }
          return $this->render('SEPlatformBundle:Comment:edit.html.twig', array(
              'form' => $form->createView(),
@@ -196,7 +196,7 @@ class CommentController extends Controller
 
       }
       else {
-          throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
+          throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
       }
 
         return $this->render('SEPlatformBundle:Comment:delete.html.twig', array(

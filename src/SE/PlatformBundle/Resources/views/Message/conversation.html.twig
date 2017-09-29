@@ -35,7 +35,12 @@
             <div class="col-md-12">
               <div class="col-md-3 text-left">
                 <h4>
-                {% if app.user == conversation.receiver %}{{ conversation.sender }} {% else %}Vous{% endif %}</h4>
+                {% if app.user == conversation.receiver %}
+                <a class="cat-link" 
+                    href="{{ path('se_platform_user_view', {'userId': conversation.sender.id}) }}"
+                    >{{ conversation.sender }}</a>
+                {% else %}Vous{% endif %}
+              </h4>
                 <h4><small>{{ conversation.dateCreation|date('d/m/Y') }} à {{ conversation.dateCreation|date('H:i:s') }}</small></h4>
               </div>
               <div class="col-md-9">

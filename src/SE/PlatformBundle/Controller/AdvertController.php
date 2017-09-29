@@ -337,7 +337,7 @@ class AdvertController extends Controller
         }
         }
         else {
-            throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
+            throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
         }
         return $this->render('SEPlatformBundle:Advert:edit.html.twig', array(
             'form' => $form->createView(),
@@ -376,7 +376,7 @@ class AdvertController extends Controller
           $mailer->sendEmail($advert, 'Suppression de votre annonce',  'Suppression de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
         }
         else {
-            throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'annonce.");
+            throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
         }
 
         return $this->redirectToRoute('se_platform_advert_user_list');

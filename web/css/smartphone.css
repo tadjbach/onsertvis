@@ -86,22 +86,6 @@ and (max-device-width : 736px) {
     top: -1px;
   }
 
-
-  #filter_responsive, #item_title_resp,
-  .ad-date-reverse,
-  .se-profile-value-reverse,
-  {
-    display: block;
-  }
-  #filter_normal, #item_price,
-  #item_date, #item_image,
-  #item_title, #index_category_dpt,
-  #help_slogan,
-  .respnse,
-  .ad-date{
-    display: none;
-  }
-
   .truncate {
     width: 200px;
   }

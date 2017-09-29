@@ -23,9 +23,9 @@
                            {% for msg in listMessage %}
                                <tr>
                                  <td class='text-center'>
-                                   <h5>
+                                   <h5 class="hidden-xs hidden-sm">
                                        {{ msg.dateCreation|date('d/m/Y') }}
-                                       <h5>
+                                       <h5 class="hidden-xs hidden-sm">
                                          {{ msg.dateCreation|date('H:i:s') }}
                                         </h5>
                                    </h5>
@@ -36,14 +36,14 @@
                                          <a href="{{ path('se_platform_user_view', {'userId': msg.sender.id}) }}" class="se-tbl-link" >
                                              {{ msg.sender }}
                                          </a>
-                                         <h5>
+                                         <h5 class="hidden-xs hidden-sm">
                                            {{ include('@SEPlatform/User/rate.html.twig', {'item': msg.sender }) }}
                                          </h5>
                                      {% else  %}
                                          <a href="{{ path('se_platform_user_view', {'userId': msg.advert.user.id}) }}" class="se-tbl-link" >
                                              {{ msg.advert.user }}
                                          </a>
-                                         <h5>
+                                         <h5 class="hidden-xs hidden-sm">
                                            {{ include('@SEPlatform/User/rate.html.twig', {'item': msg.advert.user }) }}
                                          </h5>
                                      {% endif %}
@@ -53,7 +53,7 @@
                                  <td>
                                      <h5>
                                          <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': msg.advert.slug,'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
-                                         <h5>
+                                         <h5 class="hidden-xs hidden-sm">
                                            {{ msg.advert.category.labelNormal }}
                                          </h5>
 
@@ -61,14 +61,14 @@
                                  </td>
 
                                  <td class='text-left td_center'>
-                                     <h5>
+                                     <h5 class="hidden-xs hidden-sm">
                                      {% if msg.advert.isPublished == 1 %}
-                                         <span class="label label-primary">En ligne</span>
+                                         <span class="label label-warning">En cours</span>
                                      {% elseif msg.advert.isPublished == 0 and msg.advert.auctionState == 0 %}
-                                         <span class="label label-warning">Validation en cours</span>
+                                         <span class="label label-default">Validation en cours</span>
                                      {% elseif msg.advert.isPublished == 0 and msg.advert.auctionState == 1 %}
-                                         <span class="label label-danger">Hors ligne</span>
-                                         <div class="label label-danger"
+                                         <span class="label label-success">Terminée</span>
+                                         <div class="label label-success"
                                                data-toggle="tooltip"
                                                      data-placement="bottom" title="La demande n'est plus visible sur le site">
                                           <i class="glyphicon glyphicon-info-sign"> </i>

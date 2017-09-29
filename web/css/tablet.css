@@ -31,11 +31,11 @@ and (orientation : portrait){
     #filter_responsive{
       display: block;
     }
-    #filter_normal, #item_price, #item_date, #item_image{
+    #item_price, #item_date, #item_image{
       display: none;
     }
 
-    
+
     a.se-btn-action{
       margin-bottom: 5px;
     }

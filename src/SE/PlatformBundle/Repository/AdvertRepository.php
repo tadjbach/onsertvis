@@ -129,7 +129,7 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
 
         }
 
-       $qb->OrderBy('advert.auctionState', 'DESC')->getQuery();
+       $qb->OrderBy('advert.dateCreation', 'DESC')->getQuery();
 
         $qb->setFirstResult(($page-1) * $nbPerPage)
             ->setMaxResults($nbPerPage);

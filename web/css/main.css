@@ -481,7 +481,7 @@ a.title-link:focus{
     line-height: normal;
 }
 #fos_user_profile_form_detail{
-height: 180px;
+height: 235px;
 }
 
 textarea.form-control{
@@ -517,22 +517,13 @@ a.se-password, a.se-link{
     width: 60px;
 }
 
-#filter_normal, .btnIcon-search{
+.btn-lg-se{
      width: 100%;
-
 }
 
 .se-btn-action{
      background-color: #E5DF16;
      color: #2A0540;
-     border:1px solid #E5DF16;
-}
-
-.btnIcon-search:hover,
-.btnIcon-search:active,
-.btnIcon-search:focus{
-    background-color: #E5DF16;
-     color: #484848;
      border:1px solid #E5DF16;
 }
 
@@ -796,17 +787,6 @@ a.se-tbl-link{
     width: 100%;
 }
 
-#filter_responsive, #item_title_resp,
-.se-profile-value-reverse, .ad-date-reverse{
-  display: none;
-}
-#filter_normal, #item_price,
-#item_date, #item_image,
-#item_title, #index_category_dpt
-#help_slogan,
-.ad-date{
-  display: block;
-}
 .med{
     width: 50%;
 }

@@ -74,7 +74,6 @@
                         {% elseif auction.state == 3 %}
                             <span class="label label-default">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
                         {% endif %}
-
                       </h5>
                       <h5 >
                       {% if auction.state == 1 %}
@@ -125,8 +124,8 @@
                     {% elseif auction.state == 3 %}
                         <span class="label label-default">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
                     {% endif %}
-
                   </td>
+                  
                   <td class="text-center bold hidden-xs hidden-sm">
                     <h5>
                       {% if auction.state == 1 %}

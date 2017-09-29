@@ -54,12 +54,12 @@
                         <td class='text-center td_center'>
                             <h5>
                             {% if advert.isPublished == 1 %}
-                                <span class="label label-primary">En cours</span>
+                                <span class="label label-warning">En cours</span>
                             {% elseif advert.isPublished == 0 and advert.auctionState == 0 %}
-                                <span class="label label-warning">Validation en cours</span>
+                                <span class="label label-default">Validation en cours</span>
                             {% elseif advert.isPublished == 0 and advert.auctionState == 1 %}
-                                <span class="label label-danger">Terminée</span>
-                                <div class="label label-danger"
+                                <span class="label label-success">Terminée</span>
+                                <div class="label label-success"
                                       data-toggle="tooltip"
                                             data-placement="bottom" title="La demande n'est plus visible sur le site">
                                  <i class="glyphicon glyphicon-info-sign"> </i>
@@ -67,6 +67,7 @@
                             {% endif %}
                             </h5>
                             <h5>
+                                {% if advert.auctionState != 0 or advert.isPublished == 1 %}
                               <a class="cat-link visible-xs visible-sm"
                                   data-toggle="modal"
                                   role="button"
@@ -74,10 +75,12 @@
                                   data-target="#modalAuctionShow_{{advert.id}}"
                                   >
                                     {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                                  {% endif %}
                             </h5>
                         </td>
                         <td class='text-center'>
                           <h5>
+                              {% if advert.auctionState != 0 or advert.isPublished == 1 %}
                             <a class="cat-link hidden-xs hidden-sm"
                                 data-toggle="modal"
                                 role="button"
@@ -85,6 +88,7 @@
                                 data-target="#modalAuctionShow_{{advert.id}}"
                                 >
                                   {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                                {% endif %}
                           </h5>
                         </td>
                          <td class='text-center'>
