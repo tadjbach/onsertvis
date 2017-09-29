@@ -163,9 +163,9 @@ class AdminController extends Controller
                                       $page,
                                       $this->nbPerPage);
 
-          $titleResult = count($listAdverts) == 0 ?'Aucune annonce' :
-                  (count($listAdverts) > 1 ? count($listAdverts).' annonces' :
-              count($listAdverts).' annonce');
+          $titleResult = count($listAdverts) == 0 ?'Aucune demande' :
+                  (count($listAdverts) > 1 ? count($listAdverts).' demandes' :
+              count($listAdverts).' demande');
 
           $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
 
@@ -208,7 +208,7 @@ class AdminController extends Controller
 
             $em->persist($advert);
             $em->flush();
-            
+
             if ($action == 0) {
 
                 $body = $this->renderView(
@@ -217,7 +217,7 @@ class AdminController extends Controller
                           'advert'=> $advert->getTitle())
                  );
 
-                $mailer->sendEmail($advert, "Validation de votre annonce", "Votre annonce ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
+                $mailer->sendEmail($advert, "Validation de votre demande", "Votre demande ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
             }
 
             return $this->redirectToRoute('se_platform_admin_view_advert', array('id'=>$id));
@@ -244,7 +244,7 @@ class AdminController extends Controller
                       array('receiver' => $advert->getUser(),
                            'advert'=> $advert->getTitle())
                   );
-                  $mailer->sendEmail($advert, "Validation de votre annonce", "Votre annonce ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
+                  $mailer->sendEmail($advert, "Validation de votre demande", "Votre demande ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
              }
 
              return $this->redirectToRoute('se_platform_admin_view_advert', array('id'=>$id));

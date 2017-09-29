@@ -8,7 +8,7 @@
 
 {% block layout_header2 %}
       <div class="slogan"><p>Le bon service au bon prix !</p></div>
-      <div id="help_slogan" >
+      <div class="hidden-xs hidden-sm" >
           <div class="col-md-6">
               <p class="cat-title">Vous cherchez une aide ?</p>
               <h5>
@@ -37,7 +37,7 @@
 {% block layout_body %}
 <div class="row">
   <!-- CATGEORY - CARTE DE FRANCE -->
-  <div id="index_category_dpt" class="col-md-4">
+  <div class="col-md-4 hidden-xs hidden-sm">
       <h4 class="cat-title">Par Catégories</h4>
       <ul class="ul-cat">
         {% for category in listCategory %}
@@ -66,6 +66,6 @@
   </div>
 </div>
 <div class="row text-center">
-<p class="pad-msg">Sur le site <a class='contact' href="http://www.serviceenchere.fr">www.serviceenchere.fr</a>, vous pouvez déposer, consulter des annonces et proposer des offres <b>gratuitement</b>.</p>
+<p class="pad-msg">Sur le site <a class='contact' href="http://www.serviceenchere.fr">www.serviceenchere.fr</a>, vous pouvez déposer, consulter des demandes et proposer des offres <b>gratuitement</b>.</p>
 </div>
 {% endblock %}

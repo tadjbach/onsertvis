@@ -168,9 +168,9 @@ class AdvertController extends Controller
                                           $page,
                                           $this->nbPerPage);
 
-        $titleResult = count($listAdverts) == 0 ?'Aucune annonce' :
-                (count($listAdverts) > 1 ? count($listAdverts).' annonces' :
-            count($listAdverts).' annonce');
+        $titleResult = count($listAdverts) == 0 ?'Aucune demande' :
+                (count($listAdverts) > 1 ? count($listAdverts).' demandes' :
+            count($listAdverts).' demande');
 
         $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
 
@@ -209,9 +209,9 @@ class AdvertController extends Controller
       $listAdverstByUserFilter = $em->getRepository('SEPlatformBundle:Advert')
            ->getAdvertByUser($user->getId());
 
-      $titleResult = count($listAdverstByUser) == 0 ?'Aucune annonce' :
-              (count($listAdverstByUser) > 1 ? count($listAdverstByUser).' annonces' :
-          count($listAdverstByUser).' annonce');
+      $titleResult = count($listAdverstByUser) == 0 ?'Aucune demande' :
+              (count($listAdverstByUser) > 1 ? count($listAdverstByUser).' demandes' :
+          count($listAdverstByUser).' demande');
 
         $nbPages = ceil(count($listAdverstByUser)/$this->nbPerPage);
 
@@ -280,9 +280,9 @@ class AdvertController extends Controller
                             'advert'=> $advert->getTitle())
                    );
 
-                $mailer->sendEmail($advert, 'Nouvelle annonce', 'Création de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+                $mailer->sendEmail($advert, 'Nouvelle demande', 'Création de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
 
-                $session->getFlashBag()->add('addSuccess','Annonce bien enregistrée, elle sera validée dans moins de 24h.');
+                $session->getFlashBag()->add('addSuccess','Demande bien enregistrée, elle sera validée dans moins de 24h.');
 
                 return $this->redirectToRoute('se_platform_advert_user_list');
             }
@@ -328,7 +328,7 @@ class AdvertController extends Controller
 
                 $em->flush();
 
-                $session->getFlashBag()->add('editSuccess','Annonce modifiée avec succes');
+                $session->getFlashBag()->add('editSuccess','Demande modifiée avec succes');
 
                 return $this->redirectToRoute('se_platform_advert_edit',
                             array('slug'=> $advert->getSlug(),
@@ -373,7 +373,7 @@ class AdvertController extends Controller
                       'advert'=> $advert->getTitle())
              );
 
-          $mailer->sendEmail($advert, 'Suppression de votre annonce',  'Suppression de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+          $mailer->sendEmail($advert, 'Suppression de votre demande',  'Suppression de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
         }
         else {
             throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
@@ -408,7 +408,7 @@ class AdvertController extends Controller
                       'advert'=> $advert->getTitle())
              );
 
-          $mailer->sendEmail($advert, 'Désactivation de votre demande',  'Désactivation de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+          $mailer->sendEmail($advert, 'Désactivation de votre demande',  'Désactivation de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
         }
         else {
             throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
@@ -443,7 +443,7 @@ class AdvertController extends Controller
                       'advert'=> $advert->getTitle())
              );
 
-          $mailer->sendEmail($advert, 'Activation de votre demande',  'Activation de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+          $mailer->sendEmail($advert, 'Activation de votre demande',  'Activation de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
         }
         else {
             throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
@@ -458,10 +458,10 @@ class AdvertController extends Controller
     public function validateAction($action){
       switch ($action) {
             case 'supprimer':
-                $title =  "Suppression de votre annonce";
+                $title =  "Suppression de votre demande";
                 break;
             case 'ajouter':
-                $title = 'Creation de votre annonce';
+                $title = 'Creation de votre demande';
                 break;
             case 'accept':
                 $title = 'Acceptation d\'une offre';

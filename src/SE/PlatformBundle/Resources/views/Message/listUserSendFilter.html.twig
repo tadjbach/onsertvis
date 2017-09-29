@@ -6,7 +6,7 @@
                         <select class="form-control"
                                 name="advert"
                                 id="advert_id" >
-                            <option value='0' >Toutes les annonces</option>
+                            <option value='0' >Toutes les demandes</option>
                               {% for item in listAdvert %}
                                   <option {{ app.request.query.get('advert')== item.advert.id ? ' selected ' : ' ' }}
                                       value={{ item.advert.id }}>{{ item.advert.title }}

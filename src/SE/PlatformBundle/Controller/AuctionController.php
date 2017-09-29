@@ -130,7 +130,7 @@ class AuctionController extends Controller
                                     'advert'=> $advert->getTitle())
                          );
 
-                      $mailer->sendEmail($advert, 'Nouvelle offre', 'Nouvelle offre sur votre annonce '.$advert->getTitle(), $userOwner->getEmail(), $body_owner);
+                      $mailer->sendEmail($advert, 'Nouvelle offre', 'Nouvelle offre sur votre demande '.$advert->getTitle(), $userOwner->getEmail(), $body_owner);
 
 
                       $session->getFlashBag()->add('addSuccess','Offre bien enregistrée.');
@@ -142,7 +142,7 @@ class AuctionController extends Controller
             }
 
             else {
-              $session->getFlashBag()->add('error','Vous ne pouvez pas proposer une offre sur vos propres annonces.');
+              $session->getFlashBag()->add('error','Vous ne pouvez pas proposer une offre sur vos propres demandes.');
 
               return $this->redirectToRoute('se_platform_advert_view', array('slug'=> $advert->getSlug(),
                                                                             'id'=> $advert->getId()));
@@ -180,7 +180,7 @@ class AuctionController extends Controller
                       'advert'=> $advert->getTitle())
              );
 
-          $mailer->sendEmail($advert, 'Suppression de votre annonce',  'Suppression de votre annonce '.$advert->getTitle(), $this->getUser()->getEmail(), $body);*/
+          $mailer->sendEmail($advert, 'Suppression de votre demande',  'Suppression de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);*/
         }
         else {
             throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
