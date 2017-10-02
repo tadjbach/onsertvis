@@ -1,0 +1,44 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}
+    Une erreur {{ status_code }} s'est produite : "{{ status_text }}"
+{% endblock %}
+
+{% block body %}
+
+  <div class="well slogan-well">
+    <div class="panel-body">
+      <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+              <h3 class="cat-title">Le serveur a renvoyé une erreur "{{ status_code }} {{ status_text }}"</h3>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+      </div>
+   </div>
+
+  <div class="well se-well">
+      <div class="index-container" >
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                <div class="row">
+                     <div id="content" class="col-md-12">
+                       <div class="alert alert-danger" role="alert">Un problème est survenu ({{ status_code }} - {{ status_text }})</div>
+                       <blockquote>
+                        <h5>Faites-nous savoir ce que vous avez fait pour avoir cette erreur à l'adresse <a class="contact" href="mailto:contact@serviceenchere.fr">contact@serviceenchere.fr</a></h5>
+                        <h5>Nous allons le réparer dès que possible.</h5>
+                        <h5>Désolé pour tout inconvénient causé.</h5>
+                        <h5>L'équipe Service Enchère.</h5>
+                        </blockquote>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+      </div>
+  </div>
+
+{% endblock %}
