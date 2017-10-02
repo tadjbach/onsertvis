@@ -309,7 +309,7 @@ class AdvertController extends Controller
             throw new NotFoundHttpException("Oops, La demande  que vous cherchez n'existe pas.");
         }
 
-  if ($this->getUser() === $advert->getUser() ) {
+        if ($this->getUser() === $advert->getUser() ) {
 
         $form = $this->createForm(AdvertEditType::class, $advert);
 
@@ -491,18 +491,6 @@ class AdvertController extends Controller
       $em = $this->getDoctrineManager();
 
       $advert=$em->find('SEPlatformBundle:Advert', $id);
-
-       /*
-       - Pour une URL complete, par exemple pour un mail utiliser
-        $url = $this
-               ->get('router')
-               ->generate('se_platform_advert_view',
-                    array('slug'=> $slug,
-                        'id'=> $id), UrlGeneratorInterface::ABSOLUTE_URL);
-
-        * Et pour une utilisation dans Twig il faut remplacer le path() par url()
-        *
-        */
 
         if ($advert->getIsPublished() == 0) {
           return $this->render('SEPlatformBundle:Advert:desactive.html.twig');

@@ -29,6 +29,18 @@
                        Contacter
                    </a>
            {% endif %}
+           {% if advert.auctionState == 0 %}
+           <button
+                type="button"
+                class="btn btn-default btn-md btn-block"
+                data-toggle="modal"
+                role="button"
+                data-toggle="modal"
+                data-target="#modalAuctionShow"
+                >
+              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+           </button>
+           {% else %}
            <button
                 type="button"
                 class="btn btn-warning btn-md btn-block"
@@ -39,5 +51,7 @@
                 >
               {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
            </button>
+           {% endif %}
+
          </div>
 {% endblock %}

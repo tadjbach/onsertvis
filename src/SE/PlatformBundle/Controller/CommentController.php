@@ -177,7 +177,7 @@ class CommentController extends Controller
             throw new NotFoundHttpException("Oops, L'avis que vous cherchez n'existe pas.");
         }
 
-  if ($this->getUser() === $userSender) {
+        if ($this->getUser() === $userSender) {
 
         $form = $this->createFormBuilder()->getForm();
 
@@ -203,16 +203,6 @@ class CommentController extends Controller
             'comment' => $comment,
             'form'   => $form->createView()
         ));
-    }
-
-    public function viewAction($slug, $id)
-    {
-
-    }
-
-    public function listAction(Request $request)
-    {
-
     }
 
     /**

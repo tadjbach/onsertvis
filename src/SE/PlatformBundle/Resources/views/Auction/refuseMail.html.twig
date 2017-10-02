@@ -13,9 +13,9 @@
     <div>
       <p>Bonjour <b>{{ receiver }}</b></p>
       <p>Votre offre pour la demande <b>{{advert}}</b> a été <b style="color:red">refusée</b> par le proprétaire de la demande.</p>
-      <p>L'offre a été acceptée pour <b>{{value}} €</b>.</p>
+      <p>L'offre a été acceptée pour <b>{{value|number_format(0, ' ', ' ')}} €</b>.</p>
       <p>
-        Cordialement
+        Cordialement.
       </p>
     </div>
     <br>

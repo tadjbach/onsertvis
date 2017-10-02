@@ -7,7 +7,7 @@
 {% block layout_header2 %}
 <div class="row">
   <div id="header" class="col-md-12">
-    <h3 class="cat-title">Envoie de nouveau message</h3>
+    <h3 class="cat-title">Conversations pour la demande "{{advert.title}}"</h3>
   </div>
 </div>
 {% endblock %}
@@ -15,7 +15,33 @@
 {% block layout_body %}
    <div class="row">
      <div id="content" class="col-md-12">
+       <blockquote>
+         {{countMessage}} pour "{{advert.title}}"
+       </blockquote>
           {{ include('SEPlatformBundle:Message:form.html.twig') }}
+
+          {% for conversation in listConversation %}
+          <div  class="well well-msg{% if app.user == conversation.sender %}-inverse {% else %}{% endif %}" >
+            <div class="row">
+              <div class="col-md-12">
+                <div class="col-md-3 text-left">
+                  <h4>
+                  {% if app.user == conversation.receiver %}
+                  <a class="cat-link"
+                      href="{{ path('se_platform_user_view', {'userId': conversation.sender.id}) }}"
+                      >{{ conversation.sender }}</a>
+                  {% else %}Vous{% endif %}
+                </h4>
+                  <h4><small>{{ conversation.dateCreation|date('d/m/Y') }} à {{ conversation.dateCreation|date('H:i:s') }}</small></h4>
+                </div>
+                <div class="col-md-9">
+                  <h5>{{ conversation.content |nl2br }}</h5>
+                </div>
+              </div>
+              </div>
+          </div>
+          {% endfor %}
+
      </div>
    </div>
 

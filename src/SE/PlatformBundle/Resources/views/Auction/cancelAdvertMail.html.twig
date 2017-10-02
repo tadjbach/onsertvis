@@ -12,8 +12,8 @@
 
     <div>
       <p>Bonjour <b>{{ receiver }}</b></p>
-      <p>Vous avez reçu un nouveau message de la part de <b>{{sender}}</b> concerant la demande <b>{{advert}}</b></p>
-      <p>Le message est disponible dans votre espace client.</p>
+      <p>Votre avez annulé l'offre de <b>{{value|number_format(0, ' ', ' ')}} €</b> pour la demande <b>{{advert.title}}</b></p>
+      <p>La demande est remise en ligne.</p>
       <p>
         Cordialement.
       </p>
@@ -43,7 +43,7 @@
       <p>
           L'équipe serviceenchere
           <br>
-        https://www.serviceenchere.fr
+          https://www.serviceenchere.fr
       </p>
     </div>
   </body>

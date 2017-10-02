@@ -12,7 +12,7 @@
 
     <div>
       <p>Bonjour <b>{{ receiver }}</b></p>
-      <p>Votre avez accepté l'offre de <b>{{value}} €</b> pour la demande <b>{{advert.title}}</b></p>
+      <p>Votre avez accepté l'offre de <b>{{ value|number_format(0, ' ', ' ') }} €</b> pour la demande <b>{{advert.title}}</b></p>
       <p>Contactez l'enchérisseur pour convenir d'un rendez vous : </p>
 
       <p>Nom : {{ user_auction }}</p>
@@ -25,7 +25,7 @@
       </p>
 
       <p>
-        Cordialement
+        Cordialement.
       </p>
     </div>
     <br>

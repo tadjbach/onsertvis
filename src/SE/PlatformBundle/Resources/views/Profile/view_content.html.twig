@@ -5,8 +5,10 @@
         <blockquote>
           <h5>{{user}}</h5>
           <h5>
-              {{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
-              ({{ user.PostalCode.city.departement.labelNormal }})
+             {% if user.isAcountComplete == 1 %}
+                {{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
+                ({{ user.PostalCode.city.departement.labelNormal }})
+              {% endif %}
           </h5>
           {% if user.isDetailVisible or is_granted('ROLE_SUPER_ADMIN')%}
               <h5>
@@ -15,23 +17,26 @@
           {% endif %}
             </blockquote>
           <blockquote>
-          <h5><i>Note : </i>{{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}</h5>
-          <h5><i>Membre depuis </i>: {{ user.dateCreation|date('d/m/Y') }}</h5>
+          <h5><i><b>Note : </b></i>{{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}</h5>
+          <h5><i><b>Membre depuis </b></i>: {{ user.dateCreation|date('d/m/Y') }}</h5>
           <h5>
-            <i>A propos :</i>
+            <i><b>A propos :</b></i>
           </h5>
           <h5>
-            {% if user.detail %}
-               {{ user.detail|nl2br }}
-                {% else %}
-                  {{user}} n'a pas rensigné cette partie.
-                {% endif %}
+           {% if user.isAcountComplete == 1 %}
+                {% if user.detail %}
+                   {{ user.detail|nl2br }}
+                    {% else %}
+                      {{user}} n'a pas rensigné cette partie.
+                    {% endif %}
+              {% endif %}
           </h5>
         </blockquote>
         <blockquote>
 
           <h5>
-            <i>Disponibilité : </i>
+             {% if user.isAcountComplete == 1 %}
+            <i><b>Disponibilité : </b></i>
                   {% if user.calendar|length > 6 %}
                   <b>Tous les jours</b>
                  {% else %}
@@ -41,14 +46,17 @@
                        <span>Me contacter</span>
                        {% endfor %}
                   {% endif %}
+              {% endif %}
           </h5>
           <h5>
-            <i>Mode de paiement accepté : </i>
+        {% if user.isAcountComplete == 1 %}
+            <i><b>Mode de paiement accepté : </b></i>
                {% for pay in user.payment %}
                    <span class="advert-calendar">{{ pay.labelNormal  }}</span>
                {% else %}
                  <span>Me contacter</span>
                  {% endfor %}
+            {% endif %}
           </h5>
 
         </blockquote>

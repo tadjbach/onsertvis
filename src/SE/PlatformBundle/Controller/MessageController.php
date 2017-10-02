@@ -39,6 +39,7 @@ class MessageController extends Controller
         $em = $this->getDoctrineManager();
         $session = $request->getSession();
         $mailer  = $this->get('se_platform.mailer');
+        $answer = $isAnswer == 1 ? 'Nouvelle réponse' : 'Nouvelle question';
 
         $advert = $em->find('SEPlatformBundle:Advert', $advertId);
         $userSender = $this->getUser();
@@ -50,9 +51,16 @@ class MessageController extends Controller
         $message->setReceiver($userReceive);
         $message->setAdvert($advert);
 
+          $listConversation = $this->getDoctrine()
+              ->getManager()
+              ->getRepository('SEPlatformBundle:Message')
+              ->getConversationReceive($advertId,  $receiveId, $userSender->getId());
+
+          $countMessage = count($listConversation) <= 1 ? count($listConversation).' message'
+                  : count($listConversation).' messages';
         $form = $this->createForm(MessageType::class, $message);
 
-        if ($userReceive !== $this->getUser()) {
+        if ($userReceive != $this->getUser()) {
           if ($request->isMethod('POST')){
               $form->handleRequest($request);
 
@@ -69,8 +77,8 @@ class MessageController extends Controller
                             'advert'=> $advert->getTitle())
                    );
 
-                  $mailer->sendEmail($advert,'Nouveau message', 'Vous avez un message', $userReceive->getEmail(), $body);
-                  $session->getFlashBag()->add('addSuccess','Message bien envoyé.');
+                  $mailer->sendEmail($advert,$answer, $answer, $userReceive->getEmail(), $body);
+                  $session->getFlashBag()->add('addSuccess','Message bien envoyée.');
 
                   return $this->redirectToRoute('se_platform_advert_user_list', array('slug'=> $advert->getSlug(),
                                                                                 'id'=> $advert->getId()));
@@ -87,12 +95,16 @@ class MessageController extends Controller
         if ($isAnswer == 1) {
           return $this->render('SEPlatformBundle:Message:answer.html.twig', array(
               'form' => $form->createView(),
+              'listConversation'     => $listConversation,
+              'countMessage'=> $countMessage,
               'advert'=> $advert
           ));
         }
         else{
           return $this->render('SEPlatformBundle:Message:add.html.twig', array(
               'form' => $form->createView(),
+              'listConversation'     => $listConversation,
+              'countMessage'=> $countMessage,
               'advert'=> $advert
           ));
         }

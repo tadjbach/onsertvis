@@ -12,7 +12,7 @@
 
     <div>
       <p>Bonjour <b>{{ receiver }}</b></p>
-      <p>Votre offre de <b>{{value}} €</b> pour la demande <b>{{advert.title}}</b> a été <b style="color:green">acceptée</b> par le proprétaire de la demande.</p>
+      <p>Votre offre de <b>{{value|number_format(0, ' ', ' ')}} €</b> pour la demande <b>{{advert.title}}</b> a été <b style="color:green">acceptée</b> par le proprétaire de la demande.</p>
 
       <p>Contactez le proprétaire pour convenir d'un rendez vous : </p>
       <p>Nom : {{ user_advert }}</p>
@@ -24,7 +24,7 @@
           <br>{{ user_advert.PostalCode.city.departement.labelNormal }}
       </p>
       <p>
-        Cordialement
+        Cordialement.
       </p>
     </div>
     <br>

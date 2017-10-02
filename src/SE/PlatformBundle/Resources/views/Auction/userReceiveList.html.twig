@@ -125,7 +125,7 @@
                         <span class="label label-default">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
                     {% endif %}
                   </td>
-                  
+
                   <td class="text-center bold hidden-xs hidden-sm">
                     <h5>
                       {% if auction.state == 1 %}
@@ -183,7 +183,7 @@
              <h4 class="modal-title" id="myModalLabel">Accepter cette offre</h4>
            </div>
            <div class="modal-body text-center">
-            <p class="pad-msg">Etes-vous certain de vouloir accepter l'offre de <strong>{{ auction.value }} €</strong> ?</p>
+            <p class="pad-msg">Etes-vous certain de vouloir accepter l'offre de <strong>{{ auction.value|number_format(0, ' ', ' ') }} €</strong> ?</p>
             <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Non</button>
             <a class="btn btn-success" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id, 'state' : 2}) }}">Oui</a>
            </div>
@@ -203,8 +203,8 @@
              <h4 class="modal-title" id="myModalLabel">Annuler cette offre</h4>
            </div>
            <div class="modal-body text-center">
-            <p class="pad-msg">Etes-vous certain de vouloir annuler l'offre de <strong>{{ auction.value }} €</strong> ?</p>
-            <p><b>Attention</b> la demande sera à nouveau en ligne.</p>
+            <p class="pad-msg">Etes-vous certain de vouloir annuler l'offre de <strong>{{ auction.value|number_format(0, ' ', ' ') }} €</strong> ?</p>
+            <p><div class="alert alert-danger" role="alert"><b>Attention</b> la demande sera à nouveau en ligne.</div></p>
             <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Non</button>
             <a class="btn btn-success" href="{{ path('se_platform_auction_accept', {'auctionId': auction.id, 'state' : 1}) }}">Oui</a>
            </div>
