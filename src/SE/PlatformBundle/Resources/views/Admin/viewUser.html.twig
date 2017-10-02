@@ -15,13 +15,13 @@
 {% block layout_body %}
 
               <div class="index-container" >
+                <div class="well">
                   <div class="row">
                     {% block fos_user_content %}
                         {% include "@FOSUser/Profile/view_content.html.twig" %}
                     {% endblock fos_user_content %}
                   </div>
-
-
+                    </div>
                   <div class="row">
                     <div class="col-md-12">
                       <div class="col-md-6">
@@ -89,15 +89,6 @@
                                    <a href="{{ path('se_platform_admin_visible_user', {'action': 1,'id': user.id}) }}" class="btn btn-primary">Activer</a>
                                  </td>
                                  {% endif %}
-                               </tr>
-
-                               <tr>
-                                 <td>
-                                    Note
-                                 </td>
-                                 <td>
-                                     {{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}
-                                 </td>
                                </tr>
                              </tbody>
                            </table>

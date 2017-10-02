@@ -257,6 +257,9 @@ li.hd-icon{
     margin-bottom: 2px;
 }
 
+.badge-disable{
+  background-color: #dcdcdc;
+}
 .se-badge{
     background-color: #E5DF16;
     color: #2A0540;

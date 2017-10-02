@@ -43,8 +43,10 @@ class ProfileController extends Controller
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
+
+
         return $this->render('@FOSUser/Profile/show.html.twig', array(
-            'user' => $user,
+            'user' => $user
         ));
     }
 
@@ -164,6 +166,9 @@ class ProfileController extends Controller
 
       $user = $em->find('SEPlatformBundle:User', $userId);
 
+      $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
+      $payment = $em->getRepository('SEPlatformBundle:payment')->findAll();
+
       if (!$user){
           throw new NotFoundHttpException("Cet utilisateur n'existe pas".$userId );
       }
@@ -175,6 +180,8 @@ class ProfileController extends Controller
       return $this->render('@FOSUser/Profile/view.html.twig', array(
             'user' => $user,
             'listComment'=>$listComment,
+            'calendar' => $calendar,
+            'payment' => $payment,
             'countReceivedAuction'=>count($listReceivedAuctions),
             'countProposedAuction'=>count($listProposedAuctions),
             'countAcceptedAuction'=>count($listAcceptedAuctions),

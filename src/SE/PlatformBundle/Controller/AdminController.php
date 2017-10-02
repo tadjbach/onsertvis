@@ -314,20 +314,41 @@ class AdminController extends Controller
          * @Security("has_role('ROLE_SUPER_ADMIN')")
          */
         public function listAuctionsAction(){
+          $nbPages = 1;
+          $page = 1;
 
+            return $this->render('SEPlatformBundle:Admin:listAuctions.html.twig', array(
+              'nbPages'     => $nbPages,
+              'page'        => $page,
+
+            ));
         }
 
         /**
          * @Security("has_role('ROLE_SUPER_ADMIN')")
          */
         public function listMessagesAction(){
+          $nbPages = 1;
+          $page = 1;
 
+            return $this->render('SEPlatformBundle:Admin:listMessages.html.twig', array(
+              'nbPages'     => $nbPages,
+              'page'        => $page,
+
+            ));
         }
 
         /**
          * @Security("has_role('ROLE_SUPER_ADMIN')")
          */
         public function listCommentsAction(){
+          $nbPages = 1;
+          $page = 1;
 
+            return $this->render('SEPlatformBundle:Admin:listComments.html.twig', array(
+              'nbPages'     => $nbPages,
+              'page'        => $page,
+
+            ));
         }
 }

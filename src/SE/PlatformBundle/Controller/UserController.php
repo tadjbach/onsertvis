@@ -19,13 +19,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class UserController extends Controller
 {
-    /* PRIVATE VAR */
-
-    /* PRIVATE FUNCTION */
-
-    /* PUBLIC FUNCTION */
-
-
     public function addAction(Request $request){
       $content = $this->render('SEPlatformBundle:User:add.html.twig',
               array(

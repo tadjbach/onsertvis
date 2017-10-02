@@ -13,87 +13,77 @@
 {% endblock %}
 
 {% block layout_body %}
+<div class="well">
+    <div class="row">
+         <div id="content" class="col-md-12">
 
-  <div class="row">
-    <div id="content" class="col-md-12">
-         <div class="col-md-6">
-           <div class="panel panel-default">
-             <i class="ad-date">Mise en ligne le <b>{{ advert.dateCreation|date('d/m/Y') }}</b> à <b>{{ advert.dateCreation|date('H:m') }}</b>
-                 dans<b>
-                 {% if advert.category.labelNormal != 'Autres' %}
-                     {{ advert.category.labelNormal }}
-                 {% else %}
-                     Sans catégorie
+         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and advert.user ==  app.user %}
+             <div class="col-md-12 alert alert-warning" role="alert">
+                 Vous êtes proprétaire de la demande
+             </div>
+             {% endif %}
+
+          <div class="col-md-8">
+            <h3 class="title-advert">{{ advert.title }}</h3>
+              <blockquote>
+                <h5>
+                  <i>Mise en ligne le <b>{{ advert.dateCreation|date('d/m/Y') }}</b> à <b>{{ advert.dateCreation|date('H:m') }}</b></i>
+                </h5>
+                <h5>{% if advert.category.labelNormal != 'Autres' %}
+                        <i>Dans <b>{{ advert.category.labelNormal }}</b></i>
+                    {% else %}
+                        <b>Sans catégorie</b>
+                    {% endif %}
+                </h5>
+                <h5>
+                  <i>Ville de </i><b>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</b></i>
+                </h5>
+            </blockquote>
+            <blockquote>
+                <h5>
+                  <i>Par <b>{{ advert.user }}</b>
+                  </i>
+                  <a
+                      href="{{ path('se_platform_user_view', {'userId': advert.user.id}) }}"
+                      >(Voir le profil)</a>
+                </h5>
+                {% if advert.user.isDetailVisible %}
+                <h5>
+                  <i>Contact : <b>{{ advert.user.phoneNumber|split('', 2)|join(' ') }}</b>
+                  </i>
+                </h5>
                  {% endif %}
-               </b>
-             </i>
-                <div class="panel-body text-center se-item-link">
-                   {% if advert.image == null %}
-                   <img class="se-img" src="{{ asset(advert.webPathNoImage) }}" alt="{{ asset(advert.webPathNoImage) }}">
-                   {% else %}
-                       <img class="se-img" src="{{ asset(advert.image.webPath) }}" alt="{{ asset(advert.image.webPath) }}">
-                   {% endif %}
-                </div>
-                <div class="panel-footer se-panel-footer">
-                   <h4 class="truncate">
-                     {{ advert.title }}
-                   </h4>
+                 <h5>
+                   <i>Disponibilité : </i>
+                         {% if advert.user.calendar|length > 6 %}
+                         <b>Tous les jours</b>
+                        {% else %}
+                            {% for day in advert.user.calendar %}
+                                <b class="advert-calendar">{{ day.dayFrAbbr  }}</b>
+                            {% else %}
+                              <b>Me contacter</b>
+                              {% endfor %}
+                         {% endif %}
+                 </h5>
+            </blockquote>
+            <blockquote>
+              <h5>
+                <i>Description : </i>
+              </h5>
+              <p>{{ advert.detail |nl2br }}</p>
+            </blockquote>
 
-                   <p>{{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }}
-                     ({{ advert.user.PostalCode.city.departement.labelNormal }} -
-                     {{ advert.user.PostalCode.city.departement.region.labelNormal }})
-                   </p>
-                </div>
-            </div>
+          </div>
+          <div class="col-md-4">
+                {% block view_advert_auction %}{% endblock %}
+          </div>
+
+
          </div>
-
-         <div class="col-md-6">
-                <div class="text-center se-item-link detail-body">
-                  <div class="col-md-12 text-center">
-
-                      {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}
-                  </div>
-                </div>
-         </div>
-       </div>
-   </div>
-   <div class="row">
+     </div>
+ </div>
+<div class="row">
      <div id="content" class="col-md-12">
-       <div class="col-md-6">
-            <h4 class="cat-title">Description</h4>
-            <p>{{ advert.detail |nl2br }}</p>
-        </div>
-        <div class="col-md-6">
-             <h4 class="cat-title">Demandeur</h4>
-             <p>Visible :
-                    {% if advert.user.isDetailVisible %}
-                          <span class="label label-success">Oui</span>
-                    {% else %}
-                          <span class="label label-danger">Non</span>
-                    {% endif %}
-            </p>
-             <p>Actif :
-                    {% if advert.user.enabled %}
-                          <span class="label label-success">Oui</span>
-                    {% else %}
-                          <span class="label label-danger">Non</span>
-                    {% endif %}
-            </p>
-             <p>Mail : {{ advert.user.email }}</p>
-             <p>Pseudo : <a href="{{ path('se_platform_admin_view_user' , {'id' : advert.user.id }) }}" >
-                         {{advert.user}}
-                       </a>
-              </p>
-             <p>Tél :  {{ advert.user.phoneNumber|split('', 2)|join(' ') }}</p>
-             <p>Adresse : {{ advert.user.address }} {{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }}
-                ({{ advert.user.PostalCode.city.departement.labelNormal }})</p>
-            <p>Adresse IP : {{advert.user.ipAddress}}</p>
-        </div>
-    </div>
-   </div>
-
-   <div class="row">
-     <div class="col-md-12">
        <div class="col-md-6">
             <h4 class="cat-title">Action </h4>
             <table class="table" id="tblGrid">
@@ -174,11 +164,51 @@
                       <span class="label label-warning">Offre en cours</span>
                   </td>
                   {% endif %}
+                  <td class="text-center">
+                      <a href="#todo" class="btn btn-primary">Voir les offres</a>
+                    </td>
                 </tr>
               </tbody>
             </table>
         </div>
-
-     </div>
+        <div class="col-md-6">
+             <h4 class="cat-title">Demandeur</h4>
+             <p>Visible :
+                    {% if advert.user.isDetailVisible %}
+                          <span class="label label-success">Oui</span>
+                    {% else %}
+                          <span class="label label-danger">Non</span>
+                    {% endif %}
+            </p>
+             <p>Actif :
+                    {% if advert.user.enabled %}
+                          <span class="label label-success">Oui</span>
+                    {% else %}
+                          <span class="label label-danger">Non</span>
+                    {% endif %}
+            </p>
+             <p>Mail : {{ advert.user.email }}</p>
+             <p>Pseudo : <a href="{{ path('se_platform_admin_view_user' , {'id' : advert.user.id }) }}" >
+                         {{advert.user}}
+                       </a>
+              </p>
+             <p>Tél :  {{ advert.user.phoneNumber|split('', 2)|join(' ') }}</p>
+             <p>Adresse : {{ advert.user.address }} {{ advert.user.PostalCode.value }} {{ advert.user.PostalCode.city.labelNormal }}
+                ({{ advert.user.PostalCode.city.departement.labelNormal }})</p>
+            <p>Adresse IP : {{advert.user.ipAddress}}</p>
+        </div>
+    </div>
    </div>
+
+   <div class="row">
+     <div id="content" class="col-md-12">
+        <h4 class="cat-title">Enchères </h4>
+           <div class="text-center se-item-link detail-body">
+             <div class="col-md-12 text-center">
+                 {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}
+             </div>
+           </div>
+      </div>
+    </div>
+
 {% endblock %}

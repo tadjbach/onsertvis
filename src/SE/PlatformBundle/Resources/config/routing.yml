@@ -79,17 +79,17 @@ se_platform_admin_list_adverts:
         page: \d*
 
 se_platform_admin_list_auctions:
-    path:     /se/manage/admin/auctions
+    path:     /se/manage/auctions
     defaults:
         _controller: SEPlatformBundle:Admin:listAuctions
 
 se_platform_admin_list_messages:
-    path:     /se/manage/admin/messages
+    path:     /se/manage/messages
     defaults:
         _controller: SEPlatformBundle:Admin:listMessages
 
 se_platform_admin_list_comments:
-    path:     /se/manage/admin/comments
+    path:     /se/manage/comments
     defaults:
         _controller: SEPlatformBundle:Admin:listComments
 

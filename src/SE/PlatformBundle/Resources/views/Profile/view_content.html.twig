@@ -37,25 +37,17 @@
           <h5>
              {% if user.isAcountComplete == 1 %}
             <i><b>Disponibilité : </b></i>
-                  {% if user.calendar|length > 6 %}
-                  <b>Tous les jours</b>
-                 {% else %}
-                     {% for day in user.calendar %}
-                         <span class="advert-calendar">{{ day.dayFrAbbr  }}</span>
-                     {% else %}
-                       <span>Me contacter</span>
-                       {% endfor %}
-                  {% endif %}
+                {% for daycal in calendar %}
+                    <span class="label label-default{% if daycal in user.calendar %} se-badge{% else %} badge-disable{% endif %}">{{ daycal.dayFrAbbr }}</span>
+                {% endfor %}
               {% endif %}
           </h5>
           <h5>
         {% if user.isAcountComplete == 1 %}
             <i><b>Mode de paiement accepté : </b></i>
-               {% for pay in user.payment %}
-                   <span class="advert-calendar">{{ pay.labelNormal  }}</span>
-               {% else %}
-                 <span>Me contacter</span>
-                 {% endfor %}
+            {% for pay in payment %}
+                <span class="label label-default{% if pay in user.payment %} se-badge{% else %} badge-disable{% endif %}">{{ pay.labelNormal }}</span>
+            {% endfor %}
             {% endif %}
           </h5>
 
