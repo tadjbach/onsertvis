@@ -38,21 +38,29 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ path('se_platform_advert_user_list') }}">Mes demandes</a></li>
                                 <li>
+                                  <a href="{{ path('se_platform_advert_user_list') }}">Mes demandes</a>
+                                </li>
+                                <li>
+                                  <a href="{{ path('se_platform_auction_user_receive') }}">Mes offres</a>
+                                </li>
+                              <!--  <li>
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mes offres<b class="caret"></b></a>
                                     <ul class="dropdown-menu">
                                       <li><a href="{{ path('se_platform_auction_user_receive') }}">Offres reçues</a></li>
                                       <li><a href="{{ path('se_platform_auction_user_send') }}">Offres proposées</a></li>
                                     </ul>
+                                  </li>-->
+                                  <li>
+                                    <a href="{{ path('se_platform_message_user_receive') }}">Mes messages</a>
                                   </li>
-                                <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Mes questions<b class="caret"></b></a>
+                                <!--   <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">Mes questions<b class="caret"></b></a>
                                   <ul class="dropdown-menu">
                                     <li><a href="{{ path('se_platform_message_user_receive') }}">Questions reçus</a></li>
                                     <li><a href="{{ path('se_platform_message_user_send') }}">Questions envoyés</a></li>
                                   </ul>
                                 </li>
-                                </li>
+                                </li>-->
                                   <li><a href="{{ path('se_platform_comment_user_list') }}">Mes avis</a></li>
                                 <li><a href="{{ path('se_platform_user_edit') }}" >Mon compte</a></li>
                                 <li role="separator" class="divider"></li>

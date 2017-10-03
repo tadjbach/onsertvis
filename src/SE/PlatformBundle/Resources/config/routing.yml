@@ -100,7 +100,7 @@ se_platform_admin_list_comments:
         _controller: SEPlatformBundle:Admin:listComments
         page:   1
     requirements:
-        page: \d*           
+        page: \d*
 
 # Filter Routes :
 se_platform_departement_by_region:
@@ -192,7 +192,7 @@ se_platform_advert_user_list:
     requirements:
         page: \d*
 
-# Auction Routes :
+# Auction Routes :        
 se_platform_auction_list:
     path:   /enchere-en-cours/{advertId}
     defaults:
