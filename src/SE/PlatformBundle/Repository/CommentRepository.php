@@ -12,6 +12,23 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
+  public function getCommentListAdmin( $page, $nbPerPage){
+    $qb=$this->createQueryBuilder('comment');
+
+    $qb->innerJoin('comment.sender', 'sender')
+        ->addSelect('sender')
+        ->leftJoin('comment.advert', 'advert')
+        ->addSelect('advert')
+        ->innerJoin('comment.receiver', 'receiver')
+        ->addSelect('receiver');
+
+    $qb->orderBy('comment.dateCreation', 'DESC')->getQuery();
+    $qb->setFirstResult(($page-1) * $nbPerPage)->setMaxResults($nbPerPage);
+
+    return new Paginator($qb, true);
+
+  }
+
     public function getCommentListUser($userId, $state,  $page, $nbPerPage){
       $qb = $this->createQueryBuilder('comment')
          ->leftJoin('comment.receiver', 'receiver')

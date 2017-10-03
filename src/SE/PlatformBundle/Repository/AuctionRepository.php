@@ -13,6 +13,28 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class AuctionRepository extends \Doctrine\ORM\EntityRepository
 {
+  public function getAuctionListAdmin($auctionState, $page, $nbPerPage){
+    $qb=$this->createQueryBuilder('auction');
+
+    $qb->innerJoin('auction.user', 'user_auction')
+        ->addSelect('user_auction')
+        ->leftJoin('auction.advert', 'advert')
+        ->addSelect('advert')
+        ->innerJoin('advert.user', 'user_advert')
+          ->addSelect('user_advert');
+
+        if($auctionState !== NULL && $auctionState !== '0')
+        {
+            $qb->andWhere($qb->expr()->eq('auction.state', $auctionState));
+        }
+
+
+    $qb->orderBy('auction.dateCreation', 'DESC')->getQuery();
+    $qb->setFirstResult(($page-1) * $nbPerPage)->setMaxResults($nbPerPage);
+
+    return new Paginator($qb, true);
+
+  }
   public function getAuctionList($advertId){
     $qb=$this->createQueryBuilder('auction');
     $qb->innerJoin('auction.advert', 'advert')

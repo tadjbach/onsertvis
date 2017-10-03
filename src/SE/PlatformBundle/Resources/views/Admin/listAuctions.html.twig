@@ -15,10 +15,67 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         <h4 class="cat-title">titleResult</h4>
+         <h4 class="cat-title">{{titleResult}}</h4>
             <table class="table" id="tblGrid">
+              <thead id="tblHead">
+                  <tr>
+                      <th>Date de création</th>
+                      <th>Enchirisseur</th>
+                      <th>Demande</th>
+                      <th>Offre</th>
+                      <th>Etat</th>
+                  </tr>
+              </thead>
                 <tbody>
-              TODO
+                {% for auction in listAuctions %}
+                <tr>
+                  <td>
+                    {{ auction.dateCreation|date('d/m/Y') }}
+                    à
+                    {{ auction.dateCreation|date('H:i:s') }}
+                 </td>
+                  <td>
+                    <a href="{{ path('se_platform_admin_view_user' , {'id' : auction.user.id }) }}" >
+                      {{auction.user}}
+                    </a>
+                 </td>
+                   <td>
+                     <a href="{{ path('se_platform_admin_view_advert' , {'id' : auction.advert.id }) }}" >
+                      {{auction.advert.title}} (<a href="{{ path('se_platform_admin_view_user' , {'id' : auction.advert.user.id }) }}" >
+                        {{auction.advert.user}}
+                      </a>)
+                    </a>
+                   </td>
+                   <td>
+                     {% if auction.state == 1 %}
+                         <span class="label label-warning">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
+                     {% elseif auction.state == 2 %}
+                         <span class="label label-success">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
+                     {% elseif auction.state == 3 %}
+                         <span class="label label-default">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
+                     {% endif %}
+                  </td>
+                  <td>
+                    {% if auction.state == 1 %}
+                        <span class="label label-warning">En cours</span>
+                    {% elseif auction.state == 2 %}
+                        <span class="label label-success">Acceptée</span>
+                        <div class="label label-success"
+                              data-toggle="tooltip"
+                                    data-placement="bottom" title="La demande n'est plus visible sur le site">
+                         <i class="glyphicon glyphicon-info-sign"> </i>
+                        </div>
+                    {% elseif auction.state == 3 %}
+                        <span class="label label-default">Déclinée</span>
+                        <div class="label label-default"
+                              data-toggle="tooltip"
+                                    data-placement="bottom" title="La demande n'est plus visible sur le site">
+                         <i class="glyphicon glyphicon-info-sign"> </i>
+                        </div>
+                    {% endif %}
+                 </td>
+               </tr>
+                {% endfor %}
                 </tbody>
             </table>
        </div>

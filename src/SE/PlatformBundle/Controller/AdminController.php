@@ -28,7 +28,14 @@ class AdminController extends Controller
           private $advertcategory;
           private $advertState;
 
-      private function getDoctrineManager(){
+        /* Auction */
+          private $auctionState;
+
+      private function getListAuctionFilterAttributes(Request $request){
+          $this->auctionState = $request->query->get('state');
+      }
+
+       private function getDoctrineManager(){
         return $this->getDoctrine()->getManager();
       }
 
@@ -55,6 +62,11 @@ class AdminController extends Controller
       private function getAdvertState(){
           $em = $this->getDoctrineManager();
           return $em->getRepository('SEPlatformBundle:AdvertState')->findAll();
+      }
+
+      private function getAuctionState(){
+          $em = $this->getDoctrineManager();
+          return $em->getRepository('SEPlatformBundle:AuctionState')->findAll();
       }
 
       private function getCategory(){
@@ -113,7 +125,8 @@ class AdminController extends Controller
          */
          public function viewUserAction(Request $request, $id){
            $em = $this->getDoctrineManager();
-
+           $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
+           $payment = $em->getRepository('SEPlatformBundle:payment')->findAll();
            $listComment = $this->getDoctrine()
                ->getManager()
                ->getRepository('SEPlatformBundle:Comment')
@@ -140,6 +153,8 @@ class AdminController extends Controller
            return $this->render('SEPlatformBundle:Admin:viewUser.html.twig',
                        array(
                          'user'=> $user,
+                        'calendar'=>$calendar,
+                        'payment'=>$payment,
                        'listComment'=>$listComment,
                        'countReceivedAuction'=>count($listReceivedAuctions),
                        'countProposedAuction'=>count($listProposedAuctions),
@@ -190,9 +205,11 @@ class AdminController extends Controller
            $em = $this->getDoctrineManager();
 
            $advert = $em->find('SEPlatformBundle:Advert', $id);
+           $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
 
            return $this->render('SEPlatformBundle:Admin:viewAdvert.html.twig',
                        array(
+                           'calendar'=>$calendar,
                          'advert'=> $advert));
          }
 
@@ -313,42 +330,83 @@ class AdminController extends Controller
         /**
          * @Security("has_role('ROLE_SUPER_ADMIN')")
          */
-        public function listAuctionsAction(){
-          $nbPages = 1;
-          $page = 1;
+        public function listAuctionsAction(Request $request, $page){
+          $em = $this->getDoctrineManager();
 
-            return $this->render('SEPlatformBundle:Admin:listAuctions.html.twig', array(
-              'nbPages'     => $nbPages,
-              'page'        => $page,
+          $this->getListAuctionFilterAttributes($request);
 
-            ));
+          $listAuctions = $em->getRepository('SEPlatformBundle:Auction')
+                              ->getAuctionListAdmin(
+                                      $this->auctionState,
+                                      $page,
+                                      $this->nbPerPage);
+
+          $titleResult = count($listAuctions) == 0 ?'Aucune offre' :
+                  (count($listAuctions) > 1 ? count($listAuctions).' offres' : count($listAuctions).' offre');
+
+          $nbPages = ceil(count($listAuctions)/$this->nbPerPage);
+
+          return $this->render('SEPlatformBundle:Admin:listAuctions.html.twig',
+              array(
+                  'titleResult'=>$titleResult,
+                  'nbPages'     => $nbPages,
+                  'page'        => $page,
+                  'listAuctions'=>$listAuctions,
+                  'auctionState'=>$this->getAuctionState()
+              ));
         }
 
         /**
          * @Security("has_role('ROLE_SUPER_ADMIN')")
          */
-        public function listMessagesAction(){
-          $nbPages = 1;
-          $page = 1;
+        public function listMessagesAction(Request $request, $page){
+          $em = $this->getDoctrineManager();
 
-            return $this->render('SEPlatformBundle:Admin:listMessages.html.twig', array(
-              'nbPages'     => $nbPages,
-              'page'        => $page,
+          //$this->getListMessageFilterAttributes($request);
 
-            ));
+          $listMessages = $em->getRepository('SEPlatformBundle:Message')
+                              ->getMessageListAdmin(
+                                      $page,
+                                      $this->nbPerPage);
+
+          $titleResult = count($listMessages) == 0 ?'Aucun message' :
+                  (count($listMessages) > 1 ? count($listMessages).' messages' : count($listMessages).' message');
+
+          $nbPages = ceil(count($listMessages)/$this->nbPerPage);
+
+          return $this->render('SEPlatformBundle:Admin:listMessages.html.twig',
+              array(
+                  'titleResult'=>$titleResult,
+                  'nbPages'     => $nbPages,
+                  'page'        => $page,
+                  'listMessages'=>$listMessages
+              ));
         }
 
         /**
          * @Security("has_role('ROLE_SUPER_ADMIN')")
          */
-        public function listCommentsAction(){
-          $nbPages = 1;
-          $page = 1;
+        public function listCommentsAction(Request $request, $page){
+          $em = $this->getDoctrineManager();
 
-            return $this->render('SEPlatformBundle:Admin:listComments.html.twig', array(
-              'nbPages'     => $nbPages,
-              'page'        => $page,
+          //$this->getListMessageFilterAttributes($request);
 
-            ));
+          $listComments = $em->getRepository('SEPlatformBundle:Comment')
+                              ->getCommentListAdmin(
+                                      $page,
+                                      $this->nbPerPage);
+
+          $titleResult = count($listComments) == 0 ?'Aucun avis' :
+                  (count($listComments) > 1 ? count($listComments).' avis' : count($listComments).' avis');
+
+          $nbPages = ceil(count($listComments)/$this->nbPerPage);
+
+          return $this->render('SEPlatformBundle:Admin:listComments.html.twig',
+              array(
+                  'titleResult'=>$titleResult,
+                  'nbPages'     => $nbPages,
+                  'page'        => $page,
+                  'listComments'=>$listComments
+              ));
         }
 }

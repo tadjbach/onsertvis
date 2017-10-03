@@ -15,11 +15,67 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         <h4 class="cat-title">titleResult</h4>
+         <h4 class="cat-title">{{titleResult}}</h4>
             <table class="table" id="tblGrid">
-                <tbody>
-              TODO
-                </tbody>
+              <thead id="tblHead">
+                  <tr>
+                      <th>Date de création</th>
+                      <th>Envoyeur</th>
+                      <th>Recepteur</th>
+                      <th>Demande</th>
+                      <th>Note</th>
+                      <th>Publié</th>
+                      <th>Supprimé</th>
+                  </tr>
+              </thead>
+              <tbody>
+            {% for comment in listComments %}
+            <tr>
+              <td>
+                {{ comment.dateCreation|date('d/m/Y') }}
+                à
+                {{ comment.dateCreation|date('H:i:s') }}
+             </td>
+             <td>
+               <a href="{{ path('se_platform_admin_view_user' , {'id' : comment.sender.id }) }}" >
+                 {{comment.sender}}
+               </a>
+            </td>
+              <td>
+                <a href="{{ path('se_platform_admin_view_user' , {'id' : comment.receiver.id }) }}" >
+                  {{comment.receiver}}
+                </a>
+             </td>
+             <td>
+               <a href="{{ path('se_platform_admin_view_advert' , {'id' : comment.advert.id }) }}" >
+                {{comment.advert.title}} (<a href="{{ path('se_platform_admin_view_user' , {'id' : comment.advert.user.id }) }}" >
+                  {{comment.advert.user}}
+                </a>)
+              </a>
+             </td>
+              <td>
+                <span class="label label-default se-badge">{{ comment.rate }} / 5</span>
+              </td>
+             <td>
+                {% if comment.isPublished %}
+                  <span class="label label-success">Oui</span>
+                {% else %}
+                  <span class="label label-danger">Non</span>
+                {% endif %}
+            </td>
+            <td>
+               {% if comment.isDeleted %}
+                 <span class="label label-success">Oui</span>
+               {% else %}
+                 <span class="label label-danger">Non</span>
+               {% endif %}
+           </td>
+
+            </tr>
+            {% else %}
+                <div>Pas (encore !) d'avis</div>
+            {% endfor %}
+              </tbody>
             </table>
        </div>
    </div>

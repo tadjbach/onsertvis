@@ -3,27 +3,19 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4 filter">
-                  <input name="title" type="text"
-                        value="{{ app.request.query.get('title') }}"
-                        class="form-control"
-                        placeholder="">
-                </div>
-                <div class="col-md-2 filter">
-                      <select class="form-control" name="advertState">
+                      <select class="form-control" name="auctionState">
                           <option value='0' >Tous les états</option>
-
+                          {% for state in auctionState %}
+                              <option {{ app.request.query.get('auctionState')== state.id ? ' selected ' : ' ' }}
+                                  value={{ state.id }}>{{ state.labelNormal }}
+                              </option>
+                          {% endfor %}
                       </select>
                 </div>
-                <div class="col-md-2 filter">
-                      <select class="form-control" name="category">
-                          <option value='0' >Toutes les catégories</option>
-
-                      </select>
-                </div>
-                <div class="col-md-2 filter">
+                <div class="col-md-4 filter">
                     <input class="btn btn-lg-se btn-primary" type="submit" value="Afficher"  />
                 </div>
-                <div class="col-md-2 filter">
+                <div class="col-md-4 filter">
                   <a href="{{ path('se_platform_admin_list_auctions') }}"
                             type="button" class="btn btn-lg-se btn-primary" >
                              Réinitialiser

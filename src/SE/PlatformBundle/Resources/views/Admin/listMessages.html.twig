@@ -15,10 +15,63 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         <h4 class="cat-title">titleResult</h4>
+         <h4 class="cat-title">{{titleResult}}</h4>
             <table class="table" id="tblGrid">
+              <thead id="tblHead">
+                  <tr>
+                      <th>Date de création</th>
+                      <th>Envoyeur</th>
+                      <th>Recepteur</th>
+                      <th>Demande</th>
+                      <th>Publié</th>
+                      <th>Supprimé</th>
+                  </tr>
+              </thead>
                 <tbody>
-              TODO
+              {% for msg in listMessages %}
+              <tr>
+                <td>
+                  {{ msg.dateCreation|date('d/m/Y') }}
+                  à
+                  {{ msg.dateCreation|date('H:i:s') }}
+               </td>
+               <td>
+                 <a href="{{ path('se_platform_admin_view_user' , {'id' : msg.sender.id }) }}" >
+                   {{msg.sender}}
+                 </a>
+              </td>
+                <td>
+                  <a href="{{ path('se_platform_admin_view_user' , {'id' : msg.receiver.id }) }}" >
+                    {{msg.receiver}}
+                  </a>
+               </td>
+               <td>
+                 <a href="{{ path('se_platform_admin_view_advert' , {'id' : msg.advert.id }) }}" >
+                  {{msg.advert.title}} (<a href="{{ path('se_platform_admin_view_user' , {'id' : msg.advert.user.id }) }}" >
+                    {{msg.advert.user}}
+                  </a>)
+                </a>
+               </td>
+
+               <td>
+                  {% if msg.isPublished %}
+                    <span class="label label-success">Oui</span>
+                  {% else %}
+                    <span class="label label-danger">Non</span>
+                  {% endif %}
+              </td>
+              <td>
+                 {% if msg.isDeleted %}
+                   <span class="label label-success">Oui</span>
+                 {% else %}
+                   <span class="label label-danger">Non</span>
+                 {% endif %}
+             </td>
+
+              </tr>
+              {% else %}
+                  <div>Pas (encore !) de messages</div>
+              {% endfor %}
                 </tbody>
             </table>
        </div>

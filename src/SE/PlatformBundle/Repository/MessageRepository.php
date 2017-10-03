@@ -12,6 +12,23 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class MessageRepository extends \Doctrine\ORM\EntityRepository
 {
+  public function getMessageListAdmin( $page, $nbPerPage){
+    $qb=$this->createQueryBuilder('message');
+
+    $qb->innerJoin('message.sender', 'sender')
+        ->addSelect('sender')
+        ->leftJoin('message.advert', 'advert')
+        ->addSelect('advert')
+        ->innerJoin('message.receiver', 'receiver')
+          ->addSelect('receiver');
+
+    $qb->orderBy('message.dateCreation', 'DESC')->getQuery();
+    $qb->setFirstResult(($page-1) * $nbPerPage)->setMaxResults($nbPerPage);
+
+    return new Paginator($qb, true);
+
+  }
+
   public function getAdvertByUser($userId){
     $qb=$this->createQueryBuilder('message');
 

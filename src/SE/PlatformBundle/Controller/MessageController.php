@@ -41,6 +41,8 @@ class MessageController extends Controller
         $mailer  = $this->get('se_platform.mailer');
         $answer = $isAnswer == 1 ? 'Nouvelle réponse' : 'Nouvelle question';
 
+          $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
+
         $advert = $em->find('SEPlatformBundle:Advert', $advertId);
         $userSender = $this->getUser();
         $userReceive=$em->find('SEPlatformBundle:User', $receiveId);
@@ -97,6 +99,7 @@ class MessageController extends Controller
               'form' => $form->createView(),
               'listConversation'     => $listConversation,
               'countMessage'=> $countMessage,
+              'calendar' => $calendar,
               'advert'=> $advert
           ));
         }
@@ -105,6 +108,7 @@ class MessageController extends Controller
               'form' => $form->createView(),
               'listConversation'     => $listConversation,
               'countMessage'=> $countMessage,
+              'calendar' => $calendar,
               'advert'=> $advert
           ));
         }
