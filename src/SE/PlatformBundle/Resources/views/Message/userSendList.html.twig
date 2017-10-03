@@ -79,15 +79,14 @@
                                  </td>
                                  <td>
                                       <p>
-                                          <a href="{{ path('se_platform_message_advert_send',{'advertId':msg.advert.id, 'receiverId': msg.receiver.id }) }}" class="btn btn-success">
-                                          <i class="glyphicon glyphicon-comment"></i>
+                                          <a href="{{ path('se_platform_message_advert_send',{'advertId':msg.advert.id, 'receiverId': msg.receiver.id }) }}" class="btn btn-default">
                                               Voir
                                           </a>
                                         </p>
                                     </td>
                                </tr>
                            {% else %}
-                               <div>Pas (encore !) de messages</div>
+                               <div>Pas de messages</div>
                            {% endfor %}
                     </tbody>
                     </table>
