@@ -55,15 +55,9 @@
                  {% endif %}
                  <h5>
                    <i>Disponibilité : </i>
-                         {% if advert.user.calendar|length > 6 %}
-                         <b>Tous les jours</b>
-                        {% else %}
-                            {% for day in advert.user.calendar %}
-                                <b class="advert-calendar">{{ day.dayFrAbbr  }}</b>
-                            {% else %}
-                              <b>Me contacter</b>
-                              {% endfor %}
-                         {% endif %}
+                       {% for daycal in calendar %}
+                           <span class="label label-default{% if daycal in advert.user.calendar %} se-badge{% else %} badge-disable{% endif %}">{{ daycal.dayFrAbbr }}</span>
+                       {% endfor %}
                  </h5>
             </blockquote>
             <blockquote>

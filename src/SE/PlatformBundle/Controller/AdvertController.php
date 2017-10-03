@@ -250,7 +250,8 @@ class AdvertController extends Controller
                 $em->persist($advert);
                 $em->flush();
 
-                if ($advert->getCpCity() == null or $advert->getPostalCode() == null) {
+                if ($advert->getCpCity() == null or $advert->getAddress() == null) {
+
                   $postalCode=$em->getRepository('SEPlatformBundle:PostalCode')
                          ->getPostalCodeByValue($this->getUser()->getCpCity());
 
@@ -259,6 +260,7 @@ class AdvertController extends Controller
                    }
 
                   $advert->setAddress($this->getUser()->getAddress());
+                  $advert->setCpCity($this->getUser()->getCpCity());
 
                   $em->flush();
                 }
@@ -491,6 +493,7 @@ class AdvertController extends Controller
       $em = $this->getDoctrineManager();
 
       $advert=$em->find('SEPlatformBundle:Advert', $id);
+      $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
 
         if ($advert->getIsPublished() == 0) {
           return $this->render('SEPlatformBundle:Advert:desactive.html.twig');
@@ -498,6 +501,7 @@ class AdvertController extends Controller
         else {
           return $this->render('SEPlatformBundle:Advert:view.html.twig',
                       array(
+                          'calendar' => $calendar,
                         'advert'=> $advert));
         }
 
