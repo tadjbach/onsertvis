@@ -71,6 +71,15 @@
               </h5>
           </blockquote>
           <blockquote>
+            <h5>
+              <i>Description : </i>
+            </h5>
+            <p>{{ advert.detail |nl2br }}</p>
+          </blockquote>
+
+        </div>
+        <div class="col-md-4">
+          <blockquote>
               <h5>
                 <i>Par <b>{{ advert.user }}</b>
                 </i>
@@ -87,19 +96,10 @@
                <h5>
                  <i>Disponibilité : </i>
                  {% for daycal in calendar %}
-                     <span class="label label-default{% if daycal in advert.user.calendar %} se-badge{% else %} badge-disable{% endif %}">{{ daycal.dayFrAbbr }}</span>
+                     <span class="label label-default{% if daycal in advert.user.calendar %} label-success{% else %} badge-disable{% endif %}">{{ daycal.dayFrAbbr }}</span>
                  {% endfor %}
                </h5>
           </blockquote>
-          <blockquote>
-            <h5>
-              <i>Description : </i>
-            </h5>
-            <p>{{ advert.detail |nl2br }}</p>
-          </blockquote>
-
-        </div>
-        <div class="col-md-4">
             {% block view_advert_auction %}{% endblock %}
         </div>
 

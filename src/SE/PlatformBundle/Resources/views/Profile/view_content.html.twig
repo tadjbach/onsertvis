@@ -1,9 +1,9 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-5">
         <blockquote>
-          <h5>{{user}}</h5>
+          {{user}}
           <h5>
              {% if user.isAcountComplete == 1 %}
                 {{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
@@ -17,10 +17,10 @@
           {% endif %}
             </blockquote>
           <blockquote>
-          <h5><i><b>Note : </b></i>{{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}</h5>
-          <h5><i><b>Membre depuis </b></i>: {{ user.dateCreation|date('d/m/Y') }}</h5>
+          <h5><i>Note : </i>{{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}</h5>
+          <h5><i>Membre depuis </i>: {{ user.dateCreation|date('d/m/Y') }}</h5>
           <h5>
-            <i><b>A propos :</b></i>
+            <i>A propos :</i>
           </h5>
           <h5>
            {% if user.isAcountComplete == 1 %}
@@ -36,60 +36,63 @@
 
           <h5>
              {% if user.isAcountComplete == 1 %}
-            <i><b>Disponibilité : </b></i>
+            <i>Disponibilité : </i>
                 {% for daycal in calendar %}
-                    <span class="label label-default{% if daycal in user.calendar %} se-badge{% else %} badge-disable{% endif %}">{{ daycal.dayFrAbbr }}</span>
+                    <span class="label label-default{% if daycal in user.calendar %} label-success{% else %} badge-disable{% endif %}">{{ daycal.dayFrAbbr }}</span>
                 {% endfor %}
               {% endif %}
           </h5>
           <h5>
         {% if user.isAcountComplete == 1 %}
-            <i><b>Mode de paiement accepté : </b></i>
-            {% for pay in payment %}
-                <span class="label label-default{% if pay in user.payment %} se-badge{% else %} badge-disable{% endif %}">{{ pay.labelNormal }}</span>
+            <i>Mode de paiement accepté : </i>
+            {% for pay in user.payment %}
+                <span class="label label-success">{{ pay.labelNormal }}</span>
+                {% else %}
+                Me contacter
             {% endfor %}
             {% endif %}
           </h5>
 
         </blockquote>
-
+        <blockquote>
+          Activité
+                <h5><span class="label label-default se-badge">{{countPublishAdvert}}</span> <span class="mar-lef-10">Demandes publiées</span></h5>
+                <h5><span class="label label-info">{{countReceivedAuction}}</span> <span class="mar-lef-10">Offres reçues</span></h5>
+                <h5><span class="label label-warning">{{ countProposedAuction }}</span> <span class="mar-lef-10">Offres proposées</span></h5>
+                <h5><span class="label label-success">{{countAcceptedAuction}}</span> <span class="mar-lef-10">Offres gagnées</span></h5>
+                <h5><span class="label label-danger">{{countLosedAuction}}</span> <span class="mar-lef-10">Offres perdues</span></h5>
+        </blockquote>
   </div>
-  <div class="col-md-4">
-    <blockquote>
-            <h5><span class="label label-info">{{countReceivedAuction}}</span> <span class="mar-lef-10">Offres reçues</span></h5>
-            <h5><span class="label label-warning">{{ countProposedAuction }}</span> <span class="mar-lef-10">Offres proposées</span></h5>
-            <h5><span class="label label-success">{{countAcceptedAuction}}</span> <span class="mar-lef-10">Offres gagnées</span></h5>
-            <h5><span class="label label-danger">{{countLosedAuction}}</span> <span class="mar-lef-10">Offres perdues</span></h5>
-    </blockquote>
-  </div>
-</div>
+  <div class="col-md-7">
 
-<div class="row">
-  <div class="col-md-12">
-      <blockquote>
-        Avis reçues ({{ listComment|length }})
-      </blockquote>
-        {% for comment in listComment %}
-        <div  class="well" >
-          <div class="row">
-            <div class="col-md-12">
-              <div class="col-md-4 text-center">
-                <h4>
-                  <a class='cat-link'
-                  href="{{ path('se_platform_user_view', {'userId': comment.sender.id}) }}" class="cat-link" >
-                                              {{ comment.sender }}
-                                          </a>
-                  </h4>
-                <h4><small>le {{ comment.dateCreation|date('d/m/Y') }}</small></h4>
-                <h5>Note : <span class="label label-default se-badge">{{ comment.rate }} / 5</span></h5>
-              </div>
-              <div class="col-md-8">
-                <h4>{{ comment.advert.title }}</h4>
-                <h5>{{ comment.content |nl2br }}</h5>
-              </div>
+    <div class="row">
+      <div class="col-md-12">
+          <blockquote>
+            Avis ({{ listComment|length }})
+          </blockquote>
+            {% for comment in listComment %}
+            <div  class="well box-well" >
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-4 text-center">
+                    <h4>
+                      <a class='cat-link'
+                      href="{{ path('se_platform_user_view', {'userId': comment.sender.id}) }}" class="cat-link" >
+                                                  {{ comment.sender }}
+                                              </a>
+                      </h4>
+                    <h4><small>le {{ comment.dateCreation|date('d/m/Y') }}</small></h4>
+                    <h5>Note : <span class="label label-default se-badge">{{ comment.rate }} / 5</span></h5>
+                  </div>
+                  <div class="col-md-8">
+                    <h4>{{ comment.advert.title }}</h4>
+                    <h5>{{ comment.content |nl2br }}</h5>
+                  </div>
+                </div>
+                </div>
             </div>
-            </div>
-        </div>
-          {% endfor %}
+              {% endfor %}
+      </div>
+    </div>
   </div>
 </div>

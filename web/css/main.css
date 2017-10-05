@@ -193,11 +193,16 @@ html, body{
 }
 .well-msg-inverse{
   background-color: #fff;
+  border: 1px solid rgba(42, 5, 64, 0.28);
 }
 .well-msg{
       background-color: rgba(42, 5, 64, 0.22);
 }
 
+.box-well, .well-msg{
+  background-color: rgba(229, 223, 22, 0.13);
+  border: 1px solid rgba(42, 5, 64, 0.28);
+}
 .se-well{
     background-color: #fff;
     width: 100%;
@@ -566,9 +571,13 @@ a.se-password, a.se-link{
 .rate-success{
     color:#5cb85c;
     font-size: 20px;
+    top: 5px;
+    left: 10px;
 }
 .rate-none{
     font-size: 20px;
+    top: 5px;
+    left: 10px;
 }
 .rate-warning{
     color: #f0ad4e;

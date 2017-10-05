@@ -62,7 +62,7 @@ class MessageController extends Controller
                   : count($listConversation).' messages';
         $form = $this->createForm(MessageType::class, $message);
 
-        if ($userReceive != $this->getUser()) {
+        if ($userReceive != $userSender) {
           if ($request->isMethod('POST')){
               $form->handleRequest($request);
 
@@ -82,8 +82,13 @@ class MessageController extends Controller
                   $mailer->sendEmail($advert,$answer, $answer, $userReceive->getEmail(), $body);
                   $session->getFlashBag()->add('addSuccess','Message bien envoyée.');
 
-                  return $this->redirectToRoute('se_platform_advert_user_list', array('slug'=> $advert->getSlug(),
-                                                                                'id'=> $advert->getId()));
+                  if ($userSender != $advert->getUser()) {
+                      return $this->redirectToRoute('se_platform_message_advert_send', array('advertId'=>$advert->getId(),
+                                                                                      'receiverId'=> $userReceive->getId()));
+                  }
+
+                  return $this->redirectToRoute('se_platform_message_advert_receive', array('advertId'=>$advert->getId(),
+                                                                                  'senderId'=> $userSender->getId()));
               }
           }
         }

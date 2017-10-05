@@ -164,6 +164,10 @@ class ProfileController extends Controller
              ->getRepository('SEPlatformBundle:Auction')
              ->getStateAuctionUser($userId, 3);
 
+        $listPublishAdvert = $em
+            ->getRepository('SEPlatformBundle:Advert')
+            ->getAdvertByUser($userId);
+
       $user = $em->find('SEPlatformBundle:User', $userId);
 
       $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
@@ -182,6 +186,7 @@ class ProfileController extends Controller
             'listComment'=>$listComment,
             'calendar' => $calendar,
             'payment' => $payment,
+            'countPublishAdvert'=>count($listPublishAdvert),
             'countReceivedAuction'=>count($listReceivedAuctions),
             'countProposedAuction'=>count($listProposedAuctions),
             'countAcceptedAuction'=>count($listAcceptedAuctions),

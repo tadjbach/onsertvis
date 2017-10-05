@@ -16,7 +16,7 @@
                        'receiveId': advert.user.id,
                        'isAnswer':0
                        }) }}" class="btn btn-primary btn-md btn-block">
-                           Contacter
+                           Envoyer un message
                        </a>
                  {% endif %}
              {% else %}
@@ -26,7 +26,7 @@
                     </a>
                    <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0}) }}"
                    class="btn btn-primary btn-md btn-block">
-                       Contacter
+                       Envoyer un message
                    </a>
            {% endif %}
            {% if advert.auctionState == 0 %}
