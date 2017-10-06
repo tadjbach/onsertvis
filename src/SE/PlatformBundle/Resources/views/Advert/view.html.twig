@@ -3,7 +3,8 @@
 {% block view_advert_auction %}
 
          <div class="col-md-12 text-center">
-
+             <div class="col-md-2"></div>
+           <div class="col-md-8">
            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                {% if advert.user !=  app.user %}
                         <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}"
@@ -52,6 +53,7 @@
               {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
            </button>
            {% endif %}
-
+           </div>
+             <div class="col-md-2"></div>
          </div>
 {% endblock %}

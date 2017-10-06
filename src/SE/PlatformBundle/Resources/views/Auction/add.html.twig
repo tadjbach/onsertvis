@@ -6,6 +6,8 @@
                 <strong>Attention!</strong> Je propose mon offre pour "<b>{{advert.BudgetType.labelNormal}}</b>"
           </div>
             {{ include('SEPlatformBundle:Auction:form.html.twig') }}
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
             <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0}) }}"
             class="btn btn-primary btn-md btn-block">
                 Envoyer un message
@@ -20,5 +22,7 @@
                  >
                {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
             </button>
+            </div>
+            <div class="col-md-2"></div>
    </div>
         {% endblock %}

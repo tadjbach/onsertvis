@@ -4,6 +4,8 @@
       <div class="col-md-12 text-center">
                  {{ include('SEPlatformBundle:Message:form.html.twig') }}
 
+     <div class="col-md-2"></div>
+     <div class="col-md-8">
       <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}"
       class="btn btn-primary btn-md btn-block" >
           Faire une offre
@@ -18,5 +20,7 @@
          >
        {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
     </button>
+      </div>
+    <div class="col-md-2"></div>
     </div>
 {% endblock %}
