@@ -41,25 +41,28 @@ class MessageController extends Controller
         $mailer  = $this->get('se_platform.mailer');
         $answer = $isAnswer == 1 ? 'Nouvelle réponse' : 'Nouvelle question';
 
-          $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
-
+        $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
         $advert = $em->find('SEPlatformBundle:Advert', $advertId);
         $userSender = $this->getUser();
         $userReceive=$em->find('SEPlatformBundle:User', $receiveId);
 
         $message = new Message();
-
         $message->setSender($userSender);
         $message->setReceiver($userReceive);
         $message->setAdvert($advert);
 
-          $listConversation = $this->getDoctrine()
-              ->getManager()
-              ->getRepository('SEPlatformBundle:Message')
-              ->getConversationReceive($advertId,  $receiveId, $userSender->getId());
+        $message->setIsNew(1);
 
-          $countMessage = count($listConversation) <= 1 ? count($listConversation).' message'
-                  : count($listConversation).' messages';
+        $userReceive->setIsNewMessage(1);
+
+        $listConversation = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('SEPlatformBundle:Message')
+            ->getConversationReceive($advertId,  $receiveId, $userSender->getId());
+
+        $countMessage = count($listConversation) <= 1 ? count($listConversation).' message'
+                : count($listConversation).' messages';
+
         $form = $this->createForm(MessageType::class, $message);
 
         if ($userReceive != $userSender) {
@@ -83,7 +86,7 @@ class MessageController extends Controller
                   $session->getFlashBag()->add('addSuccess','Message bien envoyée.');
 
                   if ($userSender != $advert->getUser()) {
-                      return $this->redirectToRoute('se_platform_message_advert_send', array('advertId'=>$advert->getId(),
+                      return $this->redirectToRoute('se_platform_message_user_receive', array('advertId'=>$advert->getId(),
                                                                                       'receiverId'=> $userReceive->getId()));
                   }
 
@@ -124,34 +127,6 @@ class MessageController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function editAction($id){
-
-    }
-
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
-    public function deleteAction($id){
-
-    }
-
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
-    public function viewAction($slug, $id)
-    {
-
-    }
-
-//Super ADMIN
-    public function listAction(Request $request)
-    {
-
-    }
-
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
     public function listSendConversationAction($advertId, $receiverId){
       $em = $this->getDoctrineManager();
       $advert=$em->find('SEPlatformBundle:Advert', $advertId);
@@ -162,6 +137,15 @@ class MessageController extends Controller
            ->getRepository('SEPlatformBundle:Message')
            ->getConversationSender($advertId, $sender->getId(), $receiverId);
 
+           foreach ($listConversation as $msg) {
+             if ($msg->getReceiver() == $advert->getUser()) {
+               $msg->setIsNew(0);
+
+               $em->persist($msg);
+               $em->flush();
+             }
+           }
+
        $countMessage = count($listConversation) <= 1 ? count($listConversation).' message'
                : count($listConversation).' messages';
 
@@ -171,7 +155,7 @@ class MessageController extends Controller
            'advert'=>$advert,
            'advertId'=>$advertId,
            'senderId'=>$sender->getId(),
-           'receiveId'=>$receiverId
+           'receiveId'=>$advert->getUser()->getId(),
        ));
     }
 
@@ -183,11 +167,19 @@ class MessageController extends Controller
       $advert=$em->find('SEPlatformBundle:Advert', $advertId);
       $receiver = $this->getUser();
 
-
        $listConversation = $this->getDoctrine()
            ->getManager()
            ->getRepository('SEPlatformBundle:Message')
            ->getConversationReceive($advertId, $senderId, $receiver->getId());
+
+           foreach ($listConversation as $msg) {
+             if ($msg->getSender() == $advert->getUser()) {
+               $msg->setIsNew(0);
+
+               $em->persist($msg);
+               $em->flush();
+             }
+           }
 
        $countMessage = count($listConversation) <= 1 ? count($listConversation).' message'
                : count($listConversation).' messages';
@@ -197,7 +189,7 @@ class MessageController extends Controller
            'countMessage'=> $countMessage,
            'advert'=>$advert,
            'advertId'=>$advertId,
-           'senderId'=>$receiver->getId(),
+           'senderId'=>$advert->getUser()->getId(),
            'receiveId'=>$senderId
        ));
     }
@@ -213,6 +205,7 @@ class MessageController extends Controller
       $em = $this->getDoctrineManager();
       $user = $this->getUser();
 
+
       $listAdverstByUserFilter = $em->getRepository('SEPlatformBundle:Advert')
            ->getAdvertByUser($user->getId());
 
@@ -225,6 +218,10 @@ class MessageController extends Controller
        if ($page<1){
            throw new NotFoundHttpException('page"'.$page.'" inexistante');
        }
+
+       $user->setIsNewMessage(0);
+       $em->persist($user);
+       $em->flush();
 
       return $this->render('SEPlatformBundle:Message:userReceiveList.html.twig',
       array(
@@ -239,40 +236,90 @@ class MessageController extends Controller
       ));
     }
 
-/**
- * @Security("has_role('ROLE_AUTEUR')")
- */
-public function userSendListAction(Request $request, $page)
-{
-  $advertId = $request->query->get('advert');
-  $state = $request->query->get('state');
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function userSendListAction(Request $request, $page)
+    {
+      $advertId = $request->query->get('advert');
+      $state = $request->query->get('state');
 
-  $em = $this->getDoctrineManager();
-  $user = $this->getUser();
+      $em = $this->getDoctrineManager();
+      $user = $this->getUser();
 
-  $listAdverstByUserFilter = $em->getRepository('SEPlatformBundle:Message')
-              ->getAdvertByUser($user->getId());
+      $listAdverstByUserFilter = $em->getRepository('SEPlatformBundle:Message')
+                  ->getAdvertByUser($user->getId());
 
-  $listMessageSender = $em->getRepository('SEPlatformBundle:Message')
-       ->getMessageSender($advertId, $state, $user->getId(), $page, $this->nbPerPage);
+      $listMessageSender = $em->getRepository('SEPlatformBundle:Message')
+           ->getMessageSender($advertId, $state, $user->getId(), $page, $this->nbPerPage);
 
- $countMessage = count($listMessageSender) <= 1 ? count($listMessageSender).' conversation' : count($listMessageSender).' conversations';
- $nbPages = ceil(count($listMessageSender)/$this->nbPerPage);
+     $countMessage = count($listMessageSender) <= 1 ? count($listMessageSender).' conversation' : count($listMessageSender).' conversations';
+     $nbPages = ceil(count($listMessageSender)/$this->nbPerPage);
 
-   if ($page<1){
-       throw new NotFoundHttpException('page"'.$page.'" inexistante');
-   }
+       if ($page<1){
+           throw new NotFoundHttpException('page"'.$page.'" inexistante');
+       }
 
-  return $this->render('SEPlatformBundle:Message:userSendList.html.twig',
-  array(
-    'advert'=> $advertId,
-    'state'=> $state,
-    'countMessage'=>$countMessage,
-    'nbPages'     => $nbPages,
-    'page'        => $page,
-    'listAdvert'=>$listAdverstByUserFilter,
-    'listMessage'=>$listMessageSender,
-    'listState'=>$this->getAdvertState()
-  ));
-}
+      return $this->render('SEPlatformBundle:Message:userSendList.html.twig',
+      array(
+        'advert'=> $advertId,
+        'state'=> $state,
+        'countMessage'=>$countMessage,
+        'nbPages'     => $nbPages,
+        'page'        => $page,
+        'listAdvert'=>$listAdverstByUserFilter,
+        'listMessage'=>$listMessageSender,
+        'listState'=>$this->getAdvertState()
+      ));
+    }
+
+    public function viewMessageAction($advertId, $receiverId){
+        $em = $this->getDoctrineManager();
+        $isnew = "<h5 class='label label-success'>Lu</h5>";
+
+          $lastDateMessage = $em
+            ->getRepository('SEPlatformBundle:Message')
+            ->getLastDateMessage($advertId, $receiverId);
+
+            if ($lastDateMessage[0]->getIsNew() and $lastDateMessage[0]->getSender() != $this->getUser()) {
+              $isnew = "<h5 class='label label-danger'>Non lu</h5>";
+            }
+            else {
+              $isnew = "<h5 class='label label-success'></h5>";
+            }
+
+          return new Response(
+              $isnew
+          );
+    }
+
+    public function lastDateCreationAction($advertId, $receiverId){
+        $em = $this->getDoctrineManager();
+
+          $lastDateMessage = $em
+            ->getRepository('SEPlatformBundle:Message')
+            ->getLastDateMessage($advertId, $receiverId);
+
+            $lastDate = $lastDateMessage[0]->getDateCreation();
+            $lastDateDay = $lastDate->format('d/m/Y');
+            $lastDateHour = $lastDate->format('H:i:s');
+
+          return new Response(
+              "<h5>".$lastDateDay." - ".$lastDateHour."</h5>"
+          );
+    }
+
+    public function countMessageAction($advertId, $receiverId){
+        $em = $this->getDoctrineManager();
+        $countMessage = 'Voir';
+        $listMessage = $em->getRepository('SEPlatformBundle:Message')
+                        ->getLastDateMessage($advertId, $receiverId);
+
+          /*  $countMessage = count($listMessage) <= 1 ? count($listMessage).' message'
+                    : count($listMessage).' messages';*/
+
+        return new Response(
+          $countMessage
+        );
+    }
 }

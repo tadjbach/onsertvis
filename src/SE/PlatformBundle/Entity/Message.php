@@ -74,6 +74,13 @@ class Message
     private $isDeleted;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="isNew", type="boolean")
+     */
+    private $isNew;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreation", type="datetime")
@@ -290,5 +297,29 @@ class Message
     public function getReceiver()
     {
         return $this->receiver;
+    }
+
+    /**
+     * Set isNew
+     *
+     * @param boolean $isNew
+     *
+     * @return Message
+     */
+    public function setIsNew($isNew)
+    {
+        $this->isNew = $isNew;
+
+        return $this;
+    }
+
+    /**
+     * Get isNew
+     *
+     * @return boolean
+     */
+    public function getIsNew()
+    {
+        return $this->isNew;
     }
 }

@@ -167,6 +167,28 @@ class User extends BaseUser
      */
     private $rate;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isNewMessage", type="boolean")
+     */
+    private $isNewMessage=false;
+
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isNewAuction", type="boolean")
+     */
+    private $isNewAuction=false;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isValideAuction", type="boolean")
+     */
+    private $isValideAuction=false;
+
     public function __construct()
     {
         $this->dateCreation=new \DateTime();
@@ -736,5 +758,77 @@ class User extends BaseUser
     public function getIsDetailVisible()
     {
         return $this->isDetailVisible;
+    }
+
+    /**
+     * Set isNewMessage
+     *
+     * @param boolean $isNewMessage
+     *
+     * @return User
+     */
+    public function setIsNewMessage($isNewMessage)
+    {
+        $this->isNewMessage = $isNewMessage;
+
+        return $this;
+    }
+
+    /**
+     * Get isNewMessage
+     *
+     * @return boolean
+     */
+    public function getIsNewMessage()
+    {
+        return $this->isNewMessage;
+    }
+
+    /**
+     * Set isNewAuction
+     *
+     * @param boolean $isNewAuction
+     *
+     * @return User
+     */
+    public function setIsNewAuction($isNewAuction)
+    {
+        $this->isNewAuction = $isNewAuction;
+
+        return $this;
+    }
+
+    /**
+     * Get isNewAuction
+     *
+     * @return boolean
+     */
+    public function getIsNewAuction()
+    {
+        return $this->isNewAuction;
+    }
+
+    /**
+     * Set isValideAuction
+     *
+     * @param boolean $isValideAuction
+     *
+     * @return User
+     */
+    public function setIsValideAuction($isValideAuction)
+    {
+        $this->isValideAuction = $isValideAuction;
+
+        return $this;
+    }
+
+    /**
+     * Get isValideAuction
+     *
+     * @return boolean
+     */
+    public function getIsValideAuction()
+    {
+        return $this->isValideAuction;
     }
 }

@@ -12,46 +12,47 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
-  public function getPostalCodeAction(Request $request){
 
-        $em = $this
-                ->getDoctrine()
-                ->getManager();
+      public function getPostalCodeAction(Request $request){
 
-    if($request->isXmlHttpRequest())
-        {
-            $cp = $request->request->get('codepostal');
+            $em = $this
+                    ->getDoctrine()
+                    ->getManager();
 
-            $listPostalCode=$em
-                 ->getRepository('SEPlatformBundle:PostalCode')
-                 ->getPostalCode($cp);
+        if($request->isXmlHttpRequest())
+            {
+                $cp = $request->request->get('codepostal');
 
-            $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new JsonEncoder()));
+                $listPostalCode=$em
+                     ->getRepository('SEPlatformBundle:PostalCode')
+                     ->getPostalCode($cp);
 
-            $json = $serializer->serialize($listPostalCode, 'json');
+                $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new JsonEncoder()));
 
-            return new Response($json);
+                $json = $serializer->serialize($listPostalCode, 'json');
+
+                return new Response($json);
+            }
+
+            return new Response(null);
         }
 
-        return new Response(null);
-    }
+      public function indexAction()
+      {
 
-    public function indexAction()
-    {
+          $listCategory=$this->getDoctrine()
+              ->getManager()->getRepository('SEPlatformBundle:Category')
+              ->findAllOrder();
 
-        $listCategory=$this->getDoctrine()
-            ->getManager()->getRepository('SEPlatformBundle:Category')
-            ->findAllOrder();
+          $listRegion =$this->getDoctrine()
+              ->getManager()->getRepository('SEPlatformBundle:Region')
+              ->findAllOrder();
 
-        $listRegion =$this->getDoctrine()
-            ->getManager()->getRepository('SEPlatformBundle:Region')
-            ->findAllOrder();
-
-        return $this->render('SEPlatformBundle:Default:index.html.twig', array(
-            'listCategory'=>$listCategory,
-            'listRegion'=>$listRegion
-        ));
-    }
+          return $this->render('SEPlatformBundle:Default:index.html.twig', array(
+              'listCategory'=>$listCategory,
+              'listRegion'=>$listRegion
+          ));
+      }
 
     public function cguAction()
    {

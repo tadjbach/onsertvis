@@ -16,51 +16,41 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         <div class="text-right"><a href="{{ path('se_platform_message_user_send') }}" class="btn btn-success" >Afficher les messages envoyés (En tant qu'enchérisseur)</a></div>
+         <div class="text-right hidden-xs hidden-sm"><a href="{{ path('se_platform_message_user_send') }}" class="btn btn-success" >Afficher les messages envoyés (En tant qu'enchérisseur)</a></div>
+         <div class="text-center visible-xs visible-sm"><a href="{{ path('se_platform_message_user_send') }}" class="btn btn-success" >Afficher les messages envoyés</a></div>
         <h4 class="cat-title">{{countMessage}}</h4>
         <table class="table" id="tblGrid">
 
                        <tbody>
                            {% for msg in listMessage %}
                                <tr>
-                                 <td class='text-center'>
-                                   <h5 class="hidden-xs hidden-sm">
-                                       {{ msg.dateCreation|date('d/m/Y') }}
-                                       <h5 class="hidden-xs hidden-sm">
-                                         {{ msg.dateCreation|date('H:i:s') }}
-                                        </h5>
-                                   </h5>
-                                 </td>
+                                 <td class="text-center hidden-xs hidden-sm">
+                                   {{render(controller('SEPlatformBundle:Message:viewMessage',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
+                                     {{render(controller('SEPlatformBundle:Message:lastDateCreation',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
+                                </td>
                                  <td class='text-left'>
                                    <h5>
-                                     {% if app.user != msg.sender %}
+                                       <div class="visible-xs visible-sm">
+                                          {{render(controller('SEPlatformBundle:Message:lastDateCreation',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
+                                        </div>
                                          <a href="{{ path('se_platform_user_view', {'userId': msg.sender.id}) }}" class="se-tbl-link" >
                                              {{ msg.sender }}
                                          </a>
-                                         <h5 class="hidden-xs hidden-sm">
-                                           {{ include('@SEPlatform/User/rate.html.twig', {'item': msg.sender }) }}
-                                         </h5>
-                                     {% else  %}
-                                         <a href="{{ path('se_platform_user_view', {'userId': msg.advert.user.id}) }}" class="se-tbl-link" >
-                                             {{ msg.advert.user }}
-                                         </a>
-                                         <h5 class="hidden-xs hidden-sm">
-                                           {{ include('@SEPlatform/User/rate.html.twig', {'item': msg.advert.user }) }}
-                                         </h5>
-                                     {% endif %}
-
+                                   </h5>
+                                   <h5>
+                                     <a class='visible-xs visible-sm se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': msg.advert.slug,'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
                                    </h5>
                                  </td>
                                  <td>
                                      <h5>
-                                         <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': msg.advert.slug,'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
+                                         <a class='hidden-xs hidden-sm se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': msg.advert.slug,'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
                                          <h5 class="hidden-xs hidden-sm">
                                            {{ msg.advert.category.labelNormal }}
                                          </h5>
 
                                      </h5>
                                  </td>
-
+<!--
                                  <td class='text-left td_center'>
                                      <h5 class="hidden-xs hidden-sm">
                                      {% if msg.advert.isPublished == 1 %}
@@ -76,11 +66,16 @@
                                          </div>
                                      {% endif %}
                                      </h5>
-                                 </td>
+                                 </td>-->
                                  <td>
                                         <p>
-                                          <a href="{{ path('se_platform_message_advert_receive',{'advertId':msg.advert.id, 'senderId': msg.sender.id }) }}" class="btn btn-default">
-                                            Voir
+                                          <a href="{{ path('se_platform_message_advert_receive',{'advertId':msg.advert.id, 'senderId': msg.sender.id }) }}"
+                                          class="hidden-xs hidden-sm btn btn-default">
+                                            {{ render(controller('SEPlatformBundle:Message:countMessage',  {'advertId': msg.advert.id, 'receiverId' : msg.advert.user.id })) }}
+                                        </a>
+                                        <a href="{{ path('se_platform_message_advert_receive',{'advertId':msg.advert.id, 'senderId': msg.sender.id }) }}"
+                                          class="visible-xs visible-sm btn btn-default">
+                                          Voir
                                         </a>
                                         </p>
                                     </td>
