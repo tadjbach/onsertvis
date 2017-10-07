@@ -25,7 +25,6 @@
                            {% for msg in listMessage %}
                                <tr>
                                  <td class="text-center">
-                                    {{render(controller('SEPlatformBundle:Message:viewMessage',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
                                      {{render(controller('SEPlatformBundle:Message:lastDateCreation',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
                                 </td>
                                  <td class='text-left'>

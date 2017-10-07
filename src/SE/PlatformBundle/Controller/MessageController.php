@@ -39,12 +39,14 @@ class MessageController extends Controller
         $em = $this->getDoctrineManager();
         $session = $request->getSession();
         $mailer  = $this->get('se_platform.mailer');
-        $answer = $isAnswer == 1 ? 'Nouvelle réponse' : 'Nouvelle question';
+
 
         $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
         $advert = $em->find('SEPlatformBundle:Advert', $advertId);
         $userSender = $this->getUser();
         $userReceive=$em->find('SEPlatformBundle:User', $receiveId);
+
+        $answer = 'Nouveau message de la part de '.$userSender;
 
         $message = new Message();
         $message->setSender($userSender);
@@ -86,12 +88,13 @@ class MessageController extends Controller
                   $session->getFlashBag()->add('addSuccess','Message bien envoyée.');
 
                   if ($userSender != $advert->getUser()) {
-                      return $this->redirectToRoute('se_platform_message_user_receive', array('advertId'=>$advert->getId(),
+                      return $this->redirectToRoute('se_platform_message_advert_send', array('advertId'=>$advert->getId(),
                                                                                       'receiverId'=> $userReceive->getId()));
                   }
 
                   return $this->redirectToRoute('se_platform_message_advert_receive', array('advertId'=>$advert->getId(),
                                                                                   'senderId'=> $userSender->getId()));
+
               }
           }
         }

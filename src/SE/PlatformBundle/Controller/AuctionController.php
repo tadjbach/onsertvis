@@ -86,6 +86,7 @@ class AuctionController extends Controller
         $userOwner = $advert->getUser();
 
             $advert->setAuctionState(1);
+            $advert->getUser()->setIsNewAuction(1);
 
             $auction = new Auction();
 
@@ -242,6 +243,10 @@ class AuctionController extends Controller
 
           $nbPages = ceil(count($listAuctionUser)/$this->nbPerPage);
 
+          $user->setIsValideAuction(0);
+          $em->persist($user);
+          $em->flush();
+
       $content = $this->render('SEPlatformBundle:Auction:userSendList.html.twig',
       array(
         'titleResult'=>$titleResult,
@@ -278,6 +283,9 @@ class AuctionController extends Controller
 
           $nbPages = ceil(count($listAdvertAuction)/$this->nbPerPage);
 
+          $user->setIsNewAuction(0);
+          $em->persist($user);
+          $em->flush();
 
       return $this->render('SEPlatformBundle:Auction:userReceiveList.html.twig',
           array(
@@ -304,6 +312,7 @@ class AuctionController extends Controller
       $user = $this->getUser();
       $auctionAccept = $em->find('SEPlatformBundle:Auction', $auctionId);
       $userAuction = $auctionAccept->getUser();
+      $userAuction->setIsValideAuction(1);
 
       $advert = $auctionAccept->getAdvert();
 

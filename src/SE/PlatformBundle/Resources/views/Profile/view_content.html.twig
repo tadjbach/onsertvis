@@ -1,7 +1,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-md-6">
         <blockquote>
           {{user}}
           <h5>
@@ -32,39 +32,41 @@
               {% endif %}
           </h5>
         </blockquote>
-        <blockquote>
 
-          <h5>
-             {% if user.isAcountComplete == 1 %}
-            <i>Disponibilité : </i>
-                {% for daycal in calendar %}
-                    <span class="label label-default{% if daycal in user.calendar %} label-success{% else %} badge-disable{% endif %}">{{ daycal.dayFrAbbr }}</span>
-                {% endfor %}
-              {% endif %}
-          </h5>
-          <h5>
-        {% if user.isAcountComplete == 1 %}
-            <i>Mode de paiement accepté : </i>
-            {% for pay in user.payment %}
-                <span class="label label-success">{{ pay.labelNormal }}</span>
-                {% else %}
-                Me contacter
-            {% endfor %}
-            {% endif %}
-          </h5>
-
-        </blockquote>
-        <blockquote>
-          Activité
-                <h5><span class="label label-default se-badge">{{countPublishAdvert}}</span> <span class="mar-lef-10">Demandes publiées</span></h5>
-                <h5><span class="label label-info">{{countReceivedAuction}}</span> <span class="mar-lef-10">Offres reçues</span></h5>
-                <h5><span class="label label-warning">{{ countProposedAuction }}</span> <span class="mar-lef-10">Offres proposées</span></h5>
-                <h5><span class="label label-success">{{countAcceptedAuction}}</span> <span class="mar-lef-10">Offres gagnées</span></h5>
-                <h5><span class="label label-danger">{{countLosedAuction}}</span> <span class="mar-lef-10">Offres perdues</span></h5>
-        </blockquote>
   </div>
-  <div class="col-md-7">
+  <div class="col-md-6">
+    <blockquote>
 
+      <h5>
+         {% if user.isAcountComplete == 1 %}
+        <i>Disponibilité : </i>
+            {% for daycal in calendar %}
+                <span class="label label-default{% if daycal in user.calendar %} label-success{% else %} badge-disable{% endif %}">{{ daycal.dayFrAbbr }}</span>
+            {% endfor %}
+          {% endif %}
+      </h5>
+      <h5>
+    {% if user.isAcountComplete == 1 %}
+        <i>Mode de paiement accepté : </i>
+        {% for pay in user.payment %}
+            <span class="label label-success">{{ pay.labelNormal }}</span>
+            {% else %}
+            Me contacter
+        {% endfor %}
+        {% endif %}
+      </h5>
+
+    </blockquote>
+    <blockquote>
+      Activité
+            <h5><span class="label label-default se-badge">{{countPublishAdvert}}</span> <span class="mar-lef-10">Demandes publiées</span></h5>
+            <h5><span class="label label-info">{{countReceivedAuction}}</span> <span class="mar-lef-10">Offres reçues</span></h5>
+            <h5><span class="label label-warning">{{ countProposedAuction }}</span> <span class="mar-lef-10">Offres proposées</span></h5>
+            <h5><span class="label label-success">{{countAcceptedAuction}}</span> <span class="mar-lef-10">Offres gagnées</span></h5>
+            <h5><span class="label label-danger">{{countLosedAuction}}</span> <span class="mar-lef-10">Offres perdues</span></h5>
+    </blockquote>
+  </div>
+</div>
     <div class="row">
       <div class="col-md-12">
           <blockquote>
@@ -94,5 +96,3 @@
               {% endfor %}
       </div>
     </div>
-  </div>
-</div>
