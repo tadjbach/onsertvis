@@ -24,6 +24,13 @@ class Advert
     private $user;
 
     /**
+     * @ORM\ManyToOne(targetEntity="SE\PlatformBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
+     */
+    private $userValide;
+
+    /**
      * @ORM\ManyToOne(targetEntity="SE\PlatformBundle\Entity\Category")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid()
@@ -128,7 +135,7 @@ class Advert
      * @ORM\Column(name="cpCity", type="string", length=25, nullable=true)
      */
     private $cpCity;
-    
+
     /**
      * @var string
      *
@@ -575,5 +582,29 @@ class Advert
     public function getCpCity()
     {
         return $this->cpCity;
+    }
+
+    /**
+     * Set userValide
+     *
+     * @param \SE\PlatformBundle\Entity\User $userValide
+     *
+     * @return Advert
+     */
+    public function setUserValide(\SE\PlatformBundle\Entity\User $userValide)
+    {
+        $this->userValide = $userValide;
+
+        return $this;
+    }
+
+    /**
+     * Get userValide
+     *
+     * @return \SE\PlatformBundle\Entity\User
+     */
+    public function getUserValide()
+    {
+        return $this->userValide;
     }
 }

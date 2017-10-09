@@ -15,6 +15,11 @@ UPDATE `calendar` SET `day_fr_abbr` = 'D' WHERE `calendar`.`id` = 7;
 ALTER TABLE user ADD isNewMessage TINYINT(1) NOT NULL, ADD isNewAuction TINYINT(1) NOT NULL, ADD isValideAuction TINYINT(1) NOT NULL;
 ALTER TABLE message ADD isNew TINYINT(1) NOT NULL;
 
+
+ALTER TABLE advert ADD user_valide_id INT NOT NULL;
+ALTER TABLE advert ADD CONSTRAINT FK_54F1F40BE3B631AD FOREIGN KEY (user_valide_id) REFERENCES user (id);
+CREATE INDEX IDX_54F1F40BE3B631AD ON advert (user_valide_id);
+
 /*
 SELECT * FROM (SELECT 	m.id as msgId,
                                   m.user_sender,

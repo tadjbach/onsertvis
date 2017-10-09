@@ -43,6 +43,7 @@ class MessageController extends Controller
 
         $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
         $advert = $em->find('SEPlatformBundle:Advert', $advertId);
+        $advertSimilarList = $em->getRepository('SEPlatformBundle:Advert')->getAdvertSimilaire($advert->getCategory()->getId(), $advert->getId());
         $userSender = $this->getUser();
         $userReceive=$em->find('SEPlatformBundle:User', $receiveId);
 
@@ -120,7 +121,8 @@ class MessageController extends Controller
               'listConversation'     => $listConversation,
               'countMessage'=> $countMessage,
               'calendar' => $calendar,
-              'advert'=> $advert
+              'advert'=> $advert,
+              'advertSimilarList' => $advertSimilarList
           ));
         }
 

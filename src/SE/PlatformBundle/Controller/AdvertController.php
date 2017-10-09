@@ -238,6 +238,7 @@ class AdvertController extends Controller
 
         $advert = new Advert();
         $advert->setUser($this->getUser());
+        $advert->setUserValide($this->getUser());
 		    $advert->setCommentState(0);
 
         $form = $this->createForm(AdvertType::class, $advert);
@@ -493,6 +494,9 @@ class AdvertController extends Controller
       $em = $this->getDoctrineManager();
 
       $advert=$em->find('SEPlatformBundle:Advert', $id);
+
+      $advertSimilarList = $em->getRepository('SEPlatformBundle:Advert')->getAdvertSimilaire($advert->getCategory()->getId(), $id);
+
       $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
 
         if ($advert->getIsPublished() == 0) {
@@ -501,7 +505,8 @@ class AdvertController extends Controller
         else {
           return $this->render('SEPlatformBundle:Advert:view.html.twig',
                       array(
-                          'calendar' => $calendar,
+                        'advertSimilarList'=>$advertSimilarList,
+                        'calendar' => $calendar,
                         'advert'=> $advert));
         }
 

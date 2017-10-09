@@ -85,6 +85,7 @@ html, body{
 .advert-calendar{
   padding-right: 5px;
 }
+
 .navbar{
     margin-bottom:0;
     border:0;
@@ -121,7 +122,7 @@ html, body{
 
 .navbar-default .navbar-nav>li>a:hover
 {
-  border-color: #fff; */
+  border-color: #fff;
   color: #2A0540;
   text-decoration: underline;
 }
@@ -507,6 +508,12 @@ a.se-password, a.se-link{
   cursor: pointer;
 }
 
+.trunc{
+  width: 50%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .truncate {
   width: 300px;
   white-space: nowrap;

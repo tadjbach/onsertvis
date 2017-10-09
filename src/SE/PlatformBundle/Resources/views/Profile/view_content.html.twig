@@ -36,8 +36,19 @@
   </div>
   <div class="col-md-6">
     <blockquote>
-
-      <h5>
+         {% if user.accountType == 'Society' %}
+         <h5>
+            <i>Statut : </i> Professionnel
+        </h5>
+         <h5>
+            <i>SIRET : </i> {{user.siret}}
+        </h5>
+          {% elseif user.accountType == 'Particular' %}
+           <h5>
+              <i>Status : </i> Particulier
+            </h5>
+         {% endif %}
+       <h5>
          {% if user.isAcountComplete == 1 %}
         <i>Disponibilité : </i>
             {% for daycal in calendar %}

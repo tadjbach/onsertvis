@@ -82,6 +82,7 @@ class AuctionController extends Controller
 
         $advert=$em->find('SEPlatformBundle:Advert', $advertId);
         $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
+        $advertSimilarList = $em->getRepository('SEPlatformBundle:Advert')->getAdvertSimilaire($advert->getCategory()->getId(), $advert->getId());
 
         $userOwner = $advert->getUser();
 
@@ -154,7 +155,8 @@ class AuctionController extends Controller
             return $this->render('SEPlatformBundle:Auction:add.html.twig', array(
                 'form' => $form->createView(),
                 'advert'=> $advert,
-                'calendar' => $calendar
+                'calendar' => $calendar,
+                'advertSimilarList' => $advertSimilarList
             ));
     }
 

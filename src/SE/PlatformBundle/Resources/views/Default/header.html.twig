@@ -19,12 +19,12 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="{{ path('se_platform_advert_list')  }}">
-                        Toutes les demandes
+                    <a href="{{ path('se_platform_advert_list')  }}" >
+                        Liste des demandes
                     </a>
                 </li>
                 <li>
-                    <a href="{{ path('se_platform_advert_add') }}">
+                    <a href="{{ path('se_platform_advert_add') }}" >
                         Déposer une demande
                     </a>
                 </li>
@@ -42,10 +42,10 @@
                                   <a href="{{ path('se_platform_advert_user_list') }}">Mes demandes</a>
                                 </li>
                                 <li>
-                                  <a href="{{ path('se_platform_auction_user_receive') }}">Mes offres {% if app.user.isNewAuction or app.user.isValideAuction %}<span class="label label-danger">!</span>{% endif %}</a>
+                                  <a href="{{ path('se_platform_auction_user_receive') }}">Mes offres {% if app.user.isNewAuction or app.user.isValideAuction %}<span class="label label-danger">1</span>{% endif %}</a>
                                 </li>
                                   <li>
-                                    <a href="{{ path('se_platform_message_user_receive') }}">Mes messages {% if app.user.isNewMessage %}<span class="label label-danger">!</span>{% endif %}</a>
+                                    <a href="{{ path('se_platform_message_user_receive') }}">Mes messages {% if app.user.isNewMessage %}<span class="label label-danger">1</span>{% endif %}</a>
                                   </li>
                                   <li><a href="{{ path('se_platform_comment_user_list') }}">Mes avis</a></li>
                                 <li><a href="{{ path('se_platform_user_edit') }}" >Mon compte</a></li>
@@ -73,7 +73,7 @@
                         </li>
                     {% else %}
                         <li>
-                            <a href="{{path('fos_user_security_login')}}">
+                            <a href="{{path('fos_user_security_login')}}" >
                                 Se connecter
                             </a>
                         </li>

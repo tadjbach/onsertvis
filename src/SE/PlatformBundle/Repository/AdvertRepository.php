@@ -38,6 +38,31 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
           return $text;
         }
 
+    public function getAdvertSimilaire($categoryId, $advertId){
+      $qb = $this->createQueryBuilder('advert')
+              ->innerJoin('advert.postalCode', 'postalCode')
+              ->addSelect('postalCode')
+              ->innerJoin('postalCode.city', 'city')
+              ->addSelect('city')
+              ->innerJoin('city.departement', 'departement')
+              ->addSelect('departement')
+              ->innerJoin('departement.region', 'region')
+              ->addSelect('region')
+              ->leftJoin('advert.category', 'category')
+              ->addSelect('category');
+
+        $qb->where($qb->expr()->eq('advert.isPublished', 1))
+           ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
+           ->andWhere($qb->expr()->eq('advert.isEnabled', 1))
+           ->andWhere($qb->expr()->eq('category.id', $categoryId))
+           ->andWhere($qb->expr()->neq('advert.id', $advertId));
+
+           $qb->OrderBy('advert.dateCreation', 'DESC')->getQuery();
+
+           return $qb
+               ->getQuery()
+               ->getResult();
+    }
     /*
     Get Adverts List for se_platform_advert_list route
     */

@@ -249,6 +249,7 @@ class AdminController extends Controller
              $advert = $em->find('SEPlatformBundle:Advert', $id);
              $advert->setIsPublished($action);
              $advert->setIsEnabled($action);
+             $advert->setUserValide($this->getUser());
 
              $mailer  = $this->get('se_platform.mailer');
 

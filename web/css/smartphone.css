@@ -86,14 +86,19 @@ and (max-device-width : 736px) {
     top: -1px;
   }
 
-  .truncate {
+  .truncate{
     width: 200px;
   }
 
   .auction-nb>tr>th>h5, #tblHead>tr>th>h5{
         font-size: 12px;
   }
-
+ .trunc {
+    width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .se-img {
     width: 100%;
     height: 50%;
