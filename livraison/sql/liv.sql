@@ -22,6 +22,7 @@ CREATE INDEX IDX_54F1F40BE3B631AD ON advert (user_valide_id);
 UPDATE advert
 set user_valide_id = 1
 
+ALTER TABLE advert ADD isNewMessage TINYINT(1) NOT NULL;
 /*
 SELECT * FROM (SELECT 	m.id as msgId,
                                   m.user_sender,

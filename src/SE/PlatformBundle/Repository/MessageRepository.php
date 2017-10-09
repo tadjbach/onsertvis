@@ -311,7 +311,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getLastDateMessage($advertId, $userReceiverId){
+    public function getLastMessage($advertId, $userReceiverId){
       $qb = $this->createQueryBuilder('message');
 
        $qb->leftJoin('message.advert', 'advert')

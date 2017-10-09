@@ -24,6 +24,9 @@
                        <tbody>
                            {% for msg in listMessage %}
                                <tr>
+                                 <td class="text-center hidden-xs hidden-sm">
+                                     {{render(controller('SEPlatformBundle:Message:viewMessage',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
+                                </td>
                                  <td class="text-center">
                                      {{render(controller('SEPlatformBundle:Message:lastDateCreation',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
                                 </td>

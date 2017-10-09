@@ -110,6 +110,13 @@ class Advert
     private $isPublished=false;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="isNewMessage", type="boolean")
+     */
+    private $isNewMessage=false;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="auctionState", type="integer")
@@ -606,5 +613,29 @@ class Advert
     public function getUserValide()
     {
         return $this->userValide;
+    }
+
+    /**
+     * Set isNewMessage
+     *
+     * @param boolean $isNewMessage
+     *
+     * @return Advert
+     */
+    public function setIsNewMessage($isNewMessage)
+    {
+        $this->isNewMessage = $isNewMessage;
+
+        return $this;
+    }
+
+    /**
+     * Get isNewMessage
+     *
+     * @return boolean
+     */
+    public function getIsNewMessage()
+    {
+        return $this->isNewMessage;
     }
 }

@@ -54,9 +54,10 @@ class MessageController extends Controller
         $message->setReceiver($userReceive);
         $message->setAdvert($advert);
 
-        $message->setIsNew(1);
+        //$message->setIsNew(1);
 
         $userReceive->setIsNewMessage(1);
+        $advert->setIsNewMessage(1);
 
         $listConversation = $this->getDoctrine()
             ->getManager()
@@ -142,15 +143,6 @@ class MessageController extends Controller
            ->getRepository('SEPlatformBundle:Message')
            ->getConversationSender($advertId, $sender->getId(), $receiverId);
 
-           foreach ($listConversation as $msg) {
-             if ($msg->getReceiver() == $advert->getUser()) {
-               $msg->setIsNew(0);
-
-               $em->persist($msg);
-               $em->flush();
-             }
-           }
-
        $countMessage = count($listConversation) <= 1 ? count($listConversation).' message'
                : count($listConversation).' messages';
 
@@ -176,15 +168,6 @@ class MessageController extends Controller
            ->getManager()
            ->getRepository('SEPlatformBundle:Message')
            ->getConversationReceive($advertId, $senderId, $receiver->getId());
-
-           foreach ($listConversation as $msg) {
-             if ($msg->getSender() == $advert->getUser()) {
-               $msg->setIsNew(0);
-
-               $em->persist($msg);
-               $em->flush();
-             }
-           }
 
        $countMessage = count($listConversation) <= 1 ? count($listConversation).' message'
                : count($listConversation).' messages';
@@ -223,10 +206,6 @@ class MessageController extends Controller
        if ($page<1){
            throw new NotFoundHttpException('page"'.$page.'" inexistante');
        }
-
-       $user->setIsNewMessage(0);
-       $em->persist($user);
-       $em->flush();
 
       return $this->render('SEPlatformBundle:Message:userReceiveList.html.twig',
       array(
@@ -280,13 +259,13 @@ class MessageController extends Controller
 
     public function viewMessageAction($advertId, $receiverId){
         $em = $this->getDoctrineManager();
+        $advert = $em->find('SEPlatformBundle:Advert', $advertId);
+        $userReceiver = $em->find('SEPlatformBundle:User', $receiverId);
+        $user = $this->getUser();
+
         $isnew = "<h5 class='label label-success'>Lu</h5>";
 
-          $lastDateMessage = $em
-            ->getRepository('SEPlatformBundle:Message')
-            ->getLastDateMessage($advertId, $receiverId);
-
-            if ($lastDateMessage[0]->getIsNew() and $lastDateMessage[0]->getSender() != $this->getUser()) {
+            if ($advert->getIsNewMessage() and $user->getIsNewMessage() and $userReceiver == $user) {
               $isnew = "<h5 class='label label-danger'>Non lu</h5>";
             }
             else {
@@ -301,11 +280,11 @@ class MessageController extends Controller
     public function lastDateCreationAction($advertId, $receiverId){
         $em = $this->getDoctrineManager();
 
-          $lastDateMessage = $em
+          $lastMessage = $em
             ->getRepository('SEPlatformBundle:Message')
-            ->getLastDateMessage($advertId, $receiverId);
+            ->getLastMessage($advertId, $receiverId);
 
-            $lastDate = $lastDateMessage[0]->getDateCreation();
+            $lastDate = $lastMessage[0]->getDateCreation();
             $lastDateDay = $lastDate->format('d/m/Y');
             $lastDateHour = $lastDate->format('H:i:s');
 
@@ -318,7 +297,7 @@ class MessageController extends Controller
         $em = $this->getDoctrineManager();
         $countMessage = 'Voir';
         $listMessage = $em->getRepository('SEPlatformBundle:Message')
-                        ->getLastDateMessage($advertId, $receiverId);
+                        ->getLastMessage($advertId, $receiverId);
 
           /*  $countMessage = count($listMessage) <= 1 ? count($listMessage).' message'
                     : count($listMessage).' messages';*/

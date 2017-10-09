@@ -78,7 +78,7 @@ class Message
      *
      * @ORM\Column(name="isNew", type="boolean")
      */
-    private $isNew;
+    private $isNew=false;
 
     /**
      * @var \DateTime
