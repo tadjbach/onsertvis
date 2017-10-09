@@ -92,7 +92,7 @@
           {% for advertSimilar in advertSimilarList|slice(0,4) %}
               <div class="col-md-3">
                   <blockquote>
-                    <h5><a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advertSimilar.slug,'id': advertSimilar.id}) }}">{{ advertSimilar.title }}</a><h5>
+                    <h5 class="truncate"><a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advertSimilar.slug,'id': advertSimilar.id}) }}">{{ advertSimilar.title }}</a><h5>
                       <h5>
                         <i>Mise en ligne le <b>{{ advertSimilar.dateCreation|date('d/m/Y') }}</b> à <b>{{ advertSimilar.dateCreation|date('H:m') }}</b></i>
                       </h5>

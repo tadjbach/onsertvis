@@ -19,6 +19,8 @@ ALTER TABLE message ADD isNew TINYINT(1) NOT NULL;
 ALTER TABLE advert ADD user_valide_id INT NOT NULL;
 ALTER TABLE advert ADD CONSTRAINT FK_54F1F40BE3B631AD FOREIGN KEY (user_valide_id) REFERENCES user (id);
 CREATE INDEX IDX_54F1F40BE3B631AD ON advert (user_valide_id);
+UPDATE advert
+set user_valide_id = 1
 
 /*
 SELECT * FROM (SELECT 	m.id as msgId,

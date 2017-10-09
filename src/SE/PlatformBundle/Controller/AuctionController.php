@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AuctionController extends Controller
 {
   /* PRIVATE VAR */
-  private $nbPerPage = 30;
+  private $nbPerPage = 20;
   private $em;
   private $advert;
   private $state;

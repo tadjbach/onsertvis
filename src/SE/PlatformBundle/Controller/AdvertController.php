@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AdvertController extends Controller
 {
     /* PRIVATE VAR */
-    private $nbPerPage = 30;
+    private $nbPerPage = 20;
     private $em;
 
         /* Search filter */
