@@ -73,8 +73,8 @@ class ProfileFormType extends AbstractType
                           'minlength' => 10,
                           'placeholder' => '')))
 
-          ->add('detail', TextareaType::class, array('label'=> 'À propos de moi',
-          'attr' => array('maxlength' => 4000,
+          ->add('detail', TextareaType::class, array('label'=> 'À propos de moi', 'required' => false,
+                    'attr' => array('maxlength' => 4000,
                           'class' => 'form-control textarea',
                           'placeholder' => 'Le détail ne doit pas dépasser 4000 caratères')))
 

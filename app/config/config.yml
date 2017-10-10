@@ -94,7 +94,7 @@ fos_user:
         email:
             from_email:
                 address:        noreplay@serviceenchere.fr
-                sender_name:    Service Enchère - Rénisialisation de mot de passe
+                sender_name:    Service Enchère - Réinitialisation de mot de passe
     profile:
         form:
             type: SE\PlatformBundle\Form\Type\ProfileFormType

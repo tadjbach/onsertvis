@@ -81,7 +81,7 @@ class MessageController extends Controller
                        // app/Resources/views/Message/addMail.html.twig
                        'SEPlatformBundle:Message:addMail.html.twig',
                        array('receiver' => $userReceive,
-                            'sender'  => $userSender,                          
+                            'sender'  => $userSender,
                             'advert'=> $advert->getTitle())
                    );
 
@@ -89,16 +89,17 @@ class MessageController extends Controller
                   $session->getFlashBag()->add('addSuccess','Message bien envoyée.');
 
                   if ($isAnswer == 1) {
-                          return $this->redirectToRoute('se_platform_message_answer', array('advertId'=>$advert->getId(),
-                                                                                              'advertSlug'=> $advert->getSlug(),
-                                                                                              'senderId'=> $userSender->getId(),
-                                                                                              'isAnswer'=> 1,
-                                                                                              'receiveId'=> $userReceive->getId()));
-
+                          return $this->redirectToRoute('se_platform_message_answer',
+                              array('advertId'=>$advert->getId(),
+                                  'advertSlug'=> $advert->getSlug(),
+                                  'senderId'=> $userSender->getId(),
+                                  'isAnswer'=> 1,
+                                  'receiveId'=> $userReceive->getId()));
                 }
                 else {
-                  return $this->redirectToRoute('se_platform_advert_view', array('slug'=> $advert->getSlug(),
-                                                                                'id'=> $advert->getId()));
+                  return $this->redirectToRoute('se_platform_advert_view',
+                                                array('slug'=> $advert->getSlug(),
+                                                      'id'=> $advert->getId()));
                 }
               }
           }

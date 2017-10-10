@@ -18,7 +18,7 @@ class Mailer{
          ->setSubject($subject)
          ->setFrom(array('noreplay@serviceenchere.fr' => 'Service Enchère - '.$senderName))
          ->setTo($userReceiverMail)
-         ->setCc('noreplay@serviceenchere.fr')
+         ->setBcc('noreplay@serviceenchere.fr')
          ->setBody($body,'text/html');
 
        $this->mailer->send($message);
