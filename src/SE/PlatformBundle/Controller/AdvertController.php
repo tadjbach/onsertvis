@@ -509,6 +509,16 @@ class AdvertController extends Controller
                         'calendar' => $calendar,
                         'advert'=> $advert));
         }
+    }
 
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function viewUserAction(Request $request, $id){
+      $em = $this->getDoctrineManager();
+      $advert = $em->getRepository('SEPlatformBundle:Advert')->find($id);
+      return $this->render('SEPlatformBundle:Advert:viewUser.html.twig',
+                  array(
+                    'advert'=> $advert));
     }
 }

@@ -136,6 +136,13 @@ se_platform_advert_view:
     requirements:
         id: \d+
 
+se_platform_advert_view_user:
+    path:   /mon-annonce/{id}
+    defaults:
+        _controller: SEPlatformBundle:Advert:viewUser
+    requirements:
+        id: \d+
+
 se_platform_advert_validate:
     path:   /annonce/validee/{action}
     defaults:
@@ -192,7 +199,7 @@ se_platform_advert_user_list:
     requirements:
         page: \d*
 
-# Auction Routes :        
+# Auction Routes :
 se_platform_auction_list:
     path:   /enchere-en-cours/{advertId}
     defaults:

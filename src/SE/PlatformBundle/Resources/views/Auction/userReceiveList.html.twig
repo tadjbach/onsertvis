@@ -39,8 +39,12 @@
 </div>
 <div class="row">
      <div id="content" class="col-md-12">
-         <div class="text-right"><a href="{{ path('se_platform_auction_user_send') }}" class="btn btn-success" >Afficher les offres proposées</a></div>
 
+       <ul class="nav nav-tabs nav-justified">
+         <li role="presentation" class="active"><a href="{{ path('se_platform_auction_user_receive') }}">Offre reçues</a></li>
+         <li role="presentation" ><a href="{{ path('se_platform_auction_user_send') }}">Offre proposées</a></li>
+       </ul>
+<br>
 
        <h4 class="cat-title">{{ titleResult }}</h4>
           <table class="table" id="tblGrid">
@@ -49,8 +53,15 @@
               {% for auction in listAdvertAuction %}
               <tr>
                 <td>
+                  <h5 class="hidden-xs hidden-sm">
+                      {{ auction.dateCreation|date('d/m/Y') }}
+                      à
+                      {{ auction.dateCreation|date('H:i:s') }}
+                  </h5>
+                </td>
+                <td>
                     <h5>
-                        <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': auction.advert.slug,'id': auction.advert.id}) }}">{{ auction.advert.title }}</a>
+                        <a class='se-tbl-link' href="{{ path('se_platform_advert_view_user', {'id': auction.advert.id}) }}">{{ auction.advert.title }}</a>
                     </h5>
                 </td>
                   <td>
@@ -58,18 +69,21 @@
                           <a class='se-tbl-link' href="{{ path('se_platform_user_view', {'userId': auction.user.id}) }}" class="cat-link" >
                               {{ auction.user }}
                           </a>
-                          <h5 class="hidden-xs hidden-sm">{{ include('@SEPlatform/User/rate.html.twig', {'item': auction.user }) }}  </h5>
                       </h5>
                   </td>
-                  <td>
-                    <h5 class="hidden-xs hidden-sm">
-                        le {{ auction.dateCreation|date('d/m/Y') }}
-                        à
-                        {{ auction.dateCreation|date('H:i:s') }}
-                    </h5>
-                  </td>
+
                   <td>
                       <h5 class="visible-xs visible-sm">
+                        <a class="btn btn-default"
+                            data-toggle="modal"
+                            role="button"
+                            data-toggle="modal"
+                            data-target="#modalAuctionShow_{{auction.advert.id}}"
+                            >
+                              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': auction.advert.id })) }}
+                          </a>
+                            </h5>
+                            <h5 class="visible-xs visible-sm">
                         {% if auction.state == 1 %}
                             <span class="label label-warning">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
                         {% elseif auction.state == 2 %}
@@ -78,6 +92,7 @@
                             <span class="label label-default">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
                         {% endif %}
                       </h5>
+
                       <h5 >
                       {% if auction.state == 1 %}
                           <span class="label label-warning">En cours</span>
@@ -114,7 +129,7 @@
                                     data-target="#modalAuctionCancel_{{auction.id}}"
                                     >Annuler</a>
                         {% elseif auction.state == 2 and auction.advert.commentState == 1 %}
-                        <a class="btn btn-default" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
+                        <a class="btn btn-primary" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
                         {% endif %}
                       </h5>
                   </td>
@@ -131,6 +146,14 @@
 
                   <td class="text-center bold hidden-xs hidden-sm">
                     <h5>
+                      <a class="btn btn-default"
+                          data-toggle="modal"
+                          role="button"
+                          data-toggle="modal"
+                          data-target="#modalAuctionShow_{{auction.advert.id}}"
+                          >
+                            {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': auction.advert.id })) }}
+                        </a>
                       {% if auction.state == 1 %}
                             <a class="btn btn-primary"
                                 data-toggle="modal"
@@ -147,7 +170,7 @@
                                   data-target="#modalAuctionCancel_{{auction.id}}"
                                   >Annuler</a>
                       {% elseif auction.state == 2 and auction.advert.commentState == 1 %}
-                      <a class="btn btn-default" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
+                      <a class="btn btn-primary" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
                       {% endif %}
                     </h5>
                   </td>

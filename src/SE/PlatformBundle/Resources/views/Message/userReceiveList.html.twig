@@ -16,19 +16,32 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-         <div class="text-right hidden-xs hidden-sm"><a href="{{ path('se_platform_message_user_send') }}" class="btn btn-success" >Afficher les messages envoyés (En tant qu'enchérisseur)</a></div>
-         <div class="text-center visible-xs visible-sm"><a href="{{ path('se_platform_message_user_send') }}" class="btn btn-success" >Afficher les messages envoyés</a></div>
+          <ul class="nav nav-tabs nav-justified">
+            <li role="presentation" class="active">
+              <a href="{{ path('se_platform_message_user_receive') }}">Message reçus (Mes demandes)</a>
+            </li>
+            <li role="presentation">
+              <a href="{{ path('se_platform_message_user_send') }}">Message envoyés (Demandes des clients)</a>
+            </li>
+          </ul>
+          <br>
         <h4 class="cat-title">{{countMessage}}</h4>
         <table class="table" id="tblGrid">
-
                        <tbody>
                            {% for msg in listMessage %}
                                <tr>
-                                 <td class="text-center hidden-xs hidden-sm">
-                                     {{render(controller('SEPlatformBundle:Message:viewMessage',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
-                                </td>
+                                 <!--<td class="text-center hidden-xs hidden-sm">
+                                   {% if app.user.isNewMessage and msg.receiver == app.user and msg.advert.isNewMessage %}
+                                      <span class="label label-danger">Non lu</span>
+                                  {% endif %}
+                                </td>-->
                                  <td class="text-center hidden-xs hidden-sm">
                                      {{render(controller('SEPlatformBundle:Message:lastDateCreation',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
+                                </td>
+                                <td>
+                                    <h5>
+                                        <a class='hidden-xs hidden-sm se-tbl-link' href="{{ path('se_platform_advert_view_user', {'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
+                                    </h5>
                                 </td>
                                  <td class='text-left'>
                                    <h5>
@@ -40,19 +53,10 @@
                                          </a>
                                    </h5>
                                    <h5>
-                                     <a class='visible-xs visible-sm se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': msg.advert.slug,'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
+                                     <a class='visible-xs visible-sm se-tbl-link' href="{{ path('se_platform_advert_view_user', {'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
                                    </h5>
                                  </td>
-                                 <td>
-                                     <h5>
-                                         <a class='hidden-xs hidden-sm se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': msg.advert.slug,'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
-                                         <h5 class="hidden-xs hidden-sm">
-                                           {{ msg.advert.category.labelNormal }}
-                                         </h5>
 
-                                     </h5>
-                                 </td>
-<!--
                                  <td class='text-left td_center'>
                                      <h5 class="hidden-xs hidden-sm">
                                      {% if msg.advert.isPublished == 1 %}
@@ -68,18 +72,19 @@
                                          </div>
                                      {% endif %}
                                      </h5>
-                                 </td>-->
+                                 </td>
                                  <td>
-                                        <p>
-                                          <a href="{{ path('se_platform_message_advert_receive',{'advertId':msg.advert.id, 'senderId': msg.sender.id }) }}"
-                                          class="hidden-xs hidden-sm btn btn-default">
-                                            {{ render(controller('SEPlatformBundle:Message:countMessage',  {'advertId': msg.advert.id, 'receiverId' : msg.advert.user.id })) }}
+                                    <p>
+                                        <a href="{{ path('se_platform_message_answer',
+                                                  {'advertSlug': msg.advert.slug,
+                                                    'advertId': msg.advert.id,
+                                                    'senderId': msg.advert.user.id,
+                                                    'receiveId':msg.sender.id,
+                                                    'isAnswer':1
+                                        }) }}" class="btn btn-primary">
+                                            Voir
                                         </a>
-                                        <a href="{{ path('se_platform_message_advert_receive',{'advertId':msg.advert.id, 'senderId': msg.sender.id }) }}"
-                                          class="visible-xs visible-sm btn btn-default">
-                                          Voir
-                                        </a>
-                                        </p>
+                                    </p>
                                     </td>
                                </tr>
                            {% else %}

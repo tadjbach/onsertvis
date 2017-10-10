@@ -16,19 +16,28 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-          <div class="text-right hidden-xs hidden-sm"><a href="{{ path('se_platform_message_user_receive') }}" class="btn btn-success" >Afficher les messages reçus (En tant que demandeur)</a></div>
-           <div class="text-center visible-xs visible-sm"><a href="{{ path('se_platform_message_user_receive') }}" class="btn btn-success" >Afficher les messages reçus</a></div>
+         <ul class="nav nav-tabs nav-justified">
+           <li role="presentation" ><a href="{{ path('se_platform_message_user_receive') }}">Message reçus (Mes demandes)</a></li>
+           <li role="presentation" class="active"><a href="{{ path('se_platform_message_user_send') }}">Message envoyés (Demandes des clients)</a></li>
+         </ul>
         <h4 class="cat-title">{{countMessage}}</h4>
         <table class="table" id="tblGrid">
 
                        <tbody>
                            {% for msg in listMessage %}
                                <tr>
-                                 <td class="text-center hidden-xs hidden-sm">
-                                     {{render(controller('SEPlatformBundle:Message:viewMessage',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
-                                </td>
+                                 <!--<td class="text-center hidden-xs hidden-sm">
+                                   {% if app.user.isNewMessage and msg.receiver == app.user and msg.advert.isNewMessage %}
+                                      <span class="label label-danger">Non lu</span>
+                                  {% endif %}
+                                </td>-->
                                  <td class="text-center">
                                      {{render(controller('SEPlatformBundle:Message:lastDateCreation',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
+                                </td>
+                                <td>
+                                    <h5>
+                                        <a class='se-tbl-link hidden-xs hidden-sm' href="{{ path('se_platform_advert_view', {'slug': msg.advert.slug,'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
+                                      </h5>
                                 </td>
                                  <td class='text-left'>
                                    <h5>
@@ -40,24 +49,13 @@
                                        <a class='se-tbl-link visible-xs visible-sm' href="{{ path('se_platform_advert_view', {'slug': msg.advert.slug,'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
                                    </h5>
                                  </td>
-                                 <td>
-                                     <h5>
-                                         <a class='se-tbl-link hidden-xs hidden-sm' href="{{ path('se_platform_advert_view', {'slug': msg.advert.slug,'id': msg.advert.id}) }}">{{ msg.advert.title }}</a>
-                                         <h5 class="hidden-xs hidden-sm">
-                                           {{ msg.advert.category.labelNormal }}
-                                         </h5>
-
-                                     </h5>
-                                 </td>
-<!--
                                  <td class='text-left td_center'>
                                      <h5 class="hidden-xs hidden-sm">
                                          {% if msg.advert.isPublished == 1 %}
                                              <span class="label label-warning">En cours</span>
                                          {% elseif msg.advert.isPublished == 0 and msg.advert.auctionState == 0 %}
-                                             <span class="label label-default">Validation en cours</span>
                                          {% elseif msg.advert.isPublished == 0 and msg.advert.auctionState == 1 %}
-                                             <span class="label label-success">Hors ligne</span>
+                                             <span class="label label-success">Terminée</span>
                                              <div class="label label-success"
                                                    data-toggle="tooltip"
                                                          data-placement="bottom" title="La demande n'est plus visible sur le site">
@@ -65,16 +63,17 @@
                                              </div>
                                          {% endif %}
                                      </h5>
-                                 </td>-->
+                                 </td>
                                  <td>
                                    <p>
-                                     <a href="{{ path('se_platform_message_advert_send',{'advertId':msg.advert.id, 'receiverId': msg.sender.id }) }}"
-                                     class="hidden-xs hidden-sm btn btn-default">
-                                       {{ render(controller('SEPlatformBundle:Message:countMessage',  {'advertId': msg.advert.id, 'receiverId' : msg.advert.user.id })) }}
-                                   </a>
-                                   <a href="{{ path('se_platform_message_advert_send',{'advertId':msg.advert.id, 'receiverId': msg.sender.id }) }}"
-                                     class="visible-xs visible-sm btn btn-default">
-                                     Voir
+                                   <a href="{{ path('se_platform_message_answer',
+                                             {'advertSlug': msg.advert.slug,
+                                               'advertId': msg.advert.id,
+                                               'senderId': msg.sender.id,
+                                               'receiveId': msg.advert.user.id,
+                                               'isAnswer':1
+                                   }) }}" class="btn btn-primary">
+                                       Voir
                                    </a>
                                    </p>
 

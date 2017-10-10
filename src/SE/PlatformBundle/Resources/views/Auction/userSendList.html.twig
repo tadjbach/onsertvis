@@ -15,36 +15,38 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
-       <div class="text-right"><a href="{{ path('se_platform_auction_user_receive') }}" class="btn btn-success" >Afficher les offres reçues</a></div>
-
+         <ul class="nav nav-tabs nav-justified">
+           <li role="presentation" ><a href="{{ path('se_platform_auction_user_receive') }}">Offre reçues</a></li>
+           <li role="presentation" class="active"><a href="{{ path('se_platform_auction_user_send') }}">Offre proposées</a></li>
+         </ul>
+<br>
          <h4 class="cat-title">{{ titleResult }}</h4>
             <table class="table" id="tblGrid">
                 <tbody>
                 {% for auction in listAuctionUser %}
                 <tr>
+                  <td>
+                    <h5 class="hidden-xs hidden-sm">
+                        {{ auction.dateCreation|date('d/m/Y') }}
+                        à
+                        {{ auction.dateCreation|date('H:i:s') }}
+                      </h5>
+                  </td>
                     <td>
                         <h5>
                             <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': auction.advert.slug,'id': auction.advert.id}) }}">{{ auction.advert.title }}</a>
 
                             <h5 class="hidden-xs hidden-sm">
-                              Par
                               <a class='se-tbl-link' href="{{ path('se_platform_user_view', {'userId': auction.advert.user.id}) }}" class="cat-link" >
-                                  {{ auction.advert.user }}
+                                  ({{ auction.advert.user }})
                               </a>
-
                             </h5>
+
                         </h5>
                     </td>
                     <td>
-                      <h5 class="hidden-xs hidden-sm">
-                          le {{ auction.dateCreation|date('d/m/Y') }}
-                          à
-                          {{ auction.dateCreation|date('H:i:s') }}
-                        </h5>
-                          </td>
-                    <td>
                       <h5 class="visible-xs visible-sm">
-                        <a class="cat-link"
+                          <a class="btn btn-default"
                             data-toggle="modal"
                             role="button"
                             data-toggle="modal"
@@ -92,17 +94,6 @@
                             </a>
                         </h5>
                     </td>
-                    <td>
-                        <h5 class="hidden-xs hidden-sm">
-                          <a class="cat-link"
-                              data-toggle="modal"
-                              role="button"
-                              data-toggle="modal"
-                              data-target="#modalAuctionShow_{{auction.advert.id}}"
-                              >
-                                {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': auction.advert.id })) }}
-                        </h5>
-                      </td>
                       <td>
                         <h5 class="hidden-xs hidden-sm">
                         {% if auction.state == 1 %}
@@ -116,6 +107,14 @@
                       </td>
                     <td>
                       <h5 class="hidden-xs hidden-sm">
+                        <a class="btn btn-default"
+                            data-toggle="modal"
+                            role="button"
+                            data-toggle="modal"
+                            data-target="#modalAuctionShow_{{auction.advert.id}}"
+                            >
+                              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': auction.advert.id })) }}
+                          </a>
                           <a
                             class='{% if auction.state != 1 %} btn btn-danger not-active {% else %} btn btn-danger  {% endif %}'
                                 data-toggle="modal"

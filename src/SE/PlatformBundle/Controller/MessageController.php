@@ -40,7 +40,6 @@ class MessageController extends Controller
         $session = $request->getSession();
         $mailer  = $this->get('se_platform.mailer');
 
-
         $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
         $advert = $em->find('SEPlatformBundle:Advert', $advertId);
         $advertSimilarList = $em->getRepository('SEPlatformBundle:Advert')->getAdvertSimilaire($advert->getCategory()->getId(), $advert->getId());
@@ -54,11 +53,6 @@ class MessageController extends Controller
         $message->setReceiver($userReceive);
         $message->setAdvert($advert);
 
-        //$message->setIsNew(1);
-
-        $userReceive->setIsNewMessage(1);
-        $advert->setIsNewMessage(1);
-
         $listConversation = $this->getDoctrine()
             ->getManager()
             ->getRepository('SEPlatformBundle:Message')
@@ -71,9 +65,14 @@ class MessageController extends Controller
 
         if ($userReceive != $userSender) {
           if ($request->isMethod('POST')){
+
               $form->handleRequest($request);
 
               if ($form->isValid()){
+
+                $message->setIsNew(1);
+                $userReceive->setIsNewMessage(1);
+                $advert->setIsNewMessage(1);
 
                   $em->persist($message);
                   $em->flush();
@@ -82,22 +81,34 @@ class MessageController extends Controller
                        // app/Resources/views/Message/addMail.html.twig
                        'SEPlatformBundle:Message:addMail.html.twig',
                        array('receiver' => $userReceive,
-                            'sender'  => $userSender,
+                            'sender'  => $userSender,                          
                             'advert'=> $advert->getTitle())
                    );
 
                   $mailer->sendEmail($advert,$answer, $answer, $userReceive->getEmail(), $body);
                   $session->getFlashBag()->add('addSuccess','Message bien envoyée.');
 
-                  if ($userSender != $advert->getUser()) {
-                      return $this->redirectToRoute('se_platform_message_advert_send', array('advertId'=>$advert->getId(),
-                                                                                      'receiverId'=> $userReceive->getId()));
-                  }
+                  if ($isAnswer == 1) {
+                          return $this->redirectToRoute('se_platform_message_answer', array('advertId'=>$advert->getId(),
+                                                                                              'advertSlug'=> $advert->getSlug(),
+                                                                                              'senderId'=> $userSender->getId(),
+                                                                                              'isAnswer'=> 1,
+                                                                                              'receiveId'=> $userReceive->getId()));
 
-                  return $this->redirectToRoute('se_platform_message_advert_receive', array('advertId'=>$advert->getId(),
-                                                                                  'senderId'=> $userSender->getId()));
-
+                }
+                else {
+                  return $this->redirectToRoute('se_platform_advert_view', array('slug'=> $advert->getSlug(),
+                                                                                'id'=> $advert->getId()));
+                }
               }
+          }
+          else{
+            $this->getUser()->setIsNewMessage(0);
+            $advert->setIsNewMessage(0);
+
+            $em->persist($userReceive);
+            $em->persist($advert);
+            $em->flush();
           }
         }
         else {
@@ -126,8 +137,6 @@ class MessageController extends Controller
               'advertSimilarList' => $advertSimilarList
           ));
         }
-
-
     }
 
     /**
@@ -257,26 +266,6 @@ class MessageController extends Controller
       ));
     }
 
-    public function viewMessageAction($advertId, $receiverId){
-        $em = $this->getDoctrineManager();
-        $advert = $em->find('SEPlatformBundle:Advert', $advertId);
-        $userReceiver = $em->find('SEPlatformBundle:User', $receiverId);
-        $user = $this->getUser();
-
-        $isnew = "<h5 class='label label-success'>Lu</h5>";
-
-            if ($advert->getIsNewMessage() and $user->getIsNewMessage() and $userReceiver == $user) {
-              $isnew = "<h5 class='label label-danger'>Non lu</h5>";
-            }
-            else {
-              $isnew = "<h5 class='label label-success'></h5>";
-            }
-
-          return new Response(
-              $isnew
-          );
-    }
-
     public function lastDateCreationAction($advertId, $receiverId){
         $em = $this->getDoctrineManager();
 
@@ -295,7 +284,7 @@ class MessageController extends Controller
 
     public function countMessageAction($advertId, $receiverId){
         $em = $this->getDoctrineManager();
-        $countMessage = 'Voir';
+        $countMessage = 'Conversation';
         $listMessage = $em->getRepository('SEPlatformBundle:Message')
                         ->getLastMessage($advertId, $receiverId);
 

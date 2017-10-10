@@ -18,12 +18,8 @@
       <p>Nom : {{ user_auction }}</p>
       <p>Téléphone : {{ user_auction.phoneNumber|split('', 2)|join(' ') }}</p>
       <p>Mail : <a chref="mailto:{{ user_auction.email }}">{{ user_auction.email }}</a></p>
-      <p >Adresse : </p>
-      <p> {{ user_auction.address }}
-          <br>{{ user_auction.PostalCode.value }} {{ user_auction.PostalCode.city.labelNormal }}
-          <br>{{ user_auction.PostalCode.city.departement.labelNormal }}
-      </p>
 
+      <p>Votre espace client <a href="{{url('fos_user_security_login')}}" >Se connecter</a>.</p>
       <p>
         Cordialement.
       </p>
