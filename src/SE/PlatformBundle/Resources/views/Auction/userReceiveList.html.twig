@@ -74,16 +74,6 @@
 
                   <td>
                       <h5 class="visible-xs visible-sm">
-                        <a class="btn btn-default"
-                            data-toggle="modal"
-                            role="button"
-                            data-toggle="modal"
-                            data-target="#modalAuctionShow_{{auction.advert.id}}"
-                            >
-                              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': auction.advert.id })) }}
-                          </a>
-                            </h5>
-                            <h5 class="visible-xs visible-sm">
                         {% if auction.state == 1 %}
                             <span class="label label-warning">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
                         {% elseif auction.state == 2 %}
@@ -146,14 +136,6 @@
 
                   <td class="text-center bold hidden-xs hidden-sm">
                     <h5>
-                      <a class="btn btn-default"
-                          data-toggle="modal"
-                          role="button"
-                          data-toggle="modal"
-                          data-target="#modalAuctionShow_{{auction.advert.id}}"
-                          >
-                            {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': auction.advert.id })) }}
-                        </a>
                       {% if auction.state == 1 %}
                             <a class="btn btn-primary"
                                 data-toggle="modal"

@@ -14,6 +14,8 @@
 {% endblock %}
 {% block layout_body %}
 <div class="row">
+
+
   <div class="col-md-2"></div>
   <div class="col-md-8">
       {% for flash_message in app.session.flashBag.get('addSuccess') %}
@@ -33,6 +35,7 @@
 </div>
   <div class="row">
        <div id="content" class="col-md-12">
+         <a class="btn btn-default" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
          <h4 class="cat-title">{{ titleResult }}</h4>
             <table class="table" id="tblGrid">
                 <tbody>

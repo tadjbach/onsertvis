@@ -113,7 +113,7 @@
             $cp_id.val('');
 
             getDepartementByRegion($regions, $departements, $city);
-            
+
         if ($regions.val() === '0') {
             $city.prop('disabled', true);
             $cp_id.prop('disabled', true);
@@ -253,9 +253,9 @@
                 });
         },
         minLength: 2,
-        search:function() {$('#loader-container').show();},
-        open: function() {$('#loader-container').hide();},
-        close: function() {$('#loader-container').hide();},
+        search:function() { $(".se-pre-con").show();},
+        open: function() { $(".se-pre-con").hide()},
+        close: function() { $(".se-pre-con").hide()},
         focus: function(event,ui) {},
         select: function(event, ui) {}
     });
@@ -282,9 +282,9 @@
                 });
         },
         minLength: 2,
-        search:function() {$('#loader-container').show();},
-        open: function() {$('#loader-container').hide();},
-        close: function() {$('#loader-container').hide();},
+        search:function() { $(".se-pre-con").show();},
+        open: function() {$(".se-pre-con").hide()},
+        close: function() { $(".se-pre-con").hide()},
         focus: function(event,ui) {},
         select: function(event, ui) {}
     });
@@ -311,9 +311,9 @@
                 });
         },
         minLength: 2,
-        search:function() {$('#loader-container').show();},
-        open: function() {$('#loader-container').hide();},
-        close: function() {$('#loader-container').hide();},
+        search:function() { $(".se-pre-con").show();},
+        open: function() { $(".se-pre-con").hide()  },
+        close: function() { $(".se-pre-con").hide()  },
         focus: function(event,ui) {},
         select: function(event, ui) {}
     });
