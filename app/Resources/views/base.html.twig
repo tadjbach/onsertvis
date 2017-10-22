@@ -14,6 +14,7 @@
         <!-- PAGE - CSS -->
         {% block stylesheets %}
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
         {% endblock %}
 
         <link rel="stylesheet" href="../../css/main.css" type="text/css" />
@@ -25,11 +26,9 @@
       <div class="se-pre-con" style="display:none;"></div>
         <!-- HADER - MENU -->
         <div class="row">
-          <div class="col-md-1"></div>
-          <div class="col-md-10">
+          <div class="col-md-12">
               {{ include('@SEPlatform/Default/header.html.twig') }}
             </div>
-            <div class="col-md-1"></div>
         </div>
         <!-- CONTAINER -->
               {% block body %}{% endblock %}
@@ -45,8 +44,8 @@
         <!-- PAGE - JS -->
         {% block javascripts %}
 
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script type="text/javascript" src="../../js/js.js" ></script>
