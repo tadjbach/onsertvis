@@ -160,6 +160,8 @@ class ProfileController extends Controller
              ->getRepository('SEPlatformBundle:Auction')
              ->getStateAuctionUser($userId, 2);
 
+         $titleAcceptedAuctions = count($listAcceptedAuctions) <= 1 ?'Job fait' : 'Jobs faits';
+
          $listLoseAuctions = $em
              ->getRepository('SEPlatformBundle:Auction')
              ->getStateAuctionUser($userId, 3);
@@ -167,6 +169,8 @@ class ProfileController extends Controller
         $listPublishAdvert = $em
             ->getRepository('SEPlatformBundle:Advert')
             ->getAdvertByUser($userId);
+
+        $titlePublishAdvert = count($listPublishAdvert) <= 1 ?'Demande publiées' : 'Demandes publiées';
 
       $user = $em->find('SEPlatformBundle:User', $userId);
 
@@ -187,9 +191,11 @@ class ProfileController extends Controller
             'calendar' => $calendar,
             'payment' => $payment,
             'countPublishAdvert'=>count($listPublishAdvert),
+            'titlePublishAdvert'=>$titlePublishAdvert,
             'countReceivedAuction'=>count($listReceivedAuctions),
             'countProposedAuction'=>count($listProposedAuctions),
             'countAcceptedAuction'=>count($listAcceptedAuctions),
+            'titleAcceptedAuctions'=>$titleAcceptedAuctions,
             'countLosedAuction'=>count($listLoseAuctions)
       ));
    }

@@ -290,6 +290,11 @@ li.hd-icon{
     color: #2A0540;
 }
 
+.se-badge-inverse{
+    background-color: #2A0540;
+    color: #E5DF16;
+}
+
 .help-div,
 .auction-nb>tr>th>h5{
       margin-bottom: 32px;
@@ -598,13 +603,9 @@ a.se-password, a.se-link{
 .rate-success{
     color:#5cb85c;
     font-size: 20px;
-    top: 5px;
-    left: 10px;
 }
 .rate-none{
     font-size: 20px;
-    top: 5px;
-    left: 10px;
 }
 .rate-warning{
     color: #f0ad4e;

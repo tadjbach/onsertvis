@@ -5,76 +5,83 @@
         <blockquote>
           {{user}}
           <h5>
+{% if user.rate != -1 %}
+          {{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}
+{% else %}
+Pas de note
+  {% endif %}
+        </h5>
+          {% if user.accountType == 'Society' %}
+          <h5>
+             <i>Statut : </i> Professionnel
+         </h5>
+          <h5>
+             <i>SIRET : </i> {{user.siret}}
+         </h5>
+           {% elseif user.accountType == 'Particular' %}
+            <h5>
+               <i>Status : </i> Particulier
+             </h5>
+          {% endif %}
+          <h5>
              {% if user.isAcountComplete == 1 %}
+             <i>Ville : </i>
                 {{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
                 ({{ user.PostalCode.city.departement.labelNormal }})
               {% endif %}
           </h5>
+          <h5><i>Membre depuis : {{ user.dateCreation|date('d/m/Y') }}</i></h5>
           {% if user.isDetailVisible or is_granted('ROLE_SUPER_ADMIN')%}
               <h5>
-                <i class="glyphicon glyphicon-phone-alt"></i> {{ user.phoneNumber|split('', 2)|join(' ') }}
+                <i>Contact : </i> {{ user.phoneNumber|split('', 2)|join(' ') }}
               </h5>
           {% endif %}
             </blockquote>
-          <blockquote>
-          <h5><i>Note : </i>{{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}</h5>
-          <h5><i>Membre depuis </i>: {{ user.dateCreation|date('d/m/Y') }}</h5>
-          <h5>
-            <i>A propos :</i>
-          </h5>
-          <h5>
-           {% if user.isAcountComplete == 1 %}
-                {% if user.detail %}
-                   {{ user.detail|nl2br }}
-                    {% else %}
-                      {{user}} n'a pas rensigné cette partie.
-                    {% endif %}
+
+        <blockquote>
+
+           <h5>
+             {% if user.isAcountComplete == 1 %}
+            <i>Disponibilité : </i>
+                {% for daycal in calendar %}
+                    <span class="label label-default{% if daycal in user.calendar %} label-success{% else %} badge-disable{% endif %}">{{ daycal.dayFrAbbr }}</span>
+                {% endfor %}
               {% endif %}
           </h5>
-        </blockquote>
+          <h5>
+        {% if user.isAcountComplete == 1 %}
+            <i>Mode de paiement accepté : </i>
+            {% for pay in user.payment %}
+                <span class="label label-success">{{ pay.labelNormal }}</span>
+                {% else %}
+                Me contacter
+            {% endfor %}
+            {% endif %}
+          </h5>
 
+        </blockquote>
   </div>
   <div class="col-md-6">
     <blockquote>
-         {% if user.accountType == 'Society' %}
-         <h5>
-            <i>Statut : </i> Professionnel
-        </h5>
-         <h5>
-            <i>SIRET : </i> {{user.siret}}
-        </h5>
-          {% elseif user.accountType == 'Particular' %}
-           <h5>
-              <i>Status : </i> Particulier
-            </h5>
-         {% endif %}
-       <h5>
-         {% if user.isAcountComplete == 1 %}
-        <i>Disponibilité : </i>
-            {% for daycal in calendar %}
-                <span class="label label-default{% if daycal in user.calendar %} label-success{% else %} badge-disable{% endif %}">{{ daycal.dayFrAbbr }}</span>
-            {% endfor %}
+      A propos
+      <h5>
+       {% if user.isAcountComplete == 1 %}
+            {% if user.detail %}
+               {{ user.detail|nl2br }}
+                {% else %}
+                  {{user}} n'a pas rensigné cette partie.
+                {% endif %}
           {% endif %}
       </h5>
-      <h5>
-    {% if user.isAcountComplete == 1 %}
-        <i>Mode de paiement accepté : </i>
-        {% for pay in user.payment %}
-            <span class="label label-success">{{ pay.labelNormal }}</span>
-            {% else %}
-            Me contacter
-        {% endfor %}
-        {% endif %}
-      </h5>
-
     </blockquote>
+
     <blockquote>
       Activité
-            <h5><span class="label label-default se-badge">{{countPublishAdvert}}</span> <span class="mar-lef-10">Demandes publiées</span></h5>
-            <h5><span class="label label-info">{{countReceivedAuction}}</span> <span class="mar-lef-10">Offres reçues</span></h5>
-            <h5><span class="label label-warning">{{ countProposedAuction }}</span> <span class="mar-lef-10">Offres proposées</span></h5>
-            <h5><span class="label label-success">{{countAcceptedAuction}}</span> <span class="mar-lef-10">Offres gagnées</span></h5>
-            <h5><span class="label label-danger">{{countLosedAuction}}</span> <span class="mar-lef-10">Offres perdues</span></h5>
+            <h5><span class="label label-default se-badge">{{countPublishAdvert}}</span> <span class="mar-lef-10">{{titlePublishAdvert}}</span></h5>
+            <!--<h5><span class="label label-info">{{countReceivedAuction}}</span> <span class="mar-lef-10">Offres reçues</span></h5>
+            <h5><span class="label label-warning">{{ countProposedAuction }}</span> <span class="mar-lef-10">Offres proposées</span></h5>-->
+            <h5><span class="label label-default se-badge-inverse">{{countAcceptedAuction}}</span> <span class="mar-lef-10">{{titleAcceptedAuctions}}</span></h5>
+          <!--  <h5><span class="label label-danger">{{countLosedAuction}}</span> <span class="mar-lef-10">Offres perdues</span></h5>-->
     </blockquote>
   </div>
 </div>

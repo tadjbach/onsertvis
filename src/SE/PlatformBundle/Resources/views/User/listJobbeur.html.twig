@@ -26,7 +26,11 @@
                    Membre depuis {{ jober.dateCreation|date('d/m/Y') }}
                  </h5>
                  <h5 class="visible-xs visible-sm">
-                   {{ include('@SEPlatform/User/rate.html.twig', {'item': jober }) }}
+                   {% if jober.rate != -1 %}
+                             {{ include('@SEPlatform/User/rate.html.twig', {'item': jober }) }}
+                   {% else %}
+                    Pas encore noté
+                  {% endif %}
 
                  </h5>
              </h5>
@@ -39,7 +43,11 @@
            </td>
            <td>
               <h5 class="hidden-xs hidden-sm">
-             {{ include('@SEPlatform/User/rate.html.twig', {'item': jober }) }}
+                {% if jober.rate != -1 %}
+                          {{ include('@SEPlatform/User/rate.html.twig', {'item': jober }) }}
+                {% else %}
+                 Pas de note
+               {% endif %}
                </h5>
              <h5 class="visible-xs visible-sm">
                 <i>{{ jober.PostalCode.city.labelNormal }} ({{ jober.PostalCode.value }})</i>

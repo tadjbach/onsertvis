@@ -144,6 +144,8 @@ class AdminController extends Controller
                   ->getRepository('SEPlatformBundle:Auction')
                   ->getStateAuctionUser($id, 2);
 
+              $titleAcceptedAuctions = count($listAcceptedAuctions) <= 1 ?'Job fait' : 'Jobs faits';
+
               $listLoseAuctions = $em
                   ->getRepository('SEPlatformBundle:Auction')
                   ->getStateAuctionUser($id, 3);
@@ -151,6 +153,8 @@ class AdminController extends Controller
             $listPublishAdvert = $em
                       ->getRepository('SEPlatformBundle:Advert')
                       ->getAdvertByUser($id);
+
+            $titlePublishAdvert = count($listPublishAdvert) <= 1 ?'Demande publiées' : 'Demandes publiées';
 
            $user=$em->find('SEPlatformBundle:User', $id);
 
@@ -161,9 +165,11 @@ class AdminController extends Controller
                         'payment'=>$payment,
                        'listComment'=>$listComment,
                        'countPublishAdvert'=>count($listPublishAdvert),
+                       'titlePublishAdvert'=>$titlePublishAdvert,
                        'countReceivedAuction'=>count($listReceivedAuctions),
                        'countProposedAuction'=>count($listProposedAuctions),
                        'countAcceptedAuction'=>count($listAcceptedAuctions),
+                         'titleAcceptedAuctions'=>$titleAcceptedAuctions,
                        'countLosedAuction'=>count($listLoseAuctions)
                      ));
          }
