@@ -8,7 +8,6 @@
 {% if user.rate != -1 %}
           {{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}
 {% else %}
-Pas de note
   {% endif %}
         </h5>
           {% if user.accountType == 'Society' %}
