@@ -1,0 +1,26 @@
+{% extends "SEPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Blog - {{ parent() }}
+{% endblock %}
+
+{% block layout_header2 %}
+
+    <div class="row">
+      <div id="header" class="col-md-12">
+            <h3 class="cat-title">Blog</h3>
+      </div>
+    </div>
+{% endblock %}
+{% block layout_body %}
+  <div id="blog" >
+      <div class="col-md-6">
+          <a class="twitter-timeline" data-width="600" href="https://twitter.com/ServiceEnchere?ref_src=twsrc%5Etfw">Tweets by ServiceEnchere</a>
+          <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+      <div class="col-md-6">
+      
+      </div>
+    </div>
+
+{% endblock %}

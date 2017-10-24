@@ -2,6 +2,11 @@
 
 {% block view_advert_auction %}
       <div class="col-md-12 text-center">
+        {% if app.user.isAcountComplete == 0 %}
+            <div class="alert alert-warning" role="alert">
+                Pour pouvoir envoyer un message, merci de compléter votre profil, <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
+            </div>
+        {% else %}
                  {{ include('SEPlatformBundle:Message:form.html.twig') }}
 
      <div class="col-md-2"></div>
@@ -22,5 +27,6 @@
     </button>
       </div>
     <div class="col-md-2"></div>
+         {% endif %}
     </div>
 {% endblock %}

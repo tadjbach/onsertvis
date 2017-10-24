@@ -374,6 +374,11 @@ se_platform_user_logout:
         _controller: SEPlatformBundle:User:logout
 
 #Default Pages
+se_platform_blog:
+    path: /blog
+    defaults:
+        _controller: SEPlatformBundle:Default:blog
+
 se_platform_resum:
     path: /qui-sommes-nous
     defaults:

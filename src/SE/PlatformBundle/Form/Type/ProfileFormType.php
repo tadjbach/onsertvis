@@ -66,7 +66,10 @@ class ProfileFormType extends AbstractType
           'placeholder' => 'L\'adresse ne doit pas dépasser 100 caractères')))
 
           ->add('cpCity', TextType::class,
-             array('label'=>'Code postal'))
+             array('label'=>'Code postal & Ville *',
+             'attr' => array( 'maxlength' => 100,
+                              'placeholder' => 'Tapez le code postal ou la nom de la ville'
+                            )))
 
           ->add('phoneNumber', TextType::class, array('label'=> 'N° téléphone *',
           'attr' => array('maxlength' => 10,

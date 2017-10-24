@@ -148,6 +148,10 @@ class AdminController extends Controller
                   ->getRepository('SEPlatformBundle:Auction')
                   ->getStateAuctionUser($id, 3);
 
+            $listPublishAdvert = $em
+                      ->getRepository('SEPlatformBundle:Advert')
+                      ->getAdvertByUser($id);
+
            $user=$em->find('SEPlatformBundle:User', $id);
 
            return $this->render('SEPlatformBundle:Admin:viewUser.html.twig',
@@ -156,6 +160,7 @@ class AdminController extends Controller
                         'calendar'=>$calendar,
                         'payment'=>$payment,
                        'listComment'=>$listComment,
+                       'countPublishAdvert'=>count($listPublishAdvert),
                        'countReceivedAuction'=>count($listReceivedAuctions),
                        'countProposedAuction'=>count($listProposedAuctions),
                        'countAcceptedAuction'=>count($listAcceptedAuctions),

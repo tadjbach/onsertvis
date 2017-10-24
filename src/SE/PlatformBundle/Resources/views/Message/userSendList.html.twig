@@ -7,7 +7,7 @@
 {% block layout_header2 %}
 <div class="row">
   <div id="header" class="col-md-12">
-    <h3 class="cat-title">Mes messages envoyés - En tant qu'enchérisseur</h3>
+    <h3 class="cat-title">Messages en tant qu'enchérisseur</h3>
     {{ include('@SEPlatform/Message/listUserSendFilter.html.twig') }}
   </div>
 </div>
@@ -17,8 +17,8 @@
   <div class="row">
        <div id="content" class="col-md-12">
          <ul class="nav nav-tabs nav-justified">
-           <li role="presentation" ><a href="{{ path('se_platform_message_user_receive') }}">Message reçus (Mes demandes)</a></li>
-           <li role="presentation" class="active"><a href="{{ path('se_platform_message_user_send') }}">Message envoyés (Demandes des clients)</a></li>
+           <li role="presentation" ><a href="{{ path('se_platform_message_user_receive') }}">Messages en tant que demandeur</a></li>
+           <li role="presentation" class="active"><a href="{{ path('se_platform_message_user_send') }}">Messages en tant qu'enchérisseur</a></li>
          </ul>
         <h4 class="cat-title">{{countMessage}}</h4>
         <table class="table" id="tblGrid">

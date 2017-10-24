@@ -2,27 +2,35 @@
 
 {% block view_advert_auction %}
    <div class="col-md-12 text-center">
+
+     {% if app.user.isAcountComplete == 0 %}
+         <div class="alert alert-warning" role="alert">
+             Pour pouvoir proposer une offre, merci de compléter votre profil, <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
+         </div>
+     {% else %}
+
           <div class="alert alert-danger" role="alert">
                 <strong>Attention!</strong> Je propose mon offre pour "<b>{{advert.BudgetType.labelNormal}}</b>"
           </div>
             {{ include('SEPlatformBundle:Auction:form.html.twig') }}
             <div class="col-md-2"></div>
             <div class="col-md-8">
-            <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0}) }}"
-            class="btn btn-primary btn-md btn-block">
-                Envoyer un message
-            </a>
-            <button
-                 type="button"
-                 class="btn btn-warning btn-md btn-block"
-                 data-toggle="modal"
-                 role="button"
-                 data-toggle="modal"
-                 data-target="#modalAuctionShow"
-                 >
-               {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-            </button>
+                <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0}) }}"
+                class="btn btn-primary btn-md btn-block">
+                    Envoyer un message
+                </a>
+                <button
+                     type="button"
+                     class="btn btn-warning btn-md btn-block"
+                     data-toggle="modal"
+                     role="button"
+                     data-toggle="modal"
+                     data-target="#modalAuctionShow"
+                     >
+                   {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                </button>
             </div>
             <div class="col-md-2"></div>
+               {% endif %}
    </div>
         {% endblock %}

@@ -37,8 +37,7 @@ class DefaultController extends Controller
             return new Response(null);
         }
 
-      public function indexAction()
-      {
+      public function indexAction(){
 
           $listCategory=$this->getDoctrine()
               ->getManager()->getRepository('SEPlatformBundle:Category')
@@ -67,5 +66,10 @@ class DefaultController extends Controller
    public function resumAction()
    {
        return $this->render('SEPlatformBundle:Default:resum.html.twig');
+   }
+
+   public function blogAction()
+   {
+       return $this->render('SEPlatformBundle:Default:blog.html.twig');
    }
 }

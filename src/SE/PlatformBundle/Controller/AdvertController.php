@@ -89,7 +89,7 @@ class AdvertController extends Controller
         return new Response(null);
     }
 
-    public function getCityByDepartementAction(Request $request){
+    public function getCityByDepartementAction(Request $request) {
             $em = $this->getDoctrineManager();
 
             if($request->isXmlHttpRequest())
@@ -153,6 +153,9 @@ class AdvertController extends Controller
     /*
     Get Adverts List for se_platform_advert_list route
     */
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function listAction(Request $request, $page){
         $this->getListFilterAttributes($request);
 
@@ -490,6 +493,9 @@ class AdvertController extends Controller
       return $content;
     }
 
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function viewAction($slug, $id){
       $em = $this->getDoctrineManager();
 
