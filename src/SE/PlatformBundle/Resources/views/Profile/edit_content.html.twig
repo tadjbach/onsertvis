@@ -51,18 +51,15 @@
             <h5>{{ form_widget(form.detail)  }}</h5>
          </div>
          <div class="form-group">
-           <h5><label class="control-label">Afficher mes informations</label></h5>
             <h5> {{ form_label(form.isDetailVisible) }}</h5>
             <h5> {{ form_widget(form.isDetailVisible)  }}</h5>
+            <h5> {{ form_label(form.isJobber) }}</h5>
+            <h5> {{ form_widget(form.isJobber)  }}</h5>
+            <h5>{{ form_label(form.isNewsLetter) }}</h5>
+            <h5>{{ form_widget(form.isNewsLetter)  }}</h5>
           </div>
-          <div class="form-group">
-            <h5><label class="control-label">Inscrire à la newsletter</label></h5>
-              <h5>{{ form_label(form.isNewsLetter) }}</h5>
-              <h5>{{ form_widget(form.isNewsLetter)  }}</h5>
-           </div>
       </blockquote>
   </div>
-
 
   <div class="col-md-6">
   <h4><i>Mes préferences</i></h4>

@@ -15,11 +15,17 @@
 {% block layout_body %}
   <div class="row">
        <div id="content" class="col-md-12">
+         {% if app.user.isAcountComplete == 0 %}
+             <div class="alert alert-warning" role="alert">
+                 Bonjour {{ app.user.username }}, Votre profil n'est pas complet, merci de le
+                 <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
+             </div>
+         {% else %}
          <ul class="nav nav-tabs nav-justified">
            <li role="presentation" ><a href="{{ path('se_platform_auction_user_receive') }}">Offres reçues</a></li>
            <li role="presentation" class="active"><a href="{{ path('se_platform_auction_user_send') }}">Offres proposées</a></li>
          </ul>
-<br>
+          <br>
          <h4 class="cat-title">{{ titleResult }}</h4>
             <table class="table" id="tblGrid">
                 <tbody>
@@ -129,6 +135,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+             {% endif %}
        </div>
    </div>
 

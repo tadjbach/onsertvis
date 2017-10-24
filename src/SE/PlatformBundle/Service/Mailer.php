@@ -17,7 +17,7 @@ class Mailer{
     $message = \Swift_Message::newInstance()
          ->setSubject($subject)
          ->setFrom(array('noreplay@serviceenchere.fr' => 'Service Enchère - '.$senderName))
-         ->setTo($userReceiverMail)
+         ->setTo($userReceiverMail, 'noreplay@serviceenchere.fr')
          ->setBcc('noreplay@serviceenchere.fr')
          ->setBody($body,'text/html');
 

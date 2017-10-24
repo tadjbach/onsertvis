@@ -20,12 +20,38 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UserController extends Controller
 {
+  private $nbPerPage = 20;
+  private $em;
+  private $userName;
 
-  /**
-   * @Security("has_role('ROLE_AUTEUR')")
-   */
-    public function jobbeurListAction(Request $request){
-          return $this->render('SEPlatformBundle:User:listJobbeur.html.twig');
+  private function getDoctrineManager(){
+   return $this->getDoctrine()->getManager();
+ }
+
+    public function jobbeurListAction(Request $request, $page){
+      $em = $this->getDoctrineManager();
+      $user = $this->getUser();
+
+      $listJobbeurs = $em->getRepository('SEPlatformBundle:User')
+           ->getJobberList(
+             $this->userName,
+             $page,
+             $this->nbPerPage);
+
+     $titleResult = count($listJobbeurs) == 0 ?'Aucun jobbeur trouvé' :
+             (count($listJobbeurs) > 1 ? count($listJobbeurs).' jobbeurs' :
+         count($listJobbeurs).' jobbeur');
+
+      $nbPages = ceil(count($listJobbeurs)/$this->nbPerPage);
+
+     return $this->render('SEPlatformBundle:User:listJobbeur.html.twig',
+             array(
+               'titleResult'=>$titleResult,
+               'nbPages'      => $nbPages,
+               'page'         => $page,
+               'userName'     => $this->userName,
+               'listJobbeurs'    =>$listJobbeurs
+             ));
     }
 
     public function addAction(Request $request){

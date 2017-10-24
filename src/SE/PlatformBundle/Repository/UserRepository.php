@@ -42,4 +42,22 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
       return new Paginator($qb, true);
   }
 
+  public function getJobberList($name, $page, $nbPerPage){
+      $qb = $this->createQueryBuilder('user');
+      $qb->where($qb->expr()->eq('user.isAcountComplete', 1));
+      $qb->andWhere($qb->expr()->eq('user.isJobber', 1));
+
+      if($name !== NULL && $name !== '')
+      {
+          $page = 1;
+          $qb->andWhere("user.username LIKE '%$name%'");
+      }
+
+      $qb->addOrderBy('user.rate', 'DESC');
+      $qb->addOrderBy('user.dateCreation', 'ASC')->getQuery();
+      
+      $qb->setFirstResult(($page-1) * $nbPerPage)->setMaxResults($nbPerPage);
+
+      return new Paginator($qb, true);
+  }
 }

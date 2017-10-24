@@ -14,4 +14,56 @@
 {% endblock %}
 {% block layout_body %}
 
+   <table class="table table-hover" id="tblGrid">
+     <h4 class="cat-title">{{ titleResult }}</h4>
+       <tbody>
+       {% for jober in listJobbeurs %}
+       <tr class="link" onclick="window.document.location='{{ path('se_platform_user_view', {'userId': jober.id}) }}';">
+           <td>
+             <h5 class="truncate">
+                 <a class='se-tbl-link' href="{{ path('se_platform_user_view', {'userId': jober.id}) }}">{{ jober }}</a>
+                 <h5 >
+                   Membre depuis {{ jober.dateCreation|date('d/m/Y') }}
+                 </h5>
+                 <h5 class="visible-xs visible-sm">
+                   {{ include('@SEPlatform/User/rate.html.twig', {'item': jober }) }}
+
+                 </h5>
+             </h5>
+           </td>
+           <td>
+             <h5 class="hidden-xs hidden-sm">
+               <i>{{ jober.PostalCode.value }} {{ jober.PostalCode.city.labelNormal }}
+               ({{ jober.PostalCode.city.departement.labelNormal }})</i>
+             </h5>
+           </td>
+           <td>
+              <h5 class="hidden-xs hidden-sm">
+             {{ include('@SEPlatform/User/rate.html.twig', {'item': jober }) }}
+               </h5>
+             <h5 class="visible-xs visible-sm">
+                <i>{{ jober.PostalCode.city.labelNormal }} ({{ jober.PostalCode.value }})</i>
+              </h5>
+           </td>
+         </tr>
+         {% else %}
+
+     {% endfor %}
+     </tbody>
+   </table>
+
+   <div class="row">
+       <div class="col-md-12 text-center">
+           <ul class="pagination">
+               {% if nbPages > 1 %}
+                   {% for p in range(1, nbPages) %}
+                       <li{% if p == page %} class="active"{% endif %}>
+                           <a href="{{ path('se_platform_user_jobbeur_list', {'page': p}) }}">{{ p }}</a>
+                       </li>
+                   {% endfor %}
+               {% endif %}
+           </ul>
+       </div>
+   </div>
+
 {% endblock %}

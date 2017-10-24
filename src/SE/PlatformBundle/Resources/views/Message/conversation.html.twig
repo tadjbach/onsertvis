@@ -16,6 +16,13 @@
 
 <div class="row">
   <div class="col-md-12">
+    {% if app.user.isAcountComplete == 0 %}
+        <div class="alert alert-warning" role="alert">
+            Bonjour {{ app.user.username }}, Votre profil n'est pas complet, merci de le
+            <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
+        </div>
+    {% else %}
+
       <blockquote>
         {{countMessage}} pour "{{advert.title}}"
       </blockquote>
@@ -51,6 +58,7 @@
             </div>
         </div>
         {% endfor %}
+           {% endif %}
   </div>
 </div>
 {% endblock %}

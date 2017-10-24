@@ -34,6 +34,13 @@
   <div class="col-md-2"></div>
 </div>
   <div class="row">
+
+       {% if app.user.isAcountComplete == 0 %}
+           <div class="alert alert-warning" role="alert">
+               Bonjour {{ app.user.username }}, Votre profil n'est pas complet, merci de le
+               <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
+           </div>
+       {% else %}
        <div id="content" class="col-md-12">
          <a class="btn btn-default" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
          <h4 class="cat-title">{{ titleResult }}</h4>
@@ -120,6 +127,8 @@
                 </tbody>
             </table>
        </div>
+       {% endif %}
+
    </div>
 
 
