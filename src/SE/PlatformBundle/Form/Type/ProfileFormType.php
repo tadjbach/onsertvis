@@ -109,6 +109,9 @@ class ProfileFormType extends AbstractType
             ->add('isDetailVisible', CheckboxType::class,
                       array('label'=> 'Afficher mes information de contact sur le site.', 'required' => false))
 
+            ->add('isJobber', CheckboxType::class,
+                      array('label'=> 'Je souhaite figurer dans la liste des jobbeurs.', 'required' => false))
+
           ->add('email', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\EmailType'),
                   array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'));
 

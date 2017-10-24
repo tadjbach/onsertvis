@@ -143,6 +143,13 @@ class User extends BaseUser
     private $isDetailVisible=true;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="isJobber", type="boolean")
+     */
+    private  $isJobber=false;
+
+    /**
      * @ORM\ManyToMany(targetEntity="SE\PlatformBundle\Entity\Category")
      */
     private $categories;
@@ -830,5 +837,29 @@ class User extends BaseUser
     public function getIsValideAuction()
     {
         return $this->isValideAuction;
+    }
+
+    /**
+     * Set isJobber
+     *
+     * @param boolean $isJobber
+     *
+     * @return User
+     */
+    public function setIsJobber($isJobber)
+    {
+        $this->isJobber = $isJobber;
+
+        return $this;
+    }
+
+    /**
+     * Get isJobber
+     *
+     * @return boolean
+     */
+    public function getIsJobber()
+    {
+        return $this->isJobber;
     }
 }

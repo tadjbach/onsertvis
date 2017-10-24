@@ -1,3 +1,4 @@
+ALTER TABLE user ADD isJobber TINYINT(1) NOT NULL;
 
 /*
 SELECT * FROM (SELECT 	m.id as msgId,

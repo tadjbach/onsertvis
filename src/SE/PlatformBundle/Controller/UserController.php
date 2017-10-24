@@ -16,9 +16,18 @@ use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UserController extends Controller
 {
+
+  /**
+   * @Security("has_role('ROLE_AUTEUR')")
+   */
+    public function jobbeurListAction(Request $request){
+          return $this->render('SEPlatformBundle:User:listJobbeur.html.twig');
+    }
+
     public function addAction(Request $request){
       $content = $this->render('SEPlatformBundle:User:add.html.twig',
               array(
