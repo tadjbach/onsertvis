@@ -245,7 +245,9 @@ class AdminController extends Controller
                           'advert'=> $advert->getTitle())
                  );
 
-                $mailer->sendEmail($advert, "Validation de votre demande", "Votre demande ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
+                 if (!$advert->getIsDeleted()) {
+                    $mailer->sendEmail($advert, "Validation de votre demande", "Votre demande ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
+                 }
             }
 
             return $this->redirectToRoute('se_platform_admin_view_advert', array('id'=>$id));
@@ -273,7 +275,11 @@ class AdminController extends Controller
                       array('receiver' => $advert->getUser(),
                            'advert'=> $advert->getTitle())
                   );
-                  $mailer->sendEmail($advert, "Validation de votre demande", "Votre demande ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
+
+                  if (!$advert->getIsDeleted()) {
+                       $mailer->sendEmail($advert, "Validation de votre demande", "Votre demande ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
+                  }
+
              }
 
              return $this->redirectToRoute('se_platform_admin_view_advert', array('id'=>$id));

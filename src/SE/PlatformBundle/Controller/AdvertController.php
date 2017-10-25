@@ -325,6 +325,8 @@ class AdvertController extends Controller
             if ($form->isValid()){
 
                 $advert->setDateUpdate(new \DateTime());
+                $advert->setIsPublished(0);
+
                 $postalCode=$em->getRepository('SEPlatformBundle:PostalCode')
                        ->getPostalCodeByValue($advert->getCpCity());
 
@@ -334,7 +336,7 @@ class AdvertController extends Controller
 
                 $em->flush();
 
-                $session->getFlashBag()->add('editSuccess','Demande modifiée avec succes');
+                $session->getFlashBag()->add('editSuccess','Demande modifiée avec succes, elle sera validée dans moins de 24h.');
 
                 return $this->redirectToRoute('se_platform_advert_edit',
                             array('slug'=> $advert->getSlug(),

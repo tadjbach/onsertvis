@@ -9,9 +9,9 @@
                               class="form-control"
                               placeholder="Que cherchez-vous?">
                           </div>
-                          <div class="col-md-3 filter">
+                          <div class="col-md-3 filter hide">
                                   <select class="form-control" name="category">
-                                      <option value='0' >Toutes les catégories</option>
+                                      <option value='0' >Tous les services</option>
                                       {% for category in listCategory %}
                                           <option {{ app.request.query.get('category')== category.id ? ' selected ' : ' ' }}
                                               value={{ category.id }}>{{ category.labelNormal }}
@@ -23,6 +23,11 @@
                               <input
                                   class="btn btn-lg-se btn-primary hidden-xs hidden-sm"
                                   type="submit" value="Rechercher"  />
+                          </div>
+                          <div class="col-md-3 filter">
+                              <a
+                                  class="btn btn-lg-se btn-primary hidden-xs hidden-sm"
+                                  href="{{ path('se_platform_user_jobbeur_list')  }}" >Réinitialiser</a>
                           </div>
                         </div>
                 </div>
@@ -80,6 +85,11 @@
                       <div class="col-md-3 filter">
                           <input  class="btn btn-block btn-primary visible-xs visible-sm"
                               type="submit" value="Rechercher"  />
+                      </div>
+                      <div class="col-md-3 filter">
+                          <a
+                              class="btn btn-primary visible-xs visible-sm"
+                              href="{{ path('se_platform_user_jobbeur_list')  }}" >Réinitialiser</a>
                       </div>
                     </div>
                   </div>

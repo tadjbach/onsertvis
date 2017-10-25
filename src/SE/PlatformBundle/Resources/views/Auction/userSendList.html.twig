@@ -91,13 +91,19 @@
                         </h5>
                         <h5 class="visible-xs visible-sm">
                           <a
-                            class='{% if auction.state != 1 %} btn btn-danger not-active {% else %} btn btn-danger  {% endif %}'
+                            class='{% if auction.state != 1 %} btn btn-danger hide {% else %} btn btn-danger  {% endif %}'
                                 data-toggle="modal"
                                 role="button"
                                 data-toggle="modal"
                                 data-target="#modalAdvertCancel_{{auction.id}}"
                                 >Annuler
                             </a>
+                          {% if auction.state == 1 %}
+                          {% elseif auction.state == 2 and auction.advert.commentState == 0 %}
+                            <a class="btn btn-primary" href="{{ path('se_platform_comment_add', {'advertId': auction.advert.id, 'auctionUserId': advert.user.id}) }}">Evaluer</a>
+                          {% elseif auction.state == 2 and auction.advert.commentState == 1 %}
+                          <a class="btn btn-primary" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
+                          {% endif %}
                         </h5>
                     </td>
                       <td>
@@ -122,13 +128,19 @@
                               {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': auction.advert.id })) }}
                           </a>
                           <a
-                            class='{% if auction.state != 1 %} btn btn-danger not-active {% else %} btn btn-danger  {% endif %}'
+                            class='{% if auction.state != 1 %} btn btn-danger hide {% else %} btn btn-danger  {% endif %}'
                                 data-toggle="modal"
                                 role="button"
                                 data-toggle="modal"
                                 data-target="#modalAdvertCancel_{{auction.id}}"
                                 >Annuler
                             </a>
+                            {% if auction.state == 1 %}
+                            {% elseif auction.state == 2 and auction.advert.commentState == 0 %}
+                              <a class="btn btn-primary" href="{{ path('se_platform_comment_add', {'advertId': auction.advert.id, 'auctionUserId': advert.user.id}) }}">Evaluer</a>
+                            {% elseif auction.state == 2 and auction.advert.commentState == 1 %}
+                            <a class="btn btn-primary" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
+                            {% endif %}
                           </h5>
                     </td>
                 </tr>

@@ -18,25 +18,146 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 class UserController extends Controller
 {
   private $nbPerPage = 20;
   private $em;
-  private $userName;
+  private $search;
+  private $category;
+  private $region;
+  private $departement;
+  private $city;
+  private $postalCode;
 
   private function getDoctrineManager(){
    return $this->getDoctrine()->getManager();
  }
 
+ private function getListFilterAttributes(Request $request){
+     $this->search = $request->query->get('search');
+     $this->category = $request->query->get('category');
+     $this->region = $request->query->get('region');
+     $this->departement = $request->query->get('departement');
+     $this->city = $request->query->get('city');
+     $this->postalCode = $request->query->get('postalCode');
+ }
+
+ private function getCategory(){
+   $em = $this->getDoctrineManager();
+   return $em->getRepository('SEPlatformBundle:Category')->findAll();
+ }
+
+ private function getRegion(){
+   $em = $this->getDoctrineManager();
+    return $em->getRepository('SEPlatformBundle:Region')->findAll();
+ }
+
+ private function getDepartement($region){
+   $em = $this->getDoctrineManager();
+    return $em->getRepository('SEPlatformBundle:Departement')->getDepartementByRegion($region);
+ }
+
+ public function getDepartementByRegionAction(Request $request){
+     $em = $this->getDoctrineManager();
+
+     if($request->isXmlHttpRequest())
+     {
+       $listDepartement = $em->getRepository('SEPlatformBundle:Departement')
+               ->getDepartementByRegion($request->request->get('region'));
+
+       $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new JsonEncoder()));
+
+       $json = $serializer->serialize($listDepartement, 'json');
+
+       return new Response($json);
+     }
+
+     return new Response(null);
+ }
+
+ public function getCityByDepartementAction(Request $request) {
+         $em = $this->getDoctrineManager();
+
+         if($request->isXmlHttpRequest())
+         {
+             $listCity = $em->getRepository('SEPlatformBundle:City')
+                       ->getCityByDepartement($request->request->get('departement'));
+
+             $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new JsonEncoder()));
+
+             $json = $serializer->serialize($listCity, 'json');
+
+             return new Response($json);
+         }
+         return new Response(null);
+     }
+
+ public function getPostalCodeByCityAndDepartementAction(Request $request){
+     $em = $this->getDoctrineManager();
+
+     if($request->isXmlHttpRequest())
+     {
+         $city = $request->request->get('city');
+         $dptId = $request->request->get('departement');
+
+         $listPostalCode = $em->getRepository('SEPlatformBundle:PostalCode')
+                     ->getpostalCodeByCityAndDepartement($city, $dptId);
+
+         $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new JsonEncoder()));
+
+         $json = $serializer->serialize($listPostalCode, 'json');
+
+         return new Response($json);
+     }
+
+     return new Response(null);
+ }
+
+ public function getPostalCodeByCityAction(Request $request){
+         $em = $this->getDoctrineManager();
+
+         if($request->isXmlHttpRequest())
+         {
+             $city = $request->request->get('city');
+             $dptId = $request->request->get('departement');
+
+             $listPostalCode = $em
+                         ->getRepository('SEPlatformBundle:PostalCode')
+                         ->getCpByRegionAndDpt($city, $dptId);
+
+             $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new
+ JsonEncoder()));
+
+             $json = $serializer->serialize($listPostalCode, 'json');
+
+             return new Response($json);
+         }
+
+         return new Response(null);
+     }
+
+
     public function jobbeurListAction(Request $request, $page){
+      $this->getListFilterAttributes($request);
+
       $em = $this->getDoctrineManager();
       $user = $this->getUser();
 
       $listJobbeurs = $em->getRepository('SEPlatformBundle:User')
            ->getJobberList(
-             $this->userName,
-             $page,
-             $this->nbPerPage);
+                            $this->search,
+                           $this->category,
+                           $this->region,
+                           $this->departement,
+                           $this->city,
+                           $this->postalCode,
+                           $page,
+                           $this->nbPerPage);
 
      $titleResult = count($listJobbeurs) == 0 ?'Aucun jobbeur trouvé' :
              (count($listJobbeurs) > 1 ? count($listJobbeurs).' jobbeurs' :
@@ -46,10 +167,20 @@ class UserController extends Controller
 
      return $this->render('SEPlatformBundle:User:listJobbeur.html.twig',
              array(
+               'search'=> $this->search,
+               'category'=> $this->category,
+               'region'=> $this->region,
+               'departement'=> $this->departement,
+               'city'=> $this->city,
+
+               'postalCode'=> $this->postalCode,
+               'listCategory'=>$this->getCategory(),
+               'listRegions'=>$this->getRegion(),
+               'listDepartement'=>$this->getDepartement($this->region),
+
                'titleResult'=>$titleResult,
                'nbPages'      => $nbPages,
                'page'         => $page,
-               'userName'     => $this->userName,
                'listJobbeurs'    =>$listJobbeurs
              ));
     }
