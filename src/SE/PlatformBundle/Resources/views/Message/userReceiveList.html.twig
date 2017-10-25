@@ -54,7 +54,7 @@
                                        <div class="visible-xs visible-sm">
                                           {{render(controller('SEPlatformBundle:Message:lastDateCreation',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
                                         </div>
-                                         <a href="{{ path('se_platform_user_view', {'city': msg.sender.cpCity,'userId': msg.sender.id}) }}" class="se-tbl-link" >
+                                         <a href="{{ path('se_platform_user_view', {'userId': msg.sender.id}) }}" class="se-tbl-link" >
                                              {{ msg.sender }}
                                          </a>
                                    </h5>

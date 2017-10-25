@@ -347,7 +347,7 @@ se_platform_user_add:
         _controller: SEPlatformBundle:User:add
 
 se_platform_user_view:
-    path:   /profile/{city}-{userId}
+    path:   /profile-jobbeur-01{userId}10
     defaults:
         _controller: SEPlatformBundle:Profile:view
     requirements:
