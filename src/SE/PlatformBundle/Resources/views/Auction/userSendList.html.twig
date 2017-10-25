@@ -43,7 +43,7 @@
                             <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': auction.advert.slug,'id': auction.advert.id}) }}">{{ auction.advert.title }}</a>
 
                             <h5 class="hidden-xs hidden-sm">
-                              <a class='se-tbl-link' href="{{ path('se_platform_user_view', {'userId': auction.advert.user.id}) }}" class="cat-link" >
+                              <a class='se-tbl-link' href="{{ path('se_platform_user_view', {'city': auction.advert.user.cpCity,'userId': auction.advert.user.id}) }}" class="cat-link" >
                                   ({{ auction.advert.user }})
                               </a>
                             </h5>

@@ -41,7 +41,7 @@
                   {% else %}
 
                   <a class="cat-link"
-                      href="{{ path('se_platform_user_view', {'userId': comment.receiver.id}) }}"
+                      href="{{ path('se_platform_user_view', {'city': comment.receiver.cpCity,'userId': comment.receiver.id}) }}"
                       >{{ comment.receiver }}</a>
 
                   {% endif %}

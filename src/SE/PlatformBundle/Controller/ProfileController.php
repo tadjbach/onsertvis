@@ -138,7 +138,7 @@ class ProfileController extends Controller
         ));
     }
 
-  public function viewAction($userId)
+  public function viewAction($city, $userId)
    {
      $em = $this->getDoctrine()
             ->getManager();

@@ -89,7 +89,7 @@
                 <i>Par <b>{{ advert.user }}</b>
                 </i>
                 <a
-                    href="{{ path('se_platform_user_view', {'userId': advert.user.id}) }}"
+                    href="{{ path('se_platform_user_view', {'city': advert.user.cpCity,'userId': advert.user.id}) }}"
                     >(Voir le profil)</a>
               </h5>
               {% if advert.user.isDetailVisible %}

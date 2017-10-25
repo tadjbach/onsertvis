@@ -7,7 +7,7 @@
         {% for auction in listAuctions %}
             <tr>
                 <td class="text-left">
-                    <a href="{{ path('se_platform_user_view', {'userId': auction.user.id}) }}" class="cat-link" >
+                    <a href="{{ path('se_platform_user_view', {'city': auction.user.cpCity|replace({' ': '-'}), 'userId': auction.user.id}) }}" class="cat-link" >
                         {{ auction.user }}
                     </a>
                 </td>

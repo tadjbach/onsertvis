@@ -68,7 +68,7 @@ class MessageController extends Controller
 
               $form->handleRequest($request);
 
-              if ($form->isValid()){
+              if ($form->isValid() && $message->getContent() !== NULL && $message->getContent() !== ''){
 
                 $message->setIsNew(1);
                 $userReceive->setIsNewMessage(1);
@@ -101,6 +101,9 @@ class MessageController extends Controller
                                                 array('slug'=> $advert->getSlug(),
                                                       'id'=> $advert->getId()));
                 }
+              }
+              else{
+                $session->getFlashBag()->add('warning','Votre message est vide.');
               }
           }
           else{

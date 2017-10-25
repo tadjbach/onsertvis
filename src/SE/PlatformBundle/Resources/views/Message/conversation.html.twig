@@ -45,7 +45,7 @@
                 <h4>
                 {% if app.user == conversation.receiver %}
                 <a class="cat-link"
-                    href="{{ path('se_platform_user_view', {'userId': conversation.sender.id}) }}"
+                    href="{{ path('se_platform_user_view', {'city': conversation.sender.cpCity,'userId': conversation.sender.id}) }}"
                     >{{ conversation.sender }}</a>
                 {% else %}Vous{% endif %}
               </h4>

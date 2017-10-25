@@ -54,7 +54,7 @@ class CommentController extends Controller
              if ($request->isMethod('POST')){
                  $form->handleRequest($request);
 
-                 if ($form->isValid()){
+                 if ($form->isValid() && $comment->getContent() !== NULL && $comment->getContent() !== ''){
 
                        $rate = $comment->getRate();
 
@@ -92,6 +92,9 @@ class CommentController extends Controller
                        $session->getFlashBag()->add('addSuccess','Avis bien envoyé.');
 
                        return $this->redirectToRoute('se_platform_auction_user_receive');
+                     }
+                     else{
+                       $session->getFlashBag()->add('warning','Votre message est vide.');
                      }
              }
          }

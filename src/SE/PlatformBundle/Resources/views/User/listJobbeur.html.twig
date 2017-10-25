@@ -25,10 +25,10 @@
      <h4 class="cat-title">{{ titleResult }}</h4>
        <tbody>
        {% for jober in listJobbeurs %}
-       <tr class="link" onclick="window.document.location='{{ path('se_platform_user_view', {'userId': jober.id}) }}';">
+       <tr class="link" onclick="window.document.location='{{ path('se_platform_user_view', {'city': jober.cpCity|replace({' ': '-'}),'userId': jober.id}) }}';">
            <td>
              <h5 class="truncate">
-                 <a class='se-tbl-link' href="{{ path('se_platform_user_view', {'userId': jober.id}) }}">{{ jober }}</a>
+                 <a class='se-tbl-link' href="{{ path('se_platform_user_view', {'city': jober.cpCity|replace({' ': '-'}),'userId': jober.id}) }}">{{ jober }}</a>
                  <h5 >
                    Membre depuis {{ jober.dateCreation|date('d/m/Y') }}
                  </h5>
