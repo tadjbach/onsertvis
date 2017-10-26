@@ -140,7 +140,7 @@ class User extends BaseUser
      *
      * @ORM\Column(name="isDetailVisible", type="boolean")
      */
-    private $isDetailVisible=true;
+    private $isDetailVisible=false;
 
     /**
      * @var bool

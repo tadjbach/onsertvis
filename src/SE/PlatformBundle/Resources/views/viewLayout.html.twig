@@ -56,7 +56,7 @@
 
        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and advert.user ==  app.user %}
            <div class="col-md-12 alert alert-warning" role="alert">
-               Vous êtes proprétaire de la demande
+               Vous êtes proprétaire de la demande, <a class='se-tbl-link' href="{{ path('se_platform_advert_user_list') }}">Voir mes demandes</a>               
            </div>
            {% endif %}
             <h3 class="title-advert"><p class="trunc">{{ advert.title }}</p></h3>

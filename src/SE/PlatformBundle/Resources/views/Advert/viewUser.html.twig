@@ -3,7 +3,7 @@
 {% block layout_header2 %}
 <div class="row">
   <div id="header" class="col-md-12">
-      <h5 class="cat-title hidden-xs hidden-sm" >{{ advert.title }}</h5>
+      <h3 class="cat-title hidden-xs hidden-sm" >{{ advert.title }}</h3>
       <h3 class="cat-title visible-xs visible-sm" ><p class="trunc">{{ advert.title }}</p></h3>
   </div>
 </div>
@@ -13,11 +13,15 @@
        <div class="col-md-12">
          {% if advert.getIsPublished == 0 %}
          <div class="text-center">
-           <div class="alert alert-info" role="alert">
-             La demande est désactivée ou en cours de validation
+           <div class="col-md-12 alert alert-warning" role="alert">
+             La demande est désactivée ou en cours de validation, <a class='se-tbl-link' href="{{ path('se_platform_advert_user_list') }}">Voir mes demandes</a>
            </div>
          </div>
-           {% endif %}
+         {% else %}
+         <div class="text-center">
+             <a class='btn btn-primary' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">Voir la demande en tant que visiteur</a>
+         </div>
+        {% endif %}
         <h3 class="title-advert"><p class="trunc">{{ advert.title }}</p></h3>
         <div class="col-md-6">
             <blockquote>
