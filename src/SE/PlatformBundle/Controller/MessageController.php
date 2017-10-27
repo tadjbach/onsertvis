@@ -348,6 +348,7 @@ class MessageController extends Controller
     }
 
     /**
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function listUserAction(Request $request, $page){
         $user = $this->getUser();
