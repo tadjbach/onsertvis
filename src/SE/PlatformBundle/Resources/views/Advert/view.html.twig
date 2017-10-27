@@ -14,7 +14,8 @@
                        {'advertSlug': advert.slug,
                        'advertId': advert.id,
                        'receiveId': advert.user.id,
-                       'isAnswer':0
+                       'isAnswer':0,
+                       'isAdvertOwner':0
                        }) }}" class="btn btn-primary btn-md btn-block">
                            Envoyer un message
                        </a>
@@ -24,7 +25,12 @@
                     class="btn btn-primary btn-md btn-block" >
                         Faire une offre
                     </a>
-                   <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0}) }}"
+                   <a href="{{ path('se_platform_message_add',
+                            {'advertSlug': advert.slug,
+                            'advertId': advert.id,
+                            'receiveId': advert.user.id,
+                            'isAnswer':0,
+                            'isAdvertOwner':0}) }}"
                    class="btn btn-primary btn-md btn-block">
                        Envoyer un message
                    </a>

@@ -35,8 +35,17 @@ class MessageController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function addAction(Request $request, $advertSlug, $advertId, $receiveId, $isAnswer){
+    public function addAction(Request $request, $advertSlug, $advertId, $receiveId, $isAnswer, $isAdvertOwner){
         $em = $this->getDoctrineManager();
+
+        $listMessage = $em->getRepository('SEPlatformBundle:Message')
+                        ->getLastMessage($advertId, $this->getUser()->getId(), $receiveId, $isAdvertOwner);
+
+        $lastMessage = $listMessage[0];
+        $lastMessage->setIsNew(0);
+        $em->persist($lastMessage);
+        $em->flush();
+
         $session = $request->getSession();
         $mailer  = $this->get('se_platform.mailer');
 
@@ -94,7 +103,8 @@ class MessageController extends Controller
                                   'advertSlug'=> $advert->getSlug(),
                                   'senderId'=> $userSender->getId(),
                                   'isAnswer'=> 1,
-                                  'receiveId'=> $userReceive->getId()));
+                                  'receiveId'=> $userReceive->getId(),
+                                  'isAdvertOwner'=>0));
                 }
                 else {
                   return $this->redirectToRoute('se_platform_advert_view',
@@ -270,12 +280,12 @@ class MessageController extends Controller
       ));
     }
 
-    public function lastDateCreationAction($advertId, $receiverId){
+    public function lastDateCreationAction($advertId, $receiverId, $senderId, $isAdvertOwner){
         $em = $this->getDoctrineManager();
 
           $lastMessage = $em
             ->getRepository('SEPlatformBundle:Message')
-            ->getLastMessage($advertId, $receiverId);
+            ->getLastMessage($advertId, $receiverId, $senderId, $isAdvertOwner);
 
             $lastDate = $lastMessage[0]->getDateCreation();
             $lastDateDay = $lastDate->format('d/m/Y');
@@ -286,17 +296,25 @@ class MessageController extends Controller
           );
     }
 
-    public function countMessageAction($advertId, $receiverId){
+    public function countMessageAction($advertId, $receiverId, $senderId, $isAdvertOwner){
         $em = $this->getDoctrineManager();
         $countMessage = 'Conversation';
+        $resp = '';
+
         $listMessage = $em->getRepository('SEPlatformBundle:Message')
-                        ->getLastMessage($advertId, $receiverId);
+                        ->getLastMessage($advertId, $receiverId, $senderId, $isAdvertOwner);
+
+        $lastMessage = $listMessage[0];
+
+        if ($lastMessage->getReceiver() == $this->getUser() && $lastMessage->getIsNew() == 1) {
+            $resp = '<span class="label label-danger">Non lu</span>';
+        }
 
           /*  $countMessage = count($listMessage) <= 1 ? count($listMessage).' message'
                     : count($listMessage).' messages';*/
 
         return new Response(
-          $countMessage
+          $resp
         );
     }
 }

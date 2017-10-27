@@ -311,7 +311,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getLastMessage($advertId, $userReceiverId){
+    public function getLastMessage($advertId, $userReceiverId, $userSenderId, $isAdvertOwner){
       $qb = $this->createQueryBuilder('message');
 
        $qb->leftJoin('message.advert', 'advert')
@@ -321,10 +321,17 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
            ->leftJoin('message.receiver', 'receiver')
            ->addSelect('receiver');
 
-      $qb->where($qb->expr()->eq('advert.id', $advertId))
-          ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
-          ->andWhere($qb->expr()->eq('advert.isEnabled', 1))
-          ->andWhere($qb->expr()->eq('receiver.id', $userReceiverId));
+           $qb->where($qb->expr()->eq('advert.id', $advertId))
+              ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
+              ->andWhere($qb->expr()->eq('advert.isEnabled', 1));
+
+          $qb->andWhere($qb->expr()->eq('receiver.id', $userReceiverId));
+          $qb->andWhere($qb->expr()->eq('sender.id', $userSenderId));
+
+            if ($isAdvertOwner === 1) {
+                $qb->andWhere($qb->expr()->eq('advert.user', $userReceiverId));
+            }
+
 
           $qb->orderBy('message.dateCreation', 'DESC')->getQuery();
           //$qb->setMaxResults(1);

@@ -15,7 +15,12 @@
             {{ include('SEPlatformBundle:Auction:form.html.twig') }}
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0}) }}"
+                <a href="{{ path('se_platform_message_add',
+                          {'advertSlug': advert.slug,
+                          'advertId': advert.id,
+                          'receiveId': advert.user.id,
+                          'isAnswer':0,
+                          'isAdvertOwner':0}) }}"
                 class="btn btn-primary btn-md btn-block">
                     Envoyer un message
                 </a>

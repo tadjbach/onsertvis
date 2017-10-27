@@ -36,13 +36,11 @@
                        <tbody>
                            {% for msg in listMessage %}
                                <tr>
-                                 <!--<td class="text-center hidden-xs hidden-sm">
-                                   {% if app.user.isNewMessage and msg.receiver == app.user and msg.advert.isNewMessage %}
-                                      <span class="label label-danger">Non lu</span>
-                                  {% endif %}
-                                </td>-->
                                  <td class="text-center hidden-xs hidden-sm">
-                                     {{render(controller('SEPlatformBundle:Message:lastDateCreation',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
+                                   {{render(controller('SEPlatformBundle:Message:countMessage',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id, 'senderId' : msg.sender.id, 'isAdvertOwner' : 1}))}}
+                                </td>
+                                 <td class="text-center hidden-xs hidden-sm">
+                                     {{render(controller('SEPlatformBundle:Message:lastDateCreation',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id, 'senderId' : msg.sender.id , 'isAdvertOwner' : 1}))}}
                                 </td>
                                 <td>
                                     <h5>
@@ -52,7 +50,7 @@
                                  <td class='text-left'>
                                    <h5>
                                        <div class="visible-xs visible-sm">
-                                          {{render(controller('SEPlatformBundle:Message:lastDateCreation',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id }))}}
+                                          {{render(controller('SEPlatformBundle:Message:lastDateCreation',  {'advertId': msg.advert.id, 'receiverId' : msg.receiver.id, 'senderId' : msg.sender.id, 'isAdvertOwner' : 1 }))}}
                                         </div>
                                          <a href="{{ path('se_platform_user_view', {'userId': msg.sender.id}) }}" class="se-tbl-link" >
                                              {{ msg.sender }}
@@ -86,7 +84,8 @@
                                                     'advertId': msg.advert.id,
                                                     'senderId': msg.advert.user.id,
                                                     'receiveId':msg.sender.id,
-                                                    'isAnswer':1
+                                                    'isAnswer':1,
+                                                    'isAdvertOwner' : 1
                                         }) }}" class="btn btn-primary">
                                             Voir
                                         </a>

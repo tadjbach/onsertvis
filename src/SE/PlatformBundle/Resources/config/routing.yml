@@ -130,54 +130,54 @@ se_platform_advert_add:
         _controller: SEPlatformBundle:Advert:add
 
 se_platform_advert_view:
-    path:   /demande/{slug}_01{id}10
+    path:   /demande/{slug}_{id}
     defaults:
         _controller: SEPlatformBundle:Advert:view
     requirements:
         id: \d+
 
 se_platform_advert_view_user:
-    path:   /ma-demande/01{id}10
+    path:   /ma-demande/{id}
     defaults:
         _controller: SEPlatformBundle:Advert:viewUser
     requirements:
         id: \d+
 
 se_platform_advert_validate:
-    path:   /demande/validee/01{action}10
+    path:   /demande/validee/{action}
     defaults:
         _controller: SEPlatformBundle:Advert:validate
 
 se_platform_advert_edit:
-    path:   /demande/modifier/{slug}_01{id}10
+    path:   /demande/modifier/{slug}_{id}
     defaults:
         _controller: SEPlatformBundle:Advert:edit
     requirements:
         id: \d+
 
 se_platform_advert_delete:
-    path:   /demande/supprimer/{slug}_01{id}10
+    path:   /demande/supprimer/{slug}_{id}
     defaults:
         _controller: SEPlatformBundle:Advert:delete
     requirements:
         id: \d+
 
 se_platform_auction_cancel:
-    path:   /offre/annuler/01{id}10
+    path:   /offre/annuler/{id}
     defaults:
         _controller: SEPlatformBundle:Auction:cancel
     requirements:
         id: \d+
 
 se_platform_advert_unpublish:
-    path:   /demande/desactiver/{slug}_01{id}10
+    path:   /demande/desactiver/{slug}_{id}
     defaults:
         _controller: SEPlatformBundle:Advert:unpublish
     requirements:
         id: \d+
 
 se_platform_advert_publish:
-    path:   /demande/activer/{slug}_01{id}10
+    path:   /demande/activer/{slug}_{id}
     defaults:
         _controller: SEPlatformBundle:Advert:publish
     requirements:
@@ -201,7 +201,7 @@ se_platform_advert_user_list:
 
 # Auction Routes :
 se_platform_auction_list:
-    path:   /offre-en-cours/01{advertId}10
+    path:   /offre-en-cours/{advertId}
     defaults:
         _controller: SEPlatformBundle:Auction:list
     requirements:
@@ -224,20 +224,20 @@ se_platform_auction_user_send:
         page: \d*
 
 se_platform_auction_add:
-    path:     /offre/propser-offre/{advertSlug}_01{advertId}10
+    path:     /offre/propser-offre/{advertSlug}_{advertId}
     defaults:
         _controller: SEPlatformBundle:Auction:add
     requirements:
         advertId: \d+
 
 se_platform_auction_accept:
-    path:     /offre/accepter-offre/01{auctionId}{state}10
+    path:     /offre/accepter-offre/{auctionId}{state}
     defaults:
         _controller: SEPlatformBundle:Auction:accept
 
 # Message Routes :
 se_platform_message_add:
-    path:   /envoyer-message/{advertSlug}_01{advertId}10_01{receiveId}10_01{isAnswer}10
+    path:   /envoyer-message/{advertSlug}_{advertId}{receiveId}{isAnswer}{isAdvertOwner}
     defaults:
         _controller: SEPlatformBundle:Message:add
     requirements:
@@ -245,7 +245,7 @@ se_platform_message_add:
         receiveId: \d+
 
 se_platform_message_answer:
-    path:   /envoyer-reponse/{advertSlug}_01{advertId}10_01{receiveId}10_01{isAnswer}10
+    path:   /envoyer-reponse/{advertSlug}_{advertId}_{receiveId}_{isAnswer}{isAdvertOwner}
     defaults:
         _controller: SEPlatformBundle:Message:add
     requirements:
@@ -253,21 +253,21 @@ se_platform_message_answer:
         receiveId: \d+
 
 se_platform_message_view:
-    path:   /consulter-message/{advertSlug}_01{advertId}10
+    path:   /consulter-message/{advertSlug}_{advertId}
     defaults:
         _controller: SEPlatformBundle:Message:view
     requirements:
         advertId: \d+
 
 se_platform_message_edit:
-    path:   /modifier-message/01{id}10
+    path:   /modifier-message/{id}
     defaults:
         _controller: SEPlatformBundle:Message:edit
     requirements:
         id: \d+
 
 se_platform_message_delete:
-    path:   /supprimer-message/01{id}10
+    path:   /supprimer-message/{id}
     defaults:
         _controller: SEPlatformBundle:Message:supprimer
     requirements:
@@ -298,18 +298,18 @@ se_platform_message_user_send:
         page: \d*
 
 se_platform_message_advert_send:
-    path:     /message-envoyes/01{advertId}10_01{receiverId}10
+    path:     /message-envoyes/{advertId}_{receiverId}
     defaults:
         _controller: SEPlatformBundle:Message:listSendConversation
 
 se_platform_message_advert_receive:
-    path:     /message-recues/01{advertId}10_01{senderId}10
+    path:     /message-recues/{advertId}_{senderId}
     defaults:
         _controller: SEPlatformBundle:Message:listReceiveConversation
 
 # Comment Routes :
 se_platform_comment_add:
-    path:   /ajouter-avis/01{advertId}10_01{auctionUserId}10
+    path:   /ajouter-avis/{advertId}_{auctionUserId}
     defaults:
         _controller: SEPlatformBundle:Comment:add
 
@@ -319,14 +319,14 @@ se_platform_comment_view:
         _controller: SEPlatformBundle:Comment:view
 
 se_platform_comment_edit:
-    path:   /modifier-avis/01{id}10
+    path:   /modifier-avis/{id}
     defaults:
         _controller: SEPlatformBundle:Comment:edit
     requirements:
         id: \d+
 
 se_platform_comment_delete:
-    path:   /supprimer-avis/01{id}10
+    path:   /supprimer-avis/{id}
     defaults:
         _controller: SEPlatformBundle:Comment:delete
     requirements:
@@ -347,7 +347,7 @@ se_platform_user_add:
         _controller: SEPlatformBundle:User:add
 
 se_platform_user_view:
-    path:   /profile-01{userId}10
+    path:   /profile-{userId}
     defaults:
         _controller: SEPlatformBundle:Profile:view
     requirements:
