@@ -159,9 +159,9 @@ class UserController extends Controller
                            $page,
                            $this->nbPerPage);
 
-     $titleResult = count($listJobbeurs) == 0 ?'Aucun jobbeur trouvé' :
-             (count($listJobbeurs) > 1 ? count($listJobbeurs).' jobbeurs' :
-         count($listJobbeurs).' jobbeur');
+     $titleResult = count($listJobbeurs) == 0 ?'Aucun jobber trouvé' :
+             (count($listJobbeurs) > 1 ? count($listJobbeurs).' jobbers' :
+         count($listJobbeurs).' jobber');
 
       $nbPages = ceil(count($listJobbeurs)/$this->nbPerPage);
 

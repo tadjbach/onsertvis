@@ -374,7 +374,7 @@ se_platform_user_logout:
         _controller: SEPlatformBundle:User:logout
 
 se_platform_user_jobbeur_list:
-    path:   /liste-des-jobbeurs/{page}
+    path:   /liste-des-jobbers/{page}
     defaults:
           _controller: SEPlatformBundle:User:jobbeurList
           page:   1
