@@ -122,17 +122,29 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
 
     public function getMessageConversation($userId, $page, $nbPerPage){
 
-         $qb = $this->createQueryBuilder('m')
-            ->leftJoin('m.receiver', 'r')
-            ->addSelect('r')
-            ->leftJoin('m.sender', 's')
-            ->addSelect('s')
-            ->add('groupBy', 's.id');
+         $qb = $this->createQueryBuilder('message')
+             ->leftJoin('message.advert', 'advert')
+             ->addSelect('advert')
+            ->leftJoin('message.receiver', 'receiver')
+            ->addSelect('receiver')
+            ->leftJoin('message.sender', 'sender')
+            ->addSelect('sender');
 
-        $qb->where($qb->expr()->eq('r.id', $userId))
-            ->andWhere($qb->expr()->eq('m.isPublished', 1))
-            ->andWhere($qb->expr()->eq('m.isDeleted', 0))
-            ->getQuery();
+            $qb->groupBy('advert.id');
+            $qb->addGroupBy('sender.id');
+            //$qb->addGroupBy('receiver.id');
+
+          $qb->andWhere($qb->expr()->eq('message.isPublished', 1));
+          $qb->andWhere($qb->expr()->eq('message.isDeleted', 0));
+
+            $qb->andWhere("advert.user = ".$userId);
+
+            $qb->andWhere("sender.id != ".$userId." OR receiver.id = ".$userId);
+            //$qb->andWhere("sender.id = ".$userId." OR receiver.id != ".$userId);
+
+            $qb->orderBy('message.dateCreation', 'DESC')->getQuery();
+
+            $qb->getQuery();
 
             // On définit l'demande à partir de laquelle commencer la liste
             $qb->setFirstResult(($page-1) * $nbPerPage)
@@ -311,7 +323,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getLastMessage($advertId, $userReceiverId, $userSenderId, $isAdvertOwner){
+    public function getLastMessage($advertId, $userReceiverId, $userSenderId){
       $qb = $this->createQueryBuilder('message');
 
        $qb->leftJoin('message.advert', 'advert')
@@ -321,17 +333,11 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
            ->leftJoin('message.receiver', 'receiver')
            ->addSelect('receiver');
 
-           $qb->where($qb->expr()->eq('advert.id', $advertId))
-              ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
-              ->andWhere($qb->expr()->eq('advert.isEnabled', 1));
-
-          $qb->andWhere($qb->expr()->eq('receiver.id', $userReceiverId));
-          $qb->andWhere($qb->expr()->eq('sender.id', $userSenderId));
-
-            if ($isAdvertOwner === 1) {
-                $qb->andWhere($qb->expr()->eq('advert.user', $userReceiverId));
-            }
-
+      $qb->where($qb->expr()->eq('advert.id', $advertId))
+          ->andWhere($qb->expr()->eq('advert.isDeleted', 0))
+          ->andWhere($qb->expr()->eq('advert.isEnabled', 1))
+          ->andWhere($qb->expr()->eq('receiver.id', $userReceiverId))
+          ->andWhere($qb->expr()->eq('sender.id', $userSenderId));
 
           $qb->orderBy('message.dateCreation', 'DESC')->getQuery();
           //$qb->setMaxResults(1);

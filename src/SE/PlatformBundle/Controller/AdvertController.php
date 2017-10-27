@@ -153,9 +153,6 @@ class AdvertController extends Controller
     /*
     Get Adverts List for se_platform_advert_list route
     */
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
     public function listAction(Request $request, $page){
         $this->getListFilterAttributes($request);
 
@@ -495,9 +492,6 @@ class AdvertController extends Controller
       return $content;
     }
 
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
     public function viewAction($slug, $id){
       $em = $this->getDoctrineManager();
 
@@ -525,8 +519,14 @@ class AdvertController extends Controller
     public function viewUserAction(Request $request, $id){
       $em = $this->getDoctrineManager();
       $advert = $em->getRepository('SEPlatformBundle:Advert')->find($id);
-      return $this->render('SEPlatformBundle:Advert:viewUser.html.twig',
-                  array(
-                    'advert'=> $advert));
+      if ($this->getUser() === $advert->getUser() ) {
+        return $this->render('SEPlatformBundle:Advert:viewUser.html.twig',
+                    array(
+                      'advert'=> $advert));
+      }
+      else {
+          throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
+      }
+
     }
 }

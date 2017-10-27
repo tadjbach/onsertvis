@@ -37,7 +37,10 @@
                   <span class="label label-primary">Avis laissé pour</span>
                 {% endif %}</h5>
                 <h4>
-                  {% if app.user == comment.receiver %}{{ comment.sender }}
+                  {% if app.user == comment.receiver %}
+                    <a class="cat-link"
+                        href="{{ path('se_platform_user_view', {'userId': comment.sender.id}) }}"
+                        >{{ comment.sender }}</a>
                   {% else %}
 
                   <a class="cat-link"
@@ -50,7 +53,13 @@
                 <h5>Note : <span class="label label-default se-badge">{{ comment.rate }} / 5</span></h5>
               </div>
               <div class="col-md-9">
-                <h4>{{ comment.advert.title }}</h4>
+                <h4>
+                    {% if app.user == comment.receiver %}
+                        <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': comment.advert.slug,'id': comment.advert.id}) }}">{{ comment.advert.title }}</a>
+                      {% else %}
+                        <a class='se-tbl-link' href="{{ path('se_platform_advert_view_user', {'slug': comment.advert.slug,'id': comment.advert.id}) }}">{{ comment.advert.title }}</a>
+                      {% endif %}
+                </h4>
                 <h5>{{ comment.content |nl2br }}</h5>
                 {% if app.user == comment.sender %}
                      <div class='text-right'>
@@ -59,12 +68,6 @@
                        class='btn btn-success'
                        title="Modifier">
                        Modifier
-                       </a>
-                       <a href="{{ path('se_platform_comment_delete', {'id': comment.id}) }}"
-                           type="button"
-                           class='btn btn-danger hide'
-                           title="Supprimer">
-                       Supprimer
                        </a>
                      </div>
                {% endif %}

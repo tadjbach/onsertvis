@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     <!-- MAIL - TITLE -->
+     <title>Service Enchère</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+    .alert {
+              padding: 15px;
+              margin-bottom: 20px;
+              border: 1px solid transparent;
+              border-radius: 4px;
+      }
+    .alert-success {
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+    .alert-danger {
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+      </style>
+  </head>
+  <body>
+
+    <div>
+      <p>Bonjour <b>{{ receiver }}</b></p>
+      <p>Vous avez reçu un nouveau message concerant la demande <b>{{advert}}</b> de la part de {{sender}}</p>
+
+      <div class="alert alert-success">
+        <p><b>Nom :</b> {{ sender }}</p>
+        <p><b>Téléphone :</b> {{ sender.phoneNumber|split('', 2)|join(' ') }}</p>
+        <p><b>Mail :</b> <a chref="mailto:{{ sender.email }}">{{ sender.email }}</a></p>
+        <p><b>Message :</b></p>
+        <p style="padding-left:20px">{{content|nl2br}}</p>
+      </div>
+      <p>
+        Cordialement.
+      </p>
+    </div>
+
+    <br>
+    <br>
+    <div class="alert alert-danger">
+      <p>Ne répondez pas à ce message, utilisez l'adresse mail de la personne qui vous a contacté, son adresse : {{ sender.email }} </p>
+    </div>
+    <br>
+    <br>
+    <div>
+      <p>Pensez, autant que possible, à vérifier les coordonnées de votre interlocuteur
+        (nom, adresse, numéro de téléphone) afin de vous assurer d'avoir un contact en
+        cas de litige.
+      </p>
+      <p>Méfiez-vous des offres trop alléchantes ! Fuyez les demandes provenant de
+        l'étranger quand vous ne disposez que d'un contact par email.
+      </p>
+      <p>
+        Enfin, restez vigilant face au phishing : https://www.serviceenchere.fr ne vous demandera jamais
+        vos données personnelles par email ou SMS (identifiant, mot de passe,
+        coordonnées bancaires ...).
+      </p>
+      <p>
+        Merci de ne pas répondre à ce message.
+        Si vous souhaitez nous adresser un courriel, merci de l'envoyer à l'adresse suivante : contact@serviceenchere.fr
+      </p>
+      <p>
+          Merci de votre confiance et à très bientôt,
+      </p>
+      <p>
+          L'équipe serviceenchere
+          <br>
+        https://www.serviceenchere.fr
+      </p>
+    </div>
+  </body>
+</html>

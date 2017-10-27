@@ -237,7 +237,7 @@ se_platform_auction_accept:
 
 # Message Routes :
 se_platform_message_add:
-    path:   /envoyer-message/{advertSlug}_{advertId}{receiveId}{isAnswer}{isAdvertOwner}
+    path:   /envoyer-message/{advertSlug}_{advertId}_{receiveId}_{isAnswer}_{msgId}
     defaults:
         _controller: SEPlatformBundle:Message:add
     requirements:
@@ -245,7 +245,7 @@ se_platform_message_add:
         receiveId: \d+
 
 se_platform_message_answer:
-    path:   /envoyer-reponse/{advertSlug}_{advertId}_{receiveId}_{isAnswer}{isAdvertOwner}
+    path:   /envoyer-reponse/{advertSlug}_{advertId}_{receiveId}_{isAnswer}_{msgId}
     defaults:
         _controller: SEPlatformBundle:Message:add
     requirements:

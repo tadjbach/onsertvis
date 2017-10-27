@@ -35,17 +35,8 @@ class MessageController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function addAction(Request $request, $advertSlug, $advertId, $receiveId, $isAnswer, $isAdvertOwner){
+    public function addAction(Request $request, $advertSlug, $advertId, $receiveId, $isAnswer, $msgId){
         $em = $this->getDoctrineManager();
-
-        $listMessage = $em->getRepository('SEPlatformBundle:Message')
-                        ->getLastMessage($advertId, $this->getUser()->getId(), $receiveId, $isAdvertOwner);
-
-        $lastMessage = $listMessage[0];
-        $lastMessage->setIsNew(0);
-        $em->persist($lastMessage);
-        $em->flush();
-
         $session = $request->getSession();
         $mailer  = $this->get('se_platform.mailer');
 
@@ -56,6 +47,7 @@ class MessageController extends Controller
         $userReceive=$em->find('SEPlatformBundle:User', $receiveId);
 
         $answer = 'Nouveau message de la part de '.$userSender;
+        $answerSender = 'Votre message à '.$userReceive;
 
         $message = new Message();
         $message->setSender($userSender);
@@ -86,15 +78,35 @@ class MessageController extends Controller
                   $em->persist($message);
                   $em->flush();
 
-                $body = $this->renderView(
+              /*  $body = $this->renderView(
                        // app/Resources/views/Message/addMail.html.twig
                        'SEPlatformBundle:Message:addMail.html.twig',
                        array('receiver' => $userReceive,
                             'sender'  => $userSender,
                             'advert'=> $advert->getTitle())
-                   );
+                   );*/
 
-                  $mailer->sendEmail($advert,$answer, $answer, $userReceive->getEmail(), $body);
+                   $bodyReceiver = $this->renderView(
+                            // app/Resources/views/Message/addMail.html.twig
+                            'SEPlatformBundle:Message:addMailDirectReceiver.html.twig',
+                            array('receiver' => $userReceive,
+                                 'sender'  => $userSender,
+                                 'content' => $message->getContent(),
+                                 'advert'=> $advert->getTitle())
+                        );
+
+                  $bodySender = $this->renderView(
+                           // app/Resources/views/Message/addMail.html.twig
+                           'SEPlatformBundle:Message:addMailDirectSender.html.twig',
+                           array('receiver' => $userReceive,
+                                'sender'  => $userSender,
+                                'content' => $message->getContent(),
+                                'advert'=> $advert->getTitle())
+                       );
+
+                  $mailer->sendEmail($advert,$answer, $answer, $userReceive->getEmail(), $bodyReceiver);
+                  $mailer->sendEmail($advert,$answerSender, $answerSender, $userSender->getEmail(), $bodySender);
+
                   $session->getFlashBag()->add('addSuccess','Message bien envoyée.');
 
                   if ($isAnswer == 1) {
@@ -104,7 +116,8 @@ class MessageController extends Controller
                                   'senderId'=> $userSender->getId(),
                                   'isAnswer'=> 1,
                                   'receiveId'=> $userReceive->getId(),
-                                  'isAdvertOwner'=>0));
+                                  'msgId'=> 0
+                                ));
                 }
                 else {
                   return $this->redirectToRoute('se_platform_advert_view',
@@ -133,6 +146,15 @@ class MessageController extends Controller
         }
 
         if ($isAnswer == 1) {
+
+            if ($msgId != 0) {
+              $newMassage = $em->find('SEPlatformBundle:Message', $msgId);
+              $newMassage->setIsNew(0);
+              $em->persist($newMassage);
+              $em->flush();
+
+            }
+
           return $this->render('SEPlatformBundle:Message:answer.html.twig', array(
               'form' => $form->createView(),
               'listConversation'     => $listConversation,
@@ -154,7 +176,7 @@ class MessageController extends Controller
     }
 
     /**
-     * @Security("has_role('ROLE_AUTEUR')")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function listSendConversationAction($advertId, $receiverId){
       $em = $this->getDoctrineManager();
@@ -180,7 +202,7 @@ class MessageController extends Controller
     }
 
     /**
-     * @Security("has_role('ROLE_AUTEUR')")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function listReceiveConversationAction($advertId, $senderId){
       $em = $this->getDoctrineManager();
@@ -206,7 +228,7 @@ class MessageController extends Controller
     }
 
     /**
-     * @Security("has_role('ROLE_AUTEUR')")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function userReceiveListAction(Request $request, $page)
     {
@@ -244,7 +266,7 @@ class MessageController extends Controller
     }
 
     /**
-     * @Security("has_role('ROLE_AUTEUR')")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function userSendListAction(Request $request, $page)
     {
@@ -280,12 +302,11 @@ class MessageController extends Controller
       ));
     }
 
-    public function lastDateCreationAction($advertId, $receiverId, $senderId, $isAdvertOwner){
+    public function lastDateCreationAction($advertId, $receiverId, $senderId){
         $em = $this->getDoctrineManager();
-
-          $lastMessage = $em
-            ->getRepository('SEPlatformBundle:Message')
-            ->getLastMessage($advertId, $receiverId, $senderId, $isAdvertOwner);
+        $lastMessage = $em
+          ->getRepository('SEPlatformBundle:Message')
+          ->getLastMessage($advertId, $receiverId, $senderId);
 
             $lastDate = $lastMessage[0]->getDateCreation();
             $lastDateDay = $lastDate->format('d/m/Y');
@@ -296,25 +317,59 @@ class MessageController extends Controller
           );
     }
 
-    public function countMessageAction($advertId, $receiverId, $senderId, $isAdvertOwner){
+    public function countMessageAction($advertId, $receiverId, $senderId){
         $em = $this->getDoctrineManager();
-        $countMessage = 'Conversation';
-        $resp = '';
+        $newMessage = "";
 
-        $listMessage = $em->getRepository('SEPlatformBundle:Message')
-                        ->getLastMessage($advertId, $receiverId, $senderId, $isAdvertOwner);
+        $lastMessage = $em->getRepository('SEPlatformBundle:Message')
+                        ->getLastMessage($advertId, $receiverId, $senderId);
 
-        $lastMessage = $listMessage[0];
-
-        if ($lastMessage->getReceiver() == $this->getUser() && $lastMessage->getIsNew() == 1) {
-            $resp = '<span class="label label-danger">Non lu</span>';
-        }
-
-          /*  $countMessage = count($listMessage) <= 1 ? count($listMessage).' message'
-                    : count($listMessage).' messages';*/
+          if (!$lastIsNew = $lastMessage[0]->getIsNew() && $lastMessage[0]->getReceiver() == $this->getUser()) {
+            //$newMessage = "<span class='label label-success'>Lu</span>";
+          }
+          else {
+                $newMessage = "<span class='label label-danger'>Non lu</span>";
+          }
 
         return new Response(
-          $resp
+          $newMessage
         );
+    }
+
+    public function idLastMessageAction($advertId, $receiverId, $senderId){
+        $em = $this->getDoctrineManager();
+
+        $lastMessage = $em->getRepository('SEPlatformBundle:Message')
+                        ->getLastMessage($advertId, $receiverId, $senderId);
+
+        return new Response(
+          $lastMessage[0]->getId()
+        );
+    }
+
+    /**
+     */
+    public function listUserAction(Request $request, $page){
+        $user = $this->getUser();
+        $listMessage = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('SEPlatformBundle:Message')
+            ->getMessageConversation($user->getId(), $page, $this->nbPerPage);
+
+            $countMessage = count($listMessage) <= 1 ? count($listMessage).' Conversation' : count($listMessage).' Conversations';
+
+        $nbPages = ceil(count($listMessage)/$this->nbPerPage);
+
+        if ($page<1){
+            throw new NotFoundHttpException('page"'.$page.'" inexistante');
+        }
+
+      return $this->render('SEPlatformBundle:Message:listUser.html.twig',
+          array(
+            'nbPages'     => $nbPages,
+            'page'        => $page,
+            'listMessage'=> $listMessage,
+            'countMessage'=> $countMessage
+          ));
     }
 }
