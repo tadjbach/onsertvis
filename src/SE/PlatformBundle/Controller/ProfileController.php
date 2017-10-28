@@ -248,10 +248,10 @@ class ProfileController extends Controller
                   $userSender = $this->getUser();
 
                   $mailSender = $userSender != null ? $userSender->getEmail() : $request->query->get('_email_sender');
-                  $nameSender = $userSender != null ? $userSender->getUserName() : $request->query->get('_name_sender');
+                  $nameSender = $userSender != null ? $userSender->getUsername() : $request->query->get('_name_sender');
 
 
-                  $titleReceiver = 'Nouveau message de la part '.$nameSender;
+                  $titleReceiver = 'Message de la part de '.$nameSender;
                   $titleSender = 'Votre message à '.$user;
 
                   $bodyReceiver = $this->renderView(
