@@ -38,16 +38,72 @@ class ProfileController extends Controller
      */
     public function showAction()
     {
-        $user = $this->getUser();
-        if (!is_object($user) || !$user instanceof UserInterface) {
-            throw new AccessDeniedException('This user does not have access to this section.');
-        }
+         $user = $this->getUser();
+
+          if (!is_object($user) || !$user instanceof UserInterface) {
+                throw new AccessDeniedException('This user does not have access to this section.');
+            }
+
+      $em = $this->getDoctrine()
+             ->getManager();
 
 
+       $userId = $user->getId();
+       $listComment = $this->getDoctrine()
+           ->getManager()
+           ->getRepository('SEPlatformBundle:Comment')
+           ->getCommentListUser($userId, '2', 1, 1000000);
 
-        return $this->render('@FOSUser/Profile/show.html.twig', array(
-            'user' => $user
-        ));
+           $listReceivedAuctions = $em
+              ->getRepository('SEPlatformBundle:Auction')
+              ->getStateReceiveAuctionUser($userId);
+
+           $listProposedAuctions = $em
+              ->getRepository('SEPlatformBundle:Auction')
+              ->getStateProposedAuctionUser($userId);
+
+          $listAcceptedAuctions = $em
+              ->getRepository('SEPlatformBundle:Auction')
+              ->getStateAuctionUser($userId, 2);
+
+          $titleAcceptedAuctions = count($listAcceptedAuctions) <= 1 ?'Job fait' : 'Jobs faits';
+
+          $listLoseAuctions = $em
+              ->getRepository('SEPlatformBundle:Auction')
+              ->getStateAuctionUser($userId, 3);
+
+         $listPublishAdvert = $em
+             ->getRepository('SEPlatformBundle:Advert')
+             ->getAdvertByUser($userId);
+
+         $titlePublishAdvert = count($listPublishAdvert) <= 1 ?'Demande publiées' : 'Demandes publiées';
+
+       $user = $em->find('SEPlatformBundle:User', $userId);
+
+       $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
+       $payment = $em->getRepository('SEPlatformBundle:payment')->findAll();
+
+       if (!$user){
+           throw new NotFoundHttpException("Cet utilisateur n'existe pas".$userId );
+       }
+
+       if (!is_object($user) || !$user instanceof UserInterface) {
+           throw new AccessDeniedException('This user does not have access to this section.');
+       }
+
+       return $this->render('@FOSUser/Profile/view.html.twig', array(
+             'user' => $user,
+             'listComment'=>$listComment,
+             'calendar' => $calendar,
+             'payment' => $payment,
+             'countPublishAdvert'=>count($listPublishAdvert),
+             'titlePublishAdvert'=>$titlePublishAdvert,
+             'countReceivedAuction'=>count($listReceivedAuctions),
+             'countProposedAuction'=>count($listProposedAuctions),
+             'countAcceptedAuction'=>count($listAcceptedAuctions),
+             'titleAcceptedAuctions'=>$titleAcceptedAuctions,
+             'countLosedAuction'=>count($listLoseAuctions)
+       ));
     }
 
     /**

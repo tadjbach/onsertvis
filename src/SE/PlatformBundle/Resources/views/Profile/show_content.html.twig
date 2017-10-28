@@ -1,97 +1,115 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
- <div class="well se-well">
-           <div class="index-container" >
-               <div class="row">
-                    <div id="content" class="col-md-12">
-                       <div class="">
-                           <h4 class="">
-                             {{ user }}
-                           </h4>
-                           <br>
-                           <div class="row">
-                                 <div class="col-md-4">
-                                     <i class="glyphicon glyphicon-map-marker"></i>
-                                     <span class="se-profile-title">Adresse : </span>
-                                     <p class="se-profile-value"> {{ user.address }}
-                                         <br>{{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
-                                         <br>{{ user.PostalCode.city.departement.labelNormal }}</p>
-                                     <br>
-                                   <i class="glyphicon glyphicon-phone-alt"></i>
-                                     <span class="se-profile-title">Téléphone : </span>
-                                     <p class="se-profile-value"> {{ user.phoneNumber|split('', 2)|join(' ') }}</p>
-                                     <br>
-                                     <i class="glyphicon glyphicon-calendar"></i>
-                                       <span class="se-profile-title">Disponibilité : </span>
-                                       <div class="se-profile-value-reverse">
-                                         {{ user.calendar|split('', 2)|join(' ') }}
-                                           <table>
-                                           <thead id="tblHead">
-                                               <tr>
-                                                   {% for day in user.calendar %}
-                                                   <th>
-                                                       {{ day.dayFrAbbr  }}
-                                                   </th>
-                                                   {% else %}
-                                                       <th>
-                                                       Me contacter
-                                                       </th>
-                                                   {% endfor %}
-                                               </tr>
-                                           </thead>
-                                           <tbody>
-                                               {% for day in user.calendar %}
-                                                   <td>
+<div class="row">
+  <div class="col-md-6">
+        <blockquote>
+          {{user}}
+          <h5>
+{% if user.rate != -1 %}
+          {{ include('@SEPlatform/User/rate.html.twig', {'item': user }) }}
+{% else %}
+  {% endif %}
+        </h5>
+          {% if user.accountType == 'Society' %}
+          <h5>
+             <i>Statut : </i> Professionnel
+         </h5>
+          <h5>
+             <i>SIRET : </i> {{user.siret}}
+         </h5>
+           {% elseif user.accountType == 'Particular' %}
+            <h5>
+               <i>Status : </i> Particulier
+             </h5>
+          {% endif %}
+          <h5>
+             {% if user.isAcountComplete == 1 %}
+             <i>Ville : </i>
+                {{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
+                ({{ user.PostalCode.city.departement.labelNormal }})
+              {% endif %}
+          </h5>
+          <h5><i>Membre depuis : {{ user.dateCreation|date('d/m/Y') }}</i></h5>
+          {% if user.isDetailVisible or is_granted('ROLE_SUPER_ADMIN')%}
+              <h5>
+                <i>Contact : </i> {{ user.phoneNumber|split('', 2)|join(' ') }}
+              </h5>
+          {% endif %}
+            </blockquote>
 
-                                                   </td>
-                                                   {% endfor %}
-                                           </tbody>
-                                           </table>
-                                       </div>
-                                       <div class="se-profile-value respnse">
-                                         {{ user.calendar|split('', 2)|join(' ') }}
-                                           <table>
-                                           <thead id="tblHead">
-                                               <tr>
-                                                   {% for day in user.calendar %}
-                                                   <th>
-                                                       {{ day.dayFrAbbr  }}
-                                                   </th>
-                                                   {% else %}
-                                                       <th>
-                                                       Me contacter
-                                                       </th>
-                                                   {% endfor %}
-                                               </tr>
-                                           </thead>
-                                           <tbody>
-                                               {% for day in user.calendar %}
-                                                   <td>
+        <blockquote>
 
-                                                   </td>
-                                                   {% endfor %}
-                                           </tbody>
-                                           </table>
-                                       </div>
-                                 </div>
-                               <div class="col-md-4">
-                                   <i class="glyphicon glyphicon-info-sign"></i>
-                                   <span class="se-profile-title">A propos : </span>
-                                   <p class="se-profile-value"> {{ user.detail|nl2br }}</p>
-                               </div>
-                               <div class="col-md-4">
+           <h5>
+             {% if user.isAcountComplete == 1 %}
+            <i>Disponibilité : </i>
+                {% for daycal in calendar %}
+                    <span class="label label-default{% if daycal in user.calendar %} label-success{% else %} badge-disable{% endif %}">{{ daycal.dayFrAbbr }}</span>
+                {% endfor %}
+              {% endif %}
+          </h5>
+          <h5>
+        {% if user.isAcountComplete == 1 %}
+            <i>Mode de paiement accepté : </i>
+            {% for pay in user.payment %}
+                <span class="label label-success">{{ pay.labelNormal }}</span>
+                {% else %}
+                Me contacter
+            {% endfor %}
+            {% endif %}
+          </h5>
 
-                               </div>
-                             </div>
-                       </div>
-                        <br>
-                        <div class="text-right">
-                            <a href="{{ path('se_platform_user_edit') }}" class="btn btn-primary">
-                                Modifier mon compte
-                            </a>
-                        </div>
-                   </div>
-               </div>
+        </blockquote>
+  </div>
+  <div class="col-md-6">
+    <blockquote>
+      A propos
+      <h5>
+       {% if user.isAcountComplete == 1 %}
+            {% if user.detail %}
+               {{ user.detail|nl2br }}
+                {% else %}
+                  {{user}} n'a pas renseigné cette partie.
+                {% endif %}
+          {% endif %}
+      </h5>
+    </blockquote>
 
-           </div>
-       </div>
+    <blockquote>
+      Activité
+            <h5><span class="label label-default se-badge">{{countPublishAdvert}}</span> <span class="mar-lef-10">{{titlePublishAdvert}}</span></h5>
+            <!--<h5><span class="label label-info">{{countReceivedAuction}}</span> <span class="mar-lef-10">Offres reçues</span></h5>
+            <h5><span class="label label-warning">{{ countProposedAuction }}</span> <span class="mar-lef-10">Offres proposées</span></h5>-->
+            <h5><span class="label label-default se-badge-inverse">{{countAcceptedAuction}}</span> <span class="mar-lef-10">{{titleAcceptedAuctions}}</span></h5>
+          <!--  <h5><span class="label label-danger">{{countLosedAuction}}</span> <span class="mar-lef-10">Offres perdues</span></h5>-->
+    </blockquote>
+  </div>
+</div>
+    <div class="row">
+      <div class="col-md-12">
+          <blockquote>
+            Avis ({{ listComment|length }})
+          </blockquote>
+            {% for comment in listComment %}
+            <div  class="well box-well" >
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-4 text-center">
+                    <h4>
+                      <a class='cat-link'
+                      href="{{ path('se_platform_user_view', { 'userId': comment.sender.id}) }}" class="cat-link" >
+                                                  {{ comment.sender }}
+                                              </a>
+                      </h4>
+                    <h4><small>le {{ comment.dateCreation|date('d/m/Y') }}</small></h4>
+                    <h5>Note : <span class="label label-default se-badge">{{ comment.rate }} / 5</span></h5>
+                  </div>
+                  <div class="col-md-8">
+                    <h4>{{ comment.advert.title }}</h4>
+                    <h5>{{ comment.content |nl2br }}</h5>
+                  </div>
+                </div>
+                </div>
+            </div>
+              {% endfor %}
+      </div>
+    </div>
