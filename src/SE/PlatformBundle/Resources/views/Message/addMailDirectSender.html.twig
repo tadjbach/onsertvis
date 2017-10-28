@@ -15,15 +15,13 @@
               border-radius: 4px;
       }
     .alert-success {
-            color: #3c763d;
             background-color: #dff0d8;
             border-color: #d6e9c6;
         }
-      .alert-danger {
-          color: #a94442;
-          background-color: #f2dede;
-          border-color: #ebccd1;
-      }
+    .alert-danger {
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
       </style>
   </head>
   <body>
@@ -34,7 +32,6 @@
       <p>dont voici une copie : </p>
       <div class="alert alert-success">
         <p><b>Nom :</b> {{ sender }}</p>
-        <p><b>Téléphone :</b> {{ sender.phoneNumber|split('', 2)|join(' ') }}</p>
         <p><b>Mail :</b> {{ sender.email }}</p>
         <p><b>Message :</b></p>
         <p style="padding-left:20px">{{content|nl2br}}</p>

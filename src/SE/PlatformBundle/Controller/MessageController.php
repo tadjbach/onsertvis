@@ -104,10 +104,10 @@ class MessageController extends Controller
                                 'advert'=> $advert->getTitle())
                        );
 
-                  $mailer->sendEmail($advert,$answer, $answer, $userReceive->getEmail(), $bodyReceiver);
-                  $mailer->sendEmail($advert,$answerSender, $answerSender, $userSender->getEmail(), $bodySender);
+                  $mailer->sendEmail($answer, $answer, $userReceive->getEmail(), $bodyReceiver);
+                  $mailer->sendEmail($answerSender, $answerSender, $userSender->getEmail(), $bodySender);
 
-                  $session->getFlashBag()->add('addSuccess','Message bien envoyée.');
+                  $session->getFlashBag()->add('addSuccess','Message bien envoyé.');
 
                   if ($isAnswer == 1) {
                           return $this->redirectToRoute('se_platform_message_answer',

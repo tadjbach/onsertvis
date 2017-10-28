@@ -78,7 +78,7 @@ class RegistrationController extends Controller
 
                 $user->setIpAddress($ip);
 
-                $mailer->sendEmail(null, 'Nouveau compte', 'Nouveau compte', 'noreplay@serviceenchere.fr', "Un nouveau client ".$user->getEmail()." vient de s'inscrire");
+                $mailer->sendEmail('Nouveau compte', 'Nouveau compte', 'noreplay@serviceenchere.fr', "Un nouveau client ".$user->getEmail()." vient de s'inscrire");
                 //SE PlatformBundle End */
 
                 $userManager->updateUser($user);

@@ -121,7 +121,7 @@ class AuctionController extends Controller
                                             'oldValue'=>$lastAuction[0]->getValue(),
                                             'advert'=> $advert->getTitle())
                                  );
-                              $mailer->sendEmail($advert, 'Nouvelle offre', "Nouvelle offre sur la demande ".' '.$advert->getTitle(), $lastAuction[0]->getUser()->getEmail(), $body);
+                              $mailer->sendEmail('Nouvelle offre', "Nouvelle offre sur la demande ".' '.$advert->getTitle(), $lastAuction[0]->getUser()->getEmail(), $body);
                         }
                         }
 
@@ -134,7 +134,7 @@ class AuctionController extends Controller
                                     'advert'=> $advert->getTitle())
                          );
 
-                      $mailer->sendEmail($advert, 'Nouvelle offre', 'Nouvelle offre sur votre demande '.$advert->getTitle(), $userOwner->getEmail(), $body_owner);
+                      $mailer->sendEmail('Nouvelle offre', 'Nouvelle offre sur votre demande '.$advert->getTitle(), $userOwner->getEmail(), $body_owner);
 
 
                       $session->getFlashBag()->add('addSuccess','Offre bien enregistrée.');
@@ -196,7 +196,7 @@ class AuctionController extends Controller
                       'advert'=> $advert)
              );
 
-          $mailer->sendEmail($advert, "Annulation de l'offre",  "Annulation de l'offre pour ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
+          $mailer->sendEmail("Annulation de l'offre",  "Annulation de l'offre pour ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
         }
         else {
             throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de l'offre.");
@@ -337,7 +337,7 @@ class AuctionController extends Controller
                                 'value'=> $auctionAccept->getValue(),
                                 'advert'=> $advert->getTitle())
                      );
-                  $mailer->sendEmail($advert, 'Offre refusée', 'Votre offre a été refusée', $userAuctionRefuse->getEmail(), $body);
+                  $mailer->sendEmail('Offre refusée', 'Votre offre a été refusée', $userAuctionRefuse->getEmail(), $body);
                 }
               }
 
@@ -373,9 +373,9 @@ class AuctionController extends Controller
                                  )
                     );
 
-                $mailer->sendEmail($advert, 'Offre acceptée', 'Votre offre a été acceptée', $userAuction->getEmail(), $body_auction);
+                $mailer->sendEmail('Offre acceptée', 'Votre offre a été acceptée', $userAuction->getEmail(), $body_auction);
 
-                $mailer->sendEmail($advert, 'Offre acceptée', 'Vous avez accepté une offre', $user->getEmail(), $body_advert);
+                $mailer->sendEmail('Offre acceptée', 'Vous avez accepté une offre', $user->getEmail(), $body_advert);
                 $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'offre à ".$auctionAccept->getValue()." €, il vous reste à contacter le jobber pour convenir d'un rendez-vous");
               }
               else {
@@ -397,9 +397,9 @@ class AuctionController extends Controller
                                  )
                     );
 
-                $mailer->sendEmail($advert, 'Offre annulée', 'Votre offre a été annulée', $userAuction->getEmail(), $body_auction);
+                $mailer->sendEmail('Offre annulée', 'Votre offre a été annulée', $userAuction->getEmail(), $body_auction);
 
-                $mailer->sendEmail($advert, 'Offre annulée', 'Vous avez annulée une offre', $user->getEmail(), $body_advert);
+                $mailer->sendEmail('Offre annulée', 'Vous avez annulée une offre', $user->getEmail(), $body_advert);
 
                   $session->getFlashBag()->add('warning',"Vous avez annulé l'offre de ".$auctionAccept->getValue()." €, la demande est à nouveau en ligne.");
               }

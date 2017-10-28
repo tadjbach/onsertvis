@@ -11,7 +11,7 @@ class Mailer{
       $this->mailer  = $mailer;
   }
 
-  public function sendEmail($advert, $senderName, $subject, $userReceiverMail, $body)
+  public function sendEmail($senderName, $subject, $userReceiverMail, $body)
   {
 
     $message = \Swift_Message::newInstance()

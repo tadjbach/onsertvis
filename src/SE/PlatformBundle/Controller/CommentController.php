@@ -87,7 +87,7 @@ class CommentController extends Controller
                                      'advert'=> $advert->getTitle())
                           );
 
-                       $mailer->sendEmail($advert, 'Avis reçu', 'Vous avez reçu un avis', $userReceiver->getEmail(), $body);
+                       $mailer->sendEmail('Avis reçu', 'Vous avez reçu un avis', $userReceiver->getEmail(), $body);
 
                        $session->getFlashBag()->add('addSuccess','Avis bien envoyé.');
 

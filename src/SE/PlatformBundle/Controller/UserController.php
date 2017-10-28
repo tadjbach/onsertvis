@@ -118,28 +118,29 @@ class UserController extends Controller
      return new Response(null);
  }
 
- public function getPostalCodeByCityAction(Request $request){
-         $em = $this->getDoctrineManager();
+     public function getPostalCodeByCityAction(Request $request){
+             $em = $this->getDoctrineManager();
 
-         if($request->isXmlHttpRequest())
-         {
-             $city = $request->request->get('city');
-             $dptId = $request->request->get('departement');
+             if($request->isXmlHttpRequest())
+             {
+                 $city = $request->request->get('city');
+                 $dptId = $request->request->get('departement');
 
-             $listPostalCode = $em
-                         ->getRepository('SEPlatformBundle:PostalCode')
-                         ->getCpByRegionAndDpt($city, $dptId);
+                 $listPostalCode = $em
+                             ->getRepository('SEPlatformBundle:PostalCode')
+                             ->getCpByRegionAndDpt($city, $dptId);
 
-             $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new
- JsonEncoder()));
+          $serializer = new Serializer(
+                          array(new GetSetMethodNormalizer()),
+                                array('json' => new JsonEncoder()));
 
-             $json = $serializer->serialize($listPostalCode, 'json');
+                 $json = $serializer->serialize($listPostalCode, 'json');
 
-             return new Response($json);
+                 return new Response($json);
+             }
+
+             return new Response(null);
          }
-
-         return new Response(null);
-     }
 
 
     public function jobbeurListAction(Request $request, $page){

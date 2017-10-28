@@ -36,8 +36,7 @@ class ProfileController extends Controller
     /**
      * Show the user.
      */
-    public function showAction()
-    {
+    public function showAction() {
          $user = $this->getUser();
 
           if (!is_object($user) || !$user instanceof UserInterface) {
@@ -113,8 +112,7 @@ class ProfileController extends Controller
      *
      * @return Response
      */
-    public function editAction(Request $request)
-    {
+    public function editAction(Request $request){
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
@@ -194,11 +192,12 @@ class ProfileController extends Controller
         ));
     }
 
-  public function viewAction($userId)
+  public function viewAction(Request $request, $userId)
    {
      $em = $this->getDoctrine()
             ->getManager();
 
+      $session = $request->getSession();
       $listComment = $this->getDoctrine()
           ->getManager()
           ->getRepository('SEPlatformBundle:Comment')
@@ -241,18 +240,63 @@ class ProfileController extends Controller
           throw new AccessDeniedException('This user does not have access to this section.');
       }
 
-      return $this->render('@FOSUser/Profile/view.html.twig', array(
-            'user' => $user,
-            'listComment'=>$listComment,
-            'calendar' => $calendar,
-            'payment' => $payment,
-            'countPublishAdvert'=>count($listPublishAdvert),
-            'titlePublishAdvert'=>$titlePublishAdvert,
-            'countReceivedAuction'=>count($listReceivedAuctions),
-            'countProposedAuction'=>count($listProposedAuctions),
-            'countAcceptedAuction'=>count($listAcceptedAuctions),
-            'titleAcceptedAuctions'=>$titleAcceptedAuctions,
-            'countLosedAuction'=>count($listLoseAuctions)
-      ));
+      $contentSender = $request->query->get('_profil_message_content');
+
+      if ($contentSender !== NULL && $contentSender !== ''){
+
+                  $mailer  = $this->get('se_platform.mailer');
+                  $userSender = $this->getUser();
+
+                  $mailSender = $userSender != null ? $userSender->getEmail() : $request->query->get('_email_sender');
+                  $nameSender = $userSender != null ? $userSender->getUserName() : $request->query->get('_name_sender');
+
+
+                  $titleReceiver = 'Nouveau message de la part '.$nameSender;
+                  $titleSender = 'Votre message à '.$user;
+
+                  $bodyReceiver = $this->renderView(
+                           'SEPlatformBundle:Profile:addMailDirectReceiver.html.twig',
+                           array('receiver' => $user,
+                                 'senderMail'  => $mailSender,
+                                 'senderName'  => $nameSender,
+                                 'content' => $contentSender)
+                       );
+
+                  $bodySender = $this->renderView(
+                          'SEPlatformBundle:Profile:addMailDirectSender.html.twig',
+                          array('receiver' => $user,
+                               'senderMail'  => $mailSender,
+                               'senderName'  => $nameSender,
+                               'content' => $contentSender)
+                      );
+
+                  $mailer->sendEmail($titleReceiver, $titleReceiver, $user->getEmail(), $bodyReceiver);
+                  $mailer->sendEmail($titleSender, $titleSender, $mailSender, $bodySender);
+
+                  $session->getFlashBag()->add('sendMessageOk','Message bien envoyé.');
+
+                  return $this->redirectToRoute('se_platform_user_view',
+                                                array(
+                                                      'userId'=> $user->getId()));
+
+            }
+
+            else{
+              //$session->getFlashBag()->add('sendMessageError','Une erreur est surnevue, vérifiez le contenu de votre message.');
+            }
+
+          return $this->render('@FOSUser/Profile/view.html.twig', array(
+                'user' => $user,
+                'listComment'=>$listComment,
+                'calendar' => $calendar,
+                'payment' => $payment,
+                'countPublishAdvert'=>count($listPublishAdvert),
+                'titlePublishAdvert'=>$titlePublishAdvert,
+                'countReceivedAuction'=>count($listReceivedAuctions),
+                'countProposedAuction'=>count($listProposedAuctions),
+                'countAcceptedAuction'=>count($listAcceptedAuctions),
+                'titleAcceptedAuctions'=>$titleAcceptedAuctions,
+                'countLosedAuction'=>count($listLoseAuctions)
+          ));
    }
 }

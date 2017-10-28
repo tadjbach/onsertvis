@@ -283,7 +283,7 @@ class AdvertController extends Controller
                             'advert'=> $advert->getTitle())
                    );
 
-                $mailer->sendEmail($advert, 'Nouvelle demande', 'Création de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+                $mailer->sendEmail('Nouvelle demande', 'Création de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
 
                 $session->getFlashBag()->add('addSuccess','Demande bien enregistrée, elle sera validée dans moins de 24h.');
 
@@ -378,7 +378,7 @@ class AdvertController extends Controller
                       'advert'=> $advert->getTitle())
              );
 
-          $mailer->sendEmail($advert, 'Suppression de votre demande',  'Suppression de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+          $mailer->sendEmail('Suppression de votre demande',  'Suppression de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
         }
         else {
             throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
@@ -413,7 +413,7 @@ class AdvertController extends Controller
                       'advert'=> $advert->getTitle())
              );
 
-          $mailer->sendEmail($advert, 'Désactivation de votre demande',  'Désactivation de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+          $mailer->sendEmail('Désactivation de votre demande',  'Désactivation de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
         }
         else {
             throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
@@ -448,7 +448,7 @@ class AdvertController extends Controller
                       'advert'=> $advert->getTitle())
              );
 
-          $mailer->sendEmail($advert, 'Activation de votre demande',  'Activation de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+          $mailer->sendEmail('Activation de votre demande',  'Activation de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
         }
         else {
             throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");

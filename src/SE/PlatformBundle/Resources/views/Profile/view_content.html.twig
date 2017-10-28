@@ -1,6 +1,24 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+<div class="col-md-3"></div>
+<div class="col-md-6">
+    {% for flash_message in app.session.flashBag.get('sendMessageOk') %}
+        <div class="alert alert-success text-center" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('sendMessageError') %}
+        <div class="alert alert-danger text-center" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+  </div>
+  <div class="col-md-3"></div>
+
 <div class="row">
+
   <div class="col-md-6">
         <blockquote>
           {{user}}
@@ -59,20 +77,21 @@
           </h5>
 
         </blockquote>
+        <blockquote>
+          A propos
+          <h5>
+           {% if user.isAcountComplete == 1 %}
+                {% if user.detail %}
+                   {{ user.detail|nl2br }}
+                    {% else %}
+                      {{user}} n'a pas renseigné cette partie.
+                    {% endif %}
+              {% endif %}
+          </h5>
+        </blockquote>
   </div>
   <div class="col-md-6">
-    <blockquote>
-      A propos
-      <h5>
-       {% if user.isAcountComplete == 1 %}
-            {% if user.detail %}
-               {{ user.detail|nl2br }}
-                {% else %}
-                  {{user}} n'a pas renseigné cette partie.
-                {% endif %}
-          {% endif %}
-      </h5>
-    </blockquote>
+
 
     <blockquote>
       Activité
@@ -82,6 +101,44 @@
             <h5><span class="label label-default se-badge-inverse">{{countAcceptedAuction}}</span> <span class="mar-lef-10">{{titleAcceptedAuctions}}</span></h5>
           <!--  <h5><span class="label label-danger">{{countLosedAuction}}</span> <span class="mar-lef-10">Offres perdues</span></h5>-->
     </blockquote>
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user == app.user %}
+    {% else %}
+    <blockquote>
+      Contactez {{user}}
+      <h5></h5>
+      <form id="form_send_message" action="" method="get">
+      <div id="profil_message">
+        <div class="form-group">
+          <input
+              type="text"
+              class="form-control"
+              id="name_sender"
+              name="_name_sender"
+              value="{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}{{app.user}} {% endif %}"
+              placeholder="Votre nom" required="required"
+              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} disabled {% endif %} >
+              </div>
+              <div class="form-group">
+
+              <input
+                  type="email"
+                  class="form-control"
+                  id="email_sender"
+                  name="_email_sender"
+                  value="{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}{{app.user.Email}} {% endif %}"
+                  placeholder="Votre adresse mail" required="required"
+                  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} disabled {% endif %} >
+        </div>
+        <div class="form-group">
+          <textarea id="profil_message_content" name="_profil_message_content" required="required" maxlength="1000" placeholder="Ecrivez votre message ici (1000 caratères maximum)" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+          <input class="btn btn-primary" type="submit" value="Envoyer"  />
+        </div>
+      </div>
+    </div>
+    </blockquote>
+    {% endif %}
   </div>
 </div>
     <div class="row">

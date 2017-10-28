@@ -246,7 +246,7 @@ class AdminController extends Controller
                  );
 
                  if (!$advert->getIsDeleted()) {
-                    $mailer->sendEmail($advert, "Validation de votre demande", "Votre demande ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
+                    $mailer->sendEmail("Validation de votre demande", "Votre demande ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
                  }
             }
 
@@ -277,7 +277,7 @@ class AdminController extends Controller
                   );
 
                   if (!$advert->getIsDeleted()) {
-                       $mailer->sendEmail($advert, "Validation de votre demande", "Votre demande ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
+                       $mailer->sendEmail("Validation de votre demande", "Votre demande ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
                   }
 
              }
