@@ -26,54 +26,54 @@ var mapHeight=550;				// Hauteur de la carte en pixels (facultatif)
 var paths = {
         Z1: {
             title: "Alsace-Champagne-Ardenne-Lorraine",
-            url: "/annonces-en-cours?region=6"
+            url: "/demandes-en-cours?region=6"
         },
         Z2: {
             title: "Aquitaine-Limousin-Poitou-Charentes",
-            url: "/annonces-en-cours?region=10"
+            url: "/demandes-en-cours?region=10"
         },
         Z3: {
             title: "Auvergne-Rhône-Alpes",
-            url: "/annonces-en-cours?region=1"
+            url: "/demandes-en-cours?region=1"
         },
         Z4: {
             title: "Bourgogne-Franche-Comté",
-            url: "/annonces-en-cours?region=2"
+            url: "/demandes-en-cours?region=2"
         },
         Z5: {
             title: "Bretagne",
-            url: "/annonces-en-cours?region=3"
+            url: "/demandes-en-cours?region=3"
         },
         Z6: {
             title: "Centre",
-            url: "/annonces-en-cours?region=4"
+            url: "/demandes-en-cours?region=4"
         },
         Z7: {
             title: "Corse",
-            url: "/annonces-en-cours?region=5"
+            url: "/demandes-en-cours?region=5"
         },
         Z8: {
             title: "Languedoc-Roussillon-Midi-Pyrénées",
-            url: "/annonces-en-cours?region=11"
+            url: "/demandes-en-cours?region=11"
         },
         Z9: {
             title: "Ile-de-France",
-            url: "/annonces-en-cours?region=8"
+            url: "/demandes-en-cours?region=8"
         },
         Z10: {
             title: "Nord-Pas-de-Calais-Picardie",
-            url: "/annonces-en-cours?region=7"
+            url: "/demandes-en-cours?region=7"
         },
         Z11: {
             title: "Normandie",
-            url: "/annonces-en-cours?region=9"
+            url: "/demandes-en-cours?region=9"
         },
         Z12: {
             title: "Pays-de-la-Loire",
-            url: "/annonces-en-cours?region=12"
+            url: "/demandes-en-cours?region=12"
         },
         Z13: {
             title: "Provence-Alpes-Côte-d-Azur",
-            url: "/annonces-en-cours?region=13"
+            url: "/demandes-en-cours?region=13"
         }
     }

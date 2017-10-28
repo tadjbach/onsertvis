@@ -109,19 +109,19 @@ se_platform_admin_list_comments:
 
 # Filter Routes :
 se_platform_departement_by_region:
-    path: /annonces-en-cours/getDepartementByRegion
+    path: /demandes-en-cours/getDepartementByRegion
     defaults:
         _controller: SEPlatformBundle:Advert:getDepartementByRegion
     schemes:  [https]
 
 se_platform_city_by_departement:
-    path: /annonces-en-cours/getCityByDepartement
+    path: /demandes-en-cours/getCityByDepartement
     defaults:
         _controller: SEPlatformBundle:Advert:getCityByDepartement
     schemes:  [https]
 
 se_platform_postalCode_by_city_and_departement:
-    path: /annonces-en-cours/getPostalCodeByCityAndDepartement
+    path: /demandes-en-cours/getPostalCodeByCityAndDepartement
     defaults:
         _controller: SEPlatformBundle:Advert:getPostalCodeByCityAndDepartement
     schemes:  [https]
@@ -170,7 +170,7 @@ se_platform_advert_delete:
     schemes:  [https]
 
 se_platform_advert_list:
-    path:   /annonces-en-cours/{page}
+    path:   /demandes-en-cours/{page}
     defaults:
         _controller: SEPlatformBundle:Advert:list
         page:   1

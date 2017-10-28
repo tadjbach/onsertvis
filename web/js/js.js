@@ -12,7 +12,7 @@
                 departement: $departements.val()};
 
                 $.ajax({
-                    url: 'annonces-en-cours/getDepartementByRegion',
+                    url: 'demandes-en-cours/getDepartementByRegion',
                     type:'POST',
                     data: data,
                     dataType: 'json',
@@ -34,7 +34,7 @@
         var data = {departement: $departements.val()};
 
         $.ajax({
-            url: 'annonces-en-cours/getCityByDepartement',
+            url: 'demandes-en-cours/getCityByDepartement',
             type:'POST',
             data: data,
             dataType: 'json',
@@ -61,7 +61,7 @@
             var dataPostalCode = {city: $city.val(), departement: $departements.val()};
 
             $.ajax({
-                url: 'annonces-en-cours/getPostalCodeByCityAndDepartement',
+                url: 'demandes-en-cours/getPostalCodeByCityAndDepartement',
                 type:'POST',
                 data: dataPostalCode,
                 dataType: 'json',
