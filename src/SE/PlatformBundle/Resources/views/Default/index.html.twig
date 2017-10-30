@@ -23,7 +23,7 @@
               <h5>
                   <span class="label label-default se-badge">1</span>
                   {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                  <a class="slogan-link" href="{{ path('se_platform_user_edit') }}">Inscrivez vous</a>
+                  <a class="slogan-link" href="{{ path('se_platform_user_edit') }}">Inscrivez-vous</a>
                   {% else %}
                   <a class="slogan-link" href="{{ path('fos_user_registration_register') }}">Inscrivez vous</a>
                   {% endif %}

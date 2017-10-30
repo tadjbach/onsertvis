@@ -6,7 +6,7 @@ se_platform_homepage:
 
 # Admin Routes :
 se_platform_admin_list_users:
-    path:     /se/manage/users/{page}
+    path:     /manage/users/{page}
     defaults:
         _controller: SEPlatformBundle:Admin:listUsers
         page:   1
@@ -14,7 +14,7 @@ se_platform_admin_list_users:
         page: \d*
 
 se_platform_admin_view_user:
-    path:   /se/manage/user-{id}
+    path:   /manage/user-{id}
     defaults:
         _controller: SEPlatformBundle:Admin:viewUser
     requirements:
@@ -22,56 +22,56 @@ se_platform_admin_view_user:
 
 
 se_platform_admin_enabled_user:
-    path:   /se/manage/activer/user-{id}-{action}
+    path:   /manage/activer/user-{id}-{action}
     defaults:
         _controller: SEPlatformBundle:Admin:enableUser
     requirements:
         id: \d+
 
 se_platform_admin_newsletter_user:
-    path:   /se/manage/newsletter/user-{id}-{action}
+    path:   /manage/newsletter/user-{id}-{action}
     defaults:
         _controller: SEPlatformBundle:Admin:newsletterUser
     requirements:
         id: \d+
 
 se_platform_admin_visible_user:
-    path:   /se/manage/visible/user-{id}-{action}
+    path:   /manage/visible/user-{id}-{action}
     defaults:
         _controller: SEPlatformBundle:Admin:visibleUser
     requirements:
         id: \d+
 
 se_platform_admin_view_advert:
-    path:   /se/manage/demande-{id}
+    path:   /manage/demande-{id}
     defaults:
         _controller: SEPlatformBundle:Admin:viewAdvert
     requirements:
         id: \d+
 
 se_platform_admin_enabled_advert:
-    path:   /se/manage/activer/demande-{id}-{action}
+    path:   /manage/activer/demande-{id}-{action}
     defaults:
         _controller: SEPlatformBundle:Admin:enableAdvert
     requirements:
         id: \d+
 
 se_platform_admin_publish_advert:
-    path:   /se/manage/publier/demande-{id}-{action}
+    path:   /manage/publier/demande-{id}-{action}
     defaults:
         _controller: SEPlatformBundle:Admin:publishAdvert
     requirements:
         id: \d+
 
 se_platform_admin_delete_advert:
-    path:   /se/manage/supprimer/demande-{id}-{action}
+    path:   /manage/supprimer/demande-{id}-{action}
     defaults:
         _controller: SEPlatformBundle:Admin:deleteAdvert
     requirements:
         id: \d+
 
 se_platform_admin_list_adverts:
-    path:     /se/manage/adverts/{page}
+    path:     /manage/adverts/{page}
     defaults:
         _controller: SEPlatformBundle:Admin:listAdverts
         page:   1
@@ -79,7 +79,7 @@ se_platform_admin_list_adverts:
         page: \d*
 
 se_platform_admin_list_auctions:
-    path:     /se/manage/auctions
+    path:     /manage/auctions
     defaults:
         _controller: SEPlatformBundle:Admin:listAuctions
         page:   1
@@ -87,7 +87,7 @@ se_platform_admin_list_auctions:
         page: \d*
 
 se_platform_admin_list_messages:
-    path:     /se/manage/messages
+    path:     /manage/messages
     defaults:
         _controller: SEPlatformBundle:Admin:listMessages
         page:   1
@@ -95,7 +95,7 @@ se_platform_admin_list_messages:
         page: \d*
 
 se_platform_admin_list_comments:
-    path:     /se/manage/comments
+    path:     /manage/comments
     defaults:
         _controller: SEPlatformBundle:Admin:listComments
         page:   1
