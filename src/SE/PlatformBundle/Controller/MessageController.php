@@ -46,7 +46,7 @@ class MessageController extends Controller
         $userSender = $this->getUser();
         $userReceive=$em->find('SEPlatformBundle:User', $receiveId);
 
-        $answer = 'Nouveau message de la part de '.$userSender;
+        $answer = 'Message de la part de '.$userSender;
         $answerSender = 'Votre message à '.$userReceive;
 
         $message = new Message();
@@ -92,7 +92,7 @@ class MessageController extends Controller
                             array('receiver' => $userReceive,
                                  'sender'  => $userSender,
                                  'content' => $message->getContent(),
-                                 'advert'=> $advert->getTitle())
+                                 'advert'=> $advert)
                         );
 
                   $bodySender = $this->renderView(
@@ -101,7 +101,7 @@ class MessageController extends Controller
                            array('receiver' => $userReceive,
                                 'sender'  => $userSender,
                                 'content' => $message->getContent(),
-                                'advert'=> $advert->getTitle())
+                                'advert'=> $advert)
                        );
 
                   $mailer->sendEmail($answer, $answer, $userReceive->getEmail(), $bodyReceiver);

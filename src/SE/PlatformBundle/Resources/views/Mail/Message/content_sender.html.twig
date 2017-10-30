@@ -1,0 +1,12 @@
+<div>
+    <p>Bonjour <b>{{ sender }}</b></p>
+    <p>Vous avez envoyé un message concerant la demande <a href="{{ url('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}" >{{advert.title}}</a>
+      à <a href="{{ url('se_platform_user_view', {'userId': receiver.id}) }}">{{receiver}}</a></p>
+    <p>dont voici une copie : </p>
+    <div class="alert alert-success">
+      <p><b>Nom :</b> {{ sender }}</p>
+      <p><b>Mail :</b> {{ sender.email }}</p>
+      <p><b>Message :</b></p>
+      <p style="padding-left:20px">{{content|nl2br}}</p>
+    </div>
+</div>

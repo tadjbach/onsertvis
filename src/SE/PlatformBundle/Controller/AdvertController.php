@@ -502,7 +502,7 @@ class AdvertController extends Controller
       $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
 
         if ($advert->getIsPublished() == 0) {
-          return $this->render('SEPlatformBundle:Advert:desactive.html.twig');
+          return $this->render('SEPlatformBundle:Advert:disabled.html.twig');
         }
         else {
           return $this->render('SEPlatformBundle:Advert:view.html.twig',

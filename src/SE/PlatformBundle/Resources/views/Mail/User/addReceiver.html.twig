@@ -1,0 +1,14 @@
+<div>
+  <p>Bonjour <b>{{ receiver }}</b></p>
+  <p>Vous avez reçu un nouveau message de la part de <b>{{senderName}}</b></p>
+
+  <div class="alert alert-success">
+    <p><b>Nom :</b> {{ senderName }}</p>
+    <p><b>Mail :</b> <a chref="mailto:{{ senderMail }}">{{ senderMail }}</a></p>
+    <p><b>Message :</b></p>
+    <p style="padding-left:20px">{{content|nl2br}}</p>
+  </div>
+  <p>
+    Cordialement.
+  </p>
+</div>

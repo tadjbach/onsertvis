@@ -1,0 +1,15 @@
+<div>
+  <p>Bonjour <b>{{ receiver }}</b></p>
+  <p>Votre offre de <b>{{value|number_format(0, ' ', ' ')}} €</b> pour la demande <b>{{advert.title}}</b> a été <b style="color:green">acceptée</b> par le proprétaire de la demande.</p>
+
+  <p>Contactez le proprétaire pour convenir d'un rendez vous : </p>
+  <p>Nom : {{ user_advert }}</p>
+  <p>Téléphone : {{ user_advert.phoneNumber|split('', 2)|join(' ') }}</p>
+  <p>Mail : <a chref="mailto:{{ user_advert.email }}">{{ user_advert.email }}</a></p>
+
+  <p>Votre espace client <a href="{{url('fos_user_security_login')}}" >Se connecter</a>.</p>
+
+  <p>
+    Cordialement.
+  </p>
+</div>

@@ -240,7 +240,7 @@ class AdminController extends Controller
             if ($action == 0) {
 
                 $body = $this->renderView(
-                     'SEPlatformBundle:Advert:deactiveMail.html.twig',
+                     'SEPlatformBundle:Advert:disabledMail.html.twig',
                      array('receiver' => $advert->getUser(),
                           'advert'=> $advert->getTitle())
                  );

@@ -1,0 +1,8 @@
+<div>
+  <p>Bonjour <b>{{ receiver }}</b></p>
+  <p>Vous avez reçu une nouvelle offre d'une valeur de <b>{{value|number_format(0, ' ', ' ')}} €</b>,  de la part de <b>{{sender}}</b> pour la demande <b>{{advert}}</b></p>
+  <p>La liste des offres est disponible dans votre espace client <a href="{{url('fos_user_security_login')}}" >Se connecter</a>.</p>
+  <p>
+    Cordialement.
+  </p>
+</div>
