@@ -84,7 +84,7 @@ class CommentController extends Controller
                        $body = $this->renderView(
                               'SEPlatformBundle:Comment:addMail.html.twig',
                               array( 'receiver' => $userReceiver,
-                                     'advert'=> $advert->getTitle())
+                                     'advert'=> $advert)
                           );
 
                        $mailer->sendEmail('Avis reçu', 'Vous avez reçu un avis', $userReceiver->getEmail(), $body);

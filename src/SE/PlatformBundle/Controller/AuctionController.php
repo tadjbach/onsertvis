@@ -115,11 +115,11 @@ class AuctionController extends Controller
 
                             if ($lastAuction[0]->getUser() !== $this->getUser()) {
                               $body = $this->renderView(
-                                     'SEPlatformBundle:Auction:otherAuctionMail.html.twig',
+                                     'SEPlatformBundle:Auction:lastAuctionMail.html.twig',
                                      array( 'receiver' => $lastAuction[0]->getUser(),
-                                            'value'=> $auction->getValue(),
+                                            'auction'=> $auction,
                                             'oldValue'=>$lastAuction[0]->getValue(),
-                                            'advert'=> $advert->getTitle())
+                                            'advert'=> $advert)
                                  );
                               $mailer->sendEmail('Nouvelle offre', "Nouvelle offre sur la demande ".' '.$advert->getTitle(), $lastAuction[0]->getUser()->getEmail(), $body);
                         }
@@ -130,8 +130,8 @@ class AuctionController extends Controller
                              'SEPlatformBundle:Auction:addMail.html.twig',
                              array( 'receiver' => $userOwner,
                                     'sender'=> $this->getUser(),
-                                    'value'=> $auction->getValue(),
-                                    'advert'=> $advert->getTitle())
+                                    'auction'=> $auction,
+                                    'advert'=> $advert)
                          );
 
                       $mailer->sendEmail('Nouvelle offre', 'Nouvelle offre sur votre demande '.$advert->getTitle(), $userOwner->getEmail(), $body_owner);
@@ -192,7 +192,7 @@ class AuctionController extends Controller
           $body = $this->renderView(
                  'SEPlatformBundle:Auction:cancelAuctionMail.html.twig',
                  array('receiver' => $this->getUser(),
-                 'value' => $auction->getValue(),
+                      'auction' => $auction,
                       'advert'=> $advert)
              );
 
@@ -334,8 +334,8 @@ class AuctionController extends Controller
                   $body = $this->renderView(
                          'SEPlatformBundle:Auction:refuseMail.html.twig',
                          array( 'receiver' => $userAuctionRefuse,
-                                'value'=> $auctionAccept->getValue(),
-                                'advert'=> $advert->getTitle())
+                                'auction'=> $auctionAccept,
+                                'advert'=> $advert)
                      );
                   $mailer->sendEmail('Offre refusée', 'Votre offre a été refusée', $userAuctionRefuse->getEmail(), $body);
                 }
@@ -358,7 +358,7 @@ class AuctionController extends Controller
                 $body_auction = $this->renderView(
                        'SEPlatformBundle:Auction:acceptAuctionMail.html.twig',
                        array( 'receiver' => $userAuction,
-                              'value'=> $auctionAccept->getValue(),
+                              'auction'=> $auctionAccept,
                               'advert'=> $advert,
                               'user_advert'=> $user
                               )
@@ -367,7 +367,7 @@ class AuctionController extends Controller
                 $body_advert = $this->renderView(
                           'SEPlatformBundle:Auction:acceptAdvertMail.html.twig',
                           array( 'receiver' => $user,
-                                 'value'=> $auctionAccept->getValue(),
+                                 'auction'=> $auctionAccept,
                                  'advert'=> $advert,
                                  'user_auction'=> $userAuction
                                  )
@@ -382,7 +382,7 @@ class AuctionController extends Controller
                 $body_auction = $this->renderView(
                        'SEPlatformBundle:Auction:cancelAuctionMail.html.twig',
                        array( 'receiver' => $userAuction,
-                              'value'=> $auctionAccept->getValue(),
+                              'auction'=> $auctionAccept,
                               'advert'=> $advert,
                               'user_advert'=> $user
                               )
@@ -391,10 +391,9 @@ class AuctionController extends Controller
                 $body_advert = $this->renderView(
                           'SEPlatformBundle:Auction:cancelAdvertMail.html.twig',
                           array( 'receiver' => $user,
-                                 'value'=> $auctionAccept->getValue(),
+                                 'auction'=> $auctionAccept,
                                  'advert'=> $advert,
-                                 'user_auction'=> $userAuction
-                                 )
+                                 'user_auction'=> $userAuction)
                     );
 
                 $mailer->sendEmail('Offre annulée', 'Votre offre a été annulée', $userAuction->getEmail(), $body_auction);

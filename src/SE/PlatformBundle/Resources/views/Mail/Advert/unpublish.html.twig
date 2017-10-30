@@ -1,6 +1,6 @@
 <div>
-  <p>Bonjour <b>{{ receiver }}</b></p>
-  <p>Vous avez désactivé la demande <b>{{advert}}</b> sur le site https://www.serviceenchere.fr</p>
+  <p>Bonjour <b>{{ advert.user }}</b></p>
+  <p>Vous avez désactivé la demande <b>{{ advert.title }}</b> sur le site https://www.serviceenchere.fr</p>
   <p>Elle sera invisible du site dans moins de 24 heures.</p>
   <p>Votre espace client <a href="{{url('fos_user_security_login')}}" >Se connecter</a>.</p>
   <p>

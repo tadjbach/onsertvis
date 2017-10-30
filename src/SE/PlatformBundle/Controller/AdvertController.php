@@ -279,8 +279,7 @@ class AdvertController extends Controller
 
                 $body = $this->renderView(
                        'SEPlatformBundle:Advert:addMail.html.twig',
-                       array('receiver' => $this->getUser(),
-                            'advert'=> $advert->getTitle())
+                       array('advert'=> $advert)
                    );
 
                 $mailer->sendEmail('Nouvelle demande', 'Création de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
@@ -374,8 +373,7 @@ class AdvertController extends Controller
 
           $body = $this->renderView(
                  'SEPlatformBundle:Advert:deleteMail.html.twig',
-                 array('receiver' => $this->getUser(),
-                      'advert'=> $advert->getTitle())
+                 array('advert'=> $advert)
              );
 
           $mailer->sendEmail('Suppression de votre demande',  'Suppression de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
@@ -409,8 +407,7 @@ class AdvertController extends Controller
 
           $body = $this->renderView(
                  'SEPlatformBundle:Advert:unpublishMail.html.twig',
-                 array('receiver' => $this->getUser(),
-                      'advert'=> $advert->getTitle())
+                 array('advert'=> $advert)
              );
 
           $mailer->sendEmail('Désactivation de votre demande',  'Désactivation de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
@@ -444,8 +441,7 @@ class AdvertController extends Controller
 
           $body = $this->renderView(
                  'SEPlatformBundle:Advert:publishMail.html.twig',
-                 array('receiver' => $this->getUser(),
-                      'advert'=> $advert->getTitle())
+                 array('advert'=> $advert)
              );
 
           $mailer->sendEmail('Activation de votre demande',  'Activation de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);

@@ -241,8 +241,7 @@ class AdminController extends Controller
 
                 $body = $this->renderView(
                      'SEPlatformBundle:Advert:disabledMail.html.twig',
-                     array('receiver' => $advert->getUser(),
-                          'advert'=> $advert->getTitle())
+                     array('advert'=> $advert)
                  );
 
                  if (!$advert->getIsDeleted()) {
@@ -272,8 +271,7 @@ class AdminController extends Controller
              if ($action == 1) {
                $body = $this->renderView(
                       'SEPlatformBundle:Advert:activeMail.html.twig',
-                      array('receiver' => $advert->getUser(),
-                           'advert'=> $advert->getTitle())
+                      array('advert'=> $advert)
                   );
 
                   if (!$advert->getIsDeleted()) {
