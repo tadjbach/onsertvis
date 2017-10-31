@@ -87,11 +87,13 @@ fos_user:
     registration:
         confirmation:
             enabled: true
+            template: SEPlatformBundle:Registration:email.html.twig
             from_email:
                 address: noreplay@serviceenchere.fr
                 sender_name: Service Enchère - Validation d'adresse mail
     resetting:
         email:
+            template: SEPlatformBundle:Resetting:email.html.twig
             from_email:
                 address:        noreplay@serviceenchere.fr
                 sender_name:    Service Enchère - Réinitialisation de mot de passe
