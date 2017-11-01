@@ -1,4 +1,4 @@
-{% trans_default_domain 'FOSUserBundle' %}
+
 {% block subject %}
 {%- autoescape false -%}
 {{ 'registration.email.subject'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}
@@ -25,7 +25,7 @@ Merci de ne pas répondre à ce message. Si vous souhaitez nous adresser un cour
 
 Merci de votre confiance et à très bientôt,
 
-L'équipe serviceenchere
+L'équipe Service Enchère
 https://www.serviceenchere.fr
 
 

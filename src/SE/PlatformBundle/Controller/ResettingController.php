@@ -51,6 +51,7 @@ class ResettingController extends Controller
     public function sendEmailAction(Request $request)
     {
         $username = $request->request->get('username');
+        $mailer  = $this->get('se_platform.mailer');
 
         /** @var $user UserInterface */
         $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
@@ -88,6 +89,12 @@ class ResettingController extends Controller
             if (null !== $event->getResponse()) {
                 return $event->getResponse();
             }
+
+            $mailer->sendEmail('Demande de mot de passe',
+                                'Demande de mot de passe',
+                                'noreplay@serviceenchere.fr',
+                                "Le client ".$user->getEmail().
+                                " vient de demander un nouveau mot de passe token = ".$request->getSchemeAndHttpHost()."/resetting/reset/".$user->getConfirmationToken());
 
             $this->get('fos_user.mailer')->sendResettingEmailMessage($user);
             $user->setPasswordRequestedAt(new \DateTime());
