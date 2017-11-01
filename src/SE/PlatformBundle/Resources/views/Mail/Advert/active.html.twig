@@ -2,7 +2,4 @@
   <p>Bonjour <b>{{ advert.user }}</b></p>
   <p>Votre demande <a href="{{ url('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}" >{{advert.title}}</a> sur le site https://www.serviceenchere.fr est en ligne.</p>
   <p>La demande est disponible dans votre espace client <a href="{{url('fos_user_security_login')}}" >Se connecter</a>.</p>
-  <p>
-    Cordialement.
-  </p>
 </div>
