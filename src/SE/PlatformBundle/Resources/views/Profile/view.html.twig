@@ -10,11 +10,12 @@
 
 {% block layout_body %}
 
-      {% if app.user.isAcountComplete == 0 %}
-            <div class="alert alert-danger" role="alert">
-                Bonjour {{ app.user }}, Votre profil n'est pas complet, merci de le
-                <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
-            </div>
+      {% if user.isAcountComplete == 0 %}
+          <div class="alert alert-danger" role="alert">
+              Le profil de <b>{{ user }}</b>, n'est pas complet,
+              si vous êtes <b>{{ user }}</b> merci de le
+              <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter.</a>
+          </div>
       {% else %}
       {% block fos_user_content %}
           {% include "@FOSUser/Profile/view_content.html.twig" %}
