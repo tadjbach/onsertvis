@@ -141,15 +141,10 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
         if($advertState !== NULL && $advertState !== '0')
         {
           if ($advertState === '1') {
-            $qb->andWhere($qb->expr()->eq('advert.isPublished', 0));
-            $qb->andWhere($qb->expr()->eq('advert.auctionState', 0));
-          }
-          elseif ($advertState === '2') {
             $qb->andWhere($qb->expr()->eq('advert.isPublished', 1));
           }
-          elseif ($advertState === '3') {
+          elseif ($advertState === '2') {
             $qb->andWhere($qb->expr()->eq('advert.isPublished', 0));
-              $qb->andWhere($qb->expr()->eq('advert.auctionState', 1));
           }
 
         }

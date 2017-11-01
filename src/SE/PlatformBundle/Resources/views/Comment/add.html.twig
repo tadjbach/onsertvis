@@ -28,6 +28,11 @@
          </div>
 
          {% else %}
+         <div class="alert alert-danger" role="alert">
+             Après l'ajout de cet avis, la demande sera désactivée sur le site.
+             <br>
+             Si la demande est toujours d'actualité <b>quittez cette page</b>.
+         </div>
            {{ include('SEPlatformBundle:Comment:form.html.twig') }}
          {% endif %}
        </div>

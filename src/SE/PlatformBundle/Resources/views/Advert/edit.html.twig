@@ -16,15 +16,27 @@
       <div class="col-md-12">
         <div class="col-md-3"></div>
         <div class="col-md-6">
+          {% if advert.isPublished == 0 %}
+              <div class="alert alert-info text-center" role="alert">
+                  La demande est hors ligne.
+                  <br>
+                    {% if advert.commentState == 1 %}
+                      Car vous avez déjà trouvé un jobber.
+                    {% endif %}
+              </div>
+              {% else %}
+              <div class="alert alert-info text-center" role="alert">
+                  Après la modification, la demande sera hors ligne pour validation.
+              </div>
+              {% endif %}
           {% for flash_message in app.session.flashBag.get('editSuccess') %}
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <div class="alert alert-success text-center" role="alert">
                   {{ flash_message }}
               </div>
           {% endfor %}
            {{ include('SEPlatformBundle:Advert:form.html.twig') }}
         </div>
-        <div id="content" class="col-md-3"></div>
+        <div class="col-md-3"></div>
      </div>
   </div>
 {% endblock %}

@@ -1,5 +1,6 @@
 <div>
   <p>Bonjour <b>{{ receiver }}</b></p>
-  <p>Vous avez reçu une nouvelle offre d'une valeur de <b>{{auction.value|number_format(0, ' ', ' ')}} €</b>,  de la part de <b>{{sender}}</b> pour la demande <b>{{advert.title}}</b></p>
+  <p>Vous avez reçu une nouvelle offre d'une valeur de <b>{{auction.value|number_format(0, ' ', ' ')}} €</b>,
+    de la part de <a href="{{ url('se_platform_user_view', {'userId': sender.id}) }}">{{sender}}</a> pour la demande <a href="{{ url('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}" >{{advert.title}}</a></p>
   <p>La liste des offres est disponible dans votre espace client <a href="{{url('fos_user_security_login')}}" >Se connecter</a>.</p>
 </div>

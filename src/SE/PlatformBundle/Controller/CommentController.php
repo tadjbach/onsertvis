@@ -42,6 +42,7 @@ class CommentController extends Controller
          $mailer  = $this->get('se_platform.mailer');
 
          $advert=$em->find('SEPlatformBundle:Advert', $advertId);
+         $advert->setIsPublished(false);
          $userReceiver = $em->find('SEPlatformBundle:User', $auctionUserId);
 
          $userSender = $this->getUser();
@@ -89,9 +90,9 @@ class CommentController extends Controller
 
                        $mailer->sendEmail('Avis reçu', 'Vous avez reçu un avis', $userReceiver->getEmail(), $body);
 
-                       $session->getFlashBag()->add('addSuccess','Avis bien envoyé.');
+                       $session->getFlashBag()->add('addSuccess','Avis bien ajouté.');
 
-                       return $this->redirectToRoute('se_platform_auction_user_receive');
+                       return $this->redirectToRoute('se_platform_advert_user_list');
                      }
                      else{
                        $session->getFlashBag()->add('warning','Votre message est vide.');
@@ -220,6 +221,8 @@ class CommentController extends Controller
             ->getRepository('SEPlatformBundle:Comment')
             ->getCommentListUser($user->getId(), $this->state, $page, $this->nbPerPage);
 
+        $titleResult = count($listComment) == 0 ? 'Aucun avis' : count($listComment).' avis';
+
         $nbPages = ceil(count($listComment)/$this->nbPerPage);
 
         if ($page<1){
@@ -231,7 +234,7 @@ class CommentController extends Controller
             'nbPages'     => $nbPages,
             'page'        => $page,
             'listComment'=> $listComment,
-            'countComment'=> count($listComment),
+            'countComment'=> $titleResult,
             'state'=> $this->state,
             'listCommentState'=>$this->getCommentState()
           ));

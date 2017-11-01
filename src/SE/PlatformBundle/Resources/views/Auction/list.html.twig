@@ -6,31 +6,29 @@
         <tbody>
         {% for auction in listAuctions %}
             <tr>
+              <td class="text-left hidden-xs">
+                {{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:i:s') }}
+              </td>
                 <td class="text-left">
-                    <a href="{{ path('se_platform_user_view', {'userId': auction.user.id}) }}" class="cat-link" >
-                        {{ auction.user }}
+                    <a href="{{ path('se_platform_user_view', {'userId': auction.user.id}) }}" class="se-tbl-link" >
+                          {{ auction.user }}
                     </a>
                 </td>
                 <td class="text-left hidden-xs">
                     {{ include('@SEPlatform/User/rate.html.twig', {'item': auction.user }) }}
                 </td>
                 <td class="text-right">
-                  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    {% if auction.state == 2 %}
-                        <span class="label label-success">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}</span>
-                        <span class="label label-success">Accepté</span>
-                    {% elseif auction.state == 3 %}
-                        <span class="label label-default">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}</span>
-                        <span class="label label-default">Déclinée</span>
-                    {% elseif auction.state == 1 %}
-                        <span class="label label-warning">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}</span>
-                        <span class="label label-warning">En cours</span>
-                      {% endif %}
-                {% else %}
-                        <span class="label label-default">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}</span>
-                {% endif %}
+                    <span class="label label-default se-badge-inverse-label">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}</span>
                 </td>
-                <td class="text-right hidden-xs">{{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:i:s') }}</td>
+                <td class="text-right">
+                  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and auction.advert.user ==  app.user %}
+                    {% if auction.advert.commentState == 0 %}
+                    <a class="btn btn-primary"
+                        href="{{ path('se_platform_comment_add', {'advertId': auction.advert.id, 'auctionUserId': auction.user.id}) }}"
+                        >Evaluer</a>
+                        {% endif %}
+                  {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>

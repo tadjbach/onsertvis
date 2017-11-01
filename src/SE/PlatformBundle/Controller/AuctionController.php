@@ -305,7 +305,7 @@ class AuctionController extends Controller
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function acceptAction(Request $request, $auctionId, $state){
+    public function acceptAction(Request $request, $auctionId){
 
       $em = $this->getDoctrineManager();
       $session = $request->getSession();
@@ -325,7 +325,7 @@ class AuctionController extends Controller
           if ($auctionAccept !== null && $user !== null){
 
               foreach($auctionRefuse as $auct_refus) {
-                $statusRefus = $state == 2 ? 3 : 1;
+                $statusRefus = 3;
                 $auct_refus->setState($statusRefus);
 
                 $userAuctionRefuse = $auct_refus->getUser();
@@ -341,70 +341,113 @@ class AuctionController extends Controller
                 }
               }
 
-              if ($state == 2) {
-                  $advert->setIsPublished(false);
-              }
-              else {
-                    $advert->setIsPublished(true);
-              }
-
-              $auctionAccept->setState($state);
+              $advert->setIsPublished(false);
+              $auctionAccept->setState(2);
 
               $em->persist($advert);
               $em->persist($auctionAccept);
               $em->flush();
 
-              if ($state == 2) {
-                $body_auction = $this->renderView(
-                       'SEPlatformBundle:Auction:acceptAuctionMail.html.twig',
-                       array( 'receiver' => $userAuction,
-                              'auction'=> $auctionAccept,
-                              'advert'=> $advert,
-                              'user_advert'=> $user
-                              )
-                   );
+              $body_auction = $this->renderView(
+                     'SEPlatformBundle:Auction:acceptAuctionMail.html.twig',
+                     array( 'receiver' => $userAuction,
+                            'auction'=> $auctionAccept,
+                            'advert'=> $advert,
+                            'user_advert'=> $user
+                            )
+                 );
 
-                $body_advert = $this->renderView(
-                          'SEPlatformBundle:Auction:acceptAdvertMail.html.twig',
-                          array( 'receiver' => $user,
-                                 'auction'=> $auctionAccept,
-                                 'advert'=> $advert,
-                                 'user_auction'=> $userAuction
-                                 )
-                    );
+              $body_advert = $this->renderView(
+                        'SEPlatformBundle:Auction:acceptAdvertMail.html.twig',
+                        array( 'receiver' => $user,
+                               'auction'=> $auctionAccept,
+                               'advert'=> $advert,
+                               'user_auction'=> $userAuction
+                               )
+                  );
 
-                $mailer->sendEmail('Offre acceptée', 'Votre offre a été acceptée', $userAuction->getEmail(), $body_auction);
+              $mailer->sendEmail('Offre acceptée', 'Votre offre a été acceptée', $userAuction->getEmail(), $body_auction);
+              $mailer->sendEmail('Offre acceptée', 'Vous avez accepté une offre', $user->getEmail(), $body_advert);
 
-                $mailer->sendEmail('Offre acceptée', 'Vous avez accepté une offre', $user->getEmail(), $body_advert);
-                $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'offre à ".$auctionAccept->getValue()." €, il vous reste à contacter le jobber pour convenir d'un rendez-vous");
+              $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'offre à ".$auctionAccept->getValue()." €, il vous reste à contacter le jobber pour convenir d'un rendez-vous");
+
+              return $this->redirectToRoute('se_platform_auction_user_receive');
+          }
+        }
+        else {
+          throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
+        }
+    }
+
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function refuseAction(Request $request, $auctionId){
+
+      $em = $this->getDoctrineManager();
+      $session = $request->getSession();
+      $mailer  = $this->get('se_platform.mailer');
+
+      $user = $this->getUser();
+      $auctionAccept = $em->find('SEPlatformBundle:Auction', $auctionId);
+      $userAuction = $auctionAccept->getUser();
+      $userAuction->setIsValideAuction(1);
+
+      $advert = $auctionAccept->getAdvert();
+
+      $auctionRefuse = $em->getRepository('SEPlatformBundle:Auction')->findBy(array('advert' => $advert));
+
+    if ($this->getUser() === $advert->getUser()) {
+
+          if ($auctionAccept !== null && $user !== null){
+
+              foreach($auctionRefuse as $auct_refus) {
+                $statusRefus = 1;
+                $auct_refus->setState($statusRefus);
+
+                $userAuctionRefuse = $auct_refus->getUser();
+
+                if ($userAuctionRefuse !== $userAuction) {
+                  $body = $this->renderView(
+                         'SEPlatformBundle:Auction:refuseMail.html.twig',
+                         array( 'receiver' => $userAuctionRefuse,
+                                'auction'=> $auctionAccept,
+                                'advert'=> $advert)
+                     );
+                  $mailer->sendEmail('Offre refusée', 'Votre offre a été refusée', $userAuctionRefuse->getEmail(), $body);
+                }
               }
-              else {
-                $body_auction = $this->renderView(
-                       'SEPlatformBundle:Auction:cancelAuctionMail.html.twig',
-                       array( 'receiver' => $userAuction,
-                              'auction'=> $auctionAccept,
-                              'advert'=> $advert,
-                              'user_advert'=> $user
-                              )
-                   );
 
-                $body_advert = $this->renderView(
-                          'SEPlatformBundle:Auction:cancelAdvertMail.html.twig',
-                          array( 'receiver' => $user,
-                                 'auction'=> $auctionAccept,
-                                 'advert'=> $advert,
-                                 'user_auction'=> $userAuction)
-                    );
+          $advert->setIsPublished(true);
+          $auctionAccept->setState(1);
 
-                $mailer->sendEmail('Offre annulée', 'Votre offre a été annulée', $userAuction->getEmail(), $body_auction);
+          $em->persist($advert);
+          $em->persist($auctionAccept);
+          $em->flush();
 
-                $mailer->sendEmail('Offre annulée', 'Vous avez annulée une offre', $user->getEmail(), $body_advert);
+          $body_auction = $this->renderView(
+                 'SEPlatformBundle:Auction:cancelAuctionMail.html.twig',
+                 array( 'receiver' => $userAuction,
+                        'auction'=> $auctionAccept,
+                        'advert'=> $advert,
+                        'user_advert'=> $user
+                        )
+             );
 
-                  $session->getFlashBag()->add('warning',"Vous avez annulé l'offre de ".$auctionAccept->getValue()." €, la demande est à nouveau en ligne.");
-              }
+          $body_advert = $this->renderView(
+                    'SEPlatformBundle:Auction:cancelAdvertMail.html.twig',
+                    array( 'receiver' => $user,
+                           'auction'=> $auctionAccept,
+                           'advert'=> $advert,
+                           'user_auction'=> $userAuction)
+              );
 
+            $mailer->sendEmail('Offre annulée', 'Votre offre a été annulée', $userAuction->getEmail(), $body_auction);
+            $mailer->sendEmail('Offre annulée', 'Vous avez annulée une offre', $user->getEmail(), $body_advert);
 
-               return $this->redirectToRoute('se_platform_auction_user_receive');
+            $session->getFlashBag()->add('warning',"Vous avez annulé l'offre de ".$auctionAccept->getValue()." €, la demande est à nouveau en ligne.");
+
+            return $this->redirectToRoute('se_platform_auction_user_receive');
           }
         }
         else {

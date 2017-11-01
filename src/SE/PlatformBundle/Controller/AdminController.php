@@ -238,7 +238,7 @@ class AdminController extends Controller
             $em->flush();
 
             if ($action == 0) {
-
+              /*
                 $body = $this->renderView(
                      'SEPlatformBundle:Advert:disabledMail.html.twig',
                      array('advert'=> $advert)
@@ -246,7 +246,7 @@ class AdminController extends Controller
 
                  if (!$advert->getIsDeleted()) {
                     $mailer->sendEmail("Validation de votre demande", "Votre demande ".$advert->getTitle(), $advert->getUser()->getEmail(), $body);
-                 }
+                 }*/
             }
 
             return $this->redirectToRoute('se_platform_admin_view_advert', array('id'=>$id));

@@ -1,13 +1,13 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Offres proposées - {{ parent() }}
+    Mes offres - {{ parent() }}
 {% endblock %}
 
 {% block layout_header2 %}
 <div class="row">
   <div id="header" class="col-md-12">
-    <h3 class="cat-title">Offres proposées</h3>
+    <h3 class="cat-title">Mes offres</h3>
         {{ include('@SEPlatform/Auction/listUserSendFilter.html.twig') }}
   </div>
 </div>
@@ -21,127 +21,65 @@
                  <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
              </div>
          {% else %}
-         <ul class="nav nav-tabs nav-justified">
-           <li role="presentation" ><a href="{{ path('se_platform_auction_user_receive') }}">Offres reçues</a></li>
-           <li role="presentation" class="active"><a href="{{ path('se_platform_auction_user_send') }}">Offres proposées</a></li>
-         </ul>
-          <br>
          <h4 class="cat-title">{{ titleResult }}</h4>
             <table class="table" id="tblGrid">
                 <tbody>
                 {% for auction in listAuctionUser %}
                 <tr>
                   <td>
-                    <h5 class="hidden-xs hidden-sm">
+                    <h5 class="text-left hidden-xs hidden-sm">
                         {{ auction.dateCreation|date('d/m/Y') }}
                         à
                         {{ auction.dateCreation|date('H:i:s') }}
                       </h5>
                   </td>
                     <td>
-                        <h5>
+                        <h5 class="text-left">
+                            {% if auction.advert.isPublished == 1 %}
                             <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': auction.advert.slug,'id': auction.advert.id}) }}">{{ auction.advert.title }}</a>
-
-                            <h5 class="hidden-xs hidden-sm">
-                              <a class='se-tbl-link' href="{{ path('se_platform_user_view', {'userId': auction.advert.user.id}) }}" class="cat-link" >
-                                  ({{ auction.advert.user }})
-                              </a>
-                            </h5>
-
+                            {% else %}
+                            <i>{{ auction.advert.title }}</i>
+                            <div class="label label-default"
+                                  data-toggle="tooltip"
+                                        data-placement="bottom" title="La demande est hors ligne">
+                             <i class="glyphicon glyphicon-info-sign"> </i>
+                            </div>
+                            {% endif %}
                         </h5>
                     </td>
                     <td>
-                      <h5 class="visible-xs visible-sm">
-                          <a class="btn btn-default"
+                      <h5 class="text-center visible-xs visible-sm">
+                            <span class="label label-default se-badge-inverse-label">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
+                      </h5>
+                      <h5 class="text-center visible-xs visible-sm">
+                          <a class="btn btn-primary"
                             data-toggle="modal"
                             role="button"
                             data-toggle="modal"
                             data-target="#modalAuctionShow_{{auction.advert.id}}"
                             >
-                              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': auction.advert.id })) }}
+                             Historique
                             </a>
                       </h5>
-                      <h5 class="visible-xs visible-sm">
-                        {% if auction.state == 1 %}
-                            <span class="label label-warning">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
-                        {% elseif auction.state == 2 %}
-                            <span class="label label-success">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
-                        {% elseif auction.state == 3 %}
-                            <span class="label label-default">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
-                        {% endif %}
-                      </h5>
-                        <h5>
-                        {% if auction.state == 1 %}
-                            <span class="label label-warning">En cours</span>
-                        {% elseif auction.state == 2 %}
-                            <span class="label label-success">Acceptée</span>
-                            <div class="label label-success"
-                                  data-toggle="tooltip"
-                                        data-placement="bottom" title="La demande n'est plus visible sur le site">
-                             <i class="glyphicon glyphicon-info-sign"> </i>
-                            </div>
-                        {% elseif auction.state == 3 %}
-                            <span class="label label-default">Déclinée</span>
-                            <div class="label label-default"
-                                  data-toggle="tooltip"
-                                        data-placement="bottom" title="La demande n'est plus visible sur le site">
-                             <i class="glyphicon glyphicon-info-sign"> </i>
-                            </div>
-                        {% endif %}
-                        </h5>
-                        <h5 class="visible-xs visible-sm">
-                          <a
-                            class='{% if auction.state != 1 %} btn btn-danger hide {% else %} btn btn-danger  {% endif %}'
-                                data-toggle="modal"
-                                role="button"
-                                data-toggle="modal"
-                                data-target="#modalAdvertCancel_{{auction.id}}"
-                                >Annuler
-                            </a>
-                          {% if auction.state == 1 %}
-                          {% elseif auction.state == 2 and auction.advert.commentState == 0 %}
-                            <a class="btn btn-primary" href="{{ path('se_platform_comment_add', {'advertId': auction.advert.id, 'auctionUserId': advert.user.id}) }}">Evaluer</a>
-                          {% elseif auction.state == 2 and auction.advert.commentState == 1 %}
-                          <a class="btn btn-primary" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
-                          {% endif %}
-                        </h5>
+
+
                     </td>
                       <td>
-                        <h5 class="hidden-xs hidden-sm">
-                        {% if auction.state == 1 %}
-                            <span class="label label-warning">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
-                        {% elseif auction.state == 2 %}
-                            <span class="label label-success">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
-                        {% elseif auction.state == 3 %}
-                            <span class="label label-default">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
-                        {% endif %}
+                        <h5 class="text-center hidden-xs hidden-sm">
+                            <span class="label label-default se-badge-inverse-label">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
                         </h5>
                       </td>
                     <td>
-                      <h5 class="hidden-xs hidden-sm">
-                        <a class="btn btn-default"
+                      <h5 class="text-right hidden-xs hidden-sm">
+                        <a class="btn btn-primary"
                             data-toggle="modal"
                             role="button"
                             data-toggle="modal"
                             data-target="#modalAuctionShow_{{auction.advert.id}}"
                             >
-                              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': auction.advert.id })) }}
+                              Historique
                           </a>
-                          <a
-                            class='{% if auction.state != 1 %} btn btn-danger hide {% else %} btn btn-danger  {% endif %}'
-                                data-toggle="modal"
-                                role="button"
-                                data-toggle="modal"
-                                data-target="#modalAdvertCancel_{{auction.id}}"
-                                >Annuler
-                            </a>
-                            {% if auction.state == 1 %}
-                            {% elseif auction.state == 2 and auction.advert.commentState == 0 %}
-                              <a class="btn btn-primary" href="{{ path('se_platform_comment_add', {'advertId': auction.advert.id, 'auctionUserId': advert.user.id}) }}">Evaluer</a>
-                            {% elseif auction.state == 2 and auction.advert.commentState == 1 %}
-                            <a class="btn btn-primary" href="{{ path('se_platform_comment_user_list') }}">Voir les avis</a>
-                            {% endif %}
-                          </h5>
+                        </h5>
                     </td>
                 </tr>
                 {% endfor %}

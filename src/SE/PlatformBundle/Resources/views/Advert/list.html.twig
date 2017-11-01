@@ -22,6 +22,12 @@
                         <td>
                             <h5 class="truncate">
                                 <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
+                                <h5 class="visible-xs">
+                                    <span class="label label-default se-badge-inverse">
+                                      {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                                    </span>
+                                  </h5>
+
                                 <h5 class="hidden-xs hidden-sm" >
                                   {{ advert.dateCreation|date('d/m/Y') }}
                                   à
@@ -45,16 +51,12 @@
                             <i>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</i>
                           </h5>
                         </td>
-                        <td class="text-center">
-                          <h5 >
-                          {% if advert.auctionState == 0 %}
-                              <span class="label label-default">0 offre</span>
-                          {% else %}
-                              <span class="label label-warning">
-                                {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-                              </span>
-                          {% endif %}
-                            </h5>
+                        <td class="hidden-xs">
+                          <h5>
+                            <span class="label label-default se-badge-inverse">
+                              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                            </span>
+                          </h5>
                         </td>
                     </tr>
 

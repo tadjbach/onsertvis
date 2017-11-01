@@ -295,6 +295,12 @@ li.hd-icon{
     color: #E5DF16;
 }
 
+.se-badge-inverse-label{
+  background-color: #2A0540;
+  color: #E5DF16;
+  font-size: 100%;
+}
+
 .help-div,
 .auction-nb>tr>th>h5{
       margin-bottom: 32px;

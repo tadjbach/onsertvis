@@ -2,10 +2,10 @@
   <p>Bonjour <b>{{ receiver }}</b></p>
   <p>Votre avez accepté l'offre de <b>{{ auction.value|number_format(0, ' ', ' ') }} €</b> pour la demande <b>{{advert.title}}</b></p>
   <p>Contactez le jobber pour convenir d'un rendez vous : </p>
-
-  <p>Nom : {{ user_auction }}</p>
-  <p>Téléphone : {{ user_auction.phoneNumber|split('', 2)|join(' ') }}</p>
-  <p>Mail : <a chref="mailto:{{ user_auction.email }}">{{ user_auction.email }}</a></p>
-
+  <div class="alert alert-success">
+    <p>Nom : {{ user_auction }}</p>
+    <p>Téléphone : {{ user_auction.phoneNumber|split('', 2)|join(' ') }}</p>
+    <p>Mail : <a chref="mailto:{{ user_auction.email }}">{{ user_auction.email }}</a></p>
+  </div>
   <p>Votre espace client <a href="{{url('fos_user_security_login')}}" >Se connecter</a>.</p>
 </div>

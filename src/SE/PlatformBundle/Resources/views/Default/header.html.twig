@@ -44,14 +44,11 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                  <a href="{{ path('se_platform_advert_user_list') }}">Mes demandes</a>
+                                  <a href="{{ path('se_platform_advert_user_list') }}">Mes demandes {% if app.user.isNewAuction or app.user.isValideAuction %}<span class="label label-danger">1</span>{% endif %}</a>
                                 </li>
                                 <li>
-                                  <a href="{{ path('se_platform_auction_user_receive') }}">Mes offres {% if app.user.isNewAuction or app.user.isValideAuction %}<span class="label label-danger">1</span>{% endif %}</a>
+                                  <a href="{{ path('se_platform_auction_user_send') }}">Mes offres</a>
                                 </li>
-                                <!--  <li>
-                                    <a href="{{ path('se_platform_message_user_receive') }}">Mes messages {% if app.user.isNewMessage %}<span class="label label-danger">1</span>{% endif %}</a>
-                                  </li>-->
                                   <li><a href="{{ path('se_platform_comment_user_list') }}">Mes avis</a></li>
                                 <li><a href="{{ path('se_platform_user_edit') }}" >Mon compte</a></li>
                                 <li role="separator" class="divider"></li>

@@ -162,6 +162,13 @@ se_platform_advert_delete:
     requirements:
         id: \d+
 
+se_platform_advert_disable:
+    path:   /demande/desactiver/{slug}_{id}
+    defaults:
+        _controller: SEPlatformBundle:Advert:disable
+    requirements:
+        id: \d+
+
 se_platform_auction_cancel:
     path:   /offre/annuler/{id}
     defaults:
@@ -231,9 +238,14 @@ se_platform_auction_add:
         advertId: \d+
 
 se_platform_auction_accept:
-    path:     /offre/accepter-offre/{auctionId}{state}
+    path:     /offre/accepter-offre/{auctionId}
     defaults:
         _controller: SEPlatformBundle:Auction:accept
+
+se_platform_auction_refuse:
+    path:     /offre/refuser-offre/{auctionId}
+    defaults:
+        _controller: SEPlatformBundle:Auction:refuse
 
 # Message Routes :
 se_platform_message_add:

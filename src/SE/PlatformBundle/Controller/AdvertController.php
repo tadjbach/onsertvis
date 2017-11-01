@@ -127,7 +127,8 @@ class AdvertController extends Controller
         return new Response(null);
     }
 
-    public function getPostalCodeByCityAction(Request $request){
+    public function getPostalCodeByCityAction(Request $request) {
+
             $em = $this->getDoctrineManager();
 
             if($request->isXmlHttpRequest())
@@ -200,6 +201,9 @@ class AdvertController extends Controller
     public function listUserAction(Request $request, $page){
       $em = $this->getDoctrineManager();
       $user = $this->getUser();
+      $user->setIsNewAuction(0);
+      $em->persist($user);
+      $em->flush();
 
       $this->getListUserFilterAttributes($request);
 
@@ -303,6 +307,7 @@ class AdvertController extends Controller
       $em = $this->getDoctrineManager();
       $session = $request->getSession();
       $advert=$em->find('SEPlatformBundle:Advert', $id);
+      $mailer  = $this->get('se_platform.mailer');
 
       $postalCode=$em->getRepository('SEPlatformBundle:PostalCode')
              ->getPostalCodeByValue($advert->getCpCity());
@@ -313,32 +318,39 @@ class AdvertController extends Controller
 
         if ($this->getUser() === $advert->getUser() ) {
 
-        $form = $this->createForm(AdvertEditType::class, $advert);
+            $form = $this->createForm(AdvertEditType::class, $advert);
 
-        if ($request->isMethod('POST')){
+            if ($request->isMethod('POST')){
 
-            $form->handleRequest($request);
-            if ($form->isValid()){
+                $form->handleRequest($request);
+                if ($form->isValid()){
 
-                $advert->setDateUpdate(new \DateTime());
-                $advert->setIsPublished(0);
+                    $advert->setDateUpdate(new \DateTime());
+                    $advert->setIsPublished(0);
 
-                $postalCode=$em->getRepository('SEPlatformBundle:PostalCode')
-                       ->getPostalCodeByValue($advert->getCpCity());
+                    $postalCode=$em->getRepository('SEPlatformBundle:PostalCode')
+                           ->getPostalCodeByValue($advert->getCpCity());
 
-                 foreach ($postalCode as $pc) {
-                   $advert->setPostalCode($pc);
-                 }
+                     foreach ($postalCode as $pc) {
+                       $advert->setPostalCode($pc);
+                     }
 
-                $em->flush();
+                    $em->flush();
 
-                $session->getFlashBag()->add('editSuccess','Demande modifiée avec succes, elle sera validée dans moins de 24h.');
+                    $body = $this->renderView(
+                           'SEPlatformBundle:Advert:editMail.html.twig',
+                           array('advert'=> $advert)
+                       );
 
-                return $this->redirectToRoute('se_platform_advert_edit',
-                            array('slug'=> $advert->getSlug(),
-                                  'id'=>$advert->getId()));
+                   $mailer->sendEmail('Modification de votre demande',  'Modification de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+
+                    $session->getFlashBag()->add('editSuccess','Demande modifiée avec succes, elle sera validée dans moins de 24h.');
+
+                    return $this->redirectToRoute('se_platform_advert_edit',
+                                array('slug'=> $advert->getSlug(),
+                                      'id'=>$advert->getId()));
+                }
             }
-        }
         }
         else {
             throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
@@ -349,6 +361,40 @@ class AdvertController extends Controller
         ));
     }
 
+    /**
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
+    public function disableAction($slug, $id, Request $request){
+      $em = $this->getDoctrineManager();
+      $session = $request->getSession();
+      $mailer  = $this->get('se_platform.mailer');
+
+      $advert = $em->getRepository('SEPlatformBundle:Advert')->find($id);
+
+       if (null===$advert){
+            throw new NotFoundHttpException("Oops, La demande que vous cherchez n'existe pas.");
+        }
+
+        if ($this->getUser() === $advert->getUser() ) {
+
+          $advert->setIsPublished(false);
+          $em->flush();
+
+          $body = $this->renderView(
+                 'SEPlatformBundle:Advert:disabledMail.html.twig',
+                 array('advert'=> $advert)
+             );
+
+          $session->getFlashBag()->add('addSuccess',"Demande désactivée avec succes, elle n'est plus visible sur le site.");
+          $session->getFlashBag()->add('info',"Si pour cette demande vous avez trouvé un Jobber, n'oubliez pas de l'évaluer.");
+          $mailer->sendEmail('Désactivation de votre demande',  'Désactivation de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
+        }
+        else {
+            throw new NotFoundHttpException("Oops, Vous n'êtes pas le propriétaire de la demande.");
+        }
+
+        return $this->redirectToRoute('se_platform_advert_user_list');
+    }
     /**
      * @Security("has_role('ROLE_AUTEUR')")
      */
@@ -367,7 +413,6 @@ class AdvertController extends Controller
 
           $advert->setIsDeleted(true);
           $advert->setIsPublished(false);
-          $advert->setIsEnabled(false);
 
           $em->flush();
 
@@ -376,6 +421,7 @@ class AdvertController extends Controller
                  array('advert'=> $advert)
              );
 
+          $session->getFlashBag()->add('addSuccess',"Demande supprimée avec succes, elle n'est plus visible sur le site.");
           $mailer->sendEmail('Suppression de votre demande',  'Suppression de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
         }
         else {
