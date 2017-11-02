@@ -1,7 +1,3 @@
-DELETE FROM `advert_state` WHERE `advert_state`.`id` = 3;
-
-UPDATE `advert_state` SET `value` = 'en_ligne', `labelNormal` = 'En ligne' WHERE `advert_state`.`id` = 1;
-UPDATE `advert_state` SET `value` = 'hors_ligne', `labelNormal` = 'Hors ligne' WHERE `advert_state`.`id` = 2;
 
 /*
 SELECT * FROM (SELECT 	m.id as msgId,
