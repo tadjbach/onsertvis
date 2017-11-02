@@ -1,0 +1,55 @@
+
+
+{% if item.rate == -1 or item.rate == null or item.rate == 0 %}
+    {% for i in 1..5 %}
+    <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    </button>
+    {% endfor %}
+    {% elseif item.rate == 1 %}
+    <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    </button>
+    {% for i in 1..5 - item.rate %}
+    <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    </button>
+    {% endfor %}
+    {% elseif item.rate == 2 %}
+    {% for i in 1..item.rate %}
+    <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    </button>
+    {% endfor %}
+    {% for i in 1..5 - item.rate %}
+    <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    </button>
+    {% endfor %}
+    {% elseif item.rate == 3 %}
+    {% for i in 1..item.rate %}
+    <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    </button>
+    {% endfor %}
+    {% for i in 1..5 - item.rate %}
+    <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    </button>
+    {% endfor %}
+    {% elseif item.rate == 4 %}
+    {% for i in 1..item.rate %}
+    <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    </button>
+    {% endfor %}
+    <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    </button>
+    {% elseif item.rate == 5 %}
+    {% for i in 1..item.rate %}
+    <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    </button>
+    {% endfor %}
+{% endif %}

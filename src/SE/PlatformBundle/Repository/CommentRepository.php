@@ -169,4 +169,20 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function getCommentByRate($rate, $user)
+    {
+         $qb = $this->createQueryBuilder('comment')
+            ->leftJoin('comment.receiver', 'receiver')
+            ->addSelect('receiver');
+
+            $qb->Where($qb->expr()->eq('comment.isPublished', 1))
+            ->andWhere($qb->expr()->eq('comment.isDeleted', 0))
+            ->andWhere($qb->expr()->eq('receiver.id', $user))
+            ->andWhere($qb->expr()->eq('comment.rate', $rate));
+
+            return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
 }

@@ -239,4 +239,17 @@ class CommentController extends Controller
             'listCommentState'=>$this->getCommentState()
           ));
     }
+
+    public function countRateAction($rate, $user){
+        $em = $this->getDoctrineManager();
+
+        $countRate = $em
+            ->getRepository('SEPlatformBundle:Comment')
+            ->getCommentByRate($rate, $user);
+
+
+        return new Response(
+            count($countRate)
+        );
+    }
 }

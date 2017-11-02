@@ -15,7 +15,7 @@
                     </a>
                 </td>
                 <td class="text-left hidden-xs">
-                    {{ include('@SEPlatform/User/rate.html.twig', {'item': auction.user }) }}
+                      {{ include('@SEPlatform/User/small-rate.html.twig', {'item': auction.user }) }}
                 </td>
                 <td class="text-right">
                     <span class="label label-default se-badge-inverse-label">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}</span>

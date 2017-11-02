@@ -556,6 +556,11 @@ a.se-password, a.se-link{
   color: #E5DF16;
 }
 
+p.info{
+    overflow-y: hidden;
+    height: 40px;
+}
+
 .advert-title{
     color: #007F6A;
 }
@@ -908,7 +913,7 @@ blockquote, .well blockquote{
 	font-size:13px;
 }
 .se-user-icon{
-  font-size: 400%;
+  font-size: 300%;
   color: #2a0540;
 }
 /* Iphone 6

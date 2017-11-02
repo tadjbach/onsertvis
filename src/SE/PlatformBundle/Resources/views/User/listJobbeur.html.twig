@@ -34,7 +34,7 @@
                  </h5>
                  <h5 class="visible-xs visible-sm">
                    {% if jober.rate != -1 %}
-                             {{ include('@SEPlatform/User/rate.html.twig', {'item': jober }) }}
+                             {{ include('@SEPlatform/User/small-rate.html.twig', {'item': jober }) }}
                    {% else %}
                     Pas encore noté
                   {% endif %}
@@ -51,7 +51,7 @@
            <td>
               <h5 class="hidden-xs hidden-sm">
                 {% if jober.rate != -1 %}
-                          {{ include('@SEPlatform/User/rate.html.twig', {'item': jober }) }}
+                     {{ include('@SEPlatform/User/small-rate.html.twig', {'item': jober }) }}
                 {% else %}
                  Pas encore noté
                {% endif %}
