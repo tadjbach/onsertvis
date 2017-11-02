@@ -197,8 +197,8 @@
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user == app.user %}
         {% else %}
         <div class="rating-block">
-          Contactez {{user}}
-          <h5></h5>
+          <h5>Contactez {{user}}</h5>
+
           <form id="form_send_message" action="" method="get">
           <div id="profil_message">
             <div class="form-group">
