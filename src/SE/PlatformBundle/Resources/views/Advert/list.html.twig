@@ -23,9 +23,7 @@
                             <h5 class="truncate">
                                 <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
                                 <h5 class="visible-xs">
-                                    <span class="label label-default se-badge-inverse">
                                       {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-                                    </span>
                                   </h5>
 
                                 <h5 class="hidden-xs hidden-sm" >
@@ -53,9 +51,7 @@
                         </td>
                         <td class="hidden-xs">
                           <h5>
-                            <span class="label label-default se-badge-inverse">
                               {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-                            </span>
                           </h5>
                         </td>
                     </tr>

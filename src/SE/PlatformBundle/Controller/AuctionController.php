@@ -41,13 +41,13 @@ class AuctionController extends Controller
 
     public function getNbAuctionAction($advertId){
         $em = $this->getDoctrineManager();
-        $nbAuction = '0 offre';
+        $nbAuction = '<span class="label label-default se-badge-default">0 offre</span>';
         $lastAuction = $em
             ->getRepository('SEPlatformBundle:Auction')
             ->getLastAuction($advertId);
 
       if (count($lastAuction) > 0) {
-           $nbAuction = count($lastAuction) <= 1 ? count($lastAuction).' offre' : count($lastAuction).' offres';
+           $nbAuction = count($lastAuction) <= 1 ? '<span class="label label-default se-badge-inverse-label">'.count($lastAuction).' offre</span>' : '<span class="label label-default se-badge-inverse-label">'.count($lastAuction).' offres</span>';
         }
 
         return new Response(
@@ -161,7 +161,7 @@ class AuctionController extends Controller
     }
 
     /**
-     * @Security("has_role('ROLE_AUTEUR')")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function cancelAction($id, Request $request){
       $em = $this->getDoctrineManager();
@@ -206,7 +206,6 @@ class AuctionController extends Controller
     }
 
 
-    //Super ADMIN
     public function listAction($advertId){
       $em = $this->getDoctrineManager();
       $advert=$em->find('SEPlatformBundle:Advert', $advertId);
@@ -265,7 +264,7 @@ class AuctionController extends Controller
     }
 
     /**
-     * @Security("has_role('ROLE_AUTEUR')")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function userReceiveListAction(Request $request, $page){
       $em = $this->getDoctrineManager();
@@ -303,7 +302,7 @@ class AuctionController extends Controller
     }
 
     /**
-     * @Security("has_role('ROLE_AUTEUR')")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function acceptAction(Request $request, $auctionId){
 
@@ -380,7 +379,7 @@ class AuctionController extends Controller
     }
 
     /**
-     * @Security("has_role('ROLE_AUTEUR')")
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function refuseAction(Request $request, $auctionId){
 

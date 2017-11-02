@@ -74,33 +74,29 @@
       </h5>
     </blockquote>
   </div>
-</div>
-    <div class="row">
-      <div class="col-md-12">
-          <blockquote>
-            Avis ({{ listComment|length }})
-          </blockquote>
-            {% for comment in listComment %}
-            <div  class="well box-well" >
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="col-md-4 text-center">
-                    <h4>
-                      <a class='cat-link'
-                      href="{{ path('se_platform_user_view', { 'userId': comment.sender.id}) }}" class="cat-link" >
-                                                  {{ comment.sender }}
-                                              </a>
-                      </h4>
-                    <h4><small>le {{ comment.dateCreation|date('d/m/Y') }}</small></h4>
-                    <h5>Note : <span class="label label-default se-badge">{{ comment.rate }} / 5</span></h5>
-                  </div>
-                  <div class="col-md-8">
-                    <h4>{{ comment.advert.title }}</h4>
-                    <h5>{{ comment.content |nl2br }}</h5>
-                  </div>
-                </div>
-                </div>
+    <div class="col-md-6">
+        <h4 class="cat-title">{{listComment|length}} avis</h4>
+        {% for comment in listComment %}
+        <div  class="well box-well" >
+          <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-4 text-center">
+                <h4>
+                  <a class='cat-link'
+                  href="{{ path('se_platform_user_view', { 'userId': comment.sender.id}) }}" class="cat-link" >
+                                              {{ comment.sender }}
+                                          </a>
+                  </h4>
+                <h4><small>le {{ comment.dateCreation|date('d/m/Y') }}</small></h4>
+                <h5>Note : <span class="label label-default se-badge">{{ comment.rate }} / 5</span></h5>
+              </div>
+              <div class="col-md-8">
+                <h4>{{ comment.advert.title }}</h4>
+                <h5>{{ comment.content |nl2br }}</h5>
+              </div>
             </div>
-              {% endfor %}
-      </div>
+            </div>
+        </div>
+          {% endfor %}
     </div>
+</div>

@@ -12,7 +12,7 @@
 
       {% if user.isAcountComplete == 0 %}
           <div class="alert alert-danger" role="alert">
-              Le profil de <b>{{ user }}</b>, n'est pas complet,
+              Le profil de <b>{{ user }}</b> n'est pas complet,
               si vous êtes <b>{{ user }}</b> merci de le
               <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter.</a>
           </div>

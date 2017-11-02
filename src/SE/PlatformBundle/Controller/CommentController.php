@@ -168,9 +168,9 @@ class CommentController extends Controller
          ));
      }
 
-    /**
-     * @Security("has_role('ROLE_AUTEUR')")
-     */
+     /**
+      * @Security("has_role('ROLE_SUPER_ADMIN')")
+      */
     public function deleteAction($id, Request $request){
       $em = $this->getDoctrineManager();
       $session = $request->getSession();

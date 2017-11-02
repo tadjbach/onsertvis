@@ -3,7 +3,9 @@
 {% block fos_user_content %}
     {% if error %}
         <div class="alert alert-danger" role="alert">
-            {{ error.messageKey|trans(error.messageData, 'security') }} Pensez à cliquer sur le lien d'activation reçu par mail.
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+            <br>
+            Pensez à activer votre compte en cliquant sur le lien reçu, ou créer un compte.
         </div>
     {% endif %}
 

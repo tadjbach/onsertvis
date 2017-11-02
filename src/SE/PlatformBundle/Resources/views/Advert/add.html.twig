@@ -21,6 +21,11 @@
                  <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
              </div>
          {% else %}
+               <div class="alert alert-info" role="alert">
+                   Si vous êtes dans la proposition de services, ne postez pas une demande,
+                   <br>
+                   personnalisez votre page de profil en détaillant la partie <b>A propos</b> de votre compte.
+               </div>
                {{ include('SEPlatformBundle:Advert:form.html.twig') }}
                <div class="alert alert-info" role="alert">
                    Après enregistrement, vous pourrez modifier la demande dans votre esapce client.
