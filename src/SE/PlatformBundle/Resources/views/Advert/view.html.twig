@@ -1,16 +1,5 @@
 {% extends 'SEPlatformBundle::viewLayout.html.twig' %}
 
 {% block view_advert_auction %}
- <div class="col-md-12 text-center">
-             <div class="col-md-2"></div>
-           <div class="col-md-8">
-           {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-               {% if advert.user !=  app.user %}
-                {% endif %}
-             {% else %}
-           {% endif %}
 
-           </div>
-             <div class="col-md-2"></div>
-         </div>
 {% endblock %}

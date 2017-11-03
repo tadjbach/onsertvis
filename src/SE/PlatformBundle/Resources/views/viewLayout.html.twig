@@ -22,7 +22,7 @@
         >
         {{ advert.title }}
     </h5>
-    <h3 class="cat-title visible-xs visible-sm" ><p class="trunc">{{ advert.title }}</p></h3>
+    <h3 class="cat-title visible-xs visible-sm" ><p class="">{{ advert.title }}</p></h3>
   </div>
 </div>
 {% endblock %}
@@ -63,18 +63,18 @@
            <div class="row">
              <div class="col-sm-7">
                <div class="rating-block">
-                         <h3 class="title-advert"><p class="trunc">{{ advert.title }}</p></h3>
+                         <h3 class="title-advert"><p class="">{{ advert.title }}</p></h3>
 
                          <p>Publiée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
                          <p>Catégorie : {{ advert.category.labelNormal }}</p>
                          <p>Ville : {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.labelNormal }})</p>
                           <div class="form-group visible-xs visible-sm">
                              <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}"
-                             class="btn btn-primary btn-md btn-block" >
+                             class="btn btn-default btn-md btn-block" >
                                  Faire une offre
                              </a>
                              <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0, 'msgId' : 0}) }}"
-                             class="btn btn-primary btn-md btn-block">
+                             class="btn btn-default btn-md btn-block">
                                  Envoyer un message
                              </a>
                          <a type="button"
@@ -88,11 +88,11 @@
                          </div>
                          <div class="form-group hidden-xs hidden-sm">
                             <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}"
-                            class="btn btn-primary btn-md" >
+                            class="btn btn-default btn-md" >
                                 Faire une offre
                             </a>
                             <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0, 'msgId' : 0}) }}"
-                            class="btn btn-primary btn-md">
+                            class="btn btn-default btn-md">
                                 Envoyer un message
                             </a>
                         <a type="button"

@@ -16,11 +16,6 @@
        Statut : Particulier
      </p>
   {% endif %}
-
-
-<p>Ville : {{ user.PostalCode.value }} {{ user.PostalCode.city.labelNormal }}
-              ({{ user.PostalCode.city.departement.labelNormal }})
-</p>
 <p>Tél :
      {% if user.isDetailVisible or is_granted('ROLE_SUPER_ADMIN')%}
      {{ user.phoneNumber|split('', 2)|join(' ') }}</p>
