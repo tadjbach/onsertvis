@@ -51,7 +51,7 @@ class ProfileController extends Controller
        $listComment = $this->getDoctrine()
            ->getManager()
            ->getRepository('SEPlatformBundle:Comment')
-           ->getCommentListUser($userId, '2', 1, 1000000);
+           ->getCommentListUser($userId, '2', 1, 100000000);
 
            $listReceivedAuctions = $em
               ->getRepository('SEPlatformBundle:Auction')

@@ -316,6 +316,11 @@ li.hd-icon{
   color: #2A0540;
 }
 
+h5.profil-title{
+  color: #2a0540;
+font-weight: bold;
+}
+
 .se-badge-auction{
     font-size: 20px;
 }
@@ -558,7 +563,7 @@ a.se-password, a.se-link{
 
 p.info{
     overflow-y: hidden;
-    height: 40px;
+    height: 25px;
 }
 
 .advert-title{
@@ -614,15 +619,18 @@ p.info{
 
 .rate-success{
     color:#5cb85c;
-    font-size: 20px;
 }
 .rate-none{
-    font-size: 20px;
 }
 .rate-warning{
     color: #f0ad4e;
 }
-
+.rate-info{
+    color: #5bc0de;
+}
+.rate-primary{
+    color: #428bca;
+}
 .rate-danger{
     color: #d9534f;
 }

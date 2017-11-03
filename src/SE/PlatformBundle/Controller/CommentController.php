@@ -252,4 +252,26 @@ class CommentController extends Controller
             count($countRate)
         );
     }
+
+    public function progressRateAction($rate, $user){
+        $em = $this->getDoctrineManager();
+
+        $countRate = $em
+            ->getRepository('SEPlatformBundle:Comment')
+            ->getCommentByRate($rate, $user);
+
+      $listComment = $this->getDoctrine()
+          ->getManager()
+          ->getRepository('SEPlatformBundle:Comment')
+          ->getCommentListUser($user, '2', 1, 100000000);
+
+          $progress = 0;
+          if (count($listComment) != 0) {
+            $progress =   (count($countRate) * 100) / count($listComment);
+          }
+
+        return new Response(
+          $progress
+        );
+    }
 }

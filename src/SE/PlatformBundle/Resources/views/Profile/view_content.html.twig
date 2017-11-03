@@ -34,76 +34,100 @@
           <div class="col-sm-6">
             <h4>Synthèse des avis reçus</h4>
             <div class="pull-left">
-              <div class="pull-left" style="width:35px; line-height:1;">
-                <div style="height:9px; margin:5px 0;">5 <span class="glyphicon glyphicon-star"></span></div>
+              <div class="pull-left" style="width:70px; line-height:1;">
+                <div style="height:9px; margin:5px 0;">Parfait</div>
               </div>
               <div class="pull-left" style="width:180px;">
                 <div class="progress" style="height:9px; margin:8px 0;">
-                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" style="width: 1000%">
-                  <span class="sr-only">80% Complete (danger)</span>
+                  <div class="progress-bar progress-bar-success"
+                        role="progressbar"
+                        aria-valuenow="5"
+                        aria-valuemin="0"
+                        aria-valuemax="5"
+                        style="width: {{ render(controller('SEPlatformBundle:Comment:progressRate', { 'rate': '5', 'user': user.id })) }}%">
                   </div>
                 </div>
               </div>
               <div class="pull-right" style="margin-left:10px;">{{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '5', 'user': user.id })) }}</div>
             </div>
+
             <div class="pull-left">
-              <div class="pull-left" style="width:35px; line-height:1;">
-                <div style="height:9px; margin:5px 0;">4 <span class="glyphicon glyphicon-star"></span></div>
+              <div class="pull-left" style="width:70px; line-height:1;">
+                <div style="height:9px; margin:5px 0;">Très bien</div>
               </div>
               <div class="pull-left" style="width:180px;">
                 <div class="progress" style="height:9px; margin:8px 0;">
-                  <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: 80%">
-                  <span class="sr-only">80% Complete (danger)</span>
+                  <div class="progress-bar progress-bar-primary"
+                        role="progressbar"
+                        aria-valuenow="5"
+                        aria-valuemin="0"
+                        aria-valuemax="5"
+                        style="width: {{ render(controller('SEPlatformBundle:Comment:progressRate', { 'rate': '4', 'user': user.id })) }}%">
                   </div>
                 </div>
               </div>
               <div class="pull-right" style="margin-left:10px;">{{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '4', 'user': user.id })) }}</div>
             </div>
+
             <div class="pull-left">
-              <div class="pull-left" style="width:35px; line-height:1;">
-                <div style="height:9px; margin:5px 0;">3 <span class="glyphicon glyphicon-star"></span></div>
+              <div class="pull-left" style="width:70px; line-height:1;">
+                <div style="height:9px; margin:5px 0;">Bien</div>
               </div>
               <div class="pull-left" style="width:180px;">
                 <div class="progress" style="height:9px; margin:8px 0;">
-                  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: 60%">
-                  <span class="sr-only">80% Complete (danger)</span>
+                  <div class="progress-bar progress-bar-info"
+                        role="progressbar"
+                        aria-valuenow="5"
+                        aria-valuemin="0"
+                        aria-valuemax="5"
+                        style="width: {{ render(controller('SEPlatformBundle:Comment:progressRate', { 'rate': '3', 'user': user.id })) }}%">
                   </div>
                 </div>
               </div>
-              <div class="pull-right" style="margin-left:10px;">
-              {{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '3', 'user': user.id })) }}
+              <div class="pull-right" style="margin-left:10px;">{{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '3', 'user': user.id })) }}</div>
             </div>
-          </div>
-          <div class="pull-left">
-            <div class="pull-left" style="width:35px; line-height:1;">
-              <div style="height:9px; margin:5px 0;">2 <span class="glyphicon glyphicon-star"></span></div>
-            </div>
-            <div class="pull-left" style="width:180px;">
-              <div class="progress" style="height:9px; margin:8px 0;">
-                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: 40%">
-                <span class="sr-only">80% Complete (danger)</span>
+
+            <div class="pull-left">
+              <div class="pull-left" style="width:70px; line-height:1;">
+                <div style="height:9px; margin:5px 0;">Décevant</div>
+              </div>
+              <div class="pull-left" style="width:180px;">
+                <div class="progress" style="height:9px; margin:8px 0;">
+                  <div class="progress-bar progress-bar-warning"
+                        role="progressbar"
+                        aria-valuenow="5"
+                        aria-valuemin="0"
+                        aria-valuemax="5"
+                        style="width: {{ render(controller('SEPlatformBundle:Comment:progressRate', { 'rate': '2', 'user': user.id })) }}%">
+                  </div>
                 </div>
               </div>
+              <div class="pull-right" style="margin-left:10px;">{{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '2', 'user': user.id })) }}</div>
             </div>
-            <div class="pull-right" style="margin-left:10px;">{{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '2', 'user': user.id })) }}</div>
-          </div>
-          <div class="pull-left">
-            <div class="pull-left" style="width:35px; line-height:1;">
-              <div style="height:9px; margin:5px 0;">1 <span class="glyphicon glyphicon-star"></span></div>
-            </div>
-            <div class="pull-left" style="width:180px;">
-              <div class="progress" style="height:9px; margin:8px 0;">
-                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" style="width: 20%">
-                <span class="sr-only">80% Complete (danger)</span>
+
+            <div class="pull-left">
+              <div class="pull-left" style="width:70px; line-height:1;">
+                <div style="height:9px; margin:5px 0;">À éviter</div>
+              </div>
+              <div class="pull-left" style="width:180px;">
+                <div class="progress" style="height:9px; margin:8px 0;">
+                  <div class="progress-bar progress-bar-danger"
+                        role="progressbar"
+                        aria-valuenow="5"
+                        aria-valuemin="0"
+                        aria-valuemax="5"
+                        style="width: {{ render(controller('SEPlatformBundle:Comment:progressRate', { 'rate': '1', 'user': user.id })) }}%">
+                  </div>
                 </div>
               </div>
+              <div class="pull-right" style="margin-left:10px;">{{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '1', 'user': user.id })) }}</div>
             </div>
-            <div class="pull-right" style="margin-left:10px;">{{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '1', 'user': user.id })) }}</div>
-          </div>
+
+
         </div>
       </div>
             <hr>
-            <h5>En quelques mots...</h5>
+            <h5 class="profil-title">En quelques mots...</h5>
             <p class="info">
              {% if user.isAcountComplete == 1 %}
                   {% if user.detail %}
@@ -113,10 +137,10 @@
                       {% endif %}
                 {% endif %}
             </p>
-            {% if user.isAcountComplete == 1 and user.detail  %}
+            {% if user.isAcountComplete == 1  %}
             <a
                  type="button"
-                 class="cat-link"
+                 class="btn btn-success"
                  data-toggle="modal"
                  role="button"
                  data-toggle="modal"
@@ -129,11 +153,11 @@
       </div>
       <div class="col-sm-5">
         <div class="rating-block">
-          <h5>Activité</h5>
+          <h5 class="profil-title">Activité</h5>
           <p>Dernière connexion : {{ user.lastLogin|date('d/m/Y') }}</p>
           <p>Membre depuis : {{ user.dateCreation|date('d/m/Y') }}</p>
             <hr>
-            <h5>Détail</h5>
+            <h5 class="profil-title">Détail</h5>
             {% if user.accountType == 'Society' %}
             <p>
                Statut : Professionnel (SIRET : {{user.siret}})
@@ -197,7 +221,7 @@
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user == app.user %}
         {% else %}
         <div class="rating-block">
-          <h5>Contactez {{user}}</h5>
+          <h5 class="profil-title">Contactez {{user}}</h5>
 
           <form id="form_send_message" action="" method="get">
           <div id="profil_message">
