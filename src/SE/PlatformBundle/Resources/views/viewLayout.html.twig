@@ -56,89 +56,65 @@
 
        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and advert.user ==  app.user %}
            <div class="col-md-12 alert alert-warning" role="alert">
-               Vous êtes proprétaire de la demande, <a class='se-tbl-link' href="{{ path('se_platform_advert_user_list') }}">Voir mes demandes</a>               
+               Vous êtes proprétaire de la demande, <a class='se-tbl-link' href="{{ path('se_platform_advert_user_list') }}">Voir mes demandes</a>
            </div>
            {% endif %}
-            <h3 class="title-advert"><p class="trunc">{{ advert.title }}</p></h3>
-        <div class="col-md-6">
-            <blockquote>
-              <h5>
-                <i>Mise en ligne le <b>{{ advert.dateCreation|date('d/m/Y') }}</b> à <b>{{ advert.dateCreation|date('H:m') }}</b></i>
-              </h5>
-              <h5>{% if advert.category.labelNormal != 'Autres' %}
-                      <i>Dans <b>{{ advert.category.labelNormal }}</b></i>
-                  {% else %}
-                      <b>Sans catégorie</b>
-                  {% endif %}
-              </h5>
-              <h5>
-                <i>Ville de </i><b>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</b></i>
-              </h5>
-          </blockquote>
-          <blockquote>
-            <h5>
-              <i>Description : </i>
-            </h5>
-            <p>{{ advert.detail |nl2br }}</p>
-          </blockquote>
 
-        </div>
-        <div class="col-md-6">
-          <blockquote>
-              <h5>
-                <i>Par <b>{{ advert.user }}</b>
-                </i>
-                <a
-                    href="{{ path('se_platform_user_view', {'userId': advert.user.id}) }}"
-                    >(Voir le profil)</a>
-              </h5>
-              {% if advert.user.isDetailVisible %}
-              <h5>
-                <i>Contact : <b>{{ advert.user.phoneNumber|split('', 2)|join(' ') }}</b>
-                </i>
-              </h5>
-               {% endif %}
-               <h5>
-                 <i>Disponibilité : </i>
-                 {% for daycal in calendar %}
-                     <span class="label label-default{% if daycal in advert.user.calendar %} label-success{% else %} badge-disable{% endif %}">{{ daycal.dayFrAbbr }}</span>
-                 {% endfor %}
-               </h5>
-          </blockquote>
-            {% block view_advert_auction %}{% endblock %}
-        </div>
+           <div class="row">
+             <div class="col-sm-7">
+               <div class="rating-block">
+                         <h3 class="title-advert"><p class="trunc">{{ advert.title }}</p></h3>
+                         <p>Publiée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
+                         <p>Catégorie : {{ advert.category.labelNormal }}</p>
+                         <p>Ville : {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.labelNormal }})</p>
+                         <div class="alert alert-info se-alert-advert" >
+                            <p>{{ advert.detail |nl2br }}</p>
+                         </div>
+               </div>
+             </div>
+              <div class="col-sm-5">
+                  {% block view_advert_auction %}{% endblock %}
+                </div>
+           </div>
+          <hr>
+            <div class="row">
+              <div class="col-sm-7">
+                <div class="rating-block">
+                  <h5 class="profil-title">Demandes similaires</h5>
+                  {% for advertSimilar in advertSimilarList|slice(0,4) %}
+                      <div class="col-md-3">
+                          <blockquote>
+                            <h5 class="truncate"><a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advertSimilar.slug,'id': advertSimilar.id}) }}">{{ advertSimilar.title }}</a><h5>
+                              <h5>
+                                <i>Mise en ligne le <b>{{ advertSimilar.dateCreation|date('d/m/Y') }}</b> à <b>{{ advertSimilar.dateCreation|date('H:m') }}</b></i>
+                              </h5>
+                              <h5>{% if advertSimilar.category.labelNormal != 'Autres' %}
+                                      <i>Dans <b>{{ advertSimilar.category.labelNormal }}</b></i>
+                                  {% else %}
+                                      <b>Sans catégorie</b>
+                                  {% endif %}
+                              </h5>
+                              <h5>
+                                <i>Ville de </i><b>{{ advertSimilar.PostalCode.city.labelNormal }} ({{ advertSimilar.PostalCode.value }})</b></i>
+                              </h5>
+                               <p><a href="{{ path('se_platform_advert_view', {'slug': advertSimilar.slug,'id': advertSimilar.id}) }}" class="btn btn-primary" role="button">Voir</a></p>
+                          </blockquote>
+                      </div>
+                  {% else %}
+                  <p>Aucune demande similaire pour l'instant !</p>
+                  <p><a href="{{ path('se_platform_advert_list')  }}" class="btn btn-primary" role="button">Toutes les demandes</a></p>
+                  {% endfor %}
+                </div>
+              </div>
+                <div class="col-sm-5">
+                     <h3 class="title-advert"><p class="trunc">{{ advert.user }}</p></h3>
+                    {{ include('@SEPlatform/User/userActivity.html.twig', {'user': advert.user }) }}
+                </div>
+            </div>
+
        </div>
     </div>
-    <br>  <br>  <br>
-  <div class="row mx-auto">
-     <div class="well col-md-12">
-         <h3 class="title-advert">Demandes similaires</h3>
-          {% for advertSimilar in advertSimilarList|slice(0,4) %}
-              <div class="col-md-3">
-                  <blockquote>
-                    <h5 class="truncate"><a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advertSimilar.slug,'id': advertSimilar.id}) }}">{{ advertSimilar.title }}</a><h5>
-                      <h5>
-                        <i>Mise en ligne le <b>{{ advertSimilar.dateCreation|date('d/m/Y') }}</b> à <b>{{ advertSimilar.dateCreation|date('H:m') }}</b></i>
-                      </h5>
-                      <h5>{% if advertSimilar.category.labelNormal != 'Autres' %}
-                              <i>Dans <b>{{ advertSimilar.category.labelNormal }}</b></i>
-                          {% else %}
-                              <b>Sans catégorie</b>
-                          {% endif %}
-                      </h5>
-                      <h5>
-                        <i>Ville de </i><b>{{ advertSimilar.PostalCode.city.labelNormal }} ({{ advertSimilar.PostalCode.value }})</b></i>
-                      </h5>
-                       <p><a href="{{ path('se_platform_advert_view', {'slug': advertSimilar.slug,'id': advertSimilar.id}) }}" class="btn btn-primary" role="button">Voir</a></p>
-                  </blockquote>
-              </div>
-          {% else %}
-          <p>Aucune demande similaire pour l'instant !</p>
-          <p><a href="{{ path('se_platform_advert_list')  }}" class="btn btn-primary" role="button">Toutes les demandes</a></p>
-          {% endfor %}
 
-     </div>
-  </div>
 
   <div class="row">
     <div class="col-md-12">

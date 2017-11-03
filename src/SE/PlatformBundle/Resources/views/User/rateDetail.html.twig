@@ -1,0 +1,90 @@
+<h4>Synthèse des avis reçus</h4>
+<div class="pull-left">
+  <div class="pull-left" style="width:70px; line-height:1;">
+    <div style="height:9px; margin:5px 0;">Parfait</div>
+  </div>
+  <div class="pull-left" style="width:180px;">
+    <div class="progress" style="height:9px; margin:8px 0;">
+      <div class="progress-bar progress-bar-success"
+            role="progressbar"
+            aria-valuenow="5"
+            aria-valuemin="0"
+            aria-valuemax="5"
+            style="width: {{ render(controller('SEPlatformBundle:Comment:progressRate', { 'rate': '5', 'user': user.id })) }}%">
+      </div>
+    </div>
+  </div>
+  <div class="pull-right" style="margin-left:10px;">{{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '5', 'user': user.id })) }}</div>
+</div>
+
+<div class="pull-left">
+  <div class="pull-left" style="width:70px; line-height:1;">
+    <div style="height:9px; margin:5px 0;">Très bien</div>
+  </div>
+  <div class="pull-left" style="width:180px;">
+    <div class="progress" style="height:9px; margin:8px 0;">
+      <div class="progress-bar progress-bar-primary"
+            role="progressbar"
+            aria-valuenow="5"
+            aria-valuemin="0"
+            aria-valuemax="5"
+            style="width: {{ render(controller('SEPlatformBundle:Comment:progressRate', { 'rate': '4', 'user': user.id })) }}%">
+      </div>
+    </div>
+  </div>
+  <div class="pull-right" style="margin-left:10px;">{{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '4', 'user': user.id })) }}</div>
+</div>
+
+<div class="pull-left">
+  <div class="pull-left" style="width:70px; line-height:1;">
+    <div style="height:9px; margin:5px 0;">Bien</div>
+  </div>
+  <div class="pull-left" style="width:180px;">
+    <div class="progress" style="height:9px; margin:8px 0;">
+      <div class="progress-bar progress-bar-info"
+            role="progressbar"
+            aria-valuenow="5"
+            aria-valuemin="0"
+            aria-valuemax="5"
+            style="width: {{ render(controller('SEPlatformBundle:Comment:progressRate', { 'rate': '3', 'user': user.id })) }}%">
+      </div>
+    </div>
+  </div>
+  <div class="pull-right" style="margin-left:10px;">{{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '3', 'user': user.id })) }}</div>
+</div>
+
+<div class="pull-left">
+  <div class="pull-left" style="width:70px; line-height:1;">
+    <div style="height:9px; margin:5px 0;">Décevant</div>
+  </div>
+  <div class="pull-left" style="width:180px;">
+    <div class="progress" style="height:9px; margin:8px 0;">
+      <div class="progress-bar progress-bar-warning"
+            role="progressbar"
+            aria-valuenow="5"
+            aria-valuemin="0"
+            aria-valuemax="5"
+            style="width: {{ render(controller('SEPlatformBundle:Comment:progressRate', { 'rate': '2', 'user': user.id })) }}%">
+      </div>
+    </div>
+  </div>
+  <div class="pull-right" style="margin-left:10px;">{{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '2', 'user': user.id })) }}</div>
+</div>
+
+<div class="pull-left">
+  <div class="pull-left" style="width:70px; line-height:1;">
+    <div style="height:9px; margin:5px 0;">À éviter</div>
+  </div>
+  <div class="pull-left" style="width:180px;">
+    <div class="progress" style="height:9px; margin:8px 0;">
+      <div class="progress-bar progress-bar-danger"
+            role="progressbar"
+            aria-valuenow="5"
+            aria-valuemin="0"
+            aria-valuemax="5"
+            style="width: {{ render(controller('SEPlatformBundle:Comment:progressRate', { 'rate': '1', 'user': user.id })) }}%">
+      </div>
+    </div>
+  </div>
+  <div class="pull-right" style="margin-left:10px;">{{ render(controller('SEPlatformBundle:Comment:countRate', { 'rate': '1', 'user': user.id })) }}</div>
+</div>

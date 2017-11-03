@@ -1,0 +1,37 @@
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and user == app.user %}
+{% else %}
+<div class="rating-block">
+  <h5 class="profil-title">Contactez {{user}}</h5>
+
+  <form id="form_send_message" action="" method="get">
+  <div id="profil_message">
+    <div class="form-group">
+      <input
+          type="text"
+          class="form-control"
+          id="name_sender"
+          name="_name_sender"
+          value="{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}{{app.user}} {% endif %}"
+          placeholder="Votre nom" required="required"
+          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} disabled {% endif %} >
+          </div>
+          <div class="form-group">
+
+          <input
+              type="email"
+              class="form-control"
+              id="email_sender"
+              name="_email_sender"
+              value="{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}{{app.user.Email}} {% endif %}"
+              placeholder="Votre adresse mail" required="required"
+              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} disabled {% endif %} >
+    </div>
+    <div class="form-group">
+      <textarea id="profil_message_content" name="_profil_message_content" required="required" maxlength="1000" placeholder="Ecrivez votre message ici (1000 caratères maximum)" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+      <input class="btn btn-primary" type="submit" value="Envoyer"  />
+    </div>
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,18 @@
+{% for comment in listComment %}
+      <div class="review-block">
+        <div class="row">
+          <div class="col-sm-3">
+            <i class="glyphicon glyphicon-user se-user-icon"></i>
+            <div class="review-block-name"><a class='cat-link' href="{{ path('se_platform_user_view', { 'userId': comment.sender.id}) }}">{{ comment.sender }}</a></div>
+            <div class="review-block-date">{{ comment.dateCreation|date('d/m/Y') }}</div>
+          </div>
+          <div class="col-sm-9">
+              <div class="review-block-rate">
+                {{ include('@SEPlatform/User/small-rate.html.twig', {'item': comment }) }}
+              </div>
+              <div class="review-block-title">{{ comment.advert.title }}</div>
+              <div class="review-block-description"><h5>{{ comment.content |nl2br }}</h5></div>
+          </div>
+        </div>
+      </div>
+{% endfor %}
