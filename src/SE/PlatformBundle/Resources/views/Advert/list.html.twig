@@ -18,10 +18,19 @@
             <table class="table table-hover" id="tblGrid">
                 <tbody>
                 {% for advert in advertList %}
-                    <tr class="link" onclick="window.document.location='{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}';">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                      <tr class="link" onclick="window.document.location='{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}';">
+                {% else %}
+                      <tr class="link" onclick="window.document.location='{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}';">
+                {% endif %}
                         <td>
                             <h5 class="truncate">
-                                <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
+                              {% if  is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                <a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}">{{ advert.title }}</a>
+                              {% else %}
+                              <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
+
+                              {% endif %}
                                 <h5 class="visible-xs">
                                       {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
                                   </h5>

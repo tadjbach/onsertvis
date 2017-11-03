@@ -1,32 +1,13 @@
 {% extends 'SEPlatformBundle::viewLayout.html.twig' %}
 
 {% block view_advert_auction %}
-      <div class="col-md-12 text-center">
+<div class="rating-block">
         {% if app.user.isAcountComplete == 0 %}
             <div class="alert alert-warning" role="alert">
                 Pour pouvoir envoyer un message, merci de compléter votre profil, <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter</a>
             </div>
         {% else %}
                  {{ include('SEPlatformBundle:Message:form.html.twig') }}
-
-     <div class="col-md-2"></div>
-     <div class="col-md-8">
-      <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}"
-      class="btn btn-primary btn-md btn-block" >
-          Faire une offre
-      </a>
-    <button
-         type="button"
-         class="btn btn-success btn-md btn-block"
-         data-toggle="modal"
-         role="button"
-         data-toggle="modal"
-         data-target="#modalAuctionShow"
-         >
-       Historique des offres
-    </button>
-      </div>
-    <div class="col-md-2"></div>
          {% endif %}
-    </div>
+  </div>
 {% endblock %}

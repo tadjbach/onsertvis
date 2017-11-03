@@ -72,6 +72,9 @@
                                       data-target="#modalAuctionShow_{{advert.id}}"
                                       >Historique des offres</a>
                                 </h5>
+                                <h5 class="visible-xs visible-sm">
+                                    {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                                </h5>
                                 <h5 class="hidden-xs hidden-sm">
                                   {{ advert.category.labelNormal }}
                                 </h5>
@@ -99,6 +102,11 @@
                                 data-toggle="modal"
                                 data-target="#modalAuctionShow_{{advert.id}}"
                                 >Historique des offres</a>
+                          </h5>
+                        </td>
+                        <td>
+                          <h5 class="hidden-xs hidden-sm">
+                              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
                           </h5>
                         </td>
                         <td class='text-right'>

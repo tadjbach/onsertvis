@@ -36,7 +36,7 @@
                     <td>
                         <h5 class="text-left">
                             {% if auction.advert.isPublished == 1 %}
-                            <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': auction.advert.slug,'id': auction.advert.id}) }}">{{ auction.advert.title }}</a>
+                            <a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': auction.advert.slug,'advertId': auction.advert.id}) }}">{{ auction.advert.title }}</a>
                             {% else %}
                             <i>{{ auction.advert.title }}</i>
                             <div class="label label-default"

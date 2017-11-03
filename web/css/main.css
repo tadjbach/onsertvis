@@ -367,7 +367,7 @@ h3{
 }
 h3.title-advert{
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
   color: #2A0540;
 }
 h2{
@@ -550,8 +550,6 @@ a.se-password, a.se-link{
 }
 
 .trunc{
-  width: 50%;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -865,6 +863,9 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
 #se_auctionbundle_message div>textarea.form-control{
     height: 100px;
 }
+#se_platformbundle_message_content {
+    height: 125px;
+}
 
 .item-image{
   position: relative;
@@ -924,9 +925,12 @@ blockquote, .well blockquote{
 .review-block-description{
 	font-size:13px;
 }
-.se-user-icon{
+.se-user-icon, .se-user-icon-advert{
   font-size: 300%;
   color: #2a0540;
+}
+.se-user-icon-advert{
+  font-size: 150%;
 }
 /* Iphone 6
 @media only screen and (min-width : 375px) and (max-width : 667px) {

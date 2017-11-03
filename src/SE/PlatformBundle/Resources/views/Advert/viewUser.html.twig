@@ -19,7 +19,7 @@
          </div>
          {% else %}
          <div class="text-center">
-             <a class='btn btn-primary' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">Voir la demande en tant que visiteur</a>
+             <a class='btn btn-primary' href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}">Voir la demande en tant que visiteur</a>
          </div>
         {% endif %}
         <h3 class="title-advert"><p class="trunc">{{ advert.title }}</p></h3>
@@ -44,12 +44,6 @@
             </h5>
             <p>{{ advert.detail |nl2br }}</p>
           </blockquote>
-
-        </div>
-        <div class="col-md-6">
-            <blockquote>
-               {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}
-             </blockquote>
         </div>
        </div>
     </div>
