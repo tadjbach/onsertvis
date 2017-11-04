@@ -425,4 +425,35 @@ class AdminController extends Controller
                   'listComments'=>$listComments
               ));
         }
+
+        /**
+         * @Security("has_role('ROLE_SUPER_ADMIN')")
+         */
+        public function mailAction(Request $request){
+          $mailer  = $this->get('se_platform.mailer');
+          $body = $this->renderView(
+                  'SEPlatformBundle:Admin:mailingMail.html.twig'
+              );
+          $userMailing = $request->query->get('_email_mailing');
+          $bodyMailing = $request->query->get('_email_mailing_body');
+
+          $userMailing =str_replace(' ', '', $userMailing);
+          $userMailing = strtolower($userMailing);
+
+          if ($userMailing !== NULL && $userMailing !== '' && $bodyMailing !== NULL && $bodyMailing !== ''){
+
+            $senderMailing = $request->query->get('_title_mailing');
+            $subjectMailing = $request->query->get('_subject_mailing');
+
+
+
+            $toList = explode(',' ,$userMailing);
+
+
+              $mailer->sendAdminEmail($senderMailing, $subjectMailing, $toList, $bodyMailing);
+              return $this->redirectToRoute('se_platform_admin_mail');
+            }
+
+            return $this->render('SEPlatformBundle:Admin:mail.html.twig');
+        }
 }

@@ -1,0 +1,108 @@
+{% extends "SEPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Envoi de mails - {{ parent() }}
+{% endblock %}
+
+{% block layout_header2 %}
+  <div class="row">
+    <div id="header" class="col-md-12">
+      <h3 class="cat-title-admin">Envoi de mails</h3>
+    </div>
+  </div>
+{% endblock %}
+{% block layout_body %}
+   <div class="row">
+     <div class="col-md-4">
+       <form id="form_send_message" action="" method="get">
+               <div id="mailing_message">
+                 <div class="form-group">
+                   <input type="text"
+                           id="title_mailing"
+                           name="_title_mailing"
+                           required="required"
+                           placeholder="Nom de l'envoyeur"
+                           class="form-control">
+                   </input>
+                   <br>
+                   <input type="text"
+                           id="subject_mailing"
+                           name="_subject_mailing"
+                           required="required"
+                           placeholder="Sujet"
+                           class="form-control">
+                   </input>
+                   <br>
+                   <input type="text"
+                           id="email_mailing"
+                           name="_email_mailing"
+                           required="required"
+                           placeholder="Liste d'adresse mail"
+                           class="form-control">
+                   </input>
+                   <br>
+                   <textarea id="email_mailing_body"
+                              name="_email_mailing_body"
+                              required="required"
+                              class="form-control" style="height:500px">
+                   </textarea>
+                   <br>
+                 </div>
+                 <div class="form-group">
+                   <input class="btn btn-primary" type="submit" value="Mailing"  />
+                 </div>
+               </div>
+         </form>
+     </div>
+     <div class="col-md-4">
+       <form id="form_send_message" action="" method="get">
+               <div id="noactif_message">
+                 <div class="form-group">
+                   <textarea id="email_noactif_body"
+                              name="_email_noactif_body"
+                              required="required"
+                              class="form-control" style="height:500px">
+                   </textarea>
+                   <br>
+                   <input type="text"
+                           id="email_noactif"
+                           name="_email_noactif"
+                           required="required"
+                           class="form-control">
+                   </input>
+                 </div>
+                 <div class="form-group">
+                   <input class="btn btn-primary" type="submit" value="Non actif"  />
+                 </div>
+               </div>
+         </form>
+     </div>
+     <div class="col-md-4">
+       <form id="form_send_message" action="" method="get">
+               <div id="mailing_message">
+                 <div class="form-group">
+                   <textarea id="email_nocomplet_body"
+                              name="_email_nocomplet_body"
+                              required="required"
+                              placeholder="Html du body"
+                              class="form-control" style="height:500px">
+                   </textarea>
+                   <br>
+                   <input type="text"
+                           id="email_nocomplet"
+                           name="_email_nocomplet"
+                           required="required"
+                           placeholder="Liste d'adresse mail"
+                           class="form-control">
+                   </input>
+                 </div>
+                 <div class="form-group">
+                   <input class="btn btn-primary" type="submit" value="Non complet"  />
+                 </div>
+               </div>
+         </form>
+     </div>
+   </div>
+
+
+{% endblock %}

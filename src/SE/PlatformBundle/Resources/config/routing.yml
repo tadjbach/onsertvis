@@ -102,6 +102,21 @@ se_platform_admin_list_comments:
     requirements:
         page: \d*
 
+se_platform_admin_mail:
+    path:     /manage/mail
+    defaults:
+        _controller: SEPlatformBundle:Admin:mail
+
+se_platform_admin_mailing:
+    path:     /manage/mail/mailing
+    defaults:
+        _controller: SEPlatformBundle:Admin:mailing
+
+se_platform_admin_mailing_send:
+    path:   /manage/mail/mailing/envoyer
+    defaults:
+        _controller: SEPlatformBundle:Admin:mailingSend
+
 # Filter Routes :
 se_platform_departement_by_region:
     path: /demandes-en-cours/getDepartementByRegion

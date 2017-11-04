@@ -27,6 +27,7 @@
                       <th>Date de connexion</th>
                       <th>Activé</th>
                       <th>Complet</th>
+                      <th>Jobber</th>
                   </tr>
               </thead>
                 <tbody>
@@ -52,9 +53,13 @@
                           {{ user.dateCreation|date('H:i:s') }}
                        </td>
                        <td>
+                         {% if user.lastLogin %}
                          {{ user.lastLogin|date('d/m/Y') }}
                          à
                          {{ user.lastLogin|date('H:i:s') }}
+                        {% else %}
+                           NULL
+                        {% endif %}
                       </td>
                        <td>
                           {% if user.enabled %}
@@ -70,6 +75,13 @@
                            <span class="label label-danger">Non</span>
                          {% endif %}
                      </td>
+                     <td>
+                        {% if user.isJobber %}
+                          <span class="label label-success">Oui</span>
+                        {% else %}
+                          <span class="label label-danger">Non</span>
+                        {% endif %}
+                    </td>
                     </tr>
                 {% endfor %}
                 </tbody>

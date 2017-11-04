@@ -23,4 +23,16 @@ class Mailer{
 
        $this->mailer->send($message);
   }
+
+  public function sendAdminEmail($sender, $subject, $receiver, $body)
+  {
+
+    $message = \Swift_Message::newInstance()
+         ->setSubject($subject)
+         ->setFrom(array('contact@serviceenchere.fr' => $sender))
+         ->setBcc($receiver)
+         ->setBody($body,'text/html');
+
+       $this->mailer->send($message);
+  }
 }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     <!-- MAIL - TITLE -->
+     <title>Service Enchère</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <style>
+    .alert {
+              padding: 15px;
+              margin-bottom: 20px;
+              border: 1px solid transparent;
+              border-radius: 4px;
+      }
+    .alert-success {
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+    .alert-danger {
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+    .alert-bandeau{
+          background-color: #2A0540;
+          color: #fff;
+          font-size: 18px;
+        }
+        .seconde-text{
+          color: gray;
+        }
+      </style>
+  </head>
+  <body>
+    <div >
+      <table >
+          <tbody>
+            <tr>
+              <td>
+                <div class="alert alert-bandeau">
+                    Service Enchère
+                </div>
+					     </td>
+            </tr>
+            <tr>
+      					<td>
+                  <div>
+                    <p>Bonjour,</p>
+                    <p>La puissance de votre profil</p>
+                    <p>Il suffit que la bonne personne consulte votre page de profil</p>
+                    <p>Votre espace client <a href="{{url('fos_user_registration_register')}}" >Créer un compte</a>.</p>
+                  </div>
+
+      					</td>
+    				</tr>
+            <tr >
+    					<td>
+                <div class="seconde-text">
+                  <p>Cordialement.</p>
+                  <p>L'équipe Service Enchère</p>
+                  https://www.serviceenchere.fr
+                </div>
+    					</td>
+		        </tr>
+          </tbody>
+      </table>
+    </div>
+  </body>
+</html>
