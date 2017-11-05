@@ -21,51 +21,31 @@
     <a href="{{ path('fos_user_registration_register') }}"  class="btn btn-primary">Créer un compte</a>
   {% endif %}
 
-   <table class="table table-hover" id="tblGrid">
-     <h4 class="cat-title">{{ titleResult }}</h4>
-       <tbody>
-       {% for jober in listJobbeurs %}
-       <tr class="link" onclick="window.document.location='{{ path('se_platform_user_view', {'userId': jober.id}) }}';">
-           <td>
-             <h5 class="truncate">
-                 <a class='se-tbl-link' href="{{ path('se_platform_user_view', {'userId': jober.id}) }}">{{ jober }}</a>
-                 <h5 >
-                   Membre depuis {{ jober.dateCreation|date('d/m/Y') }}
-                 </h5>
-                 <h5 class="visible-xs visible-sm">
-                   {% if jober.rate != -1 %}
-                             {{ include('@SEPlatform/User/small-rate.html.twig', {'item': jober }) }}
-                   {% else %}
-                    Pas encore noté
-                  {% endif %}
-
-                 </h5>
-             </h5>
-           </td>
-           <td>
-             <h5 class="hidden-xs hidden-sm">
-               <i>{{ jober.PostalCode.value }} {{ jober.PostalCode.city.labelNormal }}
-               ({{ jober.PostalCode.city.departement.labelNormal }})</i>
-             </h5>
-           </td>
-           <td>
-              <h5 class="hidden-xs hidden-sm">
+  <div class="row">
+      <div class="col-md-12">
+        <h4 class="cat-title">{{ titleResult }}</h4>
+        {% for jober in listJobbeurs %}
+        <div class="col-sm-4 jobber-view" onclick="window.document.location='{{ path('se_platform_user_view', {'userId': jober.id}) }}';">
+            <div class="rating-block">
+                <h4><i class="glyphicon glyphicon-user se-user-icon"></i> <span class="jobber">{{jober}}</span></h4>
+                <h6>Membre depuis {{ jober.dateCreation|date('d/m/Y') }}</h6>
+                <h6>
+                  {{ jober.PostalCode.value }} {{ jober.PostalCode.city.labelNormal }}
+                  ({{ jober.PostalCode.city.departement.labelNormal }})
+                 </h6>
                 {% if jober.rate != -1 %}
-                     {{ include('@SEPlatform/User/small-rate.html.twig', {'item': jober }) }}
+                    <h2 class="bold padding-bottom-7">{{jober.rate}} <small>/ 5</small></h2>
+                    {{ include('@SEPlatform/User/rate2.html.twig', {'item': jober }) }}
                 {% else %}
-                 Pas encore noté
-               {% endif %}
-               </h5>
-             <h5 class="visible-xs visible-sm">
-                <i>{{ jober.PostalCode.city.labelNormal }} ({{ jober.PostalCode.value }})</i>
-              </h5>
-           </td>
-         </tr>
-         {% else %}
+                    <h2 class="bold padding-bottom-7"><small>Pas encore noté</small></h2>
+                    {{ include('@SEPlatform/User/rate2.html.twig', {'item': jober }) }}
+                {% endif %}
 
-     {% endfor %}
-     </tbody>
-   </table>
+            </div>
+        </div>
+         {% endfor %}
+      </div>
+    </div>
 
    <div class="row">
        <div class="col-md-12 text-center">
