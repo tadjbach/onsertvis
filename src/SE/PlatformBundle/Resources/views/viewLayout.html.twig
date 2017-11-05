@@ -70,15 +70,15 @@
                          <p>Ville : {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.labelNormal }})</p>
                           <div class="form-group visible-xs visible-sm">
                              <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}"
-                             class="btn btn-default btn-md btn-block" >
+                             class="btn btn-primary btn-md btn-block" >
                                  Faire une offre
                              </a>
                              <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0, 'msgId' : 0}) }}"
-                             class="btn btn-default btn-md btn-block">
+                             class="btn btn-primary btn-md btn-block">
                                  Envoyer un message
                              </a>
                          <a type="button"
-                              class="btn btn-success btn-md btn-block"
+                              class="btn btn-default btn-md btn-block"
                               data-toggle="modal"
                               role="button"
                               data-toggle="modal"
@@ -88,15 +88,15 @@
                          </div>
                          <div class="form-group hidden-xs hidden-sm">
                             <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}"
-                            class="btn btn-default btn-md" >
+                            class="btn btn-primary btn-md" >
                                 Faire une offre
                             </a>
                             <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0, 'msgId' : 0}) }}"
-                            class="btn btn-default btn-md">
+                            class="btn btn-primary btn-md">
                                 Envoyer un message
                             </a>
                         <a type="button"
-                             class="btn btn-success btn-md"
+                             class="btn btn-default btn-md"
                              data-toggle="modal"
                              role="button"
                              data-toggle="modal"
@@ -110,7 +110,7 @@
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                    {% block view_advert_auction %}{% endblock %}
                 {% else %}
-                <div class="rating-block">
+                <div class="">
                   <h5 class="profil-title">Je n'ai pas de compte</h5>
                         <a href="{{ path('fos_user_registration_register') }}" role="button" class="btn btn-default btn-md btn-block">
                           Créer un compte

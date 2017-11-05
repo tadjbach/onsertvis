@@ -139,7 +139,7 @@ class Advert
     /**
      * @var string
      *
-     * @ORM\Column(name="cpCity", type="string", length=25, nullable=true)
+     * @ORM\Column(name="cpCity", type="string", length=100, nullable=true)
      */
     private $cpCity;
 
