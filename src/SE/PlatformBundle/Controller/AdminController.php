@@ -9,6 +9,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AdminController extends Controller
@@ -431,16 +432,30 @@ class AdminController extends Controller
          */
         public function mailAction(Request $request){
           $mailer  = $this->get('se_platform.mailer');
-          $body = $this->renderView(
-                  'SEPlatformBundle:Admin:mailingMail.html.twig'
-              );
+
           $userMailing = $request->query->get('_email_mailing');
           $bodyMailing = $request->query->get('_email_mailing_body');
 
-          $userMailing =str_replace(' ', '', $userMailing);
-          $userMailing = strtolower($userMailing);
+          $userNoactif = $request->query->get('_email_noactif');
+          $bodyNoactif = $request->query->get('_email_noactif_body');
+
+          $userNocomplet = $request->query->get('_email_nocomplet');
+          $bodyNocomplet = $request->query->get('_email_nocomplet_body');
+
+          $this->sendMailing($request, $mailer, $userMailing, $bodyMailing);
+          $this->sendNoactif($request, $mailer, $userNoactif, $bodyNoactif);
+          $this->sendNocomplet($request, $mailer, $userNocomplet, $bodyNocomplet);
+
+          return $this->render('SEPlatformBundle:Admin:mail.html.twig');
+        }
+
+        private function sendMailing(Request $request, $mailer, $userMailing, $bodyMailing){
+          $session = $request->getSession();
 
           if ($userMailing !== NULL && $userMailing !== '' && $bodyMailing !== NULL && $bodyMailing !== ''){
+
+            $userMailing =str_replace(' ', '', $userMailing);
+            $userMailing = strtolower($userMailing);
 
             $senderMailing = $request->query->get('_title_mailing');
             $subjectMailing = $request->query->get('_subject_mailing');
@@ -448,12 +463,49 @@ class AdminController extends Controller
 
 
             $toList = explode(',' ,$userMailing);
+            $mailer->sendAdminEmail($senderMailing, $subjectMailing, $toList, $bodyMailing);
+            $session->getFlashBag()->add('sendSuccess','Mailing envoyé OK.');
 
-
-              $mailer->sendAdminEmail($senderMailing, $subjectMailing, $toList, $bodyMailing);
-              return $this->redirectToRoute('se_platform_admin_mail');
+            return $this->redirectToRoute('se_platform_admin_mail');
             }
+        }
 
-            return $this->render('SEPlatformBundle:Admin:mail.html.twig');
+        private function sendNoactif(Request $request, $mailer, $userNoactif, $bodyNoactif){
+          $session = $request->getSession();
+
+          if ($userNoactif !== NULL && $userNoactif !== '' && $bodyNoactif !== NULL && $bodyNoactif !== ''){
+
+            $userNoactif =str_replace(' ', '', $userNoactif);
+            $userNoactif = strtolower($userNoactif);
+
+            $senderNoactif = $request->query->get('_title_noactif');
+            $subjectNoactif = $request->query->get('_subject_noactif');
+
+            $toList = explode(',' ,$userNoactif);
+
+            $mailer->sendAdminEmail($senderNoactif, $subjectNoactif, $toList, $bodyNoactif);
+            $session->getFlashBag()->add('sendSuccess','No actif mail envoyé OK.');
+
+            return $this->redirectToRoute('se_platform_admin_mail');
+            }
+        }
+
+        private function sendNocomplet(Request $request, $mailer, $userNocomplet, $bodyNocomplet){
+          $session = $request->getSession();
+
+          if ($userNocomplet !== NULL && $userNocomplet !== '' && $bodyNocomplet !== NULL && $bodyNocomplet !== ''){
+
+            $userNocomplet =str_replace(' ', '', $userNocomplet);
+            $userNocomplet = strtolower($userNocomplet);
+
+            $senderNocomplet = $request->query->get('_title_nocomplet');
+            $subjectNocomplet = $request->query->get('_subject_nocomplet');
+
+            $toList = explode(',' ,$userNocomplet);
+            $mailer->sendAdminEmail($senderNocomplet, $subjectNocomplet, $toList, $bodyNocomplet);
+            $session->getFlashBag()->add('sendSuccess','Non complet mail envoyé OK.');
+
+            return $this->redirectToRoute('se_platform_admin_mail');
+            }
         }
 }

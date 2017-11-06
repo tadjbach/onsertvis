@@ -12,9 +12,20 @@
   </div>
 {% endblock %}
 {% block layout_body %}
+<div class="row">
+  <div class="col-md-12">
+      {% for flash_message in app.session.flashBag.get('sendSuccess') %}
+          <div class="alert alert-success text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{ flash_message }}
+          </div>
+      {% endfor %}
+  </div>
+</div>
+
    <div class="row">
      <div class="col-md-4">
-       <form id="form_send_message" action="" method="get">
+       <form id="form_send_mailing" action="" method="get">
                <div id="mailing_message">
                  <div class="form-group">
                    <input type="text"
@@ -55,21 +66,38 @@
          </form>
      </div>
      <div class="col-md-4">
-       <form id="form_send_message" action="" method="get">
+       <form id="form_send_noactif" action="" method="get">
                <div id="noactif_message">
                  <div class="form-group">
-                   <textarea id="email_noactif_body"
-                              name="_email_noactif_body"
-                              required="required"
-                              class="form-control" style="height:500px">
-                   </textarea>
+                   <input type="text"
+                           id="title_noactif"
+                           name="_title_noactif"
+                           required="required"
+                           placeholder="Nom de l'envoyeur"
+                           class="form-control">
+                   </input>
+                   <br>
+                   <input type="text"
+                           id="subject_noactif"
+                           name="_subject_noactif"
+                           required="required"
+                           placeholder="Sujet"
+                           class="form-control">
+                   </input>
                    <br>
                    <input type="text"
                            id="email_noactif"
                            name="_email_noactif"
                            required="required"
+                           placeholder="Liste d'adresse mail"
                            class="form-control">
                    </input>
+                   <br>
+                   <textarea id="email_noactif_body"
+                              name="_email_noactif_body"
+                              required="required"
+                              class="form-control" style="height:500px">
+                   </textarea>
                  </div>
                  <div class="form-group">
                    <input class="btn btn-primary" type="submit" value="Non actif"  />
@@ -81,12 +109,21 @@
        <form id="form_send_message" action="" method="get">
                <div id="mailing_message">
                  <div class="form-group">
-                   <textarea id="email_nocomplet_body"
-                              name="_email_nocomplet_body"
-                              required="required"
-                              placeholder="Html du body"
-                              class="form-control" style="height:500px">
-                   </textarea>
+                   <input type="text"
+                           id="title_nocomplet"
+                           name="_title_nocomplet"
+                           required="required"
+                           placeholder="Nom de l'envoyeur"
+                           class="form-control">
+                   </input>
+                   <br>
+                   <input type="text"
+                           id="subject_nocomplet"
+                           name="_subject_nocomplet"
+                           required="required"
+                           placeholder="Sujet"
+                           class="form-control">
+                   </input>
                    <br>
                    <input type="text"
                            id="email_nocomplet"
@@ -95,6 +132,13 @@
                            placeholder="Liste d'adresse mail"
                            class="form-control">
                    </input>
+                   <br>
+                   <textarea id="email_nocomplet_body"
+                              name="_email_nocomplet_body"
+                              required="required"
+                              placeholder="Html du body"
+                              class="form-control" style="height:500px">
+                   </textarea>
                  </div>
                  <div class="form-group">
                    <input class="btn btn-primary" type="submit" value="Non complet"  />
