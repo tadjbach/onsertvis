@@ -120,9 +120,13 @@ class MessageController extends Controller
                                 ));
                 }
                 else {
-                  return $this->redirectToRoute('se_platform_advert_view',
-                                                array('slug'=> $advert->getSlug(),
-                                                      'id'=> $advert->getId()));
+                  return $this->redirectToRoute('se_platform_message_add',
+                                                array('advertSlug'=> $advert->getSlug(),
+                                                      'advertId'=> $advert->getId(),
+                                                      'receiveId'=> $advert->getUser()->getId(),
+                                                      'isAnswer'=>0,
+                                                      'msgId' => 0)
+                                                    );
                 }
               }
               else{

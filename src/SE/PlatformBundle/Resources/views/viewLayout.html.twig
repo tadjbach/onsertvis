@@ -1,7 +1,10 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  {{advert.title}} - {{ parent() }}
+  {{advert.title}} dans {{advert.category.labelNormal}} dans la ville de {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} département de {{ advert.PostalCode.city.departement.labelNormal }} - {{ parent() }}
+{% endblock %}
+{% block description %}
+  <meta name="description" content="Vous cherchez une aide similaire à {{advert.title}} - {{advert.id}} dans {{ advert.PostalCode.city.departement.labelNormal }} ou dans la ville de {{ advert.PostalCode.city.labelNormal }}, postez votre demande dans la catégorie {{advert.category.labelNormal}} et trouvez le jobber compétente près de chez vous!" />
 {% endblock %}
 
 {% block layout_header2 %}
@@ -63,39 +66,35 @@
            <div class="row">
              <div class="col-sm-8">
                <div class="rating-block">
-                  <div class="row">
-                       <div class="col-sm-8">
-                               <h3 class="title-advert"><p class="">{{ advert.title }}</p></h3>
-
-                               <p>Publiée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
-                               <p>Catégorie : {{ advert.category.labelNormal }}</p>
-                               <p>Ville : {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.labelNormal }})</p>
-                        </div>
-                       <div class="col-sm-4">
-                           {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                               <div class="form-group">
-                                  <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}"
-                                  class="btn btn-primary btn-md btn-block" >
-                                      Faire une offre
-                                  </a>
-                                  <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0, 'msgId' : 0}) }}"
-                                  class="btn btn-primary btn-md btn-block">
-                                      Envoyer un message
-                                  </a>
-                                  <a type="button"
-                                       class="btn btn-default btn-md btn-block"
-                                       data-toggle="modal"
-                                       role="button"
-                                       data-toggle="modal"
-                                       data-target="#modalAuctionShow" >
-                                     Historique des offres
-                                  </a>
-                              </div>
-                           {% else %}
-                             {% endif %}
-                        </div>
-                      </div>
+                <div class="row">
+                     <div class="col-md-8">
+                                   <h3 class="title-advert">{{ advert.title }}</h3>
+                                   <p>Publiée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
+                                   <p>Catégorie : {{ advert.category.labelNormal }}</p>
+                                   <p>Ville : {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.labelNormal }})</p>
+                                   <a type="button"
+                                        class="btn btn-success btn-md"
+                                        data-toggle="modal"
+                                        role="button"
+                                        data-toggle="modal"
+                                        data-target="#modalAuctionShow" >
+                                      Historique des offres
+                                   </a>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                               {{ include('@SEPlatform/User/userAdvertActivity.html.twig', {'user': advert.user }) }}
+                           </div>
+                          </div>
                   </div>
+                   <hr>
+                  <div class="row">
+                     <div class="col-md-12">
+                       <h4 class="profil-title text-left">Description</h4>
+                       <p>{{ advert.detail |nl2br }}</p>
+                     </div>
+                  </div>
+                </div>
              </div>
               <div class="col-sm-4">
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -110,14 +109,6 @@
                      class="btn btn-primary btn-md btn-block">
                          Envoyer un message
                      </a>
-                     <a type="button"
-                          class="btn btn-default btn-md btn-block"
-                          data-toggle="modal"
-                          role="button"
-                          data-toggle="modal"
-                          data-target="#modalAuctionShow" >
-                        Historique des offres
-                     </a>
                  </div>
                 {% endif %}
               </div>
@@ -125,53 +116,47 @@
 
             <div class="row">
               <hr>
-              <div class="col-sm-8">
-                 <div class="rating-block">
-                   <h4 class="profil-title text-left">Description</h4>
-                   <hr>
-                   <p>{{ advert.detail |nl2br }}</p>
-                 </div>
-              </div>
-                <div class="col-sm-4">
-                    {{ include('@SEPlatform/User/userAdvertActivity.html.twig', {'user': advert.user }) }}
+              <div class="col-sm-12">
+               <div class="rating-block">
+                       <h4 class="profil-title text-left">Demandes similaires</h4>
+                      <hr>
+                      {% for advertSimilar in advertSimilarList|slice(0,3) %}
+                          <div class="col-md-4">
+                            <blockquote>
+                                <h5 class="truncate">
+                                  {% if  is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
+                                    <a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': advertSimilar.slug,'advertId': advertSimilar.id}) }}">{{ advertSimilar.title }}</a>
+                                  {% else %}
+                                  <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advertSimilar.slug,'id': advertSimilar.id}) }}">{{ advertSimilar.title }}</a>
+                                  {% endif %}
+                                  <h5>
+                                  <p>Publiée le : {{ advertSimilar.dateCreation|date('d/m/Y') }} à {{ advertSimilar.dateCreation|date('H:m') }}</p>
+                                  <p>Catégorie : {{ advertSimilar.category.labelNormal }}</p>
+                                  <p>Ville : {{ advertSimilar.PostalCode.value }} {{ advertSimilar.PostalCode.city.labelNormal }} ({{ advertSimilar.PostalCode.city.departement.labelNormal }})</p>
+                                  <p>
+                                    {% if  is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                      <a href="{{ path('se_platform_auction_add', {'advertSlug': advertSimilar.slug,'advertId': advertSimilar.id}) }}" class="btn btn-primary" role="button">Voir</a>
+                                    {% else %}
+                                    <a href="{{ path('se_platform_advert_view', {'slug': advertSimilar.slug,'id': advertSimilar.id}) }}" class="btn btn-primary" role="button">Voir</a>
+                                      {% endif %}
+                                  </p>
+                                </blockquote>
+                          </div>
+                      {% else %}
+                          <p>Aucune demande similaire pour l'instant !</p>
+                          <p>
+                              <a href="{{ path('se_platform_advert_list')  }}" class="btn btn-primary" role="button">Toutes les demandes</a>
+                              <a class="btn btn-primary" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
+                          </p>
+                      {% endfor %}
                 </div>
+              </div>
             </div>
 
        </div>
     </div>
 <hr>
-<div class="row well">
-      <h5 class="profil-title">Demandes similaires</h5>
-      <hr>
-      {% for advertSimilar in advertSimilarList|slice(0,3) %}
-          <div class="col-md-4">
-            <blockquote>
-                <h5 class="truncate">
-                  {% if  is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    <a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': advertSimilar.slug,'advertId': advertSimilar.id}) }}">{{ advertSimilar.title }}</a>
-                  {% else %}
-                  <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advertSimilar.slug,'id': advertSimilar.id}) }}">{{ advertSimilar.title }}</a>
-                  {% endif %}
-                  <h5>
-                  <p>Publiée le : {{ advertSimilar.dateCreation|date('d/m/Y') }} à {{ advertSimilar.dateCreation|date('H:m') }}</p>
-                  <p>Catégorie : {{ advertSimilar.category.labelNormal }}</p>
-                  <p>Ville : {{ advertSimilar.PostalCode.value }} {{ advertSimilar.PostalCode.city.labelNormal }} ({{ advertSimilar.PostalCode.city.departement.labelNormal }})</p>
-                  <p>
-                    {% if  is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                      <a href="{{ path('se_platform_auction_add', {'advertSlug': advertSimilar.slug,'advertId': advertSimilar.id}) }}" class="btn btn-primary" role="button">Voir</a>
-                    {% else %}
-                    <a href="{{ path('se_platform_advert_view', {'slug': advertSimilar.slug,'id': advertSimilar.id}) }}" class="btn btn-primary" role="button">Voir</a>
-                      {% endif %}
-                  </p>
-                </blockquote>
-          </div>
-      {% else %}
-       <div class="rating-block">
-          <p>Aucune demande similaire pour l'instant !</p>
-          <p><a href="{{ path('se_platform_advert_list')  }}" class="btn btn-primary" role="button">Toutes les demandes</a></p>
-      </div>
-      {% endfor %}
-</div>
+
   <div class="row">
     <div class="col-md-12">
       <div class="modal fade"

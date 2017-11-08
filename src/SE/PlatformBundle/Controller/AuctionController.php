@@ -139,8 +139,8 @@ class AuctionController extends Controller
 
                       $session->getFlashBag()->add('addSuccess','Offre bien enregistrée.');
 
-                      return $this->redirectToRoute('se_platform_advert_view', array('slug'=> $advert->getSlug(),
-                                                                                    'id'=> $advert->getId()));
+                      return $this->redirectToRoute('se_platform_auction_add', array('advertSlug'=> $advert->getSlug(),
+                                                                                    'advertId'=> $advert->getId()));
                   }
               }
             }

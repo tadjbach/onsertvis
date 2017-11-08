@@ -8,6 +8,13 @@
             </div>
         {% else %}
                  {{ include('SEPlatformBundle:Message:form.html.twig') }}
+                 <hr>
+                 <div class="form-group">
+                    <a href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}"
+                    class="btn btn-default btn-md btn-block" >
+                        Faire une offre
+                    </a>
+                </div>
          {% endif %}
   </div>
 {% endblock %}

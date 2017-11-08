@@ -903,6 +903,7 @@ blockquote, .well blockquote{
 	border:1px solid #EFEFEF;
 	padding:15px 15px 20px 15px;
 	border-radius:3px;
+  margin-bottom: 10px;
 }
 .bold{
 	font-weight:700;

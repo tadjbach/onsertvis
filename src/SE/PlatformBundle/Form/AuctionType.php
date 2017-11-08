@@ -28,7 +28,7 @@ class AuctionType extends AbstractType
                  ->add('save', SubmitType::class,
                                 array('label'=> 'Valider mon offre',
                                     'attr'   =>  array(
-                                                'class'   => 'btn btn-primary')));
+                                                'class'   => 'btn btn-primary btn-block')));
     }
 
     /**

@@ -13,6 +13,13 @@
             <p> Je propose mon offre pour "<b>{{advert.BudgetType.labelNormal}}</b>" </p>
       </div>
       {{ include('SEPlatformBundle:Auction:form.html.twig') }}
+      <hr>
+      <div class="form-group">
+         <a href="{{ path('se_platform_message_add', {'advertSlug': advert.slug,'advertId': advert.id, 'receiveId': advert.user.id, 'isAnswer':0, 'msgId' : 0}) }}"
+         class="btn btn-default btn-md btn-block">
+             Envoyer un message
+         </a>
+     </div>
          {% endif %}
   </div>
 {% endblock %}

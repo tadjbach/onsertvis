@@ -538,6 +538,12 @@ class AdvertController extends Controller
       $em = $this->getDoctrineManager();
 
       $advert=$em->find('SEPlatformBundle:Advert', $id);
+      $currectUser = $this->getUser();
+
+      if ($currectUser !== null and $advert->getUser() !== $currectUser) {
+        return $this->redirectToRoute('se_platform_auction_add', array('advertSlug'=> $advert->getSlug(),
+                                                                      'advertId'=> $advert->getId()));
+      }
 
       $advertSimilarList = $em->getRepository('SEPlatformBundle:Advert')->getAdvertSimilaire($advert->getCategory()->getId(), $id);
 
