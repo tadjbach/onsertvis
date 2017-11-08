@@ -1,7 +1,10 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Envoyer un message - {{ parent() }}
+    Messagerie pour la demande {{advert.title}}
+{% endblock %}
+{% block description %}
+  <meta name="description" content="Conversations concerant ma demande de service." />
 {% endblock %}
 
 {% block layout_header2 %}

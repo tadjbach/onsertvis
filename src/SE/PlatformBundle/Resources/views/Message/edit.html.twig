@@ -1,7 +1,10 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Modifier un message - {{ parent() }}
+  Modifier un message pour la demande {{advert.title}}
+{% endblock %}
+{% block description %}
+  <meta name="description" content="Modification d'un message pour mes demandes de jobbing." />
 {% endblock %}
 
 {% block layout_header2 %}

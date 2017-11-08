@@ -1,7 +1,10 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Modifier la demande "{{advert.title}}" - {{ parent() }}
+  Modifier la demande "{{advert.title}}" - {{advert.category.labelNormal}}
+{% endblock %}
+{% block description %}
+  <meta name="description" content="Vous n'avez pas trouvé un bon jobber pour votre demande, consultez la page des jobbers." />
 {% endblock %}
 
 {% block layout_header2 %}

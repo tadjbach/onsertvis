@@ -1,7 +1,10 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Ajouter un avis - {{ parent() }}
+  Ajouter un avis pour la demande {{advert.title}}
+{% endblock %}
+{% block description %}
+  <meta name="description" content="Vous êtes satisfait ou pas de la prestation, exprimez vous en ajoutant un avis." />
 {% endblock %}
 
 {% block layout_header2 %}

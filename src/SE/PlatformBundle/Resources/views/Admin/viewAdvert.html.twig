@@ -1,7 +1,7 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Détail de la demande - {{ parent() }}
+    Détail de la demande
 {% endblock %}
 
 {% block layout_header2 %}
@@ -19,7 +19,7 @@
 
          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and advert.user ==  app.user %}
              <div class="col-md-12 alert alert-warning" role="alert">
-                 Vous êtes proprétaire de la demande, <a class='se-tbl-link' href="{{ path('se_platform_advert_user_list') }}">Voir mes demandes</a>      
+                 Vous êtes proprétaire de la demande, <a class='se-tbl-link' href="{{ path('se_platform_advert_user_list') }}">Voir mes demandes</a>
              </div>
              {% endif %}
 

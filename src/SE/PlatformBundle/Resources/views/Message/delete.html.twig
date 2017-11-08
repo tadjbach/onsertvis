@@ -1,7 +1,10 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  Supprimer un message - {{ parent() }}
+  Supprimer un message pour la demande {{advert.title}}
+{% endblock %}
+{% block description %}
+  <meta name="description" content="Suppression de la messagerie pour mes demandes de jobbing." />
 {% endblock %}
 
 {% block layout_header2 %}
