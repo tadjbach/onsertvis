@@ -117,12 +117,11 @@
             <div class="row">
               <hr>
               <div class="col-sm-12">
-               <div class="rating-block">
                        <h4 class="profil-title text-left">Demandes similaires</h4>
-                      <hr>
                       {% for advertSimilar in advertSimilarList|slice(0,3) %}
-                          <div class="col-md-4">
-                            <blockquote>
+                        <div class="col-md-4">
+                         <div class="rating-block">
+
                                 <h5 class="truncate">
                                   {% if  is_granted("IS_AUTHENTICATED_REMEMBERED")  %}
                                     <a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': advertSimilar.slug,'advertId': advertSimilar.id}) }}">{{ advertSimilar.title }}</a>
@@ -137,11 +136,11 @@
                                     {% if  is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                       <a href="{{ path('se_platform_auction_add', {'advertSlug': advertSimilar.slug,'advertId': advertSimilar.id}) }}" class="btn btn-primary" role="button">Voir</a>
                                     {% else %}
-                                    <a href="{{ path('se_platform_advert_view', {'slug': advertSimilar.slug,'id': advertSimilar.id}) }}" class="btn btn-primary" role="button">Voir</a>
+                                    <a href="{{ path('se_platform_advert_view', {'slug': advertSimilar.slug,'id': advertSimilar.id}) }}" class="btn btn-success" role="button">Voir</a>
                                       {% endif %}
                                   </p>
-                                </blockquote>
                           </div>
+                            </div>
                       {% else %}
                           <p>Aucune demande similaire pour l'instant !</p>
                           <p>
@@ -149,7 +148,6 @@
                               <a class="btn btn-primary" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
                           </p>
                       {% endfor %}
-                </div>
               </div>
             </div>
 
