@@ -119,7 +119,7 @@
                             {% if advert.isPublished == 1 %}
                                 <span class="label label-success">En ligne</span>
                             {% else %}
-                                <span class="label label-default">Hors ligne</span>
+                                <span class="label label-danger">Hors ligne</span>
                             {% endif %}
                             </h5>
                         </td>
@@ -133,8 +133,8 @@
                                 >Historique des offres</a>
                           </h5>
                         </td>
-                        <td>
-                          <h5 class="hidden-xs hidden-sm">
+                        <td class="">
+                          <h5 class="hidden-xs hidden-sm text-right">
                               {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
                           </h5>
                         </td>
