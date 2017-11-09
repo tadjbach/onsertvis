@@ -6,11 +6,18 @@
         <input type="checkbox" id="accept_cgu" name="_accept_cgu"  value="on" required="required"/>
         <label id="accept_cgu_label" for="accept_cgu">J’accepte les <a href="{{ path('se_platform_cgu') }}" class="cat-link se-password">conditions générales d'utilisation</a></label>
     </div>
-    <div class="text-center">
+    <div class="form-group text-center hidden-xs hidden-sm">
       <a href="{{ path('fos_user_security_login') }}" class="btn btn-default">
           <i class="glyphicon glyphicon-chevron-left"></i>
           Connexion
       </a>
         <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary" />
-    </div>
+      </div>
+      <div class="form-group visible-xs visible-sm">
+          <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary btn-block" />
+          <a href="{{ path('fos_user_security_login') }}" class="btn btn-default btn-block">
+              <i class="glyphicon glyphicon-chevron-left"></i>
+              Connexion
+          </a>
+        </div>
 {{ form_end(form) }}

@@ -21,7 +21,7 @@
             <label for="password" class="control-label required">{{ 'security.login.password'|trans }}</label>
             <input type="password" class="form-control se-password" id="password" name="_password" required="required" />
             <a href="{{ path('fos_user_resetting_request') }}" class="cat-link se-password" >
-                Mot de passe oublié
+                Mot de passe oublié ?
             </a>
         </div>
 
@@ -29,7 +29,9 @@
             <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
             <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
         </div>
-        <div class="text-center">
+
+
+        <div class="form-group text-center hidden-xs hidden-sm">
           <a href="{{ path('fos_user_registration_register') }}"  class="btn btn-default">
               Créer un compte
           </a>
@@ -38,8 +40,16 @@
                    id="_submit"
                    name="_submit"
                    value="{{ 'security.login.submit'|trans }}" />
-
-
-        </div>
+      </div>
+        <div class="form-group visible-xs visible-sm">
+          <input type="submit"
+                 class="btn btn-primary btn-block"
+                 id="_submit"
+                 name="_submit"
+                 value="{{ 'security.login.submit'|trans }}" />
+          <a href="{{ path('fos_user_registration_register') }}"  class="btn btn-default btn-block">
+              Créer un compte
+          </a>
+      </div>
     </form>
 {% endblock fos_user_content %}

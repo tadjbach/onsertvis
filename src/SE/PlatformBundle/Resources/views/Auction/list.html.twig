@@ -10,22 +10,33 @@
                 {{ auction.dateCreation|date('d/m/Y') }} à {{ auction.dateCreation|date('H:i:s') }}
               </td>
                 <td class="text-left">
-                    <a href="{{ path('se_platform_user_view', {'userId': auction.user.id}) }}" class="se-tbl-link" >
+                    <a href="{{ path('se_platform_user_view', {'userId': auction.user.id}) }}" class="se-tbl-link truncate visible-xs visible-sm" >
+                          {{ auction.user }}
+                    </a>
+                    <p><span class="visible-xs visible-sm label label-default se-badge-inverse-label">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}</span></p>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and auction.advert.user ==  app.user %}
+                      {% if auction.advert.commentState == 0 %}
+                          <a class="btn btn-primary btn-block visible-xs visible-sm"
+                              href="{{ path('se_platform_comment_add', {'advertId': auction.advert.id, 'auctionUserId': auction.user.id}) }}"
+                              >Accepter & évaluer</a>
+                          {% endif %}
+                    {% endif %}
+                    <a href="{{ path('se_platform_user_view', {'userId': auction.user.id}) }}" class="se-tbl-link hidden-xs hidden-sm" >
                           {{ auction.user }}
                     </a>
                 </td>
                 <td class="text-left hidden-xs">
                       {{ include('@SEPlatform/User/small-rate.html.twig', {'item': auction.user }) }}
                 </td>
-                <td class="text-right">
+                <td class="text-right hidden-xs hidden-sm">
                     <span class="label label-default se-badge-inverse-label">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}</span>
                 </td>
                 <td class="text-right">
                   {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and auction.advert.user ==  app.user %}
                     {% if auction.advert.commentState == 0 %}
-                    <a class="btn btn-primary"
+                    <a class="btn btn-primary hidden-xs hidden-sm"
                         href="{{ path('se_platform_comment_add', {'advertId': auction.advert.id, 'auctionUserId': auction.user.id}) }}"
-                        >Evaluer</a>
+                        >Accepter & évaluer</a>
                         {% endif %}
                   {% endif %}
                 </td>

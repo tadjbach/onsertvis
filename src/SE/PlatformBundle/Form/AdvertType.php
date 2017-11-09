@@ -60,11 +60,11 @@ class AdvertType extends AbstractType
               /*  ->add('image', ImageType::class, array(
                         'label'=>' ',  'required' => false
                     ))*/
-
                 ->add('save', SubmitType::class,
-                                array('label'=> 'Enregistrer',
-                                    'attr'   =>  array(
-                                                'class'   => 'btn btn-primary btn')));
+                        array('label'=> 'Enregistrer',
+                              'attr'   =>  array(
+                                'title'=> 'Enregistrer la demande',
+                                'class'   => 'btn btn-primary btn-block')));
     }
 
     /**

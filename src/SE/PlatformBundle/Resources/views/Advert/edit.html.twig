@@ -19,6 +19,12 @@
       <div class="col-md-12">
         <div class="col-md-3"></div>
         <div class="col-md-6">
+          <div class="form-group hidden-xs hidden-sm">
+            <a class="btn btn-primary" href="{{ path('se_platform_advert_user_list') }}"> <i class="glyphicon glyphicon-chevron-left"></i> Revenir à mes demandes</a>
+          </div>
+          <div class="form-group visible-xs visible-sm">
+            <a class="btn btn-primary btn-block" href="{{ path('se_platform_advert_user_list') }}"> <i class="glyphicon glyphicon-chevron-left"></i> Revenir à mes demandes</a>
+          </div>
           {% if advert.isPublished == 0 %}
               <div class="alert alert-info text-center" role="alert">
                   La demande est hors ligne.
@@ -28,8 +34,8 @@
                     {% endif %}
               </div>
               {% else %}
-              <div class="alert alert-info text-center" role="alert">
-                  Après la modification, la demande sera hors ligne pour validation.
+              <div class="alert alert-danger text-center" role="alert">
+                  <b>Attention ! </b>Après la modification, la demande sera hors ligne pour validation.
               </div>
               {% endif %}
           {% for flash_message in app.session.flashBag.get('editSuccess') %}

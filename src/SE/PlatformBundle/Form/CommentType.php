@@ -19,24 +19,24 @@ class CommentType extends AbstractType
     {
         $builder
 
-                ->add('rate', ChoiceType::class, array('label'=> 'Note / 5 *',
+                ->add('rate', ChoiceType::class, array('label'=> "Note de l'avis *",
                       'placeholder' => "Note de l'avis",
                             'choices' => array(
-                                '1' => '1',
-                                '2' => '2',
-                                '3' => '3',
-                                '4' => '4',
-                                '5' => '5'
+                                        'À éviter - 1/5' => '1',
+                                        'Décevant - 2/5' => '2',
+                                        'Bien - 3/5' =>  '3' ,
+                                        'Très bien - 4/5' => '4',
+                                        'Parfait - 5/5' => '5'
                             ),
                             'required'    => true
                         ))
-                        ->add('content', TextareaType::class, array('label'=> 'Avis *'))
+                        ->add('content', TextareaType::class, array('label'=> "Commentaire de l'avis *"))
 
 
                  ->add('save', SubmitType::class,
                                 array('label'=> 'Envoyer',
                                     'attr'   =>  array(
-                                                'class'   => 'btn btn-primary')));
+                                                'class'   => 'btn btn-primary btn-block')));
     }
 
     /**

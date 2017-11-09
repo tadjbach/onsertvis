@@ -5,11 +5,20 @@
         <label for="username" class="control-label required">{{ 'resetting.request.username'|trans }}</label>
         <input type="text" class="form-control" id="username" name="username" required="required" />
     </div>
-    <div class="text-center">
+    <div class="form-group text-center hidden-xs hidden-sm">
       <a href="{{ path('fos_user_security_login') }}" class="btn btn-default">
           <i class="glyphicon glyphicon-chevron-left"></i>
           Connexion
       </a>
         <input type="submit" class="btn btn-primary" value="Envoyer" />
-    </div>
+  </div>
+    <div class="form-group visible-xs visible-sm">
+        <input type="submit" class="btn btn-primary btn-block" value="Envoyer" />
+          <a href="{{ path('fos_user_security_login') }}" class="btn btn-default btn-block">
+              <i class="glyphicon glyphicon-chevron-left"></i>
+              Connexion
+          </a>
+  </div>
+
+
 </form>

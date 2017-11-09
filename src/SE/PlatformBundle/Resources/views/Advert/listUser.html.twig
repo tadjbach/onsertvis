@@ -17,9 +17,7 @@
 {% endblock %}
 {% block layout_body %}
 <div class="row">
-
-
-  <div class="col-md-2"></div>
+<div class="col-md-2"></div>
   <div class="col-md-8">
       {% for flash_message in app.session.flashBag.get('addSuccess') %}
           <div class="alert alert-success text-center" role="alert">
@@ -51,7 +49,12 @@
            </div>
        {% else %}
        <div id="content" class="col-md-12">
-         <a class="btn btn-primary" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
+         <div class="form-group hidden-xs hidden-sm">
+           <a class="btn btn-primary" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
+         </div>
+         <div class="form-group visible-xs visible-sm">
+           <a class="btn btn-primary btn-block" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
+         </div>
          <h4 class="cat-title">{{ titleResult }}</h4>
             <table class="table" id="tblGrid">
                 <tbody>
@@ -59,24 +62,47 @@
                     <tr>
                         <td class="text-left">
                             <h5>
+                              <h5 class="visible-xs visible-sm text-right">
+                              {% if advert.isPublished == 1 %}
+                                  <span class="label label-success">En ligne</span>
+                              {% else %}
+                                  <span class="label label-danger">Hors ligne</span>
+                              {% endif %}
+
+                              </h5>
                                 <a class='se-tbl-link' href="{{ path('se_platform_advert_view_user', {'id': advert.id}) }}"><p class="trunc">{{ advert.title }}</p></a>
                                 <h5 class="visible-xs visible-sm">
-                                {% if advert.isPublished == 1 %}
-                                    <span class="label label-warning">En ligne</span>
-                                {% else %}
-                                    <span class="label label-default">Hors ligne</span>
-                                {% endif %}
+                                    {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
                                 </h5>
                                 <h5 class="visible-xs visible-sm">
-                                  <a class="btn btn-default"
+                                  <a class="btn btn-success btn-block"
                                       data-toggle="modal"
                                       role="button"
                                       data-toggle="modal"
                                       data-target="#modalAuctionShow_{{advert.id}}"
                                       >Historique des offres</a>
-                                </h5>
-                                <h5 class="visible-xs visible-sm">
-                                    {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                                      <a href="{{ path('se_platform_advert_edit', {'slug': advert.slug,'id': advert.id}) }}"
+                                        type="button"
+                                        class='btn btn-primary btn-block'
+                                        title="Modifier la demande">
+                                        Modifier
+                                      </a>
+                                      {% if advert.isPublished == 1 %}
+                                        <a class='btn btn-primary btn-block'
+                                              data-toggle="modal"
+                                              role="button"
+                                              data-toggle="modal"
+                                              title="Désactiver la demande"
+                                              data-target="#modalAdvertDisabled_{{advert.id}}" >Désactiver</a>
+                                          {% endif %}
+                                          <a class='btn btn-danger btn-block'
+                                                data-toggle="modal"
+                                                role="button"
+                                                data-toggle="modal"
+                                                  title="Supprimer la demande"
+                                                data-target="#modalAdvertDelete_{{advert.id}}" >
+                                                Supprimer
+                                            </a>
                                 </h5>
                                 <h5 class="hidden-xs hidden-sm">
                                   {{ advert.category.labelNormal }}
@@ -99,7 +125,7 @@
                         </td>
                         <td class="text-right">
                           <h5 class="hidden-xs hidden-sm">
-                            <a class="btn btn-default"
+                            <a class="btn btn-success"
                                 data-toggle="modal"
                                 role="button"
                                 data-toggle="modal"
@@ -112,23 +138,23 @@
                               {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
                           </h5>
                         </td>
-                        <td class='text-right'>
-
+                        <td class='text-right hidden-xs hidden-sm'>
                           <div class="btn-group btn-group" role="group" aria-label="...">
                               <div class="btn-group" role="group">
                                 <a href="{{ path('se_platform_advert_edit', {'slug': advert.slug,'id': advert.id}) }}"
                                   type="button"
-                                  class='btn btn-default'
+                                  class='btn btn-primary'
                                   title="Modifier la demande">
                                   Modifier
                                 </a>
                               </div>
                               <div class="btn-group" role="group">
                                 {% if advert.isPublished == 1 %}
-                                  <a class='btn btn-default'
+                                  <a class='btn btn-primary'
                                         data-toggle="modal"
                                         role="button"
                                         data-toggle="modal"
+                                        title="Désactiver la demande"
                                         data-target="#modalAdvertDisabled_{{advert.id}}" >Désactiver</a>
                                     {% endif %}
                               </div>
@@ -139,6 +165,7 @@
                                       data-toggle="modal"
                                       role="button"
                                       data-toggle="modal"
+                                        title="Supprimer la demande"
                                       data-target="#modalAdvertDelete_{{advert.id}}" >
                                       Supprimer
                                   </a>

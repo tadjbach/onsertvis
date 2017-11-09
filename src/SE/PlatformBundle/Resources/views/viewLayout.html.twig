@@ -59,7 +59,7 @@
 
        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and advert.user ==  app.user %}
            <div class="col-md-12 alert alert-warning" role="alert">
-               Vous êtes proprétaire de la demande, <a class='se-tbl-link' href="{{ path('se_platform_advert_user_list') }}">Voir mes demandes</a>
+               Vous êtes proprétaire de la demande. <a class='se-tbl-link' href="{{ path('se_platform_advert_user_list') }}">Voir mes demandes</a>
            </div>
            {% endif %}
 
@@ -68,30 +68,48 @@
                <div class="rating-block">
                 <div class="row">
                      <div class="col-md-8">
-                                   <h3 class="title-advert">{{ advert.title }}</h3>
-                                   <p>Publiée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
-                                   <p>Catégorie : {{ advert.category.labelNormal }}</p>
-                                   <p>Ville : {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.labelNormal }})</p>
-                                   <a type="button"
-                                        class="btn btn-success btn-md"
-                                        data-toggle="modal"
-                                        role="button"
-                                        data-toggle="modal"
-                                        data-target="#modalAuctionShow" >
-                                      Historique des offres
-                                   </a>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
-                               {{ include('@SEPlatform/User/userAdvertActivity.html.twig', {'user': advert.user }) }}
-                           </div>
-                          </div>
+                           <h3 class="title-advert">{{ advert.title }}</h3>
+                           <p>Publiée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
+                           <p>Catégorie : {{ advert.category.labelNormal }}</p>
+                           <p>Ville : {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.labelNormal }})</p>
+                           <a type="button"
+                                class="btn btn-success btn-md hidden-xs hidden-sm"
+                                data-toggle="modal"
+                                role="button"
+                                data-toggle="modal"
+                                data-target="#modalAuctionShow" >
+                              Historique des offres
+                           </a>
+                           <a type="button"
+                                class="btn btn-success btn-block visible-xs visible-sm"
+                                data-toggle="modal"
+                                role="button"
+                                data-toggle="modal"
+                                data-target="#modalAuctionShow" >
+                              Historique des offres
+                           </a>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group hidden-xs hidden-sm">
+                           {{ include('@SEPlatform/User/userAdvertActivity.html.twig', {'user': advert.user }) }}
+                       </div>
+                       <div class="form-group visible-xs visible-sm">
+                           <hr class="visible-xs visible-sm">
+                         <h4 class="profil-title text-left">Description</h4>
+                         <p>{{ advert.detail |nl2br }}</p>
+                        </div>
+                      </div>
                   </div>
                    <hr>
                   <div class="row">
                      <div class="col-md-12">
-                       <h4 class="profil-title text-left">Description</h4>
-                       <p>{{ advert.detail |nl2br }}</p>
+                       <div class="form-group visible-xs visible-sm">
+                          {{ include('@SEPlatform/User/userAdvertActivity.html.twig', {'user': advert.user }) }}
+                      </div>
+                      <div class="form-group hidden-xs hidden-sm">
+                        <h4 class="profil-title text-left">Description</h4>
+                        <p>{{ advert.detail |nl2br }}</p>
+                       </div>
                      </div>
                   </div>
                 </div>
@@ -143,10 +161,14 @@
                             </div>
                       {% else %}
                           <p>Aucune demande similaire pour l'instant !</p>
-                          <p>
+                            <div class="form-group hidden-xs hidden-sm">
                               <a href="{{ path('se_platform_advert_list')  }}" class="btn btn-primary" role="button">Toutes les demandes</a>
                               <a class="btn btn-primary" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
-                          </p>
+                            </div>
+                            <div class="form-group visible-xs visible-sm">
+                              <a href="{{ path('se_platform_advert_list')  }}" class="btn btn-primary btn-block" role="button">Toutes les demandes</a>
+                              <a class="btn btn-primary btn-block" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
+                            </div>
                       {% endfor %}
               </div>
             </div>
