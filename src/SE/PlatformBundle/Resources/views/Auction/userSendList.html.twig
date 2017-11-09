@@ -37,33 +37,35 @@
                       </h5>
                   </td>
                     <td>
+                      <h5 class="text-right">
+                          {% if auction.advert.isPublished == 1 %}
+                            <span class="label label-success">En ligne</span>
+                          {% else %}
+                            <span class="label label-danger">Hors ligne</span>
+                          {% endif %}
+                      </h5>
                         <h5 class="text-left">
                             {% if auction.advert.isPublished == 1 %}
-                            <a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': auction.advert.slug,'advertId': auction.advert.id}) }}">{{ auction.advert.title }}</a>
+                              <a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': auction.advert.slug,'advertId': auction.advert.id}) }}">{{ auction.advert.title }}</a>
                             {% else %}
                             <i>{{ auction.advert.title }}</i>
-                            <div class="label label-default"
-                                  data-toggle="tooltip"
-                                        data-placement="bottom" title="La demande est hors ligne">
-                             <i class="glyphicon glyphicon-info-sign"> </i>
-                            </div>
                             {% endif %}
                         </h5>
+                        <h5 class="visible-xs visible-sm">
+                              <span class="label label-default se-badge-inverse-label">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
+                        </h5>
+                        <h5 class="visible-xs visible-sm">
+                            <a class="btn btn-block btn-success"
+                              data-toggle="modal"
+                              role="button"
+                              data-toggle="modal"
+                              data-target="#modalAuctionShow_{{auction.advert.id}}" >
+                               Voir toutes les offres
+                              </a>
+                        </h5>
+
                     </td>
                     <td>
-                      <h5 class="text-center visible-xs visible-sm">
-                            <span class="label label-default se-badge-inverse-label">{{ auction.value|number_format(0, ' ', ' ') }} €  / {{auction.advert.BudgetType.slug}}<span>
-                      </h5>
-                      <h5 class="text-center visible-xs visible-sm">
-                          <a class="btn btn-primary"
-                            data-toggle="modal"
-                            role="button"
-                            data-toggle="modal"
-                            data-target="#modalAuctionShow_{{auction.advert.id}}"
-                            >
-                             Historique des offres
-                            </a>
-                      </h5>
 
 
                     </td>
@@ -74,13 +76,12 @@
                       </td>
                     <td>
                       <h5 class="text-right hidden-xs hidden-sm">
-                        <a class="btn btn-primary"
+                        <a class="btn btn-success"
                             data-toggle="modal"
                             role="button"
                             data-toggle="modal"
-                            data-target="#modalAuctionShow_{{auction.advert.id}}"
-                            >
-                              Historique des offres
+                            data-target="#modalAuctionShow_{{auction.advert.id}}" >
+                              Voir toutes les offres
                           </a>
                         </h5>
                     </td>
