@@ -1,7 +1,7 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Liste des jobbers - {{ parent() }} - Service à domicile - Trouvez un jobber pour votre demande
+    Liste des jobbers - Trouvez un jobber pour votre demande
 {% endblock %}
 {% block description %}
   <meta name="description" content="Trouvez un jobber ou un artisant près de chez vous" />
@@ -16,16 +16,28 @@
       </div>
     </div>
 {% endblock %}
-{% block layout_body %}
-<a class="btn btn-primary" href="{{ path('se_platform_advert_add') }}">Déposer une demande</a>
-  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-    <a href="{{ path('se_platform_user_edit') }}"  class="btn btn-primary">Mettre à jour mon compte</a>
-  {% else %}
-    <a href="{{ path('fos_user_registration_register') }}"  class="btn btn-primary">Créer un compte</a>
-  {% endif %}
 
-  <div class="row">
-      <div class="col-md-12">
+{% block layout_body %}
+      <div class="form-group">
+            <a href="{{ path('se_platform_advert_add') }}" class="btn btn-primary btn-md btn-block visible-xs visible-sm">Déposer une demande</a>
+
+              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <a href="{{ path('se_platform_user_edit') }}"  class="btn btn-primary btn-md btn-block visible-xs visible-sm">Mettre à jour mon compte</a>
+              {% else %}
+                <a href="{{ path('fos_user_registration_register') }}"  class="btn btn-primary btn-md btn-block visible-xs visible-sm">Créer un compte</a>
+              {% endif %}
+      </div>
+      <div class="form-group">
+        <a href="{{ path('se_platform_advert_add') }}" class="btn btn-primary hidden-xs hidden-sm" >Déposer une demande</a>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+          <a href="{{ path('se_platform_user_edit') }}"  class="btn btn-primary hidden-xs hidden-sm">Mettre à jour mon compte</a>
+        {% else %}
+          <a href="{{ path('fos_user_registration_register') }}"  class="btn btn-primary hidden-xs hidden-sm">Créer un compte</a>
+        {% endif %}
+     </div>
+     
+      <div class="row">
+          <div class="col-md-12">
         <h4 class="cat-title">{{ titleResult }}</h4>
         {% for jober in listJobbeurs %}
         <div class="col-sm-4 jobber-view" onclick="window.document.location='{{ path('se_platform_user_view', {'userId': jober.id}) }}';">

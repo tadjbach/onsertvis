@@ -88,7 +88,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
       }
 
       $qb->addOrderBy('user.rate', 'DESC');
-      $qb->addOrderBy('user.dateCreation', 'ASC')->getQuery();
+      $qb->addOrderBy('user.lastLogin', 'DESC')->getQuery();
 
       $qb->setFirstResult(($page-1) * $nbPerPage)->setMaxResults($nbPerPage);
 
