@@ -42,8 +42,7 @@
         {% for jober in listJobbeurs %}
         <div class="col-sm-4 jobber-view" onclick="window.document.location='{{ path('se_platform_user_view', {'userId': jober.id}) }}';">
             <div class="rating-block">
-                <h4 class="truncate visible-xs visible-sm"><i class="glyphicon glyphicon-user se-user-icon"></i> <span class="jobber">{{jober}}</span></h4>
-                <h4 class="hidden-xs hidden-sm"><i class="glyphicon glyphicon-user se-user-icon"></i> <span class="jobber">{{jober}}</span></h4>
+                <h4 class="truncate"><i class="glyphicon glyphicon-user se-user-icon"></i> <span class="jobber">{{jober}}</span></h4>
                 <h6>Membre depuis {{ jober.dateCreation|date('d/m/Y') }}</h6>
                 <h6>
                   {{ jober.PostalCode.value }} {{ jober.PostalCode.city.labelNormal }}
