@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserController extends Controller
 {
-  private $nbPerPage = 20;
+  private $nbPerPage = 18;
   private $em;
   private $search;
   private $category;

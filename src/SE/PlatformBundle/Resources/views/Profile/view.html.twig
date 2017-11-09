@@ -19,6 +19,8 @@
               si vous êtes <b>{{ user }}</b> merci de le
               <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter.</a>
           </div>
+          <a class="btn btn-primary hidden-xs hidden-sm" href="{{ path('se_platform_user_jobbeur_list') }}"><i class="glyphicon glyphicon-chevron-left"></i> Liste des Jobbers</a>
+          <a class="btn btn-block btn-primary visible-xs visible-sm" href="{{ path('se_platform_user_jobbeur_list') }}"><i class="glyphicon glyphicon-chevron-left"></i> Liste des Jobbers</a>
       {% else %}
       {% block fos_user_content %}
           {% include "@FOSUser/Profile/view_content.html.twig" %}
