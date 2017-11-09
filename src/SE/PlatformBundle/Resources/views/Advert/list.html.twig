@@ -16,7 +16,11 @@
     </div>
 {% endblock %}
 {% block layout_body %}
- <a class="btn btn-primary" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
+  <div class="form-group">
+    <a class="btn btn-primary btn-md btn-block visible-xs visible-sm" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
+    <a class="btn btn-primary btn-md hidden-xs hidden-sm" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
+  </div>
+
          <h4 class="cat-title">{{ titleResult }}</h4>
             <table class="table table-hover" id="tblGrid">
                 <tbody>
@@ -32,11 +36,7 @@
                                 <a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}">{{ advert.title }}</a>
                               {% else %}
                               <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
-
                               {% endif %}
-                                <h5 class="visible-xs">
-                                      {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-                                  </h5>
 
                                 <h5 class="hidden-xs hidden-sm" >
                                   {{ advert.dateCreation|date('d/m/Y') }}
@@ -61,10 +61,15 @@
                             <i>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</i>
                           </h5>
                         </td>
-                        <td class="hidden-xs">
+                        <td class="hidden-xs hidden-sm">
                           <h5>
                               {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
                           </h5>
+                        </td>
+                        <td class="visible-xs visible-sm">
+                          <h5 >
+                                {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                            </h5>
                         </td>
                     </tr>
 
