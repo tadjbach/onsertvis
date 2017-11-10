@@ -30,6 +30,7 @@ class Mailer{
     $message = \Swift_Message::newInstance()
          ->setSubject($subject)
          ->setFrom(array('contact@serviceenchere.fr' => $sender))
+         ->setTo('noreplay@serviceenchere.fr')
          ->setBcc($receiver)
          ->setBody($body,'text/html');
 

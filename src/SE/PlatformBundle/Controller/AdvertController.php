@@ -169,7 +169,7 @@ class AdvertController extends Controller
                                           $page,
                                           $this->nbPerPage);
 
-        $titleResult = count($listAdverts) == 0 ?'Aucune demande' :
+        $titleResult = count($listAdverts) == 0 ?'Aucune demande trouvée' :
                 (count($listAdverts) > 1 ? count($listAdverts).' demandes' :
             count($listAdverts).' demande');
 

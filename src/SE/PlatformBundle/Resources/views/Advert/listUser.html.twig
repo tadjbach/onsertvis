@@ -70,8 +70,9 @@
                               {% endif %}
 
                               </h5>
+                              <h5 class="truncate">
                                 <a class='se-tbl-link' href="{{ path('se_platform_advert_view_user', {'id': advert.id}) }}"><p class="trunc">{{ advert.title }}</p></a>
-                                <h5 class="visible-xs visible-sm">
+                              </h5>                                <h5 class="visible-xs visible-sm">
                                     {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
                                 </h5>
                                 <h5 class="visible-xs visible-sm">

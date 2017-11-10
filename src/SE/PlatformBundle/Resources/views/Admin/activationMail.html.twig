@@ -77,20 +77,13 @@
   <body>
 	<div class="body">
 		<div class="header">
-			<p>Votre profil n'est pas complet</p>
+			<p>Vous n'avez pas validé votre adresse mail</p>
 		</div>
 		<div class="content">
-			<p>Bonjour, </p>
-      <p>Vous avez créé un compte sur https://www.serviceenchere.fr.</p>
-
-      <p>Pensez à le compléter dans votre espace client :
-            <a style="color: #fff" class="btn btn-primary" href="https://www.serviceenchere.fr/mon-compte/modifier" >Compléter mon compte</a>
-      </p>
-
-      <p>Pour consulter la liste des Jobbers :
-            <a style="color: #fff" class="btn btn-primary" href="https://www.serviceenchere.fr/liste-des-jobbers" >Liste des Jobbers</a>
-      </p>
-
+			<p>Bonjour {{user}}, </p>
+      <br>
+      <p>Merci de valider votre adresse mail en cliquant sur le lien suivant : <a style="color: #fff" class="btn btn-primary" href="https://www.serviceenchere.fr/register/confirm/{{user.ConfirmationToken}}" >Je valide mon adresse</a></p>
+      <p>Ce lien ne peut être utilisé qu'une seule fois pour valider votre compte.</p>
       <br><br><br>
 
 			<h4>Vous proposez vos services ? </h4>
@@ -103,6 +96,9 @@
 			<p> <b>4.</b> trouvez facilement le service demandé de votre région.</p>
 			<p> <b>5.</b> le site est entièrement gratuit.</p>
 
+
+			<a style="color: #fff" class="btn btn-primary" href="https://www.serviceenchere.fr/liste-des-jobbers" >Liste des Jobbers</a>
+      <a style="color: #fff" class="btn btn-primary" href="https://www.serviceenchere.fr/demandes-en-cours" >Liste des demandes</a>
 		</div>
 		<div class="footer">
 			<span>L'équipe Service Enchère</span><br>

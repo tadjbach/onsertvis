@@ -344,6 +344,57 @@ class AdminController extends Controller
                  return $this->redirectToRoute('se_platform_admin_view_user', array('id'=>$id));
                }
 
+               /**
+                * @Security("has_role('ROLE_SUPER_ADMIN')")
+                */
+                public function jobberUserAction(Request $request, $id, $action){
+                  $em = $this->getDoctrineManager();
+
+                  $user = $em->find('SEPlatformBundle:User', $id);
+                  $user->setIsJobber($action);
+
+                  $em->persist($user);
+                  $em->flush();
+
+                  return $this->redirectToRoute('se_platform_admin_view_user', array('id'=>$id));
+                }
+
+                /**
+                 * @Security("has_role('ROLE_SUPER_ADMIN')")
+                 */
+                 public function completeMailUserAction(Request $request, $id){
+                   $em = $this->getDoctrineManager();
+                   $mailer  = $this->get('se_platform.mailer');
+                   $user = $em->find('SEPlatformBundle:User', $id);
+
+                   $body = $this->renderView(
+                          'SEPlatformBundle:Admin:completeMail.html.twig',
+                          array('user'=> $user)
+                      );
+
+                  $mailer->sendAdminEmail("Service Enchère", "Votre profil n'est pas complet", $user->getEmail(), $body);
+
+                   return $this->redirectToRoute('se_platform_admin_view_user', array('id'=>$id));
+                 }
+
+                 /**
+                  * @Security("has_role('ROLE_SUPER_ADMIN')")
+                  */
+                  public function activationMailUserAction(Request $request, $id){
+                    $em = $this->getDoctrineManager();
+                    $mailer  = $this->get('se_platform.mailer');
+                    $user = $em->find('SEPlatformBundle:User', $id);
+
+                    $body = $this->renderView(
+                           'SEPlatformBundle:Admin:activationMail.html.twig',
+                           array('user'=> $user)
+                       );
+
+                   $mailer->sendAdminEmail("Service Enchère", "Validation de votre adresse mail", $user->getEmail(), $body);
+
+                    return $this->redirectToRoute('se_platform_admin_view_user', array('id'=>$id));
+                  }
+
         /**
          * @Security("has_role('ROLE_SUPER_ADMIN')")
          */

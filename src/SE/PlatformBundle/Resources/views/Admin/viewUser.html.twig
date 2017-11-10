@@ -90,6 +90,60 @@
                                  </td>
                                  {% endif %}
                                </tr>
+                               <tr>
+                                 <td>
+                                     Jobber
+                                 </td>
+                                 {% if user.isJobber %}
+                                 <td>
+                                     <span class="label label-success">Oui</span>
+                                 </td>
+                                 <td class="text-center">
+                                   <a href="{{ path('se_platform_admin_jobber_user', {'action': 0,'id': user.id}) }}" class="btn btn-primary">Désactiver</a>
+                                 </td>
+                                 {% else %}
+                                 <td>
+                                     <span class="label label-danger">Non</span>
+                                 </td>
+                                 <td class="text-center">
+                                   <a href="{{ path('se_platform_admin_jobber_user', {'action': 1,'id': user.id}) }}" class="btn btn-primary">Activer</a>
+                                 </td>
+                                 {% endif %}
+                               </tr>
+                               <tr>
+                                 <td>
+                                     Complet (mail)
+                                 </td>
+                                 {% if user.isAcountComplete %}
+                                 <td>
+                                     <span class="label label-success">Oui</span>
+                                 </td>
+                                 {% else %}
+                                 <td>
+                                     <span class="label label-danger">Non</span>
+                                 </td>
+                                 <td class="text-center">
+                                   <a href="{{ path('se_platform_admin_complete_mail_user', {'id': user.id}) }}" class="btn btn-primary">Send complet mail</a>
+                                 </td>
+                                 {% endif %}
+                               </tr>
+                               <tr>
+                                 <td>
+                                     Activé (mail)
+                                 </td>
+                                 {% if user.isEnabled %}
+                                 <td>
+                                     <span class="label label-success">Oui</span>
+                                 </td>
+                                 {% else %}
+                                 <td>
+                                     <span class="label label-danger">Non</span>
+                                 </td>
+                                 <td class="text-center">
+                                   <a href="{{ path('se_platform_admin_activation_mail_user', {'id': user.id}) }}" class="btn btn-primary">Send activation mail</a>
+                                 </td>
+                                 {% endif %}
+                               </tr>
                              </tbody>
                            </table>
                        </div>

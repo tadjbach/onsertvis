@@ -44,13 +44,16 @@
                             <span class="label label-danger">Hors ligne</span>
                           {% endif %}
                       </h5>
-                        <h5 class="text-left">
                             {% if auction.advert.isPublished == 1 %}
-                              <a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': auction.advert.slug,'advertId': auction.advert.id}) }}">{{ auction.advert.title }}</a>
+                            <h5 class="truncate text-left">
+                              <p><a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': auction.advert.slug,'advertId': auction.advert.id}) }}">{{ auction.advert.title }}</a></p>
+                            </h5>
                             {% else %}
-                            <i>{{ auction.advert.title }}</i>
+                            <h5 class="truncate text-left">
+                              <p><i>{{ auction.advert.title }}</i></p>
+                            </h5>
                             {% endif %}
-                        </h5>
+
                         <h5 class="hidden-xs hidden-sm">
                             {% if auction.advert.isPublished == 1 %}
                               <span class="label label-success">En ligne</span>

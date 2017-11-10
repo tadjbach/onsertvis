@@ -70,6 +70,27 @@ se_platform_admin_delete_advert:
     requirements:
         id: \d+
 
+se_platform_admin_jobber_user:
+    path:   /manage/jobber/user-{id}-{action}
+    defaults:
+        _controller: SEPlatformBundle:Admin:jobberUser
+    requirements:
+        id: \d+
+
+se_platform_admin_complete_mail_user:
+    path:   /manage/complete/mail/user-{id}
+    defaults:
+        _controller: SEPlatformBundle:Admin:completeMailUser
+    requirements:
+        id: \d+
+
+se_platform_admin_activation_mail_user:
+    path:   /manage/activation/mail/user-{id}
+    defaults:
+        _controller: SEPlatformBundle:Admin:activationMailUser
+    requirements:
+        id: \d+
+
 se_platform_admin_list_adverts:
     path:     /manage/adverts/{page}
     defaults:

@@ -567,13 +567,13 @@ a.se-password, a.se-link{
   text-overflow: ellipsis;
 }
 .truncate {
-  width: 300px;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   margin-top: 0px;
   margin-bottom: 2px;
-  color: #E5DF16;
+  color: #2a0540;
 }
 
 p.info{
