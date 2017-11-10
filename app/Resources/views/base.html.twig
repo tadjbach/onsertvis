@@ -7,7 +7,7 @@
 
         <!-- PAGE - TITLE -->
         <title>{% block title %}Service Enchère{% endblock %}</title>
-        {% block description %} 
+        {% block description %}
         {% endblock %}
 
         <!-- PAGE - FAVICON -->
@@ -36,6 +36,9 @@
               {% block body %}{% endblock %}
 
         <div id="pathCpCity" data-path="{{ path('se_platform_postalCode' )}}"></div>
+        <div id="pathDepartementByRegion" data-path="{{ path('se_platform_departement_by_region' )}}"></div>
+        <div id="pathCityByDepartement" data-path="{{ path('se_platform_city_by_departement' )}}"></div>
+        <div id="pathPostalCodeByCityAndDepartement" data-path="{{ path('se_platform_postalCode_by_city_and_departement' )}}"></div>
 
         <!-- PAGE - FOOTER - SERVICE -->
         <div class="row">

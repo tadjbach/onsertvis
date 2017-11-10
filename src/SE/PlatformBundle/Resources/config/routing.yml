@@ -140,17 +140,17 @@ se_platform_admin_mailing_send:
 
 # Filter Routes :
 se_platform_departement_by_region:
-    path: /demandes-en-cours/getDepartementByRegion
+    path: /getDepartementByRegion
     defaults:
         _controller: SEPlatformBundle:Advert:getDepartementByRegion
 
 se_platform_city_by_departement:
-    path: /demandes-en-cours/getCityByDepartement
+    path: /getCityByDepartement
     defaults:
         _controller: SEPlatformBundle:Advert:getCityByDepartement
 
 se_platform_postalCode_by_city_and_departement:
-    path: /demandes-en-cours/getPostalCodeByCityAndDepartement
+    path: /getPostalCodeByCityAndDepartement
     defaults:
         _controller: SEPlatformBundle:Advert:getPostalCodeByCityAndDepartement
 

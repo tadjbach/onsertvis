@@ -85,32 +85,26 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
 
         if($title !== NULL && $title !== '')
         {
-            $page = 1;
             $qb->andWhere("advert.title LIKE '%$title%'")->orWhere("advert.detail LIKE '%$title%'");
         }
         if($category !== NULL && $category !== '0')
         {
-            $page = 1;
             $qb->andWhere($qb->expr()->eq('category.id', $category));
         }
         if($region !== NULL && $region !== '0')
         {
-            $page = 1;
             $qb->andWhere($qb->expr()->eq('region.id', $region));
         }
         if($departement !== NULL && $departement !== '0')
         {
-            $page = 1;
             $qb->andWhere($qb->expr()->eq('departement.id', $departement));
         }
         if($city !== NULL && $city !== '')
         {
-            $page = 1;
             $city = $this->slugify($city);
             $qb->andWhere("city.slug LIKE '%$city%'");
         }
         if ($postalCode !== null && $postalCode !== '') {
-            $page = 1;
             $qb->andWhere("postalCode.value LIKE '%$postalCode%'");
         }
 
@@ -194,12 +188,10 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository{
 
         if($title !== NULL && $title !== '')
         {
-            $page = 1;
             $qb->andWhere("advert.title LIKE '%$title%'")->orWhere("advert.detail LIKE '%$title%'");
         }
         if($category !== NULL && $category !== '0')
         {
-            $page = 1;
             $qb->andWhere($qb->expr()->eq('category.id', $category));
         }
 

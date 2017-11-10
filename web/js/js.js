@@ -11,8 +11,10 @@
                 var data = {region: $regions.val(),
                 departement: $departements.val()};
 
+                var pathDepartementByRegion = $("#pathDepartementByRegion").attr("data-path");
+
                 $.ajax({
-                    url: 'demandes-en-cours/getDepartementByRegion',
+                    url: pathDepartementByRegion,
                     type:'POST',
                     data: data,
                     dataType: 'json',
@@ -33,8 +35,10 @@
 
         var data = {departement: $departements.val()};
 
+        var pathCityByDepartement = $("#pathCityByDepartement").attr("data-path");
+
         $.ajax({
-            url: 'demandes-en-cours/getCityByDepartement',
+            url: pathCityByDepartement,
             type:'POST',
             data: data,
             dataType: 'json',
@@ -60,8 +64,10 @@
 
             var dataPostalCode = {city: $city.val(), departement: $departements.val()};
 
+            var pathPostalCodeByCityAndDepartement = $("#pathPostalCodeByCityAndDepartement").attr("data-path");
+
             $.ajax({
-                url: 'demandes-en-cours/getPostalCodeByCityAndDepartement',
+                url: pathPostalCodeByCityAndDepartement,
                 type:'POST',
                 data: dataPostalCode,
                 dataType: 'json',

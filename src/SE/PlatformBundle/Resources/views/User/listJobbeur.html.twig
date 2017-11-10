@@ -63,13 +63,33 @@
       </div>
     </div>
 
+    {% if app.request.query.get('region') == NULL %}
+      {% set region = 0 %}
+      {% else %}
+          {% set region = app.request.query.get('region') %}
+    {% endif %}
+
+    {% if app.request.query.get('departement') == NULL %}
+      {% set departement = 0 %}
+      {% else %}
+          {% set departement = app.request.query.get('departement') %}
+    {% endif %}
+
+    {% if app.request.query.get('city') %}
+          {% set city = '&city=' ~ app.request.query.get('city') %}
+    {% endif %}
+
+    {% if app.request.query.get('postalCode') %}
+          {% set city = '&postalCode=' ~ app.request.query.get('postalCode') %}
+    {% endif %}
+
    <div class="row">
        <div class="col-md-12 text-center">
            <ul class="pagination">
                {% if nbPages > 1 %}
                    {% for p in range(1, nbPages) %}
                        <li{% if p == page %} class="active"{% endif %}>
-                           <a href="{{ path('se_platform_user_jobbeur_list', {'page': p}) }}">{{ p }}</a>
+                           <a href="{{ path('se_platform_user_jobbeur_list', {'page': p}) }}?search={{ app.request.query.get('search') }}&region={{ region }}&departement={{ departement }}{{city}}{{postalCode}}">{{ p }}</a>
                        </li>
                    {% endfor %}
                {% endif %}

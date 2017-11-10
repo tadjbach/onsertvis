@@ -19,19 +19,15 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
       if($nameOremail !== NULL && $nameOremail !== '')
       {
-          $page = 1;
           $qb->andWhere("user.username LIKE '%$nameOremail%'")->orWhere("user.email LIKE '%$nameOremail%'");
       }
       if($role !== NULL && $role !== '0')
       {
-          $page = 1;
-
           $role = $role === '1' ? 'ROLE_SUPER_ADMIN' : 'ROLE_AUTEUR';
           $qb->andWhere("user.roles LIKE '%$role%'");
       }
       if($state !== NULL && $state !== '0')
       {
-          $page = 1;
           $state = $state === '1' ? 1 : 0;
           $qb->andWhere($qb->expr()->eq('user.enabled', $state));
       }
@@ -58,32 +54,26 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
       if($title !== NULL && $title !== '')
       {
-          $page = 1;
           $qb->andWhere("user.username LIKE '%$title%'")->orWhere("user.detail LIKE '%$title%'");
       }
       if($category !== NULL && $category !== '0')
       {
-          $page = 1;
           $qb->andWhere($qb->expr()->eq('category.id', $category));
       }
       if($region !== NULL && $region !== '0')
       {
-          $page = 1;
           $qb->andWhere($qb->expr()->eq('region.id', $region));
       }
       if($departement !== NULL && $departement !== '0')
       {
-          $page = 1;
           $qb->andWhere($qb->expr()->eq('departement.id', $departement));
       }
       if($city !== NULL && $city !== '')
       {
-          $page = 1;
           $city = $this->slugify($city);
           $qb->andWhere("city.slug LIKE '%$city%'");
       }
       if ($postalCode !== null && $postalCode !== '') {
-          $page = 1;
           $qb->andWhere("postalCode.value LIKE '%$postalCode%'");
       }
 

@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class AdminController extends Controller
 {
   /* PRIVATE VAR */
-  private $nbPerPage = 20;
+  private $nbPerPage = 40;
   private $em;
 
       /* Search filter */

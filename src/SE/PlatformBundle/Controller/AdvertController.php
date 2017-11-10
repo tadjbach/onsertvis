@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AdvertController extends Controller
 {
     /* PRIVATE VAR */
-    private $nbPerPage = 20;
+    private $nbPerPage = 40;
     private $em;
 
         /* Search filter */
@@ -169,11 +169,28 @@ class AdvertController extends Controller
                                           $page,
                                           $this->nbPerPage);
 
+        $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
+
+        if ($nbPages < $page ) {
+          $page = 1;
+          $listAdverts = $em->getRepository('SEPlatformBundle:Advert')
+                              ->getAdvertList($this->search,
+                                            $this->category,
+                                            $this->region,
+                                            $this->departement,
+                                            $this->city,
+                                            $this->postalCode,
+                                            $page,
+                                            $this->nbPerPage);
+
+            $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
+        }
+
         $titleResult = count($listAdverts) == 0 ?'Aucune demande trouvée' :
                 (count($listAdverts) > 1 ? count($listAdverts).' demandes' :
             count($listAdverts).' demande');
 
-        $nbPages = ceil(count($listAdverts)/$this->nbPerPage);
+
 
         return $this->render('SEPlatformBundle:Advert:list.html.twig',
             array(

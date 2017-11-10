@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserController extends Controller
 {
-  private $nbPerPage = 18;
+  private $nbPerPage = 30;
   private $em;
   private $search;
   private $category;
@@ -160,11 +160,27 @@ class UserController extends Controller
                            $page,
                            $this->nbPerPage);
 
-     $titleResult = count($listJobbeurs) == 0 ?'Aucun jobber trouvé' :
-             (count($listJobbeurs) > 1 ? count($listJobbeurs).' jobbers' :
-         count($listJobbeurs).' jobber');
+                  $nbPages = ceil(count($listJobbeurs)/$this->nbPerPage);
 
-      $nbPages = ceil(count($listJobbeurs)/$this->nbPerPage);
+      if ($nbPages < $page ) {
+        $page = 1;
+        $listJobbeurs = $em->getRepository('SEPlatformBundle:User')
+             ->getJobberList(
+                              $this->search,
+                             $this->category,
+                             $this->region,
+                             $this->departement,
+                             $this->city,
+                             $this->postalCode,
+                             $page,
+                             $this->nbPerPage);
+
+        $nbPages = ceil(count($listJobbeurs)/$this->nbPerPage);
+      }
+
+      $titleResult = count($listJobbeurs) == 0 ?'Aucun jobber trouvé' :
+              (count($listJobbeurs) > 1 ? count($listJobbeurs).' jobbers' :
+          count($listJobbeurs).' jobber');
 
      return $this->render('SEPlatformBundle:User:listJobbeur.html.twig',
              array(

@@ -13,7 +13,7 @@
                                   <select class="form-control" name="category">
                                       <option value='0' >Toutes les catégories</option>
                                       {% for category in listCategory %}
-                                          <option {{ app.request.query.get('category')== category.id ? ' selected ' : ' ' }}
+                                          <option {{ app.request.query.get('category') == category.id ? ' selected ' : ' ' }}
                                               value={{ category.id }}>{{ category.labelNormal }}
                                           </option>
                                       {% endfor %}
