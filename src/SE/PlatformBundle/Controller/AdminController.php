@@ -11,6 +11,8 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use SE\PlatformBundle\Form\PotentialUserType;
+use SE\PlatformBundle\Entity\PotentialUser;
 
 class AdminController extends Controller
 {
@@ -87,6 +89,57 @@ class AdminController extends Controller
       /**
        * @Security("has_role('ROLE_SUPER_ADMIN')")
        */
+       public function listUsersPotentialAction(Request $request, $page){
+         $em = $this->getDoctrineManager();
+         $listPotentialUsers = $em->getRepository('SEPlatformBundle:PotentialUser')
+              ->getUserPotentialListAdmin($page, $this->nbPerPage);
+
+        $titleResult = count($listPotentialUsers) == 0 ?'Aucun utilisateur' :
+                (count($listPotentialUsers) > 1 ? count($listPotentialUsers).' utilisateurs' :
+            count($listPotentialUsers).' utilisateur');
+
+         $nbPages = ceil(count($listPotentialUsers)/$this->nbPerPage);
+
+        return $this->render('SEPlatformBundle:Admin:listPotentialUsers.html.twig',
+                array(
+                  'titleResult'=>$titleResult,
+                  'nbPages'      => $nbPages,
+                  'page'         => $page,
+                  'listPotentialUsers'    =>$listPotentialUsers
+                ));
+       }
+
+       /**
+        * @Security("has_role('ROLE_SUPER_ADMIN')")
+        */
+        public function addUsersPotentialAction(Request $request){
+          $em = $this->getDoctrineManager();
+          $session = $request->getSession();
+
+          $potentialUser = new PotentialUser();
+
+          $form = $this->createForm(PotentialUserType::class, $potentialUser);
+
+          if ($request->isMethod('POST')){
+              $form->handleRequest($request);
+
+              if ($form->isValid()){
+                 //$advert->getImage()->upload();
+                  $em->persist($potentialUser);
+                  $em->flush();
+
+                  return $this->redirectToRoute('se_platform_admin_list_users_portential');
+              }
+          }
+
+          return $this->render('SEPlatformBundle:Admin:addUsersPotentiel.html.twig', array(
+              'form' => $form->createView()
+          ));
+        }
+
+      /**
+       * @Security("has_role('ROLE_SUPER_ADMIN')")
+       */
         public function listUsersAction(Request $request, $page){
           $em = $this->getDoctrineManager();
 
@@ -100,7 +153,7 @@ class AdminController extends Controller
                  $page,
                  $this->nbPerPage);
 
-         $titleResult = count($listUsers) == 0 ?'Aucune utilisateur' :
+         $titleResult = count($listUsers) == 0 ?'Aucun utilisateur' :
                  (count($listUsers) > 1 ? count($listUsers).' utilisateurs' :
              count($listUsers).' utilisateur');
 
@@ -487,15 +540,7 @@ class AdminController extends Controller
           $userMailing = $request->query->get('_email_mailing');
           $bodyMailing = $request->query->get('_email_mailing_body');
 
-          $userNoactif = $request->query->get('_email_noactif');
-          $bodyNoactif = $request->query->get('_email_noactif_body');
-
-          $userNocomplet = $request->query->get('_email_nocomplet');
-          $bodyNocomplet = $request->query->get('_email_nocomplet_body');
-
           $this->sendMailing($request, $mailer, $userMailing, $bodyMailing);
-          $this->sendNoactif($request, $mailer, $userNoactif, $bodyNoactif);
-          $this->sendNocomplet($request, $mailer, $userNocomplet, $bodyNocomplet);
 
           return $this->render('SEPlatformBundle:Admin:mail.html.twig');
         }
@@ -516,45 +561,6 @@ class AdminController extends Controller
             $toList = explode(',' ,$userMailing);
             $mailer->sendAdminEmail($senderMailing, $subjectMailing, $toList, $bodyMailing);
             $session->getFlashBag()->add('sendSuccess','Mailing envoyé OK.');
-
-            return $this->redirectToRoute('se_platform_admin_mail');
-            }
-        }
-
-        private function sendNoactif(Request $request, $mailer, $userNoactif, $bodyNoactif){
-          $session = $request->getSession();
-
-          if ($userNoactif !== NULL && $userNoactif !== '' && $bodyNoactif !== NULL && $bodyNoactif !== ''){
-
-            $userNoactif =str_replace(' ', '', $userNoactif);
-            $userNoactif = strtolower($userNoactif);
-
-            $senderNoactif = $request->query->get('_title_noactif');
-            $subjectNoactif = $request->query->get('_subject_noactif');
-
-            $toList = explode(',' ,$userNoactif);
-
-            $mailer->sendAdminEmail($senderNoactif, $subjectNoactif, $toList, $bodyNoactif);
-            $session->getFlashBag()->add('sendSuccess','No actif mail envoyé OK.');
-
-            return $this->redirectToRoute('se_platform_admin_mail');
-            }
-        }
-
-        private function sendNocomplet(Request $request, $mailer, $userNocomplet, $bodyNocomplet){
-          $session = $request->getSession();
-
-          if ($userNocomplet !== NULL && $userNocomplet !== '' && $bodyNocomplet !== NULL && $bodyNocomplet !== ''){
-
-            $userNocomplet =str_replace(' ', '', $userNocomplet);
-            $userNocomplet = strtolower($userNocomplet);
-
-            $senderNocomplet = $request->query->get('_title_nocomplet');
-            $subjectNocomplet = $request->query->get('_subject_nocomplet');
-
-            $toList = explode(',' ,$userNocomplet);
-            $mailer->sendAdminEmail($senderNocomplet, $subjectNocomplet, $toList, $bodyNocomplet);
-            $session->getFlashBag()->add('sendSuccess','Non complet mail envoyé OK.');
 
             return $this->redirectToRoute('se_platform_admin_mail');
             }

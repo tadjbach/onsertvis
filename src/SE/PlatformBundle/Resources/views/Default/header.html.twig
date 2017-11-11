@@ -53,22 +53,25 @@
                                 <li role="separator" class="divider"></li>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                                 <li role="presentation" >
-                                   <a href="{{ path('se_platform_admin_list_users') }}">Liste des utilisateurs</a>
+                                   <a href="{{ path('se_platform_admin_list_users_portential') }}">Utilisateurs potentiels</a>
+                                </li>
+                                <li role="presentation" >
+                                   <a href="{{ path('se_platform_admin_list_users') }}">Utilisateurs inscrits</a>
                                  </li>
                                  <li role="presentation" >
-                                    <a href="{{ path('se_platform_admin_list_adverts') }}">Liste des demandes</a>
+                                    <a href="{{ path('se_platform_admin_list_adverts') }}">Demandes</a>
                                   </li>
                                   <li role="presentation" >
-                                     <a href="{{ path('se_platform_admin_list_auctions') }}">Liste des offres</a>
+                                     <a href="{{ path('se_platform_admin_list_auctions') }}">Offres</a>
                                    </li>
                                    <li role="presentation" >
-                                      <a href="{{ path('se_platform_admin_list_messages') }}">Liste des messages</a>
+                                      <a href="{{ path('se_platform_admin_list_messages') }}">Messages</a>
                                     </li>
                                     <li role="presentation" >
-                                       <a href="{{ path('se_platform_admin_list_comments') }}">Liste des avis</a>
+                                       <a href="{{ path('se_platform_admin_list_comments') }}">Avis</a>
                                      </li>
                                      <li role="presentation" >
-                                        <a href="{{ path('se_platform_admin_mail') }}">Envoi de mails</a>
+                                        <a href="{{ path('se_platform_admin_mail') }}">Mailing</a>
                                      </li>
                                 <li role="separator" class="divider"></li>
                                 {% endif %}

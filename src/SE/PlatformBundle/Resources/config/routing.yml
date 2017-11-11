@@ -13,6 +13,40 @@ se_platform_admin_list_users:
     requirements:
         page: \d*
 
+se_platform_admin_list_users_portential:
+    path:     /manage/users-potential/{page}
+    defaults:
+        _controller: SEPlatformBundle:Admin:listUsersPotential
+        page:   1
+    requirements:
+        page: \d*
+
+se_platform_users_portential_view:
+    path:      /manage/users-potential/view/{id}
+    defaults:
+        _controller: SEPlatformBundle:Admin:viewUsersPotential
+    requirements:
+        id: \d+
+
+se_platform_users_portential_add:
+    path:      /manage/users-potential/add
+    defaults:
+        _controller: SEPlatformBundle:Admin:addUsersPotential
+
+se_platform_users_portential_edit:
+    path:      /manage/users-potential/edit/{id}
+    defaults:
+        _controller: SEPlatformBundle:Admin:editUsersPotential
+    requirements:
+        id: \d+
+
+se_platform_users_portential_delete:
+    path:      /manage/users-potential/delete/{id}
+    defaults:
+        _controller: SEPlatformBundle:Admin:deleteUsersPotential
+    requirements:
+        id: \d+
+
 se_platform_admin_view_user:
     path:   /manage/user-{id}
     defaults:

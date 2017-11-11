@@ -1,26 +1,4 @@
+CREATE TABLE potential_user (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, isSociety TINYINT(1) NOT NULL, isJobber TINYINT(1) NOT NULL, email VARCHAR(255) NOT NULL, isSendMail TINYINT(1) NOT NULL, DateSendMail DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+ALTER TABLE advert CHANGE cpCity cpCity VARCHAR(100) DEFAULT NULL;
 
-/*
-SELECT * FROM (SELECT 	m.id as msgId,
-                                  m.user_sender,
-                                  m.advert_id,
-                                  m.content,
-                                  m.state as msgState,
-                                  m.isPublished as msgIsPublished,
-                                  m.isDeleted as msgIsDeleted,
-                                  m.dateCreation as msgDateCreation,
-                                  m.user_receiver,
-                                  a.user_id as advert_user_id
-                      FROM message m
-                      INNER JOIN advert a ON m.advert_id = a.id
-                      INNER JOIN user sender ON sender.id = m.user_sender
-                      INNER JOIN user receiver ON receiver.id = m.user_receiver
-                                  WHERE m.user_receiver = 56
-                                  AND m.isPublished = 1
-                                  AND m.isDeleted = 0
-                                  AND a.user_id = 56
-                              ORDER BY m.dateCreation  DESC
-                          )msg
-
-                       GROUP BY advert_id, user_sender
-                       ORDER BY msgDateCreation  DESC
-*/
+ALTER TABLE potential_user CHANGE DateSendMail DateSendMail DATETIME DEFAULT NULL;
