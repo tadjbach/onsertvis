@@ -28,6 +28,7 @@
                       <th>isSendMail</th>
                       <th>DateSendMail</th>
                       <th>isJobber</th>
+                      <th>Action</th>
                   </tr>
               </thead>
                 <tbody>
@@ -55,13 +56,18 @@
                            NULL
                         {% endif %}
                       </td>
-                     <td>
+                      <td>
                         {% if user.isJobber %}
                           <span class="label label-success">Oui</span>
                         {% else %}
                           <span class="label label-danger">Non</span>
                         {% endif %}
-                    </td>
+                      </td>
+                      <td>
+                        <a href="{{ path('se_platform_users_portential_edit' , {'id' : user.id }) }}" >
+                          Modifier
+                        </a>
+                      </td>
                     </tr>
                 {% endfor %}
                 </tbody>

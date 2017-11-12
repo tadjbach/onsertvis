@@ -137,6 +137,38 @@ class AdminController extends Controller
           ));
         }
 
+        /**
+         * @Security("has_role('ROLE_SUPER_ADMIN')")
+         */
+        public function editUsersPotentialAction($id, Request $request){
+
+          $em = $this->getDoctrineManager();
+          $session = $request->getSession();
+          $PotentialUser = $em->find('SEPlatformBundle:PotentialUser', $id);
+
+          if (null===$PotentialUser){
+                throw new NotFoundHttpException("Oops, user  que vous cherchez n'existe pas.");
+            }
+
+                $form = $this->createForm(PotentialUserType::class, $PotentialUser);
+
+                if ($request->isMethod('POST')){
+
+                    $form->handleRequest($request);
+                    if ($form->isValid()){
+
+                        $em->flush();
+
+                        return $this->redirectToRoute('se_platform_users_portential_edit',
+                                    array('id'=>$PotentialUser->getId()));
+                    }
+                  }
+
+            return $this->render('SEPlatformBundle:Admin:editUsersPotentiel.html.twig', array(
+                'form' => $form->createView()
+            ));
+        }
+
       /**
        * @Security("has_role('ROLE_SUPER_ADMIN')")
        */
