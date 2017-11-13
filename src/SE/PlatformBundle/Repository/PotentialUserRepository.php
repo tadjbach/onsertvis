@@ -15,10 +15,15 @@ class PotentialUserRepository extends \Doctrine\ORM\EntityRepository
 {
 
 
-  public function getUserPotentialListAdmin($page, $nbPerPage){
-      $qb = $this->createQueryBuilder('PotentialUser');
+  public function getUserPotentialListAdmin($page, $nameOremail, $nbPerPage){
+      $qb = $this->createQueryBuilder('potentialUser');
 
-      $qb->orderBy('PotentialUser.dateSendMail', 'DESC')->getQuery();
+      if($nameOremail !== NULL && $nameOremail !== '')
+      {
+          $qb->andWhere("potentialUser.name LIKE '%$nameOremail%'")->orWhere("potentialUser.email LIKE '%$nameOremail%'");
+      }
+
+      $qb->orderBy('potentialUser.dateSendMail', 'DESC')->getQuery();
       $qb->setFirstResult(($page-1) * $nbPerPage)->setMaxResults($nbPerPage);
 
       return new Paginator($qb, true);

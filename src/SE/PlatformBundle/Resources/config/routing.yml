@@ -34,14 +34,14 @@ se_platform_users_portential_add:
         _controller: SEPlatformBundle:Admin:addUsersPotential
 
 se_platform_users_portential_edit:
-    path:      /manage/users-potential/edit/{id}
+    path:      /users-potential/edit/{id}
     defaults:
         _controller: SEPlatformBundle:Admin:editUsersPotential
     requirements:
         id: \d+
 
 se_platform_users_portential_delete:
-    path:      /manage/users-potential/delete/{id}
+    path:      /users-potential/delete/{id}
     defaults:
         _controller: SEPlatformBundle:Admin:deleteUsersPotential
     requirements:

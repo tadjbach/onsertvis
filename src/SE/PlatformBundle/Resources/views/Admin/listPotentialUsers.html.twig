@@ -7,7 +7,8 @@
 {% block layout_header2 %}
   <div class="row">
     <div id="header" class="col-md-12">
-      <h3 class="cat-title-admin">Liste des utilisateurs</h3>
+      <h3 class="cat-title-admin">Liste des utilisateurs potentiels</h3>
+      {{ include('@SEPlatform/Admin/listPotentielUserFilter.html.twig') }}
     </div>
   </div>
 {% endblock %}
@@ -66,6 +67,9 @@
                       <td>
                         <a href="{{ path('se_platform_users_portential_edit' , {'id' : user.id }) }}" >
                           Modifier
+                        </a>
+                        <a href="{{ path('se_platform_users_portential_delete' , {'id' : user.id }) }}" >
+                          Supprimer
                         </a>
                       </td>
                     </tr>

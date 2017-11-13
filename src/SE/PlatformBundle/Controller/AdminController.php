@@ -91,8 +91,10 @@ class AdminController extends Controller
        */
        public function listUsersPotentialAction(Request $request, $page){
          $em = $this->getDoctrineManager();
+         $userNameOrEmail = $request->query->get('userNameOrEmail');
+
          $listPotentialUsers = $em->getRepository('SEPlatformBundle:PotentialUser')
-              ->getUserPotentialListAdmin($page, $this->nbPerPage);
+              ->getUserPotentialListAdmin($page, $userNameOrEmail, $this->nbPerPage);
 
         $titleResult = count($listPotentialUsers) == 0 ?'Aucun utilisateur' :
                 (count($listPotentialUsers) > 1 ? count($listPotentialUsers).' utilisateurs' :
@@ -103,6 +105,7 @@ class AdminController extends Controller
         return $this->render('SEPlatformBundle:Admin:listPotentialUsers.html.twig',
                 array(
                   'titleResult'=>$titleResult,
+                  'userNameOrEmail'     => $userNameOrEmail,
                   'nbPages'      => $nbPages,
                   'page'         => $page,
                   'listPotentialUsers'    =>$listPotentialUsers
@@ -169,6 +172,35 @@ class AdminController extends Controller
             ));
         }
 
+        /**
+         * @Security("has_role('ROLE_SUPER_ADMIN')")
+         */
+        public function deleteUsersPotentialAction($id, Request $request){
+          $em = $this->getDoctrineManager();
+          $session = $request->getSession();
+          $PotentialUser = $em->find('SEPlatformBundle:PotentialUser', $id);
+
+          if (null === $PotentialUser) {
+            throw new NotFoundHttpException("L'user d'id ".$id." n'existe pas.");
+          }
+
+          $form = $this->get('form.factory')->create();
+
+          if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+                  $em->remove($PotentialUser);
+                  $em->flush();
+
+                  $request->getSession()->getFlashBag()->add('info', "L'annonce a bien été supprimée.");
+
+                return $this->redirectToRoute('se_platform_admin_list_users_portential');
+            }
+
+            return $this->render('SEPlatformBundle:Admin:deleteUsersPotentiel.html.twig', array(
+              'form'   => $form->createView(),
+              'user'=> $PotentialUser
+            ));
+
+        }
       /**
        * @Security("has_role('ROLE_SUPER_ADMIN')")
        */

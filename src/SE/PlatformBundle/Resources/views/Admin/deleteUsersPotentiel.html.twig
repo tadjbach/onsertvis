@@ -1,0 +1,43 @@
+{% extends "SEPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Supprimer un compte d'un utilisateur potentiel
+{% endblock %}
+{% block description %}
+
+{% endblock %}
+
+{% block layout_header2 %}
+<div class="row">
+  <div id="header" class="col-md-12">
+      <h3 class="cat-title">Supprimer un compte d'un utilisateur potentiel</h3>
+  </div>
+</div>
+{% endblock %}
+{% block layout_body %}
+  <div class="row">
+    <div class="col-md-3"></div>
+       <div class="col-md-6">
+
+         <p>
+             Etes-vous certain de vouloir supprimer l'annonce "{{ user.name }}" ?
+           </p>
+
+         {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+         <form action="{{ path('se_platform_users_portential_delete', {'id': user.id}) }}" method="post">
+           <a href="{{ path('se_platform_admin_list_users_portential') }}" class="btn btn-default">
+             <i class="glyphicon glyphicon-chevron-left"></i>
+             Retour à la liste
+           </a>
+           {# Ici j'ai écrit le bouton de soumission à la main #}
+           <input type="submit" value="Supprimer" class="btn btn-danger" />
+           {# Ceci va générer le champ CSRF #}
+          {{ include('SEPlatformBundle:Admin:formUsersPotentiel.html.twig') }}
+         </form>
+
+
+
+       </div>
+       <div class="col-md-3"></div>
+ </div>
+{% endblock %}
