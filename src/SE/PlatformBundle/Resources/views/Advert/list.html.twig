@@ -31,6 +31,11 @@
                       <tr class="link" onclick="window.document.location='{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}';">
                 {% endif %}
                         <td>
+                          <h5 class="text-center hidden-xs hidden-sm">
+                              <div class="svg img-{{ advert.category.slug }}"></div>
+                          </h5>
+                        </td>
+                        <td>
                             <h5 class="truncate">
                               {% if  is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                 <a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}">{{ advert.title }}</a>

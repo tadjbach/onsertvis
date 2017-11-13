@@ -66,32 +66,32 @@
            <div class="row">
              <div class="col-sm-8">
                <div class="rating-block">
-                <div class="row">
-                     <div class="col-md-8">
+                 <div class="row">
+                     <div class="col-md-12">
                            <h3 class="truncate title-advert">{{ advert.title }}</h3>
-                           <p>Publiée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
-                           <p>Catégorie : {{ advert.category.labelNormal }}</p>
-                           <p>Ville : {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.labelNormal }})</p>
-                           <a type="button"
-                                class="btn btn-success btn-md hidden-xs hidden-sm"
-                                data-toggle="modal"
-                                role="button"
-                                data-toggle="modal"
-                                data-target="#modalAuctionShow" >
-                              Historique des offres
-                           </a>
-                           <a type="button"
-                                class="btn btn-success btn-block visible-xs visible-sm"
-                                data-toggle="modal"
-                                role="button"
-                                data-toggle="modal"
-                                data-target="#modalAuctionShow" >
-                              Historique des offres
-                           </a>
                       </div>
+                 </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <h5 class="cadre text-center hidden-xs hidden-sm" >
+                        <div class="svg-detail img-{{ advert.category.slug }}-detail"></div>
+                    </h5>
+                    <h4><p>Publiée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p></h4>
+                    <p><b>Catégorie :</b> {{ advert.category.labelNormal }}</p>
+                    <p><b>Ville :</b> {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.labelNormal }})</p>
+
+                  </div>
                       <div class="col-md-4">
                         <div class="form-group hidden-xs hidden-sm">
                            {{ include('@SEPlatform/User/userAdvertActivity.html.twig', {'user': advert.user }) }}
+                           <a type="button"
+                                class="btn btn-default btn-block"
+                                data-toggle="modal"
+                                role="button"
+                                data-toggle="modal"
+                                data-target="#modalAuctionShow" >
+                              Historique des offres
+                           </a>
                        </div>
                        <div class="form-group visible-xs visible-sm">
                            <hr class="visible-xs visible-sm">
@@ -105,6 +105,14 @@
                      <div class="col-md-12">
                        <div class="form-group visible-xs visible-sm">
                           {{ include('@SEPlatform/User/userAdvertActivity.html.twig', {'user': advert.user }) }}
+                          <a type="button"
+                               class="btn btn-default btn-block"
+                               data-toggle="modal"
+                               role="button"
+                               data-toggle="modal"
+                               data-target="#modalAuctionShow" >
+                             Historique des offres
+                          </a>
                       </div>
                       <div class="form-group hidden-xs hidden-sm">
                         <h4 class="profil-title text-left">Description</h4>
@@ -185,17 +193,16 @@
            role="dialog"
            aria-labelledby="modalAuctionShowLabel">
               <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="myModalLabel">Historique des offres</h4>
-                </div>
-                <div class="modal-body text-center">
-                  {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}
-                </div>
-              </div>
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Historique des offres</h4>
+                    </div>
+                    <div class="modal-body text-center">
+                      {{ render(controller('SEPlatformBundle:Auction:list', { 'advertId': advert.id })) }}
+                    </div>
+                  </div>
             </div>
-      </div>
     </div>
   </div>
 {% endblock %}

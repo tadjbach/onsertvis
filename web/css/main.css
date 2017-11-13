@@ -600,13 +600,9 @@ p.info{
 }
 
 .cadre{
-    border: 2px solid #484848;
+    border: 1px solid #ddd;
+    padding: 50px;
 }
-
-.cadre:hover{
-    border: 2px solid #007F6A;
-}
-
 .se-img {
   width: 70%;
   height: 50%;
@@ -946,6 +942,77 @@ blockquote, .well blockquote{
 .se-user-icon-advert{
   font-size: 150%;
 }
+
+.svg{
+  background-size: contain;
+  height: 128px;
+  width: 128px;
+  display: block;
+margin: auto;
+}
+
+.svg-detail{
+  background-size: contain;
+  height: 256px;
+  width: 256px;
+  display: block;
+  margin: auto;
+}
+
+.img-automobile, .img-automobile-detail{
+    background-image: url("../uploads/img/category/automobile.svg");
+}
+.img-batiment, .img-batiment-detail{
+    background-image: url("../uploads/img/category/batiment.svg");
+  }
+.img-enseignement, .img-enseignement-detail{
+    background-image: url("../uploads/img/category/enseignement.svg");
+}
+.img-formation, .img-formation-detail{
+    background-image: url("../uploads/img/category/formation.svg");
+}
+.img-environnement, .img-environnement-detail{
+    background-image: url("../uploads/img/category/environnement.svg");
+}
+.img-nettoyage, .img-nettoyage-detail{
+    background-image: url("../uploads/img/category/nettoyage.svg");
+}
+.img-services-a-la-personne, .img-services-a-la-personne-detail{
+    background-image: url("../uploads/img/category/services-a-la-personne.svg");
+}
+.img-soins-esthetique-coiffure, .img-soins-esthetique-coiffure-detail{
+    background-image: url("../uploads/img/category/soins-esthetique-coiffure.svg");
+}
+.img-sport, .img-sport-detail{
+    background-image: url("../uploads/img/category/sport.svg");
+}
+.img-animation, .img-animation-detail{
+    background-image: url("../uploads/img/category/animation.svg");
+}
+.img-transport{
+    background-image: url("../uploads/img/category/transport.svg");
+    width: 108px;
+}
+.img-transport-detail{
+    background-image: url("../uploads/img/category/transport.svg");
+    width: 216px;
+}
+
+.img-logistique{
+    background-image: url("../uploads/img/category/logistique.svg");
+      width: 104px;
+}
+.img-logistique-detail{
+    background-image: url("../uploads/img/category/logistique.svg");
+      width: 208px;
+}
+
+
+
+.img-autres, .img-autres-detail{
+    background-image: url("../uploads/img/category/autres.svg");
+}
+
 /* Iphone 6
 @media only screen and (min-width : 375px) and (max-width : 667px) {
 
