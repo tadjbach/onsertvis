@@ -16,75 +16,80 @@
   </div>
 {% endblock %}
 {% block layout_body %}
-  <div class="form-group">
-    <a class="btn btn-primary btn-md btn-block visible-xs visible-sm" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
-    <a class="btn btn-primary btn-md hidden-xs hidden-sm" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
-  </div>
-  <div class="form-group">
-         <h4 class="cat-title">{{ titleResult }}</h4>
-            <table class="table table-hover" id="tblGrid">
-                <tbody>
-                {% for advert in advertList %}
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                      <tr class="link" onclick="window.document.location='{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}';">
-                {% else %}
-                      <tr class="link" onclick="window.document.location='{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}';">
-                {% endif %}
-                        <td>
-                          <h5 class="text-center hidden-xs hidden-sm">
-                              <div class="svg img-{{ advert.category.slug }}"></div>
-                          </h5>
-                        </td>
-                        <td>
-                            <h5 class="truncate">
-                              {% if  is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                <a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}">{{ advert.title }}</a>
-                              {% else %}
-                              <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
-                              {% endif %}
 
-                                <h5 class="hidden-xs hidden-sm" >
-                                  {{ advert.dateCreation|date('d/m/Y') }}
-                                  à
-                                  {{ advert.dateCreation|date('H:i:s') }}
+  <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <a class="btn btn-primary btn-md btn-block visible-xs visible-sm" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
+          <a class="btn btn-primary btn-md hidden-xs hidden-sm" href="{{ path('se_platform_advert_add') }}">Déposer une nouvelle demande</a>
+        </div>
+        <div class="form-group">
+               <h4 class="cat-title">{{ titleResult }}</h4>
+                  <table class="table table-hover" id="tblGrid">
+                      <tbody>
+                      {% for advert in advertList %}
+                      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <tr class="link" onclick="window.document.location='{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}';">
+                      {% else %}
+                            <tr class="link" onclick="window.document.location='{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}';">
+                      {% endif %}
+                              <td>
+                                <h5 class="text-center hidden-xs hidden-sm">
+                                    <div class="svg img-{{ advert.category.slug }}"></div>
+                                    <p style="margin-top:10px">{{ advert.category.labelNormal }}</p>
                                 </h5>
-                                <h5 class="visible-xs visible-sm">
+                              </td>
+                              <td>
+                                  <h5 class="truncate">
+                                    {% if  is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                      <a class='se-tbl-link' href="{{ path('se_platform_auction_add', {'advertSlug': advert.slug,'advertId': advert.id}) }}">{{ advert.title }}</a>
+                                    {% else %}
+                                    <a class='se-tbl-link' href="{{ path('se_platform_advert_view', {'slug': advert.slug,'id': advert.id}) }}">{{ advert.title }}</a>
+                                    {% endif %}
+
+                                      <h5 class="hidden-xs hidden-sm" >
+                                        {{ advert.dateCreation|date('d/m/Y') }}
+                                        à
+                                        {{ advert.dateCreation|date('H:i:s') }}
+                                      </h5>
+                                      <h5 class="visible-xs visible-sm">
+
+                                      </h5>
+                                      <h5 class="visible-xs visible-sm">
+                                        <i>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</i>
+                                      </h5>
+                                  </h5>
+                              </td>
+                              <td class="visible-xs visible-sm">
+                                <h5>
+                                    {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                                </h5>
+                              </td>
+                              <td class="hidden-xs hidden-sm">
+                                <h5  >
                                   <i>{{ advert.category.labelNormal }}</i>
                                 </h5>
-                                <h5 class="visible-xs visible-sm">
-                                  <i>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</i>
+                              </td>
+                              <td class="hidden-xs hidden-sm">
+                                <h5>
+                                  <i>{{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.region.labelNormal }})</i>
                                 </h5>
-                            </h5>
-                        </td>
-                        <td class="visible-xs visible-sm">
-                          <h5>
-                              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-                          </h5>
-                        </td>
-                        <td class="hidden-xs hidden-sm">
-                          <h5  >
-                            <i>{{ advert.category.labelNormal }}</i>
-                          </h5>
-                        </td>
-                        <td class="hidden-xs hidden-sm">
-                          <h5>
-                            <i>{{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.value }})</i>
-                          </h5>
-                        </td>
-                        <td class="hidden-xs hidden-sm">
-                          <h5>
-                              {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
-                          </h5>
-                        </td>
-                    </tr>
-                    {% else %}
-                    <p>Si vous effectuez une recherche par mots-clés, vérifiez bien qu'il n'y ait pas de faute de frappe.</p>
-                {% endfor %}
+                              </td>
+                              <td class="hidden-xs hidden-sm">
+                                <h5>
+                                    {{ render(controller('SEPlatformBundle:Auction:getNbAuction', { 'advertId': advert.id })) }}
+                                </h5>
+                              </td>
+                          </tr>
+                          {% else %}
+                          <p>Si vous effectuez une recherche par mots-clés, vérifiez bien qu'il n'y ait pas de faute de frappe.</p>
+                      {% endfor %}
 
-                </tbody>
-            </table>
-  </div>
-
+                      </tbody>
+                  </table>
+        </div>
+      </div>
+</div>
 {% if app.request.query.get('category') == NULL %}
   {% set category = 0 %}
   {% else %}

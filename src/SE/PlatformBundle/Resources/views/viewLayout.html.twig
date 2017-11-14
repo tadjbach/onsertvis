@@ -78,7 +78,7 @@
                     </h5>
                     <h4><p>Publiée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p></h4>
                     <p><b>Catégorie :</b> {{ advert.category.labelNormal }}</p>
-                    <p><b>Ville :</b> {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.labelNormal }})</p>
+                    <p><b>Ville :</b> {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.labelNormal }} / {{ advert.PostalCode.city.departement.region.labelNormal }})</p>
 
                   </div>
                       <div class="col-md-4">
