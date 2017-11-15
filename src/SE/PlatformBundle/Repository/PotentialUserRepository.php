@@ -28,4 +28,17 @@ class PotentialUserRepository extends \Doctrine\ORM\EntityRepository
 
       return new Paginator($qb, true);
   }
+
+  public function findByMail($email){
+      $qb = $this->createQueryBuilder('potentialUser');
+
+      if($email !== NULL && $email !== '')
+      {
+          $qb->andWhere("potentialUser.email LIKE '%$email%'");
+      }
+
+      return $qb->getQuery()
+          ->getResult();
+
+  }
 }

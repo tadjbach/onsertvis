@@ -47,6 +47,13 @@ se_platform_users_portential_delete:
     requirements:
         id: \d+
 
+se_platform_users_portential_mail:
+    path:      /users-potential/mail/{id}
+    defaults:
+        _controller: SEPlatformBundle:Admin:mailUsersPotential
+    requirements:
+        id: \d+
+
 se_platform_admin_view_user:
     path:   /manage/user-{id}
     defaults:

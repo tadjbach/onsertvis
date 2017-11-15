@@ -13,6 +13,30 @@
   </div>
 {% endblock %}
 {% block layout_body %}
+<div class="row">
+<div class="col-md-2"></div>
+  <div class="col-md-8">
+      {% for flash_message in app.session.flashBag.get('success') %}
+          <div class="alert alert-success text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{ flash_message }}
+          </div>
+      {% endfor %}
+      {% for flash_message in app.session.flashBag.get('info') %}
+          <div class="alert alert-info text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{ flash_message }}
+          </div>
+      {% endfor %}
+      {% for flash_message in app.session.flashBag.get('error') %}
+          <div class="alert alert-danger text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{ flash_message }}
+          </div>
+      {% endfor %}
+  </div>
+  <div class="col-md-2"></div>
+</div>
   <div class="row">
        <div id="content" class="col-md-12">
          <div class="form-group">
@@ -68,8 +92,13 @@
                         <a href="{{ path('se_platform_users_portential_edit' , {'id' : user.id }) }}" >
                           Modifier
                         </a>
+                        |
                         <a href="{{ path('se_platform_users_portential_delete' , {'id' : user.id }) }}" >
                           Supprimer
+                        </a>
+                        |
+                        <a href="{{ path('se_platform_users_portential_mail' , {'id' : user.id }) }}" >
+                          Mail
                         </a>
                       </td>
                     </tr>

@@ -119,22 +119,30 @@ class AdminController extends Controller
           $em = $this->getDoctrineManager();
           $session = $request->getSession();
 
-          $potentialUser = new PotentialUser();
+          $email = $request->request->get('se_platformbundle_potentialuser')['email'];
 
+          $ExistPotentialUser = $em->getRepository('SEPlatformBundle:PotentialUser')->findByMail($email);
+          $potentialUser = new PotentialUser();
           $form = $this->createForm(PotentialUserType::class, $potentialUser);
 
-          if ($request->isMethod('POST')){
-              $form->handleRequest($request);
 
-              if ($form->isValid()){
-                 //$advert->getImage()->upload();
-                  $em->persist($potentialUser);
-                  $em->flush();
+          if ($ExistPotentialUser != null and $ExistPotentialUser[0] != null){
+                $request->getSession()->getFlashBag()->add('error', "L'utilisateur existe déja");
+            }
+            else {
 
-                  return $this->redirectToRoute('se_platform_admin_list_users_portential');
+              if ($request->isMethod('POST')){
+                  $form->handleRequest($request);
+
+                  if ($form->isValid()){
+                     //$advert->getImage()->upload();
+                      $em->persist($potentialUser);
+                      $em->flush();
+                      $request->getSession()->getFlashBag()->add('success', "L'utilisateur ajouté avec succes");
+                      return $this->redirectToRoute('se_platform_admin_list_users_portential');
+                  }
               }
-          }
-
+            }
           return $this->render('SEPlatformBundle:Admin:addUsersPotentiel.html.twig', array(
               'form' => $form->createView()
           ));
@@ -162,6 +170,8 @@ class AdminController extends Controller
 
                         $em->flush();
 
+                        $request->getSession()->getFlashBag()->add('info', "L'utilisateur a bien été modifié.");
+
                         return $this->redirectToRoute('se_platform_users_portential_edit',
                                     array('id'=>$PotentialUser->getId()));
                     }
@@ -172,6 +182,42 @@ class AdminController extends Controller
             ));
         }
 
+        /**
+         * @Security("has_role('ROLE_SUPER_ADMIN')")
+         */
+        public function mailUsersPotentialAction($id, Request $request){
+              $em = $this->getDoctrineManager();
+              $mailer  = $this->get('se_platform.mailer');
+              $session = $request->getSession();
+              $subjectMailing = 'Ce mail est pour vous';
+
+              $PotentialUser = $em->find('SEPlatformBundle:PotentialUser', $id);
+              $PotentialUser->setIsSendMail(1);
+              $PotentialUser->setDateSendMail(new \DateTime());
+
+              $em->persist($PotentialUser);
+              $em->flush();
+
+              if ($PotentialUser->getIsJobber()) {
+                $senderMailing = 'Vous proposez vos services ? Service Enchère';
+                $body = $this->renderView(
+                     'SEPlatformBundle:Admin:mailPotentielJobber.html.twig',
+                     array('PotentialUser'=> $PotentialUser)
+                 );
+              }
+              else {
+                  $senderMailing = 'Vous cherchez une aide ? Service Enchère';
+                  $body = $this->renderView(
+                       'SEPlatformBundle:Admin:mailPotentielUser.html.twig',
+                       array('PotentialUser'=> $PotentialUser)
+                   );
+              }
+
+               $mailer->sendAdminEmail($senderMailing, $subjectMailing, $PotentialUser->getEmail(), $body);
+               $session->getFlashBag()->add('info','Mail envoyé à '.$PotentialUser->getEmail());
+
+               return $this->redirectToRoute('se_platform_admin_list_users_portential');
+        }
         /**
          * @Security("has_role('ROLE_SUPER_ADMIN')")
          */
@@ -190,7 +236,7 @@ class AdminController extends Controller
                   $em->remove($PotentialUser);
                   $em->flush();
 
-                  $request->getSession()->getFlashBag()->add('info', "L'annonce a bien été supprimée.");
+                  $request->getSession()->getFlashBag()->add('info', "L'utilisateur a bien été supprimée.");
 
                 return $this->redirectToRoute('se_platform_admin_list_users_portential');
             }
