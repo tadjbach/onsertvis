@@ -76,7 +76,7 @@
                     <h5 class="cadre text-center hidden-xs hidden-sm" >
                         <div class="svg-detail img-{{ advert.category.slug }}-detail"></div>
                     </h5>
-                    <h4><p>Publiée le : {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p></h4>
+                    <p><b>Publiée le :</b> {{ advert.dateCreation|date('d/m/Y') }} à {{ advert.dateCreation|date('H:m') }}</p>
                     <p><b>Catégorie :</b> {{ advert.category.labelNormal }}</p>
                     <p><b>Ville :</b> {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} ({{ advert.PostalCode.city.departement.labelNormal }} / {{ advert.PostalCode.city.departement.region.labelNormal }})</p>
 
