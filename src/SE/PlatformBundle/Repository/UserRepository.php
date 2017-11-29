@@ -40,6 +40,8 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
   public function getJobberList($title, $category, $region, $departement, $city, $postalCode, $page, $nbPerPage){
       $qb = $this->createQueryBuilder('user')
+              ->leftJoin('user.categories', 'category')
+              ->addSelect('category')
               ->innerJoin('user.postalCode', 'postalCode')
               ->addSelect('postalCode')
               ->innerJoin('postalCode.city', 'city')

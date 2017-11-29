@@ -93,8 +93,7 @@ class ProfileFormType extends AbstractType
                       'class'=> 'SEPlatformBundle:Category',
                       'choice_label'=>'labelNormal',
                       'multiple'=>true,
-                      'expanded' => true,
-                      'disabled' => true))
+                      'expanded' => true))
 
           ->add('calendar', EntityType::class,
                   array('label'=>'Vos disponibilités',

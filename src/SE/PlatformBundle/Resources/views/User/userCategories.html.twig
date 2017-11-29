@@ -1,0 +1,6 @@
+  {% if user.isJobber %}
+        <h5 class="profil-title">Services & Compétences</h5>
+        {% for cat in category %}
+              <span class="label label-default{% if cat in user.categories %} label-success{% else %} badge-disable{% endif %}">{{ cat.labelNormal }}</span>
+        {% endfor %}
+{% endif %}

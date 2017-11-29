@@ -231,6 +231,7 @@ class ProfileController extends Controller
 
       $calendar = $em->getRepository('SEPlatformBundle:Calendar')->findAll();
       $payment = $em->getRepository('SEPlatformBundle:payment')->findAll();
+      $category = $em->getRepository('SEPlatformBundle:category')->findAll();
 
       if (!$user){
           throw new NotFoundHttpException("Cet utilisateur n'existe pas".$userId );
@@ -289,6 +290,7 @@ class ProfileController extends Controller
                 'user' => $user,
                 'listComment'=>$listComment,
                 'calendar' => $calendar,
+                 'category'=>$category,
                 'payment' => $payment,
                 'countPublishAdvert'=>count($listPublishAdvert),
                 'titlePublishAdvert'=>$titlePublishAdvert,

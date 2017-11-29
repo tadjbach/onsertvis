@@ -50,18 +50,16 @@
                 <a type="button" class="btn btn-success" data-toggle="modal" role="button" data-toggle="modal" data-target="#modalDetailShow">+ d'infos</a>
             {% endif %}
         </div>
+        {{ include('@SEPlatform/User/commentList.html.twig', {'listComment': listComment }) }}
       </div>
       <div class="col-sm-5">
             {{ include('@SEPlatform/User/userActivity.html.twig', {'user': user }) }}
       </div>
   </div>
-  <hr>
+
     <div class="row">
-      <div class="col-sm-7">
-        {{ include('@SEPlatform/User/commentList.html.twig', {'listComment': listComment }) }}
-    </div>
       <div class="col-sm-5">
-        {{ include('@SEPlatform/User/userSendMessage.html.twig', {'user': user }) }}
+        
       </div>
 </div>
 

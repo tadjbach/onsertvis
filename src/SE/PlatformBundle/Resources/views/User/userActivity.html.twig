@@ -38,4 +38,8 @@
       Me contacter
     {% endfor %}
 </p>
+<hr>
+{{ include('@SEPlatform/User/userCategories.html.twig', {'user': user }) }}
 </div>
+
+{{ include('@SEPlatform/User/userSendMessage.html.twig', {'user': user }) }}

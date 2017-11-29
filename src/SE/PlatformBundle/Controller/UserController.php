@@ -151,7 +151,7 @@ class UserController extends Controller
 
       $listJobbeurs = $em->getRepository('SEPlatformBundle:User')
            ->getJobberList(
-                            $this->search,
+                           $this->search,
                            $this->category,
                            $this->region,
                            $this->departement,
