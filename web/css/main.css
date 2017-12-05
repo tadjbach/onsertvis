@@ -1007,7 +1007,12 @@ margin: auto;
       width: 208px;
 }
 
-
+.img-animaux, .img-animaux-detail{
+    background-image: url("../uploads/img/category/animaux.svg");
+}
+.img-admin-task, .img-admin-task-detail{
+    background-image: url("../uploads/img/category/admin-task.svg");
+}
 
 .img-autres, .img-autres-detail{
     background-image: url("../uploads/img/category/autres.svg");
