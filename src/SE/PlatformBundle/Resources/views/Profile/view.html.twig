@@ -1,10 +1,10 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Voir le profil de {{user}} sur Service Enchère
+    Voir le profil de {{user}} sur Top Artisan
 {% endblock %}
 {% block description %}
-  <meta name="description" content="Vous proposez un service une aide, soyez Jobber sur Service Enchère." />
+  <meta name="description" content="Vous proposez un service une aide, soyez l'artisan sur Top Artisan." />
 {% endblock %}
 
 {% block layout_header2 %}
@@ -19,8 +19,8 @@
               si vous êtes <b>{{ user }}</b> merci de le
               <a class="alert-link" href="{{ path('fos_user_profile_edit') }}" >compléter.</a>
           </div>
-          <a class="btn btn-primary hidden-xs hidden-sm" href="{{ path('se_platform_user_jobbeur_list') }}"><i class="glyphicon glyphicon-chevron-left"></i> Liste des Jobbers</a>
-          <a class="btn btn-block btn-primary visible-xs visible-sm" href="{{ path('se_platform_user_jobbeur_list') }}"><i class="glyphicon glyphicon-chevron-left"></i> Liste des Jobbers</a>
+          <a class="btn btn-primary hidden-xs hidden-sm" href="{{ path('se_platform_user_jobbeur_list') }}"><i class="glyphicon glyphicon-chevron-left"></i> Liste des Artisans</a>
+          <a class="btn btn-block btn-primary visible-xs visible-sm" href="{{ path('se_platform_user_jobbeur_list') }}"><i class="glyphicon glyphicon-chevron-left"></i> Liste des Artisans</a>
       {% else %}
       {% block fos_user_content %}
           {% include "@FOSUser/Profile/view_content.html.twig" %}

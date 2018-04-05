@@ -199,14 +199,14 @@ class AdminController extends Controller
               $em->flush();
 
               if ($PotentialUser->getIsJobber()) {
-                $senderMailing = 'Vous proposez vos services ? Service Enchère';
+                $senderMailing = 'Vous proposez vos services ? Top Artisan';
                 $body = $this->renderView(
                      'SEPlatformBundle:Admin:mailPotentielJobber.html.twig',
                      array('PotentialUser'=> $PotentialUser)
                  );
               }
               else {
-                  $senderMailing = 'Vous cherchez une aide ? Service Enchère';
+                  $senderMailing = 'Vous cherchez un artisan ? Top Artisan';
                   $body = $this->renderView(
                        'SEPlatformBundle:Admin:mailPotentielUser.html.twig',
                        array('PotentialUser'=> $PotentialUser)
@@ -535,7 +535,7 @@ class AdminController extends Controller
                           array('user'=> $user)
                       );
 
-                  $mailer->sendAdminEmail("Service Enchère", "Votre profil n'est pas complet", $user->getEmail(), $body);
+                  $mailer->sendAdminEmail("Top Artisan", "Votre profil n'est pas complet", $user->getEmail(), $body);
 
                    return $this->redirectToRoute('se_platform_admin_view_user', array('id'=>$id));
                  }
@@ -553,7 +553,7 @@ class AdminController extends Controller
                            array('user'=> $user)
                        );
 
-                   $mailer->sendAdminEmail("Service Enchère", "Validation de votre adresse mail", $user->getEmail(), $body);
+                   $mailer->sendAdminEmail("Top Artisan", "Validation de votre adresse mail", $user->getEmail(), $body);
 
                     return $this->redirectToRoute('se_platform_admin_view_user', array('id'=>$id));
                   }

@@ -403,7 +403,7 @@ class AdvertController extends Controller
              );
 
           $session->getFlashBag()->add('addSuccess',"Demande désactivée avec succes, elle n'est plus visible sur le site.");
-          $session->getFlashBag()->add('info',"Si pour cette demande vous avez trouvé un Jobber, n'oubliez pas de l'évaluer.");
+          $session->getFlashBag()->add('info',"Si pour cette demande vous avez trouvé un Artisan, n'oubliez pas de l'évaluer.");
           $mailer->sendEmail('Désactivation de votre demande',  'Désactivation de votre demande '.$advert->getTitle(), $this->getUser()->getEmail(), $body);
         }
         else {

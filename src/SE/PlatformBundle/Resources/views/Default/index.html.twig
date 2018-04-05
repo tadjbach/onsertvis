@@ -3,22 +3,22 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-      Service Enchère: Prestation, jobbing, services entre particuliers
+      Top Artisan : Annuaire, adresses, artisan en France
 {% endblock %}
 {% block description %}
-  <meta name="description" content="Plateforme de prestation jobbing et de services entre particuliers aux enchères inversées. Simple gratuit est efficace." />
+  <meta name="description" content="Plateforme de prestation jobbing et de services entre particuliers. Simple gratuit est efficace." />
 {% endblock %}
 
 {% block layout_header2 %}
-      <div class="slogan"><p>Le bon service au bon prix !</p></div>
+      <div class="slogan"><p>Le meilleur artisan au bon prix !</p></div>
       <div class="hidden-xs hidden-sm" >
           <div class="col-md-6">
-              <p class="cat-title">Vous cherchez une aide ?</p>
+              <p class="cat-title">Vous cherchez un artisan ?</p>
               <h5>
                   <span class="label label-default se-badge">1</span>
-                  <a class="slogan-link" href="{{ path('se_platform_advert_add') }}">Postez votre demande</a>
+                  <a class="slogan-link" href="{{ path('se_platform_user_jobbeur_list') }}">Consulter l'annuaire des artisans</a>
               </h5>
-              <h5><span class="label label-default se-badge">2</span> Recevez des offres des <a class="slogan-link" href="{{ path('se_platform_user_jobbeur_list') }}">Jobbers</a></h5>
+              <h5><span class="label label-default se-badge">2</span> Demandez des devis</h5>
               <h5><span class="label label-default se-badge">3</span> Choisissez la meilleure offre</h5>
           </div>
           <div class="col-md-6">
@@ -31,8 +31,8 @@
                   <a class="slogan-link" href="{{ path('fos_user_registration_register') }}">Inscrivez vous</a>
                   {% endif %}
               </h5>
-              <h5><span class="label label-default se-badge">2</span> Proposez des offres</h5>
-              <h5><span class="label label-default se-badge">3</span> Retrouver le demandeur</h5>
+              <h5><span class="label label-default se-badge">2</span> Recevez des demandes de devis</h5>
+              <h5><span class="label label-default se-badge">3</span> Proposez la meilleure offre</h5>
           </div>
       </div>
 {% endblock %}
@@ -45,7 +45,7 @@
       <ul class="ul-cat">
         {% for category in listCategory %}
               <li>
-                  <a class="cat-link" href="{{ path('se_platform_advert_list' , {'category' : category.id }) }}">
+                  <a class="cat-link" href="{{ path('se_platform_user_jobbeur_list' , {'category' : category.id }) }}">
                       {{ category.labelNormal }}
                   </a>
               </li>
@@ -56,7 +56,7 @@
       <ul class="ul-cat">
         {% for region in listRegion %}
         <li>
-            <a class="cat-link" href="{{ path('se_platform_advert_list', { 'region': region.id }) }}">
+            <a class="cat-link" href="{{ path('se_platform_user_jobbeur_list', { 'region': region.id }) }}">
                 {{ region.labelNormal }}
             </a>
         </li>
@@ -69,6 +69,6 @@
   </div>
 </div>
 <div class="row text-center">
-<p class="pad-msg">Sur le site <a class='contact' href="http://www.serviceenchere.fr">www.serviceenchere.fr</a>, vous pouvez déposer, consulter des demandes et proposer des offres <b>gratuitement</b>.</p>
+<p class="pad-msg">Sur le site <a class='contact' href="http://www.topartisan.fr">www.topartisan.fr</a>, vous pouvez déposer, consulter des demandes et proposer des offres <b>gratuitement</b>.</p>
 </div>
 {% endblock %}

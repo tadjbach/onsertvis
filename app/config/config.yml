@@ -83,20 +83,20 @@ fos_user:
     user_class:    SE\PlatformBundle\Entity\User   # La classe de l'entité User que nous utilisons
     from_email:
             address: noreplay@serviceenchere.fr
-            sender_name: Service Enchère
+            sender_name: Top Artisan
     registration:
         confirmation:
             enabled: true
             template: SEPlatformBundle:Registration:email.html.twig
             from_email:
                 address: noreplay@serviceenchere.fr
-                sender_name: Service Enchère - Validation d'adresse mail
+                sender_name: Top Artisan - Validation d'adresse mail
     resetting:
         email:
             template: SEPlatformBundle:Resetting:email.html.twig
             from_email:
                 address:        noreplay@serviceenchere.fr
-                sender_name:    Service Enchère - Réinitialisation de mot de passe
+                sender_name:    Top Artisan - Réinitialisation de mot de passe
     profile:
         form:
             type: SE\PlatformBundle\Form\Type\ProfileFormType

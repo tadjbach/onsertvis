@@ -4,7 +4,7 @@
   Modifier la demande "{{advert.title}}" - {{advert.category.labelNormal}}
 {% endblock %}
 {% block description %}
-  <meta name="description" content="Vous n'avez pas trouvé un bon jobber pour votre demande, consultez la page des jobbers." />
+  <meta name="description" content="Vous n'avez pas trouvé un bon Artisan pour votre demande, consultez la page des Artisans." />
 {% endblock %}
 
 {% block layout_header2 %}
@@ -30,7 +30,7 @@
                   La demande est hors ligne.
                   <br>
                     {% if advert.commentState == 1 %}
-                      Car vous avez déjà trouvé un jobber.
+                      Car vous avez déjà trouvé un Artisan.
                     {% endif %}
               </div>
               {% else %}

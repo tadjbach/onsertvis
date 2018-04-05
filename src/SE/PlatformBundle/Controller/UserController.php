@@ -178,9 +178,9 @@ class UserController extends Controller
         $nbPages = ceil(count($listJobbeurs)/$this->nbPerPage);
       }
 
-      $titleResult = count($listJobbeurs) == 0 ?'Aucun jobber trouvé' :
-              (count($listJobbeurs) > 1 ? count($listJobbeurs).' jobbers' :
-          count($listJobbeurs).' jobber');
+      $titleResult = count($listJobbeurs) == 0 ?'Aucun artisan trouvé' :
+              (count($listJobbeurs) > 1 ? count($listJobbeurs).' artisans' :
+          count($listJobbeurs).' Artisan');
 
      return $this->render('SEPlatformBundle:User:listJobbeur.html.twig',
              array(

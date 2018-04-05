@@ -89,7 +89,7 @@ class ProfileFormType extends AbstractType
                   'expanded' => true))
 
           ->add('categories', EntityType::class,
-                  array('label'=>'Vos services préférés (disponible bientôt)',
+                  array('label'=>'Vos services proposés',
                       'class'=> 'SEPlatformBundle:Category',
                       'choice_label'=>'labelNormal',
                       'multiple'=>true,
@@ -109,7 +109,7 @@ class ProfileFormType extends AbstractType
                       array('label'=> 'Afficher mes information de contact sur le site.', 'required' => false))
 
             ->add('isJobber', CheckboxType::class,
-                      array('label'=> 'Je souhaite figurer dans la liste des jobbers.', 'required' => false))
+                      array('label'=> 'Je souhaite figurer dans la liste des Artisans.', 'required' => false))
 
           ->add('email', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\EmailType'),
                   array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'));

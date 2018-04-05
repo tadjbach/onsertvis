@@ -20,10 +20,10 @@
             <ul class="nav navbar-nav navbar-right">
               <li>
                   <a href="{{ path('se_platform_user_jobbeur_list')  }}" >
-                      Jobbers
+                      Annuaire des artisans
                   </a>
               </li>
-                <li>
+              <!--  <li>
                     <a href="{{ path('se_platform_advert_list')  }}" >
                         Demandes
                     </a>
@@ -32,7 +32,7 @@
                     <a href="{{ path('se_platform_advert_add') }}" >
                         Déposer une demande
                     </a>
-                </li>
+                </li>-->
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li role="presentation" class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#"
@@ -42,13 +42,15 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
+                              <!--  <li>
                                   <a href="{{ path('se_platform_advert_user_list') }}">Mes demandes {% if app.user.isNewAuction or app.user.isValideAuction %}<span class="label label-danger">1</span>{% endif %}</a>
                                 </li>
                                 <li>
                                   <a href="{{ path('se_platform_auction_user_send') }}">Mes offres</a>
                                 </li>
-                                  <li><a href="{{ path('se_platform_comment_user_list') }}">Mes avis</a></li>
+                                  <li>
+                                    <a href="{{ path('se_platform_comment_user_list') }}">Mes avis</a>
+                                  </li>-->
                                 <li><a href="{{ path('se_platform_user_edit') }}" >Mon compte</a></li>
                                 <li role="separator" class="divider"></li>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}

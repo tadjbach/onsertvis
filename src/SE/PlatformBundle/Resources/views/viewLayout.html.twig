@@ -1,10 +1,10 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-  {{advert.title}} dans {{advert.category.labelNormal}} dans la ville de {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} département de {{ advert.PostalCode.city.departement.labelNormal }} Service Enchère
+  {{advert.title}} dans {{advert.category.labelNormal}} dans la ville de {{ advert.PostalCode.value }} {{ advert.PostalCode.city.labelNormal }} département de {{ advert.PostalCode.city.departement.labelNormal }} Top Artisan
 {% endblock %}
 {% block description %}
-  <meta name="description" content="Vous cherchez une aide similaire à {{advert.title}} - {{advert.id}} dans {{ advert.PostalCode.city.departement.labelNormal }} ou dans la ville de {{ advert.PostalCode.city.labelNormal }}, postez votre demande dans la catégorie {{advert.category.labelNormal}} et trouvez le jobber compétente près de chez vous!" />
+  <meta name="description" content="Vous cherchez une aide similaire à {{advert.title}} - {{advert.id}} dans {{ advert.PostalCode.city.departement.labelNormal }} ou dans la ville de {{ advert.PostalCode.city.labelNormal }}, postez votre demande dans la catégorie {{advert.category.labelNormal}} et trouvez le artisan compétente près de chez vous!" />
 {% endblock %}
 
 {% block layout_header2 %}

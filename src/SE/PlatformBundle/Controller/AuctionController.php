@@ -368,7 +368,7 @@ class AuctionController extends Controller
               $mailer->sendEmail('Offre acceptée', 'Votre offre a été acceptée', $userAuction->getEmail(), $body_auction);
               $mailer->sendEmail('Offre acceptée', 'Vous avez accepté une offre', $user->getEmail(), $body_advert);
 
-              $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'offre à ".$auctionAccept->getValue()." €, il vous reste à contacter le jobber pour convenir d'un rendez-vous");
+              $session->getFlashBag()->add('addSuccess',"Vous avez bien accepté l'offre à ".$auctionAccept->getValue()." €, il vous reste à contacter le Artisan pour convenir d'un rendez-vous");
 
               return $this->redirectToRoute('se_platform_auction_user_receive');
           }
