@@ -109,7 +109,7 @@ class ProfileFormType extends AbstractType
                       array('label'=> 'Afficher mes information de contact sur le site.', 'required' => false))
 
             ->add('isJobber', CheckboxType::class,
-                      array('label'=> 'Je souhaite figurer dans la liste des Artisans.', 'required' => false))
+                      array('label'=> 'Je souhaite figurer dans la liste des artisans.', 'required' => false))
 
           ->add('email', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\EmailType'),
                   array('label' => 'form.email', 'translation_domain' => 'FOSUserBundle'));

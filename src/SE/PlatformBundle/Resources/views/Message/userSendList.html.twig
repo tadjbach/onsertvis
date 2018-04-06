@@ -1,16 +1,16 @@
 {% extends "SEPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Ma messagerie en tant que Artisan Top Artisan
+    Ma messagerie en tant qu'artisan - Top Artisan
 {% endblock %}
 {% block description %}
-  <meta name="description" content="Ma messagerie de jobbing en tant que Artisan Top Artisan." />
+  <meta name="description" content="Ma messagerie de jobbing en tant qu'artisan Top Artisan." />
 {% endblock %}
 
 {% block layout_header2 %}
 <div class="row">
   <div id="header" class="col-md-12">
-    <h3 class="cat-title">Messages en tant que Artisan</h3>
+    <h3 class="cat-title">Messages en tant qu'artisan</h3>
     {{ include('@SEPlatform/Message/listUserSendFilter.html.twig') }}
   </div>
 </div>
@@ -27,7 +27,7 @@
          {% else %}
          <ul class="nav nav-tabs nav-justified">
            <li role="presentation" ><a href="{{ path('se_platform_message_user_receive') }}">Messages en tant que demandeur</a></li>
-           <li role="presentation" class="active"><a href="{{ path('se_platform_message_user_send') }}">Messages en tant que Artisan</a></li>
+           <li role="presentation" class="active"><a href="{{ path('se_platform_message_user_send') }}">Messages en tant qu'artisan</a></li>
          </ul>
         <h4 class="cat-title">{{countMessage}}</h4>
         <table class="table" id="tblGrid">
