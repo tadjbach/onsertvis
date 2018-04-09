@@ -82,20 +82,20 @@ fos_user:
     firewall_name: main                      # Le nom du firewall derrière lequel on utilisera ces utilisateurs
     user_class:    SE\PlatformBundle\Entity\User   # La classe de l'entité User que nous utilisons
     from_email:
-            address: noreplay@serviceenchere.fr
+            address: noreplay@topartisan.fr
             sender_name: Top Artisan
     registration:
         confirmation:
             enabled: true
             template: SEPlatformBundle:Registration:email.html.twig
             from_email:
-                address: noreplay@serviceenchere.fr
+                address: noreplay@topartisan.fr
                 sender_name: Top Artisan - Validation d'adresse mail
     resetting:
         email:
             template: SEPlatformBundle:Resetting:email.html.twig
             from_email:
-                address:        noreplay@serviceenchere.fr
+                address:        noreplay@topartisan.fr
                 sender_name:    Top Artisan - Réinitialisation de mot de passe
     profile:
         form:

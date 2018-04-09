@@ -92,7 +92,7 @@ class ResettingController extends Controller
 
             $mailer->sendEmail('Demande de mot de passe',
                                 'Demande de mot de passe',
-                                'noreplay@serviceenchere.fr',
+                                'noreplay@topartisan.fr',
                                 "Le client ".$user->getEmail().
                                 " vient de demander un nouveau mot de passe token = ".$request->getSchemeAndHttpHost()."/resetting/reset/".$user->getConfirmationToken());
 

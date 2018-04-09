@@ -16,9 +16,9 @@ class Mailer{
 
     $message = \Swift_Message::newInstance()
          ->setSubject($subject)
-         ->setFrom(array('noreplay@serviceenchere.fr' => 'Top Artisan - '.$senderName))
-         ->setTo($userReceiverMail, 'noreplay@serviceenchere.fr')
-         ->setBcc('noreplay@serviceenchere.fr')
+         ->setFrom(array('noreplay@topartisan.fr' => 'Top Artisan - '.$senderName))
+         ->setTo($userReceiverMail, 'noreplay@topartisan.fr')
+         ->setBcc('noreplay@topartisan.fr')
          ->setBody($body,'text/html');
 
        $this->mailer->send($message);
@@ -29,8 +29,8 @@ class Mailer{
 
     $message = \Swift_Message::newInstance()
          ->setSubject($subject)
-         ->setFrom(array('contact@serviceenchere.fr' => $sender))
-         ->setTo('noreplay@serviceenchere.fr')
+         ->setFrom(array('contact@topartisan.fr' => $sender))
+         ->setTo('noreplay@topartisan.fr')
          ->setBcc($receiver)
          ->setBody($body,'text/html');
 
