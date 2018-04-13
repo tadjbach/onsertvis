@@ -5,7 +5,10 @@
 /* #007F6A -> vert/bleu */
 
 /* #2A0540 -> violet */
-/* #E5DF16 -> jaune fluo */
+/* #E5DF16 -> jaune fluo
+da912a -> Orange
+1cd2cc -> Bleu turquoise
+*/
 
 html, body{
     font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -86,12 +89,12 @@ html, body{
     margin-top: -10px;
 }
 .logo_img{
-  width: 220px;
+  width: 230px;
   height: 60px;
-  background-size: 220px 60px;
+  background-size: 230px 60px;
   vertical-align: text-top;
   background-repeat: no-repeat;
-  background-image: url(img/BT-01.jpg);
+  background-image: url(img/TopArtisan-01.png);
 }
 
 .label{
@@ -104,11 +107,13 @@ span.jobber{
 .advert-calendar{
   padding-right: 5px;
 }
-
+#bs-example-navbar-collapse-1{
+      padding-top: 15px;
+}
 .navbar{
     margin-bottom:0;
     border:0;
-    min-height: 65px;
+    min-height: 80px;
 }
 
 .navbar-nav>li {
