@@ -180,7 +180,7 @@ class UserController extends Controller
 
       $titleResult = count($listJobbeurs) == 0 ?'Aucun artisan trouvé' :
               (count($listJobbeurs) > 1 ? count($listJobbeurs).' artisans' :
-          count($listJobbeurs).' Artisan');
+          count($listJobbeurs).' artisan');
 
      return $this->render('SEPlatformBundle:User:listJobbeur.html.twig',
              array(
