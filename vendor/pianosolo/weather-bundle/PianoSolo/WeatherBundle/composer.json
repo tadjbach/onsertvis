@@ -1,0 +1,26 @@
+{
+    "name": "pianosolo/weather-bundle",
+    "description": "Weather Bundle of Symfony",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Ahmet Akbana",
+            "email": "ahmetakbana@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "PianoSolo\\WeatherBundle": "" }
+    },
+    "require": {
+        "php": ">=5.3.9",
+        "symfony/symfony": "~2.7|~3.0",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "target-dir": "PianoSolo/WeatherBundle",
+    "extra": {
+    }
+}

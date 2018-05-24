@@ -9,6 +9,7 @@ return array(
     'Twig_Extensions_' => array($vendorDir . '/twig/extensions/lib'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'SensioLabs\\Security' => array($vendorDir . '/sensiolabs/security-checker'),
+    'PianoSolo\\WeatherBundle' => array($vendorDir . '/pianosolo/weather-bundle'),
     'JSqueeze' => array($vendorDir . '/patchwork/jsqueeze/class'),
     'Gedmo\\' => array($vendorDir . '/gedmo/doctrine-extensions/lib'),
     'Doctrine\\ORM\\' => array($vendorDir . '/doctrine/orm/lib'),

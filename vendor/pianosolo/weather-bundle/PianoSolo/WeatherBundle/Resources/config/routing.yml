@@ -1,0 +1,3 @@
+pianosolo_weather_generate_csv:
+    path:     pianosolo/weather/csv/{city}/{days}
+    defaults: { _controller: PianoSoloWeatherBundle:Weather:generateCSV }

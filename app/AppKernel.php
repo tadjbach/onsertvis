@@ -25,6 +25,8 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Pyrrah\Bundle\OpenWeatherMapBundle\PyrrahOpenWeatherMapBundle(),
+            new PianoSolo\WeatherBundle\PianoSoloWeatherBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

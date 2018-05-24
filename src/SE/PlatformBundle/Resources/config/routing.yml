@@ -490,3 +490,9 @@ se_platform_help:
     path: /aide
     defaults:
         _controller: SEPlatformBundle:Default:help
+
+#Wether Pages
+se_platform_weather:
+    path: /meteo/{zipcode}_{countrycode}
+    defaults:
+        _controller: SEPlatformBundle:Default:weather
