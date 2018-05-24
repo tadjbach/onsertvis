@@ -85,8 +85,8 @@ class DefaultController extends Controller
    {
       $this->guzzleClient = new GuzzleClient();
       $cityQuery = $zipcode.','.$countrycode;
-      $baseUrlWeather = $this->apiWeatherUrl.$this->weather.'?zip='.$cityQuery.'&units='.$this->apiUnits.'.mode='.$this->apiMode.'&APPID='.$this->apiKey;
-      $baseUrlForecast = $this->apiWeatherUrl.$this->forecast.'?zip='.$cityQuery.'&units='.$this->apiUnits.'.mode='.$this->apiMode.'&APPID='.$this->apiKey;
+      $baseUrlWeather = $this->apiWeatherUrl.$this->weather.'?zip='.$cityQuery.'&units='.$this->apiUnits.'&mode='.$this->apiMode.'&APPID='.$this->apiKey;
+      $baseUrlForecast = $this->apiWeatherUrl.$this->forecast.'?zip='.$cityQuery.'&units='.$this->apiUnits.'&mode='.$this->apiMode.'&APPID='.$this->apiKey;
 
       $responseWeather = $this->guzzleClient->get($baseUrlWeather);
       $responseWeather = json_decode($responseWeather->getBody()->getContents());
