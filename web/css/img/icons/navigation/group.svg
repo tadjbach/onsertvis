@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>9D2AA89B-2912-4059-8017-85ED00AC57C3</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M12,0 L48,0 C54.627417,-1.21743675e-15 60,5.372583 60,12 L60,48 C60,54.627417 54.627417,60 48,60 L12,60 C5.372583,60 8.11624501e-16,54.627417 0,48 L0,12 C-8.11624501e-16,5.372583 5.372583,1.21743675e-15 12,0 Z" id="path-1"></path>
+        <path d="M7.83887979,13.1995154 L18.3791598,6.43207304 C19.3667055,5.79801414 20.6332945,5.79801414 21.6208402,6.43207304 L32.1611202,13.1995154 C33.3071063,13.9353018 34,15.2035953 34,16.5654565 L34,29.7834594 C34,30.8880288 33.1045695,31.7834594 32,31.7834594 L8,31.7834594 C6.8954305,31.7834594 6,30.8880288 6,29.7834594 L6,16.5654565 C6,15.2035953 6.6928937,13.9353018 7.83887979,13.1995154 Z" id="path-3"></path>
+    </defs>
+    <g id="Device/Navigation/Domovea" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#00477E" style="mix-blend-mode: multiply;" xlink:href="#path-1"></use>
+            <g id="Icons/domovea_house" mask="url(#mask-2)">
+                <g transform="translate(10.000000, 10.000000)" id="Original-Icons/domovea_house">
+                    <g>
+                        <rect id="Rectangle" x="0" y="0" width="40" height="40"></rect>
+                        <g id="Rectangle">
+                            <use fill="#00AAE1" fill-rule="evenodd" xlink:href="#path-3"></use>
+                            <path stroke="#00AAE1" stroke-width="3" d="M8.64929987,14.4617433 C7.93305856,14.9216098 7.5,15.7142933 7.5,16.5654565 L7.5,29.7834594 C7.5,30.0596017 7.72385763,30.2834594 8,30.2834594 L32,30.2834594 C32.2761424,30.2834594 32.5,30.0596017 32.5,29.7834594 L32.5,16.5654565 C32.5,15.7142933 32.0669414,14.9216098 31.3507001,14.4617433 L20.8104201,7.69430095 C20.3166472,7.3772715 19.6833528,7.3772715 19.1895799,7.69430095 L8.64929987,14.4617433 Z"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

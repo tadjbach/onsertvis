@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>9BDF3502-77A4-4BAE-A84F-B1E0919060E6</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Device/KNX-Scene/Record-ON" transform="translate(-22.000000, -23.000000)">
+            <g id="Icons/Record_KNX_Scene_ON" transform="translate(12.500000, 13.000000)">
+                <g id="Original-Icons/knx-scene-rec" fill="#FFFFFF">
+                    <path d="M24.9375,17.9375 C24.9375,13.8301406 21.6073594,10.5 17.5,10.5 C13.3926406,10.5 10.0625,13.8301406 10.0625,17.9375 C10.0625,22.0448594 13.3926406,25.375 17.5,25.375 C21.6073594,25.375 24.9375,22.0448594 24.9375,17.9375" id="Fill-15"></path>
+                </g>
+                <path d="M24.9375,17.9375 C24.9375,13.8301406 21.6073594,10.5 17.5,10.5 C13.3926406,10.5 10.0625,13.8301406 10.0625,17.9375 C10.0625,22.0448594 13.3926406,25.375 17.5,25.375 C21.6073594,25.375 24.9375,22.0448594 24.9375,17.9375" id="Fill-15" fill="#EF4351"></path>
+            </g>
+        </g>
+    </g>
+</svg>

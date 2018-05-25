@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>07DF6087-2169-4E52-B374-3260A8F3EB2E</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#F3DCFB" offset="0%"></stop>
+            <stop stop-color="#679FE4" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="SYMBOLS" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Buttons/Binary-Input-ON">
+            <g id="Group-12">
+                <g id="Group-5" fill="url(#linearGradient-1)">
+                    <circle id="Oval-5" cx="30" cy="30" r="30"></circle>
+                </g>
+                <g id="Page-1" transform="translate(18.000000, 23.000000)" fill="#FFFFFF">
+                    <polygon id="Fill-1" points="0 14.2141302 3.15869559 14.2141302 3.15869559 0.631739119 0 0.631739119"></polygon>
+                    <g id="Group-4" transform="translate(9.160217, 0.000000)">
+                        <path d="M7.50329293,11.9227309 C4.89794318,11.9227309 2.78717153,9.82472531 2.78717153,7.23396319 C2.78717153,4.64130584 4.89794318,2.54140501 7.50329293,2.54140501 C10.1086427,2.54140501 12.2194143,4.64130584 12.2194143,7.23396319 C12.2194143,9.82472531 10.1086427,11.9227309 7.50329293,11.9227309 M7.50329293,0.0179231038 C3.49806798,0.0179231038 0.249480821,3.24832109 0.249480821,7.23396319 C0.249480821,11.2186577 3.49806798,14.4471604 7.50329293,14.4471604 C11.5094708,14.4471604 14.758058,11.2186577 14.758058,7.23396319 C14.758058,3.24832109 11.5094708,0.0179231038 7.50329293,0.0179231038" id="Fill-2"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

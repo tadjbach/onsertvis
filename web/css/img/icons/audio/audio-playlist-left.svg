@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>8F9287C4-EDA6-426F-80D3-AFC2CD9FE6FA</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Validated" transform="translate(-821.000000, -152.000000)"></g>
+        <g id="Icons/Audio-Playlist-Left" fill="#FFFFFF">
+            <g id="Group" transform="translate(8.000000, 13.000000)">
+                <path d="M12.7501,0.5058 L12.7501,13.7448 C12.7501,14.1508 12.3071,14.3898 11.9791,14.1618 L2.4541,7.5198 C2.1831,7.3298 2.1831,6.9208 2.4541,6.7318 L11.9791,0.0888 C12.3071,-0.1402 12.7501,0.1008 12.7501,0.5058" id="Fill-3"></path>
+                <path d="M24.0001,0.5058 L24.0001,13.7448 C24.0001,14.1508 23.5571,14.3898 23.2291,14.1618 L13.7041,7.5198 C13.4331,7.3298 13.4331,6.9208 13.7041,6.7318 L23.2291,0.0888 C23.5571,-0.1402 24.0001,0.1008 24.0001,0.5058" id="Fill-5"></path>
+                <path d="M0.501,0 L0.999,0 C1.275,0 1.5,0.225 1.5,0.502 L1.5,13.749 C1.5,14.025 1.275,14.25 0.999,14.25 L0.501,14.25 C0.225,14.25 0,14.025 0,13.749 L0,0.502 C0,0.225 0.225,0 0.501,0" id="Fill-7"></path>
+            </g>
+        </g>
+    </g>
+</svg>

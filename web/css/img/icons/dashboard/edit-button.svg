@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="34px" viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>9271C7AE-B30F-4141-AEDD-480DFBE27B6A</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M325,43 C315.611159,43 308,35.3888407 308,26 C308,16.6111593 315.611159,9 325,9 C334.388841,9 342,16.6111593 342,26 C342,35.3888407 334.388841,43 325,43 Z M328.75827,19 L317.739764,30.0183402 L316,35.237554 L320.639371,34.0777287 L332.237798,22.4794759 L331.077956,21.3196506 L320.05945,32.3379908 L318.319685,32.9179035 L318.899607,31.1781655 L329.918113,20.1598253 L328.75827,19 Z M330,17.7397379 L333.479528,21.2192138 L334.157148,20.5416041 C334.743754,19.9550069 334.750028,19.0102183 334.156412,18.416612 L332.802644,17.0628638 C332.215632,16.4758604 331.264366,16.475391 330.67762,17.0621282 L330,17.7397379 Z" id="path-1"></path>
+    </defs>
+    <g id="DASHBOARD" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.599999964">
+        <g id="View/Dashboard1-Copy-12" transform="translate(-327.000000, -119.000000)" fill="#FFFFFF">
+            <g id="Group-5" transform="translate(18.000000, 110.000000)">
+                <g id="Widget-1">
+                    <g id="Group-3" transform="translate(1.000000, 0.000000)">
+                        <g id="Edit-Button">
+                            <use style="mix-blend-mode: overlay;" xlink:href="#path-1"></use>
+                            <use style="mix-blend-mode: soft-light;" xlink:href="#path-1"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>A5F7438A-F68A-4973-9D4F-7C66831293F4</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <polygon id="path-1" points="0.000421142851 0 14.7399998 0 14.7399998 20.0041776 0.000421142851 20.0041776"></polygon>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Validated" transform="translate(-597.000000, -152.000000)"></g>
+        <g id="Icons/Audio-Play">
+            <g id="Page-1" transform="translate(13.000000, 10.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Clip-2"></g>
+                <path d="M0.000421142851,19.2946597 L0.000421142851,0.709625703 C0.000421142851,0.141082855 0.622659705,-0.196884283 1.08275827,0.124237141 L14.4550966,9.44833985 C14.8351781,9.71471271 14.8351781,10.2895727 14.4550966,10.5548927 L1.08275827,19.8800483 C0.622659705,20.2001168 0.000421142851,19.8642554 0.000421142851,19.2946597" id="Fill-1" fill="#FFFFFF" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

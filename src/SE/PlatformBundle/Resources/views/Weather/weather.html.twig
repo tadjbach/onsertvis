@@ -1,0 +1,41 @@
+{% extends "SEPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Météo
+{% endblock %}
+{% block description %}
+  <meta name="description" content="" />
+{% endblock %}
+
+{% block layout_header2 %}
+<div class="row">
+  <div id="header" class="col-md-12">
+      <h3 class="cat-title">Météo {{zipCode}} - {{countryCode}}</h3>
+  </div>
+</div>
+{% endblock %}
+{% block layout_body %}
+  <div class="row">
+    Heure,
+    <div class="col-md-3">
+      <h5>Ville : {{ responseWeather.name }} </h5>
+      <h5>Date du jour : {{ "now"|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h5>
+      <h5>Levé du soleil : {{ responseWeather.sys.sunrise|date('H:i', "Europe/Paris") }} </h5>
+      <h5>Couché du soleil : {{ responseWeather.sys.sunset|date('H:i', "Europe/Paris") }} </h5>
+
+      <h5>Temps : {{ responseWeather.weather[0].description }}</h5>
+      <div class="weather-icon img-{{ responseWeather.weather[0].icon }}"></div>
+
+      <h5>Températeur : {{ responseWeather.main.temp }} C° (min = {{ responseWeather.main.temp_min }} C° - max = {{ responseWeather.main.temp_max }} C°)</h5>
+      <h5>Humidité : {{ responseWeather.main.humidity }} %</h5>
+      <h5>Baromètre : {{ responseWeather.main.pressure }} hpa</h5>
+      <h5>Vitesse du vent : {{ responseWeather.wind.speed }} meter/sec (Degré : {{ responseWeather.wind.deg }}°)</h5>
+    </div>
+       <div class="col-md-3">
+         {{ dump(responseWeather) }}
+       </div>
+       <div class="col-md-3">
+         {{ dump(responseForecast) }}
+       </div>
+ </div>
+{% endblock %}

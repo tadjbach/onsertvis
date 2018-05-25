@@ -495,4 +495,4 @@ se_platform_help:
 se_platform_weather:
     path: /meteo/{zipcode}_{countrycode}
     defaults:
-        _controller: SEPlatformBundle:Default:weather
+        _controller: SEPlatformBundle:Weather:weather

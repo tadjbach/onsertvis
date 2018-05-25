@@ -12,3 +12,7 @@ services:
         class: SE\PlatformBundle\Service\Mailer
         arguments :
             - "@mailer"
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }

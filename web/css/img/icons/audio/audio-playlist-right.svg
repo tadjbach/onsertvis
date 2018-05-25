@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>2F706601-D606-48C3-99E7-D8F0AC59680E</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <polygon id="path-1" points="10.74925 15 0.25 15 0.25 0.750007225 10.74925 0.750007225 10.74925 15"></polygon>
+        <polygon id="path-3" points="0 7.87500361 0 15 10.49925 15 10.49925 0.750007225 0 0.750007225"></polygon>
+        <polygon id="path-5" points="0.5001 0.75 2 0.75 2 14.9998 0.5001 14.9998"></polygon>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Validated" transform="translate(-877.000000, -152.000000)"></g>
+        <g id="Icons/Audio-Playlist-Right">
+            <g id="Page-1" transform="translate(8.000000, 12.000000)">
+                <g id="Group-3" transform="translate(11.000000, 0.250000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Clip-2"></g>
+                    <path d="M0.25,14.4949 L0.25,1.2559 C0.25,0.8499 0.693,0.6099 1.021,0.8389 L10.546,7.4809 C10.817,7.6709 10.817,8.0799 10.546,8.2689 L1.021,14.9119 C0.693,15.1399 0.25,14.8999 0.25,14.4949" id="Fill-1" fill="#FFFFFF" mask="url(#mask-2)"></path>
+                </g>
+                <g id="Group-6" transform="translate(0.000000, 0.250000)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <g id="Clip-5"></g>
+                    <path d="M0,14.4949 L0,1.2559 C0,0.8499 0.443,0.6099 0.771,0.8389 L10.296,7.4809 C10.567,7.6709 10.567,8.0799 10.296,8.2689 L0.771,14.9119 C0.443,15.1399 0,14.8999 0,14.4949" id="Fill-4" fill="#FFFFFF" mask="url(#mask-4)"></path>
+                </g>
+                <g id="Group-9" transform="translate(22.000000, 0.250000)">
+                    <mask id="mask-6" fill="white">
+                        <use xlink:href="#path-5"></use>
+                    </mask>
+                    <g id="Clip-8"></g>
+                    <path d="M1.4991,14.9998 L1.0011,14.9998 C0.7251,14.9998 0.5001,14.7748 0.5001,14.4988 L0.5001,1.2518 C0.5001,0.9748 0.7251,0.7498 1.0011,0.7498 L1.4991,0.7498 C1.7751,0.7498 2.0001,0.9748 2.0001,1.2518 L2.0001,14.4988 C2.0001,14.7748 1.7751,14.9998 1.4991,14.9998" id="Fill-7" fill="#FFFFFF" mask="url(#mask-6)"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
