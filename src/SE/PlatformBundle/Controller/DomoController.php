@@ -40,18 +40,22 @@ class DomoController extends Controller
       $responseForecast = json_decode($responseForecast->getBody()->getContents());
 
       //Local sensor
-      $local_sensor = array(
+      $local_sensor_outdoor = array(
         'pressure'=>1005,
         'temperature'=>21,
-        'temperatureIndoor'=>19,
         'humidity'=>47,
-        'humidityIndoor'=>55,
-        'rain'=>300
+        'rain'=>500
+      );
+      $local_sensor_indoor = array(
+        'temperature'=>21,
+        'humidity'=>47
       );
 
-/*      pressure    */
-      $pressure = $local_sensor['pressure'];
-      $pressure_alert = 'green';
+
+  $local_weather_icon = '01d';
+  $local_weather_desc = 'Beau';
+/*      OutDoor    */
+/*
       $local_weather_desc = 'Beau';
       $local_weather_icon = '01d';
 
@@ -64,10 +68,10 @@ class DomoController extends Controller
         $local_weather_desc = 'Ondées / Nuageux';
         $local_weather_icon = '01d';
         $pressure_alert = 'orange';
-      }
+      }*/
 
 /*    temperature     */
-      $temperature = $local_sensor['temperature'];
+  /*    $temperature = $local_sensor['temperature'];
       $temp_alert = 'green';
 
       if ($temperature < 18) {
@@ -81,10 +85,10 @@ class DomoController extends Controller
       }
       else {
           $temp_alert = 'red';
-      }
+      }*/
 
 /*    temperature Indoor */
-      $temperatureIndoor = $local_sensor['temperatureIndoor'];
+    /*  $temperatureIndoor = $local_sensor['temperatureIndoor'];
       $tempindoor_alert = 'green';
 
       if ($temperatureIndoor < 18) {
@@ -98,10 +102,10 @@ class DomoController extends Controller
       }
       else {
           $tempindoor_alert = 'red';
-      }
+      }*/
 
 /*      humidity outdoor  */
-      $humidity = $local_sensor['humidity'];
+    /*  $humidity = $local_sensor['humidity'];
       $hum_alert = 'green';
       if ($humidity < 25) {
         $hum_alert = 'blue';
@@ -114,10 +118,10 @@ class DomoController extends Controller
       }
       else {
           $hum_alert = 'red';
-      }
+      }*/
 
   /*    humidity Indoor */
-        $humidityIndoor = $local_sensor['humidityIndoor'];
+      /*  $humidityIndoor = $local_sensor['humidityIndoor'];
         $humidityindoor_alert = 'green';
 
         if ($humidityIndoor < 18) {
@@ -131,10 +135,10 @@ class DomoController extends Controller
         }
         else {
             $humidityindoor_alert = 'red';
-        }
+        }*/
 
 /*      Rain   */
-      $rain = $local_sensor['rain'];
+    /*  $rain = $local_sensor['rain'];*/
 
 
 
@@ -146,12 +150,14 @@ class DomoController extends Controller
         'countryCode'=>$countrycode,
         'responseWeather'=>$responseWeather,
         'responseForecast'=>$responseForecast,
-        'local_sensor'=>$local_sensor,
+        'local_sensor_outdoor'=>$local_sensor_outdoor,
+        'local_sensor_indoor'=>$local_sensor_indoor,
+      /*  'local_sensor'=>$local_sensor,
         'pressure_alert'=>$pressure_alert,
         'temp_alert'=>$temp_alert,
         'tempindoor_alert'=>$tempindoor_alert,
         'hum_alert'=>$hum_alert,
-        'humindoor_alert'=>$humidityindoor_alert,  
+        'humindoor_alert'=>$humidityindoor_alert,*/
         'local_weather_icon'=>$local_weather_icon,
         'local_weather_desc'=>$local_weather_desc
     ));
