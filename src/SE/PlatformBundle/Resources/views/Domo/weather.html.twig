@@ -1,0 +1,77 @@
+{% extends "SEPlatformBundle::domo-layout.html.twig" %}
+
+
+{% block domo_body %}
+    <div class="row">
+          <div class="col-md-12">
+            <div class="row" style="display:none">
+                <div class="col-md-12">
+                    <h1>My Home</h1>
+                    <h5>{{ "now"|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h5>
+                </div>
+            </div>
+            <div class="row" style="display:none">
+                <div class="col-md-12">
+                    <div class="weather-icon img-{{ local_weather_icon }}"></div>
+                    <div >{{local_weather_desc}}</div>
+                </div>
+            </div>
+            <div class="row">
+                  <div class="col-md-12">
+                    <h1>Extérieur</h1>
+                      <div class="cercle-icon-{{temp_alert}}">
+                        <div class="cercle-icon">
+                          <span class="sensor-icon img-temperature"></span>
+                          {{ local_sensor.temperature|round }} C°
+                        </div>
+                      </div>
+
+                      <div class="cercle-icon-{{hum_alert}}">
+                          <div class="cercle-icon">
+                            <span class="sensor-icon img-humidity"></span>
+                            {{ local_sensor.humidity|round }} %
+                          </div>
+                    </div>
+                    <div class="cercle-icon-{{pressure_alert}}">
+                          <div class="cercle-icon">
+                            <span class="sensor-icon img-pressure"></span>
+                              <span>{{ (local_sensor.pressure)|round }} hP</span>
+                          </div>
+                    </div>
+                    {% if local_sensor.rain >= 480 %}
+                    <div class="cercle-icon-red" >
+                          <div class="cercle-icon">
+                            <span class="sensor-icon img-rain"></span>
+                              <span>{{ (local_sensor.rain)|round }}</span>
+                          </div>
+                    </div>
+                    {% else %}
+                    <div class="cercle-icon-green" >
+                          <div class="cercle-icon">
+                            <span class="sensor-icon img-no-rain"></span>
+                              <span>{{ (local_sensor.rain)|round }}</span>
+                          </div>
+                    </div>
+                    {% endif %}
+                  </div>
+              </div>
+              <div class="row">
+                    <div class="col-md-12">
+                      <h1>Intérieur</h1>
+                      <div class="cercle-icon-{{tempindoor_alert}}">
+                          <div class="cercle-icon">
+                            <span class="sensor-icon img-temperature"></span>
+                            {{ local_sensor.temperatureIndoor|round }} C°
+                          </div>
+                        </div>
+                        <div class="cercle-icon-{{humindoor_alert}}">
+                            <div class="cercle-icon">
+                              <span class="sensor-icon img-humidity"></span>
+                              {{ local_sensor.humidityIndoor|round }} %
+                            </div>
+                      </div>
+                    </div>
+                </div>
+          </div>
+      </div>
+{% endblock %}

@@ -1,0 +1,255 @@
+
+
+/*****************************/
+/*        weather style     */
+/*****************************/
+/*
+
+#00aae1 Bleu turquoise
+#767472 Gris off
+#393634 Gris Arr plan
+#8d8d8d Gris Controur
+
+*/
+
+html, body{
+    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.43;
+    color: #fff;
+    background-color: #000;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.domo-well{
+    background-color: #000;
+    color: #fff;
+    width: 100%;
+    height: auto;
+    margin-bottom: 0;
+    border: 0;
+    border-radius: 0;
+    padding: 80px;
+    min-height: 1024px;
+    min-width: 1024px;
+    background: url("domo/img/dashboard-landscape@3x.jpg") no-repeat center center fixed;
+    height: 100%;
+    background-size: cover;
+}
+
+.domo-index-container{
+    padding: 0 19px;
+    min-height: 460px;
+    height: auto;
+}
+
+.domo-index-container .row{
+  margin: auto;
+}
+
+.cercle-icon-blue {
+  width: 70px;
+  height: 70px;
+  background: #00aae1;
+  margin: 10px;
+  text-align: center;
+  border-radius: 50px;
+  line-height: 59px;
+  padding-top: 0px;
+  float: left;
+}
+
+.cercle-icon-green {
+  width: 70px;
+  height: 70px;
+  background: green;
+  margin: 10px;
+  text-align: center;
+  border-radius: 50px;
+  line-height: 59px;
+  padding-top: 0px;
+  float: left;
+}
+
+.cercle-icon-orange {
+  width: 70px;
+  height: 70px;
+  background: orange;
+  margin: 10px;
+  text-align: center;
+  border-radius: 50px;
+  line-height: 59px;
+  padding-top: 0px;
+  float: left;
+}
+
+.cercle-icon-red {
+  width: 70px;
+  height: 70px;
+  background: red;
+  margin: 10px;
+  text-align: center;
+  border-radius: 50px;
+  line-height: 59px;
+  padding-top: 0px;
+  float: left;
+}
+
+.cercle-icon {
+  width: 60px;
+  height: 60px;
+  background: #393634;
+  margin: 5px;
+  text-align: center;
+  border-radius: 50px;
+  line-height: 65px;
+  padding-top: 15px;
+  float: left;
+}
+
+.sensor-icon{
+  background-size: contain;
+  height: 30px;
+  width: 30px;
+  display: block;
+  margin: auto;
+}
+
+.img-temperature{
+  background-image: url("domo/icons/sensors/temperature.svg");
+}
+
+.img-temperatureIndoor{
+  background-image: url("domo/icons/sensors/weather-station/temperatureIndoor.svg");
+}
+
+.img-humidity{
+  background-image: url("domo/icons/sensors/humidity.svg");
+}
+
+.img-wind{
+  background-image: url("domo/icons/sensors/wind.svg");
+}
+
+.img-no-rain{
+  background-image: url("domo/icons/sensors/no-rain.svg");
+}
+
+.img-rain{
+  background-image: url("domo/icons/sensors/rain.svg");
+}
+
+.img-pressure
+{
+  background-image: url("domo/icons/sensors/weather-station/pressure.svg");
+}
+
+.weather-city{
+  float: left;
+    margin: 20px;
+    font-size: 32px;
+}
+.weather-icon{
+      background-size: contain;
+      height: 200px;
+      width: 200px;
+      display: block;
+      float: left;
+      margin-right: 30px;
+}
+
+/* clear sky = ciel clair */
+ .img-01d{
+    /*background-image: url("domo/icons/openweathermap/01d.png");*/
+    background-image: url("domo/icons/sensors/weather-station/sun.svg");
+}
+
+.img-01n{
+   /*background-image: url("domo/icons/openweathermap/01n.png");*/
+   background-image: url("domo/icons/sensors/weather-station/moon.svg");
+}
+
+/* few clouds = quelques nuages*/
+.img-02d{
+   /*background-image: url("domo/icons/openweathermap/02d.png");*/
+   background-image: url("domo/icons/sensors/weather-station/cloud-sun.svg");
+}
+
+.img-02n{
+  /*background-image: url("domo/icons/openweathermap/02n.png");*/
+  background-image: url("domo/icons/sensors/weather-station/greyCloud-sun.svg");
+}
+
+/* scattered clouds = nuages ​​dispersés */
+.img-03d{
+   /*background-image: url("domo/icons/openweathermap/03d.png");*/
+   background-image: url("domo/icons/sensors/weather-station/greyCloud-sun.svg");
+}
+
+.img-03n{
+  /*background-image: url("domo/icons/openweathermap/03n.png");*/
+   background-image: url("domo/icons/sensors/weather-station/greyCloud-sun.svg");
+}
+
+/* broken clouds = nuages ​​brisés */
+.img-04d{
+   /*background-image: url("domo/icons/openweathermap/04d.png");*/
+    background-image: url("domo/icons/sensors/weather-station/greyCloud-sun.svg");
+}
+
+.img-04n{
+  /*background-image: url("domo/icons/openweathermap/04n.png");*/
+  background-image: url("domo/icons/sensors/weather-station/greyCloud-sun.svg");
+}
+
+/* shower rain = douche pluie*/
+.img-09d{
+   /*background-image: url("domo/icons/openweathermap/09d.png");*/
+   background-image: url("domo/icons/sensors/weather-station/greyCloud-rain.svg");
+}
+
+.img-09n{
+  /*background-image: url("domo/icons/openweathermap/09n.png");*/
+  background-image: url("domo/icons/sensors/weather-station/greyCloud-rain.svg");
+}
+
+/* rain = pluie */
+.img-10d{
+   /*background-image: url("domo/icons/openweathermap/10d.png");*/
+     background-image: url("domo/icons/sensors/weather-station/cloud-rain.svg");
+}
+
+.img-10n{
+  /*background-image: url("domo/icons/openweathermap/10n.png");*/
+     background-image: url("domo/icons/sensors/weather-station/moon-rain.svg");
+}
+
+/* thunderstorm = orage */
+.img-11d{
+   /*background-image: url("domo/icons/openweathermap/11d.png");*/
+        background-image: url("domo/icons/sensors/weather-station/blackCloud-rain.svg");
+}
+
+.img-11n{
+  /*background-image: url("domo/icons/openweathermap/11n.png");*/
+       background-image: url("domo/icons/sensors/weather-station/blackCloud-rain.svg");
+}
+
+/* snow = neige */
+.img-13d{
+   background-image: url("domo/icons/openweathermap/13d.png");
+}
+
+.img-13n{
+  background-image: url("domo/icons/openweathermap/13n.png");
+}
+
+/* mist = brouillard */
+.img-50d{
+   background-image: url("domo/icons/openweathermap/50d.png");
+}
+
+.img-50n{
+  background-image: url("domo/icons/openweathermap/50n.png");
+}

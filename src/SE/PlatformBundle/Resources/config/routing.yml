@@ -491,8 +491,14 @@ se_platform_help:
     defaults:
         _controller: SEPlatformBundle:Default:help
 
+#DOMO
 #Wether Pages
-se_platform_weather:
+se_platform_domo_weather:
     path: /meteo/{zipcode}_{countrycode}
     defaults:
-        _controller: SEPlatformBundle:Weather:weather
+        _controller: SEPlatformBundle:Domo:weather
+
+se_platform_domo_openweather:
+    path: /openmeteo/{zipcode}_{countrycode}
+    defaults:
+        _controller: SEPlatformBundle:Domo:openweather

@@ -1,0 +1,80 @@
+{% extends "SEPlatformBundle::domo-layout.html.twig" %}
+
+
+{% block domo_body %}
+    <div class="row">
+      <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{ responseWeather.name }}, {{ responseWeather.sys.country }}</h1>
+                    <h5>{{ "now"|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="weather-icon img-{{ responseWeather.weather[0].icon }}"></div>
+                </div>
+            </div>
+            <div class="row">
+                  <div class="col-md-12">
+                    <div class="cercle-icon">
+                      <span class="sensor-icon img-temperature"></span>
+                      {{ responseWeather.main.temp|round }} C°
+                    </div>
+                    <div class="cercle-icon">
+                      <span class="sensor-icon img-humidity"></span>
+                      {{ responseWeather.main.humidity|round }} %
+                    </div>
+                    <div class="cercle-icon">
+                      <span class="sensor-icon img-wind"></span>
+                      {{ (responseWeather.wind.speed * 3.6)|round }} Km/h
+                    </div>
+                    <div class="cercle-icon">
+                      <span class="sensor-icon img-pressure"></span>
+                      {{ (responseWeather.main.pressure)|round }} hP
+                    </div>
+                  </div>
+              </div>
+          </div>
+
+        <div class="col-md-12">
+
+          <h5>Date du jour : {{ "now"|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h5>
+          <h5>Levé du soleil : {{ responseWeather.sys.sunrise|date('H:i', "Europe/Paris") }} </h5>
+          <h5>Couché du soleil : {{ responseWeather.sys.sunset|date('H:i', "Europe/Paris") }} </h5>
+
+          <h5>Temps : {{ responseWeather.weather[0].description }}</h5>
+
+
+          <h5>Températeur : {{ responseWeather.main.temp }} C° (min = {{ responseWeather.main.temp_min }} C° - max = {{ responseWeather.main.temp_max }} C°)</h5>
+
+
+          <h5>Baromètre : {{ responseWeather.main.pressure }} hpa</h5>
+          <h5>Vitesse du vent : {{ responseWeather.wind.speed }} meter/sec (Degré : {{ responseWeather.wind.deg }}°)</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+          <h5>Ville : {{ responseWeather.name }} </h5>
+          <h5>Date du jour : {{ "now"|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h5>
+          <h5>Levé du soleil : {{ responseWeather.sys.sunrise|date('H:i', "Europe/Paris") }} </h5>
+          <h5>Couché du soleil : {{ responseWeather.sys.sunset|date('H:i', "Europe/Paris") }} </h5>
+
+          <h5>Temps : {{ responseWeather.weather[0].description }}</h5>
+          <div class="weather-icon img-{{ responseWeather.weather[0].icon }}"></div>
+
+          <h5>Températeur : {{ responseWeather.main.temp }} C° (min = {{ responseWeather.main.temp_min }} C° - max = {{ responseWeather.main.temp_max }} C°)</h5>
+          <h5>Humidité : {{ responseWeather.main.humidity }} %</h5>
+          <h5>Baromètre : {{ responseWeather.main.pressure }} hpa</h5>
+          <h5>Vitesse du vent : {{ responseWeather.wind.speed }} meter/sec (Degré : {{ responseWeather.wind.deg }}°)</h5>
+        </div>
+    </div>
+ <div class="row">
+   <div class="col-md-6">
+     {{ dump(responseWeather) }}
+   </div>
+   <div class="col-md-6">
+     {{ dump(responseForecast) }}
+   </div>
+ </div>
+{% endblock %}
