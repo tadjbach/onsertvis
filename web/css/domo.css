@@ -29,12 +29,24 @@ h2{
     font-style: normal;
     font-variant: normal;
 }
+.margin-t{
+  margin-top: 30px;
+}
 
+.weather-desc{
+  font-size: 22px;
+  padding-top: 36px;
+}
+.temp{
+  font-size: 50px;
+padding-top: 32px;
+}
 .cont{
   padding: 20px 30px 0px 30px;
   margin-bottom: 10px;
   color: inherit;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(195, 153, 153, 0.3);
+  border-radius: 15px;
 }
 .domo-well{
     background-color: #000;
@@ -153,6 +165,16 @@ h2{
   background-image: url("domo/icons/light-normal/light-white.svg");
 }
 
+.img-camera
+{
+  background-image: url("domo/icons/camera/camera.svg");
+}
+
+.img-camera-grey
+{
+  background-image: url("domo/icons/camera/camera-grey.svg");
+}
+
 .sun-icon{
       background-size: contain;
       height: 50px;
@@ -178,102 +200,104 @@ h2{
 }
 .weather-icon{
       background-size: contain;
-      height: 200px;
-      width: 200px;
+      height: 150px;
+      width: 140px;
       display: inline-block;
+      margin-bottom: 50px;
 }
 
 /* clear sky = ciel clair */
  .img-01d{
-    /*background-image: url("domo/icons/openweathermap/01d.png");*/
-    background-image: url("domo/icons/sensors/weather-station/sun.svg");
+    /*background-image: url("domo/icons/openweathermap/01d.png");
+    background-image: url("domo/icons/sensors/weather-station/sun.svg");*/
+    background-image: url("domo/icons/weather/soleil.svg");
 }
 
 .img-01n{
    /*background-image: url("domo/icons/openweathermap/01n.png");*/
-   background-image: url("domo/icons/sensors/weather-station/moon.svg");
+   background-image: url("domo/icons/weather/lune.svg");
 }
 
 /* few clouds = quelques nuages*/
 .img-02d{
    /*background-image: url("domo/icons/openweathermap/02d.png");*/
-   background-image: url("domo/icons/sensors/weather-station/cloud-sun.svg");
+   background-image: url("domo/icons/weather/nuage-soleil.svg");
 }
 
 .img-02n{
   /*background-image: url("domo/icons/openweathermap/02n.png");*/
-  background-image: url("domo/icons/sensors/weather-station/greyCloud-sun.svg");
+  background-image: url("domo/icons/weather/nuage-lune.svg");
 }
 
 /* scattered clouds = nuages ​​dispersés */
 .img-03d{
    /*background-image: url("domo/icons/openweathermap/03d.png");*/
-   background-image: url("domo/icons/sensors/weather-station/greyCloud-sun.svg");
+   background-image: url("domo/icons/weather/nuage.svg");
 }
 
 .img-03n{
   /*background-image: url("domo/icons/openweathermap/03n.png");*/
-   background-image: url("domo/icons/sensors/weather-station/greyCloud-sun.svg");
+   background-image: url("domo/icons/weather/nuage.svg");
 }
 
 /* broken clouds = nuages ​​brisés */
 .img-04d{
    /*background-image: url("domo/icons/openweathermap/04d.png");*/
-    background-image: url("domo/icons/sensors/weather-station/greyCloud-sun.svg");
+    background-image: url("domo/icons/weather/nuage-2.svg");
 }
 
 .img-04n{
   /*background-image: url("domo/icons/openweathermap/04n.png");*/
-  background-image: url("domo/icons/sensors/weather-station/greyCloud-sun.svg");
+  background-image: url("domo/icons/weather/nuage-2.svg");
 }
 
 /* shower rain = douche pluie*/
 .img-09d{
    /*background-image: url("domo/icons/openweathermap/09d.png");*/
-   background-image: url("domo/icons/sensors/weather-station/greyCloud-rain.svg");
+   background-image: url("domo/icons/weather/pluie-3.svg");
 }
 
 .img-09n{
   /*background-image: url("domo/icons/openweathermap/09n.png");*/
-  background-image: url("domo/icons/sensors/weather-station/greyCloud-rain.svg");
+  background-image: url("domo/icons/weather/pluie-3.svg");
 }
 
 /* rain = pluie */
 .img-10d{
    /*background-image: url("domo/icons/openweathermap/10d.png");*/
-     background-image: url("domo/icons/sensors/weather-station/cloud-rain.svg");
+     background-image: url("domo/icons/weather/pluie-1.svg");
 }
 
 .img-10n{
   /*background-image: url("domo/icons/openweathermap/10n.png");*/
-     background-image: url("domo/icons/sensors/weather-station/moon-rain.svg");
+     background-image: url("domo/icons/weather/pluie-1.svg");
 }
 
 /* thunderstorm = orage */
 .img-11d{
    /*background-image: url("domo/icons/openweathermap/11d.png");*/
-        background-image: url("domo/icons/sensors/weather-station/blackCloud-rain.svg");
+        background-image: url("domo/icons/weather/nuage-3-eclaire.svg");
 }
 
 .img-11n{
   /*background-image: url("domo/icons/openweathermap/11n.png");*/
-       background-image: url("domo/icons/sensors/weather-station/blackCloud-rain.svg");
+       background-image: url("domo/icons/weather/nuage-3-eclaire.svg");
 }
 
 /* snow = neige */
 .img-13d{
-   background-image: url("domo/icons/openweathermap/13d.png");
+   background-image: url("domo/icons/weather/neige-3.svg");
 }
 
 .img-13n{
-  background-image: url("domo/icons/openweathermap/13n.png");
+  background-image: url("domo/icons/weather/neige-3.svg");
 }
 
 /* mist = brouillard */
 .img-50d{
-   background-image: url("domo/icons/openweathermap/50d.png");
+   background-image: url("domo/icons/weather/brouillard.svg");
 }
 
 .img-50n{
-  background-image: url("domo/icons/openweathermap/50n.png");
+  background-image: url("domo/icons/weather/brouillard.svg");
 }

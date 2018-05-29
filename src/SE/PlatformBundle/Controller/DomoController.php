@@ -25,7 +25,7 @@ class DomoController extends Controller
   private $pressure_1 = 1013;
   private $pressure_2 = 1020;
 
-   public function weatherAction($zipcode, $countrycode)
+   public function dashboardAction($zipcode, $countrycode)
    {
      //Online weather API
       $this->guzzleClient = new GuzzleClient();
@@ -154,7 +154,7 @@ class DomoController extends Controller
 
 
 
-    return $this->render('SEPlatformBundle:Domo:weather.html.twig', array(
+    return $this->render('SEPlatformBundle:Domo:dashboard.html.twig', array(
         'zipCode'=>$zipcode,
         'countryCode'=>$countrycode,
         'responseWeather'=>$responseWeather,
@@ -192,5 +192,12 @@ class DomoController extends Controller
         'responseWeather'=>$responseWeather,
         'responseForecast'=>$responseForecast
     ));
+   }
+
+   public function cameraAction($camera_id)
+   {
+     return $this->render('SEPlatformBundle:Domo:camera.html.twig', array(
+         'camera_id'=>$camera_id
+     ));
    }
 }

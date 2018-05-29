@@ -493,12 +493,17 @@ se_platform_help:
 
 #DOMO
 #Wether Pages
-se_platform_domo_weather:
-    path: /meteo/{zipcode}_{countrycode}
+se_platform_domo_dashboard:
+    path: /domo/dashboard/{zipcode}_{countrycode}
     defaults:
-        _controller: SEPlatformBundle:Domo:weather
+        _controller: SEPlatformBundle:Domo:dashboard
 
 se_platform_domo_openweather:
-    path: /openmeteo/{zipcode}_{countrycode}
+    path: /domo/openmeteo/{zipcode}_{countrycode}
     defaults:
         _controller: SEPlatformBundle:Domo:openweather
+
+se_platform_domo_camera:
+    path: /domo/camera_{camera_id}
+    defaults:
+        _controller: SEPlatformBundle:Domo:camera
