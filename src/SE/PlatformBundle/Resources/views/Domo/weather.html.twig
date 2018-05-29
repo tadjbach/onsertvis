@@ -2,51 +2,57 @@
 
 
 {% block domo_body %}
+<div class="jumbotron cont">
+  <div class="row" >
+      <div class="col-md-4 text-left">
+          <div class="sun-icon img-sunrise"></div>
+          <h4>{{ responseWeather.sys.sunrise|date('H:i', "Europe/Paris") }}</h4>
+      </div>
+      <div class="col-md-4 text-center">
+          <div class="weather-icon img-{{ local_weather_icon }}"></div>
+      </div>
+      <div class="col-md-4 text-right">
+        <div class="sun-icon img-sunset"></div>
+          <h4>{{ responseWeather.sys.sunset|date('H:i', "Europe/Paris") }}</h4>
+      </div>
+  </div>
+</div>
+
+
     <div class="row">
           <div class="col-md-12">
-            <div class="row" style="display:none">
-                <div class="col-md-12">
-                    <h1>My Home</h1>
-                    <h5>{{ "now"|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h5>
-                </div>
-            </div>
-            <div class="row" style="display:none">
-                <div class="col-md-12">
-                    <div class="weather-icon img-{{ local_weather_icon }}"></div>
-                    <div >{{local_weather_desc}}</div>
-                </div>
-            </div>
+
+            <div class="jumbotron cont">
             <div class="row">
-                  <div class="col-md-12">
-                    <h1>Extérieur</h1>
-                      <div class="cercle-icon-blue">
+                  <div class="col-md-8">
+                    <h3>Extérieur</h3>
+                      <div class="cercle-icon-ext blue">
                         <div class="cercle-icon">
                           <span class="sensor-icon img-temperature"></span>
                           {{ local_sensor_outdoor.temperature|round }} C°
                         </div>
                       </div>
-
-                      <div class="cercle-icon-blue">
+                      <div class="cercle-icon-ext blue">
                           <div class="cercle-icon">
                             <span class="sensor-icon img-humidity"></span>
                             {{ local_sensor_outdoor.humidity|round }} %
                           </div>
                     </div>
-                    <div class="cercle-icon-blue">
+                    <div class="cercle-icon-ext blue">
                           <div class="cercle-icon">
                             <span class="sensor-icon img-pressure"></span>
                               <span>{{ (local_sensor_outdoor.pressure)|round }} hP</span>
                           </div>
                     </div>
                     {% if local_sensor_outdoor.rain >= 480 %}
-                    <div class="cercle-icon-blue" >
+                    <div class="cercle-icon-ext blue" >
                           <div class="cercle-icon">
                             <span class="sensor-icon img-rain"></span>
                               <span>{{ (local_sensor_outdoor.rain)|round }}</span>
                           </div>
                     </div>
                     {% else %}
-                    <div class="cercle-icon-blue" >
+                    <div class="cercle-icon-ext blue" >
                           <div class="cercle-icon">
                             <span class="sensor-icon img-no-rain"></span>
                               <span>{{ (local_sensor_outdoor.rain)|round }}</span>
@@ -55,24 +61,122 @@
                     {% endif %}
                   </div>
               </div>
-              <br><br>
+            </div>
+            <div class="jumbotron cont">
               <div class="row">
-                    <div class="col-md-12">
-                      <h1>Intérieur</h1>
-                      <div class="cercle-icon-green">
+                    <div class="col-md-4">
+                      <h3>Séjour / Cuisine</h3>
+                        <div class="cercle-icon-ext blue">
                           <div class="cercle-icon">
                             <span class="sensor-icon img-temperature"></span>
-                            {{ local_sensor_indoor.temperature|round }} C°
+                            {{ local_sensor_indoor.temperatureSejour|round }} C°
                           </div>
                         </div>
-                        <div class="cercle-icon-green">
+                        <div class="cercle-icon-ext blue">
                             <div class="cercle-icon">
                               <span class="sensor-icon img-humidity"></span>
-                              {{ local_sensor_indoor.humidity|round }} %
+                              {{ local_sensor_indoor.humiditySejour|round }} %
+                            </div>
+                          </div>
+
+                          {% if local_light_indoor.lightSejour == 1 %}
+                          <div class="cercle-icon-ext orange">
+                              <div class="cercle-icon">
+                                <span class="sensor-icon img-light-white"></span>
+                                  Séjour
+                              </div>
+                            </div>
+                          {% else %}
+                          <div class="cercle-icon-ext gray">
+                              <div class="cercle-icon">
+                                <span class="sensor-icon img-light-dark"></span>
+                                  Séjour
+                              </div>
+                            </div>
+                            {% endif %}
+
+                            {% if local_light_indoor.lightCuisine == 1 %}
+                            <div class="cercle-icon-ext orange">
+                                <div class="cercle-icon">
+                                  <span class="sensor-icon img-light-white"></span>
+                                    Cuisine
+                                </div>
+                              </div>
+                            {% else %}
+                            <div class="cercle-icon-ext gray">
+                                <div class="cercle-icon">
+                                  <span class="sensor-icon img-light-dark"></span>
+                                    Cuisine
+                                </div>
+                              </div>
+                              {% endif %}
+
+                      </div>
+                      <div class="col-md-4">
+                        <h3>Chambre 1</h3>
+                        <div class="cercle-icon-ext blue">
+                            <div class="cercle-icon">
+                              <span class="sensor-icon img-temperature"></span>
+                              {{ local_sensor_indoor.temperatureChambre1|round }} C°
+                            </div>
+                          </div>
+                          <div class="cercle-icon-ext blue">
+                              <div class="cercle-icon">
+                                <span class="sensor-icon img-humidity"></span>
+                                {{ local_sensor_indoor.humidityChambre1|round }} %
+                              </div>
+                        </div>
+
+                        {% if local_light_indoor.lightChambre1 == 1 %}
+                        <div class="cercle-icon-ext orange">
+                            <div class="cercle-icon">
+                              <span class="sensor-icon img-light-white"></span>
+                            </div>
+                          </div>
+                        {% else %}
+                        <div class="cercle-icon-ext gray">
+                            <div class="cercle-icon">
+                              <span class="sensor-icon img-light-dark"></span>
+                            </div>
+                          </div>
+                          {% endif %}
+
+                    </div>
+                    <div class="col-md-4">
+                      <h3>Chambre 2</h3>
+                        <div class="cercle-icon-ext blue">
+                          <div class="cercle-icon">
+                            <span class="sensor-icon img-temperature"></span>
+                            {{ local_sensor_indoor.temperatureChambre2|round }} C°
+                          </div>
+                        </div>
+                        <div class="cercle-icon-ext blue">
+                            <div class="cercle-icon">
+                              <span class="sensor-icon img-humidity"></span>
+                              {{ local_sensor_indoor.humidityChambre2|round }} %
                             </div>
                       </div>
-                    </div>
+                      {% if local_light_indoor.lightChambre2 == 1 %}
+                      <div class="cercle-icon-ext orange">
+                          <div class="cercle-icon">
+                            <span class="sensor-icon img-light-white"></span>
+                          </div>
+                        </div>
+                      {% else %}
+                      <div class="cercle-icon-ext gray">
+                          <div class="cercle-icon">
+                            <span class="sensor-icon img-light-dark"></span>
+                          </div>
+                        </div>
+                        {% endif %}
+                  </div>
+                </div>
                 </div>
           </div>
       </div>
+    <div class="row" >
+      <div class="col-md-12 text-center" style="margin-top:30px;">
+        <h3>{{ "now"|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h3>
+      </div>
+    </div>
 {% endblock %}

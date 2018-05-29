@@ -47,10 +47,19 @@ class DomoController extends Controller
         'rain'=>500
       );
       $local_sensor_indoor = array(
-        'temperature'=>21,
-        'humidity'=>47
+        'temperatureSejour'=>21,
+        'humiditySejour'=>47,
+        'temperatureChambre1'=>21,
+        'humidityChambre1'=>47,
+        'temperatureChambre2'=>21,
+        'humidityChambre2'=>47
       );
-
+      $local_light_indoor = array(
+        'lightSejour'=>1,
+        'lightCuisine'=>0,
+        'lightChambre1'=>1,
+        'lightChambre2'=>0
+      );
 
   $local_weather_icon = '01d';
   $local_weather_desc = 'Beau';
@@ -152,6 +161,7 @@ class DomoController extends Controller
         'responseForecast'=>$responseForecast,
         'local_sensor_outdoor'=>$local_sensor_outdoor,
         'local_sensor_indoor'=>$local_sensor_indoor,
+        'local_light_indoor'=>$local_light_indoor,
       /*  'local_sensor'=>$local_sensor,
         'pressure_alert'=>$pressure_alert,
         'temp_alert'=>$temp_alert,
