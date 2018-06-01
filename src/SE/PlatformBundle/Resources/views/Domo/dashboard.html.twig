@@ -52,6 +52,40 @@
       </div>
 </div>
 
+<div class="row" >
+  <div class="col-md-12 text-center" style="margin-top:30px;">
+    <h3>Prévision</h3>
+  </div>
+</div>
+
+<div class="jumbotron cont">
+    <div class="row" >
+      <div class="col-md-12">
+        {% set tomorrow = 'now'|date_modify("+1 day") %}
+        {% set tomorrow_1 = 'now'|date_modify("+2 day") %}
+        <h4>{{ tomorrow|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h4>
+        {% for forecast in responseForecast.list %}
+          {% if tomorrow|date("Y-m-d") == forecast.dt|date('Y-m-d') %}
+              <div class="col-md-1 text-center" style="margin:0 15px 10px 15px;">
+                  <h4>{{ forecast.dt|date('H:i') }}</h4>
+                  <div class="sun-icon img-{{ forecast.weather[0].icon }}"></div>
+                  <div>{{ forecast.main.temp|round }} C°</div>
+              </div>
+                {% endif %}
+        {% endfor %}
+        <h4>{{ tomorrow_1|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h4>
+        {% for forecast in responseForecast.list %}
+          {% if tomorrow_1|date("Y-m-d") == forecast.dt|date('Y-m-d') %}
+              <div class="col-md-1 text-center" style="margin:0 15px 10px 15px;">
+                  <h4>{{ forecast.dt|date('H:i') }}</h4>
+                  <div class="sun-icon img-{{ forecast.weather[0].icon }}"></div>
+                  <div>{{ forecast.main.temp|round }} C°</div>
+              </div>
+                {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+</div>
   <div class="row">
           <div class="col-md-12">
             <div class="jumbotron cont">
@@ -232,39 +266,5 @@
       </div>
 </div>
 
-<div class="row" >
-  <div class="col-md-12 text-center" style="margin-top:30px;">
-    <h3>Prévision</h3>
-  </div>
-</div>
-
-<div class="jumbotron cont">
-    <div class="row" >
-      <div class="col-md-12">
-        {% set tomorrow = 'now'|date_modify("+1 day") %}
-        {% set tomorrow_1 = 'now'|date_modify("+2 day") %}
-        <h4>{{ tomorrow|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h4>
-        {% for forecast in responseForecast.list %}
-          {% if tomorrow|date("Y-m-d") == forecast.dt|date('Y-m-d') %}
-              <div class="col-md-1 text-center" style="margin:0 15px 10px 15px;">
-                  <h4>{{ forecast.dt|date('H:i') }}</h4>
-                  <div class="sun-icon img-{{ forecast.weather[0].icon }}"></div>
-                  <div>{{ forecast.main.temp|round }} C°</div>
-              </div>
-                {% endif %}
-        {% endfor %}
-        <h4>{{ tomorrow_1|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h4>
-        {% for forecast in responseForecast.list %}
-          {% if tomorrow_1|date("Y-m-d") == forecast.dt|date('Y-m-d') %}
-              <div class="col-md-1 text-center" style="margin:0 15px 10px 15px;">
-                  <h4>{{ forecast.dt|date('H:i') }}</h4>
-                  <div class="sun-icon img-{{ forecast.weather[0].icon }}"></div>
-                  <div>{{ forecast.main.temp|round }} C°</div>
-              </div>
-                {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-</div>
 
 {% endblock %}
