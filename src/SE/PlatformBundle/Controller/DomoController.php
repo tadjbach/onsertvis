@@ -25,13 +25,19 @@ class DomoController extends Controller
   private $pressure_1 = 1013;
   private $pressure_2 = 1020;
 
-   public function dashboardAction($zipcode, $countrycode)
+   public function dashboardAction()
    {
+       $user = $this->getUser();
+
+       $cityName = $user->getPostalCode()->getCity()->getLabelNormal();
+       $zipcode = $user->getPostalCode()->getValue();
+       $countrycode = $user->getPostalCode()->getCity()->getDepartement()->getRegion()->getCountry()->getAlpha2();
+
      //Online weather API
       $this->guzzleClient = new GuzzleClient();
       $cityQuery = $zipcode.','.$countrycode;
-      $baseUrlWeather = $this->apiWeatherUrl.$this->weather.'?zip='.$cityQuery.'&units='.$this->apiUnits.'&mode='.$this->apiMode.'&APPID='.$this->apiKey;
-      $baseUrlForecast = $this->apiWeatherUrl.$this->forecast.'?zip='.$cityQuery.'&units='.$this->apiUnits.'&mode='.$this->apiMode.'&APPID='.$this->apiKey;
+      $baseUrlWeather = $this->apiWeatherUrl.$this->weather.'?q='.$cityName.'&zip='.$zipcode.'&units='.$this->apiUnits.'&mode='.$this->apiMode.'&APPID='.$this->apiKey;
+      $baseUrlForecast = $this->apiWeatherUrl.$this->forecast.'?q='.$cityName.'&zip='.$cityQuery.'&units='.$this->apiUnits.'&mode='.$this->apiMode.'&APPID='.$this->apiKey;
 
       $responseWeather = $this->guzzleClient->get($baseUrlWeather);
       $responseWeather = json_decode($responseWeather->getBody()->getContents());
@@ -41,23 +47,23 @@ class DomoController extends Controller
 
       //Local sensor
       $local_sensor_outdoor = array(
-        'pressure'=>1005,
-        'temperature'=>21,
-        'humidity'=>47,
-        'rain'=>500
+        'pressure'=>0,
+        'temperature'=>0,
+        'humidity'=>0,
+        'rain'=>0
       );
       $local_sensor_indoor = array(
-        'temperatureSejour'=>21,
-        'humiditySejour'=>47,
-        'temperatureChambre1'=>21,
-        'humidityChambre1'=>47,
-        'temperatureChambre2'=>21,
-        'humidityChambre2'=>47
+        'temperatureSejour'=>0,
+        'humiditySejour'=>0,
+        'temperatureChambre1'=>0,
+        'humidityChambre1'=>0,
+        'temperatureChambre2'=>0,
+        'humidityChambre2'=>0
       );
       $local_light_indoor = array(
-        'lightSejour'=>1,
+        'lightSejour'=>0,
         'lightCuisine'=>0,
-        'lightChambre1'=>1,
+        'lightChambre1'=>0,
         'lightChambre2'=>0
       );
 
@@ -173,12 +179,12 @@ class DomoController extends Controller
     ));
    }
 
-   public function openweatherAction($zipcode, $countrycode)
+   public function openweatherAction($cityName, $zipcode, $countrycode)
    {
       $this->guzzleClient = new GuzzleClient();
       $cityQuery = $zipcode.','.$countrycode;
-      $baseUrlWeather = $this->apiWeatherUrl.$this->weather.'?zip='.$cityQuery.'&units='.$this->apiUnits.'&mode='.$this->apiMode.'&APPID='.$this->apiKey;
-      $baseUrlForecast = $this->apiWeatherUrl.$this->forecast.'?zip='.$cityQuery.'&units='.$this->apiUnits.'&mode='.$this->apiMode.'&APPID='.$this->apiKey;
+      $baseUrlWeather = $this->apiWeatherUrl.$this->weather.'?q='.$cityName.'&zip='.$cityQuery.'&units='.$this->apiUnits.'&mode='.$this->apiMode.'&APPID='.$this->apiKey;
+      $baseUrlForecast = $this->apiWeatherUrl.$this->forecast.'?q='.$cityName.'&zip='.$cityQuery.'&units='.$this->apiUnits.'&mode='.$this->apiMode.'&APPID='.$this->apiKey;
 
       $responseWeather = $this->guzzleClient->get($baseUrlWeather);
       $responseWeather = json_decode($responseWeather->getBody()->getContents());

@@ -131,4 +131,14 @@ class Region
     {
         return $this->position;
     }
+
+    /**
+     * Get country
+     *
+     * @return \SE\PlatformBundle\Entity\Country
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
 }

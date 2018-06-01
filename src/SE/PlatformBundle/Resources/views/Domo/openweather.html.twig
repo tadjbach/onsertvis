@@ -69,6 +69,32 @@
           <h5>Vitesse du vent : {{ responseWeather.wind.speed }} meter/sec (Degré : {{ responseWeather.wind.deg }}°)</h5>
         </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        {% set tomorrow = 'now'|date_modify("+1 day") %}
+        {% set tomorrow_1 = 'now'|date_modify("+2 day") %}
+
+        {{ "now"|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}} <br>
+        {% for forecast in responseForecast.list %}
+            {% if "now"|date('Y-m-d') == forecast.dt|date('Y-m-d') %}
+              {{ forecast.dt|date('H:i') }} - {{ forecast.weather[0].main }}   <br>
+            {% endif %}
+        {% endfor %}
+        {{ tomorrow|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}} <br>
+        {% for forecast in responseForecast.list %}
+            {% if tomorrow|date("Y-m-d") == forecast.dt|date('Y-m-d') %}
+              {{ forecast.dt|date('H:i') }} - {{ forecast.weather[0].main }}   <br>
+            {% endif %}
+        {% endfor %}
+          {{ tomorrow_1|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}} <br>
+        {% for forecast in responseForecast.list %}
+            {% if tomorrow_1|date("Y-m-d") == forecast.dt|date('Y-m-d') %}
+              {{ forecast.dt|date('H:i') }} - {{ forecast.weather[0].main }}   <br>
+            {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
  <div class="row">
    <div class="col-md-6">
      {{ dump(responseWeather) }}

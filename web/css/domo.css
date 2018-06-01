@@ -42,8 +42,8 @@ h2{
 padding-top: 32px;
 }
 .cont{
-  padding: 20px 30px 0px 30px;
-  margin-bottom: 10px;
+  padding: 10px 30px 0px 30px;
+  margin-bottom: 5px;
   color: inherit;
   background-color: rgba(195, 153, 153, 0.3);
   border-radius: 15px;
@@ -200,10 +200,10 @@ padding-top: 32px;
 }
 .weather-icon{
       background-size: contain;
-      height: 150px;
+      height: 140px;
       width: 140px;
       display: inline-block;
-      margin-bottom: 50px;
+      margin-bottom: 15px;
 }
 
 /* clear sky = ciel clair */

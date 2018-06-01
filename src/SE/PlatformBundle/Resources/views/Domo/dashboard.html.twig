@@ -1,54 +1,63 @@
 {% extends "SEPlatformBundle::domo-layout.html.twig" %}
 
 {% block title %}
-    Domo dahsboards
+    Domo dahsboard
 {% endblock %}
 
 {% block domo_body %}
 <div class="row" >
-  <div class="col-md-12 text-center" style="margin-top:30px;">
-    <h3>{{ "now"|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h3>
+  <div class="col-md-12 text-center" style="margin-top:-5px">
+    <h4>{{ "now"|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}} ({{responseWeather.name}})</h4>
   </div>
 </div>
 
 <div class="jumbotron cont">
   <div class="row" >
       <div class="col-md-12">
-      <div class="col-md-2 text-left">
-          <div class="sun-icon img-sunrise"></div>
-          <h4>{{ responseWeather.sys.sunrise|date('H:i', "Europe/Paris") }}</h4>
-      </div>
-      <div class="col-md-8 text-center">
-          <div class="col-md-12 text-center">
-            <div class="col-md-4 text-center">
-                <div>Min {{ responseWeather.main.temp_min }} C°</div>
-                <div class="temp">{{ responseWeather.main.temp }} C°</div>
-            </div>
-            <div class="col-md-4 text-center">
-                <div class="weather-icon img-{{ responseWeather.weather[0].icon }}"></div>
-            </div>
-            <div class="col-md-4 text-center">
-              <div>Max {{ responseWeather.main.temp_max }} C°</div>
-                <div class="weather-desc">{{ responseWeather.weather[0].description }}</div>
+        <div class="col-md-2 text-left">
+            <div class="sun-icon img-sunrise"></div>
+            <h4>{{ responseWeather.sys.sunrise|date('H:i', "Europe/Paris") }}</h4>
+        </div>
+        <div class="col-md-8 text-center">
+            <div class="col-md-12 text-center">
+              <div class="col-md-4 text-center">
+                  <div>Min {{ responseWeather.main.temp_min|round }} C°</div>
+                  <div class="temp">{{ responseWeather.main.temp|round }} C°</div>
+              </div>
+              <div class="col-md-4 text-center">
+                  <div class="weather-icon img-{{ responseWeather.weather[0].icon }}"></div>
+              </div>
+              <div class="col-md-4 text-center">
+                <div>Max {{ responseWeather.main.temp_max|round }} C°</div>
+                  <div class="weather-desc">{{ responseWeather.weather[0].description }}</div>
+              </div>
             </div>
           </div>
-
-
+          <div class="col-md-2 text-right">
+            <div class="sun-icon img-sunset"></div>
+              <h4>{{ responseWeather.sys.sunset|date('H:i', "Europe/Paris") }}</h4>
+          </div>
+        </div>
       </div>
-      <div class="col-md-2 text-right">
-        <div class="sun-icon img-sunset"></div>
-          <h4>{{ responseWeather.sys.sunset|date('H:i', "Europe/Paris") }}</h4>
+      <div class="row" >
+        <div class="col-md-12">
+            {% for forecast in responseForecast.list|slice(0, 6) %}
+                  <div class="col-md-2 text-center" style="margin-bottom:10px;">
+                      <h4>{{ forecast.dt|date('H:i') }}</h4>
+                      <div class="sun-icon img-{{ forecast.weather[0].icon }}"></div>
+                      <div>{{ forecast.main.temp|round }} C°</div>
+                  </div>
+            {% endfor %}
+        </div>
       </div>
-  </div>
-</div>
 </div>
 
-    <div class="row">
+  <div class="row">
           <div class="col-md-12">
             <div class="jumbotron cont">
             <div class="row">
                   <div class="col-md-12">
-                    <h3>Extérieur</h3>
+                    <h4 style="margin-top:0px" >Extérieur</h4>
                       <div class="cercle-icon-ext blue">
                         <div class="cercle-icon">
                           <span class="sensor-icon img-temperature"></span>
@@ -112,7 +121,7 @@
             <div class="jumbotron cont">
               <div class="row">
                     <div class="col-md-4">
-                      <h3>Séjour / Cuisine</h3>
+                      <h4 style="margin-top:0px" >Séjour / Cuisine</h4>
                         <div class="cercle-icon-ext blue">
                           <div class="cercle-icon">
                             <span class="sensor-icon img-temperature"></span>
@@ -160,7 +169,7 @@
 
                       </div>
                       <div class="col-md-4">
-                        <h3>Chambre 1</h3>
+                        <h4 style="margin-top:0px">Chambre 1</h4>
                         <div class="cercle-icon-ext blue">
                             <div class="cercle-icon">
                               <span class="sensor-icon img-temperature"></span>
@@ -190,7 +199,7 @@
 
                     </div>
                     <div class="col-md-4">
-                      <h3>Chambre 2</h3>
+                      <h4 style="margin-top:0px">Chambre 2</h4>
                         <div class="cercle-icon-ext blue">
                           <div class="cercle-icon">
                             <span class="sensor-icon img-temperature"></span>
@@ -221,5 +230,41 @@
 
           </div>
       </div>
+</div>
+
+<div class="row" >
+  <div class="col-md-12 text-center" style="margin-top:30px;">
+    <h3>Prévision</h3>
+  </div>
+</div>
+
+<div class="jumbotron cont">
+    <div class="row" >
+      <div class="col-md-12">
+        {% set tomorrow = 'now'|date_modify("+1 day") %}
+        {% set tomorrow_1 = 'now'|date_modify("+2 day") %}
+        <h4>{{ tomorrow|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h4>
+        {% for forecast in responseForecast.list %}
+          {% if tomorrow|date("Y-m-d") == forecast.dt|date('Y-m-d') %}
+              <div class="col-md-1 text-center" style="margin:0 15px 10px 15px;">
+                  <h4>{{ forecast.dt|date('H:i') }}</h4>
+                  <div class="sun-icon img-{{ forecast.weather[0].icon }}"></div>
+                  <div>{{ forecast.main.temp|round }} C°</div>
+              </div>
+                {% endif %}
+        {% endfor %}
+        <h4>{{ tomorrow_1|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y')}}</h4>
+        {% for forecast in responseForecast.list %}
+          {% if tomorrow_1|date("Y-m-d") == forecast.dt|date('Y-m-d') %}
+              <div class="col-md-1 text-center" style="margin:0 15px 10px 15px;">
+                  <h4>{{ forecast.dt|date('H:i') }}</h4>
+                  <div class="sun-icon img-{{ forecast.weather[0].icon }}"></div>
+                  <div>{{ forecast.main.temp|round }} C°</div>
+              </div>
+                {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+</div>
 
 {% endblock %}
